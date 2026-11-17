@@ -1,0 +1,8 @@
+{
+ "vc": 13,
+ "vn": "2.5.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.5.0.apk",
+ "sha256": "bdeafea3077802e0193806a05d7ec86a981ec35e6e6e9d54797de23a07ca375a",
+ "size": 1004359,
+ "notes": "Automatic updates: the app now updates itself."
+}
