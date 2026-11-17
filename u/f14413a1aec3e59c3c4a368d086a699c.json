@@ -1,8 +1,8 @@
 {
- "vc": 17,
- "vn": "2.6.3",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.3.apk",
- "sha256": "677bd1fa477a7028edc6e039dd829c24d59d64e7272da5fb2476c7bdf62db8b6",
- "size": 1016403,
- "notes": "Bug sweep: the slot machine no longer gets cut off on narrow phone screens."
+ "vc": 18,
+ "vn": "2.7.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.7.0.apk",
+ "sha256": "c671115abe45ce9a68013043fafc02be8257f3804ef5a1cb92efa06609dca434",
+ "size": 3542137,
+ "notes": "Watch an optional ad to skip a hacking job's recharge (up to 6 a day). Preparing for Google Play."
 }
