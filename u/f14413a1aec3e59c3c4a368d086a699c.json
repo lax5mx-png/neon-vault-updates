@@ -1,8 +1,8 @@
 {
- "vc": 16,
- "vn": "2.6.2",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.2.apk",
- "sha256": "c8d642dee9db047f8467c675ac07a3e547d891f331baf13590fbbc6ec92d9fb2",
- "size": 1016383,
- "notes": "Same-bet dealing: tap DEAL / SPIN / ROLL with an empty table to repeat your last bet (Blackjack, Roulette, Baccarat, Craps). REBET buttons removed. Fixed Craps' ROLL button, which was wired to Crash."
+ "vc": 17,
+ "vn": "2.6.3",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.3.apk",
+ "sha256": "677bd1fa477a7028edc6e039dd829c24d59d64e7272da5fb2476c7bdf62db8b6",
+ "size": 1016403,
+ "notes": "Bug sweep: the slot machine no longer gets cut off on narrow phone screens."
 }
