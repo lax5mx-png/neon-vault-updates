@@ -1,8 +1,8 @@
 {
- "vc": 14,
- "vn": "2.6.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.0.apk",
- "sha256": "e6df24b8bcd3a76fb5c8c7f128e2f205db86faea1c2209d23c948f69457ed595",
- "size": 1015271,
- "notes": "Netrunner Ops: when you're broke, pick from 4 hacking jobs (Icebreaker, Signal Lock, Echo, Cipher) at Easy, Normal, Hard or Elite. Harder runs pay more, up to \u00a23,500."
+ "vc": 15,
+ "vn": "2.6.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.1.apk",
+ "sha256": "f5f050d512dc6c4ea728647a2c46ed54452e19c9b41d2af7641627b364f50783",
+ "size": 1015855,
+ "notes": "Netrunner Ops is open any time now: every job pays out whenever you run it, then recharges (Easy 4m, Normal 8m, Hard 15m, Elite 25m). Payouts: \u00a2300 / \u00a2700 / \u00a21,500 / \u00a23,000. Get a heads-up when a job is ready."
 }
