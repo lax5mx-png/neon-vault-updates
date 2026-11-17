@@ -1,8 +1,8 @@
 {
- "vc": 13,
- "vn": "2.5.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.5.0.apk",
- "sha256": "bdeafea3077802e0193806a05d7ec86a981ec35e6e6e9d54797de23a07ca375a",
- "size": 1004359,
- "notes": "Automatic updates: the app now updates itself."
+ "vc": 14,
+ "vn": "2.6.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.6.0.apk",
+ "sha256": "e6df24b8bcd3a76fb5c8c7f128e2f205db86faea1c2209d23c948f69457ed595",
+ "size": 1015271,
+ "notes": "Netrunner Ops: when you're broke, pick from 4 hacking jobs (Icebreaker, Signal Lock, Echo, Cipher) at Easy, Normal, Hard or Elite. Harder runs pay more, up to \u00a23,500."
 }
