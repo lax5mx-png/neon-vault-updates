@@ -1,8 +1,8 @@
 {
- "vc": 31,
- "vn": "3.2.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.1.apk",
- "sha256": "1863aa48d3483238ed501fd825bd4f69d5a9f053e38078a0d8b0e9b77fbc5380",
- "size": 1045687,
- "notes": "Signal Lock pays much more: double the base pay, the combo climbs faster, and the difficulty ramps up slower, so good runs reach \u00a21,000+."
+ "vc": 32,
+ "vn": "3.2.2",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.2.apk",
+ "sha256": "d49e456c273ebf895f8e400ee2d725c54daaa050108c1ce8638424aa32fdfd46",
+ "size": 1046339,
+ "notes": "Cipher Echo is gone. New loot job, Circuit Route: turn scrambled circuit tiles until every one is wired to the core. Bigger boards pay better keys."
 }
