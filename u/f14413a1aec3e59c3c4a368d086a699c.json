@@ -1,8 +1,8 @@
 {
- "vc": 21,
- "vn": "2.8.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.8.1.apk",
- "sha256": "5a8690139d92c3549ee12d49bb78b7de402e9915db13c388452c930f1d8d9675",
- "size": 1017227,
- "notes": "Netrunner Ops is now Signal Lock plus Data Mine. Signal Lock pays more (\u00a2600 to \u00a26,000) and recharges faster (3 to 12 minutes)."
+ "vc": 22,
+ "vn": "2.9.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.9.0.apk",
+ "sha256": "ff186f09fce27b650657b13ffc7ce8c08b0857f01816fde8efcd8fa947bb2c74",
+ "size": 1019063,
+ "notes": "Data Mine is now endless: your combo keeps climbing while it gets faster and trickier. Signal Lock now pays shards and cache keys instead of credits."
 }
