@@ -1,8 +1,8 @@
 {
- "vc": 25,
- "vn": "3.0.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.1.apk",
- "sha256": "9a07d7e12266cb9cb8f4276e51dee5cacf85acde8ffd7ad5efedc115654647c5",
- "size": 1043243,
- "notes": "Neon Bank: lock credits for 1, 8 or 24 hours and earn interest. Light Cycle and the event badge now fit better on phone screens."
+ "vc": 26,
+ "vn": "3.0.2",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.2.apk",
+ "sha256": "cbae049c62827498cf52eeba541015c4d5883cedead2d59d9c37154bcca4108d",
+ "size": 1044247,
+ "notes": "Neon Bank: pick any lock time from 1 hour to 7 days. Longer locks pay more interest, and deposits stay locked until the timer ends. Light Cycle is now full screen and sizes the board to your phone."
 }
