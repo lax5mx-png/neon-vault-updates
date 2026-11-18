@@ -1,8 +1,8 @@
 {
- "vc": 20,
- "vn": "2.8.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.8.0.apk",
- "sha256": "8a6f00c909d7162522a83c470d6dfbb64c81a6ac5d46c70488677eb2c5914d09",
- "size": 1020827,
- "notes": "Data Mine: a new side gig on the Netrunner Ops board. Always open, no recharge: tap data packets for 30 seconds and earn up to \u00a260 a run."
+ "vc": 21,
+ "vn": "2.8.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.8.1.apk",
+ "sha256": "5a8690139d92c3549ee12d49bb78b7de402e9915db13c388452c930f1d8d9675",
+ "size": 1017227,
+ "notes": "Netrunner Ops is now Signal Lock plus Data Mine. Signal Lock pays more (\u00a2600 to \u00a26,000) and recharges faster (3 to 12 minutes)."
 }
