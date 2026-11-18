@@ -1,8 +1,8 @@
 {
- "vc": 30,
- "vn": "3.2.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.0.apk",
- "sha256": "dd0b92e75ad27f541353d949d025c78c32504bb5cc3ac8b7b43eeb7b33f05a9d",
- "size": 1045635,
- "notes": "Signal Lock now makes money: endless, no recharge, and it gets harder the longer you go. Data Mine is gone. New loot job, Cipher Echo: memorize the code and tap it back to win shards and keys, with a separate timer for each difficulty."
+ "vc": 31,
+ "vn": "3.2.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.1.apk",
+ "sha256": "1863aa48d3483238ed501fd825bd4f69d5a9f053e38078a0d8b0e9b77fbc5380",
+ "size": 1045687,
+ "notes": "Signal Lock pays much more: double the base pay, the combo climbs faster, and the difficulty ramps up slower, so good runs reach \u00a21,000+."
 }
