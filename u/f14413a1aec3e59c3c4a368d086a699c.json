@@ -1,8 +1,8 @@
 {
- "vc": 27,
- "vn": "3.1.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.0.apk",
- "sha256": "f20be8ebe9bf15fc93a17f00bf01537dbe3472b662d22ed2cd4e9b85ef3a4417",
- "size": 1044771,
- "notes": "The progressive jackpot is gone, so bets no longer cost an extra 1%. New: Hot Table of the Day, where one game gives double XP all day."
+ "vc": 28,
+ "vn": "3.1.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.1.apk",
+ "sha256": "24e0d17834b76c95eca039d6e85adc6c000a3360f4eaa9994532b2aa8f208a38",
+ "size": 1044611,
+ "notes": "Opening a cache no longer shows the loading bar. It cracks open right away and goes straight to the spin."
 }
