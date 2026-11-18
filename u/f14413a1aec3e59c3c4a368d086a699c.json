@@ -1,8 +1,8 @@
 {
- "vc": 24,
- "vn": "3.0.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.0.apk",
- "sha256": "6674e692006aa9512941c61d1c67c0f0de02afd6b5dc3228a0af0845b7892566",
- "size": 1040951,
- "notes": "v3.0: Server Farm (idle income), Daily Puzzle, weekly Contracts with Syndicate exclusive skins, Prestige, Hideout, Light Cycle arcade, surprise casino events, market price swings, and a ghost to race in Data Mine."
+ "vc": 25,
+ "vn": "3.0.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.1.apk",
+ "sha256": "9a07d7e12266cb9cb8f4276e51dee5cacf85acde8ffd7ad5efedc115654647c5",
+ "size": 1043243,
+ "notes": "Neon Bank: lock credits for 1, 8 or 24 hours and earn interest. Light Cycle and the event badge now fit better on phone screens."
 }
