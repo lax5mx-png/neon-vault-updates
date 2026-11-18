@@ -1,8 +1,8 @@
 {
- "vc": 26,
- "vn": "3.0.2",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.2.apk",
- "sha256": "cbae049c62827498cf52eeba541015c4d5883cedead2d59d9c37154bcca4108d",
- "size": 1044247,
- "notes": "Neon Bank: pick any lock time from 1 hour to 7 days. Longer locks pay more interest, and deposits stay locked until the timer ends. Light Cycle is now full screen and sizes the board to your phone."
+ "vc": 27,
+ "vn": "3.1.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.0.apk",
+ "sha256": "f20be8ebe9bf15fc93a17f00bf01537dbe3472b662d22ed2cd4e9b85ef3a4417",
+ "size": 1044771,
+ "notes": "The progressive jackpot is gone, so bets no longer cost an extra 1%. New: Hot Table of the Day, where one game gives double XP all day."
 }
