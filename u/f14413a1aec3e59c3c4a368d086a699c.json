@@ -1,8 +1,8 @@
 {
- "vc": 23,
- "vn": "2.9.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.9.1.apk",
- "sha256": "86a37cb0af36cc4363986ed8fef9f2f190bbe5c30e3d26c39a5c7a1214e3e150",
- "size": 1019547,
- "notes": "Signal Lock: each difficulty now has its own recharge timer, so you can play Easy while Hard is recharging."
+ "vc": 24,
+ "vn": "3.0.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.0.0.apk",
+ "sha256": "6674e692006aa9512941c61d1c67c0f0de02afd6b5dc3228a0af0845b7892566",
+ "size": 1040951,
+ "notes": "v3.0: Server Farm (idle income), Daily Puzzle, weekly Contracts with Syndicate exclusive skins, Prestige, Hideout, Light Cycle arcade, surprise casino events, market price swings, and a ghost to race in Data Mine."
 }
