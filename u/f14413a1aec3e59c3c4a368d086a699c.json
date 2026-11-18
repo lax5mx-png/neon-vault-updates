@@ -1,8 +1,8 @@
 {
- "vc": 19,
- "vn": "2.7.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.7.1.apk",
- "sha256": "f5f071d52cdd7cac9d92a04f962a08fae4cd83d5a033edd7541ba77ac909f45c",
- "size": 1018091,
- "notes": "No ads in this version. Ads only exist in the separate Google Play version."
+ "vc": 20,
+ "vn": "2.8.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.8.0.apk",
+ "sha256": "8a6f00c909d7162522a83c470d6dfbb64c81a6ac5d46c70488677eb2c5914d09",
+ "size": 1020827,
+ "notes": "Data Mine: a new side gig on the Netrunner Ops board. Always open, no recharge: tap data packets for 30 seconds and earn up to \u00a260 a run."
 }
