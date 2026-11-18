@@ -1,8 +1,8 @@
 {
- "vc": 29,
- "vn": "3.1.2",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.2.apk",
- "sha256": "ed1ffd24cfe69f7d5c801c4b05a133a63834e87cc313601f6c3f4c215eec6b88",
- "size": 1045063,
- "notes": "Data Mine: packets never change color anymore. Deeper levels now add ICE guards stuck right next to good packets. ICE that pops up under your finger can't hurt you."
+ "vc": 30,
+ "vn": "3.2.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.0.apk",
+ "sha256": "dd0b92e75ad27f541353d949d025c78c32504bb5cc3ac8b7b43eeb7b33f05a9d",
+ "size": 1045635,
+ "notes": "Signal Lock now makes money: endless, no recharge, and it gets harder the longer you go. Data Mine is gone. New loot job, Cipher Echo: memorize the code and tap it back to win shards and keys, with a separate timer for each difficulty."
 }
