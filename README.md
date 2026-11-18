@@ -1,3 +1,3 @@
 # Neon Vault updates
 
-Newest version: **3.1.1** · [download APK](apk/NeonVault-3.1.1.apk)
+Newest version: **3.1.2** · [download APK](apk/NeonVault-3.1.2.apk)

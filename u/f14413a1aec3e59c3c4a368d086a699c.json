@@ -1,8 +1,8 @@
 {
- "vc": 28,
- "vn": "3.1.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.1.apk",
- "sha256": "24e0d17834b76c95eca039d6e85adc6c000a3360f4eaa9994532b2aa8f208a38",
- "size": 1044611,
- "notes": "Opening a cache no longer shows the loading bar. It cracks open right away and goes straight to the spin."
+ "vc": 29,
+ "vn": "3.1.2",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.1.2.apk",
+ "sha256": "ed1ffd24cfe69f7d5c801c4b05a133a63834e87cc313601f6c3f4c215eec6b88",
+ "size": 1045063,
+ "notes": "Data Mine: packets never change color anymore. Deeper levels now add ICE guards stuck right next to good packets. ICE that pops up under your finger can't hurt you."
 }
