@@ -1,8 +1,8 @@
 {
- "vc": 22,
- "vn": "2.9.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.9.0.apk",
- "sha256": "ff186f09fce27b650657b13ffc7ce8c08b0857f01816fde8efcd8fa947bb2c74",
- "size": 1019063,
- "notes": "Data Mine is now endless: your combo keeps climbing while it gets faster and trickier. Signal Lock now pays shards and cache keys instead of credits."
+ "vc": 23,
+ "vn": "2.9.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-2.9.1.apk",
+ "sha256": "86a37cb0af36cc4363986ed8fef9f2f190bbe5c30e3d26c39a5c7a1214e3e150",
+ "size": 1019547,
+ "notes": "Signal Lock: each difficulty now has its own recharge timer, so you can play Easy while Hard is recharging."
 }
