@@ -1,8 +1,8 @@
 {
- "vc": 41,
- "vn": "3.8.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.8.0.apk",
- "sha256": "8021f0c40a3ace4579bb4b65d94f0326f06067600d357ed24e3dca26032391b1",
- "size": 1062843,
- "notes": "Performance update: same look with much less lag. The background glow is drawn more efficiently, live blur effects are gone, spinning rings use the GPU, skin grids stop animating while you scroll, and the app now detects lag and quietly tones down the background if your phone can't keep up."
+ "vc": 42,
+ "vn": "3.8.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.8.1.apk",
+ "sha256": "576d119c67d0e177ef064e3e50f05186edb1d2303ef9e089424d2b7d627674ab",
+ "size": 1063283,
+ "notes": "Cache opening is smoother. The spinning reel no longer redraws every tile each frame, and the background pauses while a cache opens."
 }
