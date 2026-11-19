@@ -1,8 +1,8 @@
 {
- "vc": 34,
- "vn": "3.2.4",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.4.apk",
- "sha256": "e34b28d41f61018ae753059464a2ab8988760560f0fc1a49428bfb2332cf8b0b",
- "size": 1047279,
- "notes": "New loot job, Drone Swarm: tap security drones before they reach your core and hold out until the timer ends. Win shards and keys. Circuit Route is gone."
+ "vc": 35,
+ "vn": "3.3.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.3.0.apk",
+ "sha256": "7332975199443806c8e7c145ce722d04630879389d484a938404cf656812f4fb",
+ "size": 1048863,
+ "notes": "Drone Swarm is gone. Two new loot jobs: Neon Stack (drop blocks to build a tower) and Lockpick (set each pin in the gold line). Both pay shards and keys, with a separate timer for each difficulty."
 }
