@@ -1,8 +1,8 @@
 {
- "vc": 39,
- "vn": "3.7.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.7.0.apk",
- "sha256": "e5d3c3d08f81b418571abb9af316852d75660e0f0c854b99a33b05c15ed01c65",
- "size": 1063031,
- "notes": "Polish and balance: the Bank pays more for longer locks and the cap is now \u00a2500k, Server Farm upgrades pay off faster, the hack job screens look better with the tap button at the bottom, and Plinko pegs glow. Fixed the Corpo Vault odds so Exotics only come from Black ICE and Prime caches."
+ "vc": 40,
+ "vn": "3.7.1",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.7.1.apk",
+ "sha256": "fa52b37ec6bcb92839e005c8e87914282d2abf534bec7df933fdc5ccf80c4479",
+ "size": 1061283,
+ "notes": "Neon Stack is gone. Lockpick is now the only loot job."
 }
