@@ -1,8 +1,8 @@
 {
- "vc": 40,
- "vn": "3.7.1",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.7.1.apk",
- "sha256": "fa52b37ec6bcb92839e005c8e87914282d2abf534bec7df933fdc5ccf80c4479",
- "size": 1061283,
- "notes": "Neon Stack is gone. Lockpick is now the only loot job."
+ "vc": 41,
+ "vn": "3.8.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.8.0.apk",
+ "sha256": "8021f0c40a3ace4579bb4b65d94f0326f06067600d357ed24e3dca26032391b1",
+ "size": 1062843,
+ "notes": "Performance update: same look with much less lag. The background glow is drawn more efficiently, live blur effects are gone, spinning rings use the GPU, skin grids stop animating while you scroll, and the app now detects lag and quietly tones down the background if your phone can't keep up."
 }
