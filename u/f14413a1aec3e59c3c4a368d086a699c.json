@@ -1,8 +1,8 @@
 {
- "vc": 35,
- "vn": "3.3.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.3.0.apk",
- "sha256": "7332975199443806c8e7c145ce722d04630879389d484a938404cf656812f4fb",
- "size": 1048863,
- "notes": "Drone Swarm is gone. Two new loot jobs: Neon Stack (drop blocks to build a tower) and Lockpick (set each pin in the gold line). Both pay shards and keys, with a separate timer for each difficulty."
+ "vc": 36,
+ "vn": "3.4.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.4.0.apk",
+ "sha256": "8ff4206bd9e2db36e1d1fb7fc984984dd93f90102a8db080dfe5039917448dcf",
+ "size": 1055259,
+ "notes": "Ultra graphics: holographic skins that shift as you tilt your phone, animated borders and glows on Epic and higher, glossy 3D chips, glowing balls and gems, a sharper and smoother background with bloom, and glassy buttons and menus. Turn on Battery saver in Settings to go back to the lighter look."
 }
