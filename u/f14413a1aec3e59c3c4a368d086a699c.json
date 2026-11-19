@@ -1,8 +1,8 @@
 {
- "vc": 33,
- "vn": "3.2.3",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.3.apk",
- "sha256": "eb3afc8b39ff6ee467022a61f2e9a8495221d435b3155a2aeaaa9bdbfcc23d48",
- "size": 1046587,
- "notes": "Hi-Lo: a tie (same rank) is now a push. You don't lose, you just call again. Correct calls pay slightly less to make up for it."
+ "vc": 34,
+ "vn": "3.2.4",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.2.4.apk",
+ "sha256": "e34b28d41f61018ae753059464a2ab8988760560f0fc1a49428bfb2332cf8b0b",
+ "size": 1047279,
+ "notes": "New loot job, Drone Swarm: tap security drones before they reach your core and hold out until the timer ends. Win shards and keys. Circuit Route is gone."
 }
