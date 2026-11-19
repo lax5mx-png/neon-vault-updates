@@ -1,8 +1,8 @@
 {
- "vc": 37,
- "vn": "3.5.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.5.0.apk",
- "sha256": "6a95a497ab75d97331586a6910936a3e7d91d2a3a7cadbf4fb54c3fd3d0a7d8a",
- "size": 1059719,
- "notes": "Skin redesign: number cards have real pip layouts, face cards are mirrored with new crests, card backs get a medallion that gets fancier with rarity, all chips are redrawn as detailed casino chips, and Exotic skins get a pearl holo look."
+ "vc": 38,
+ "vn": "3.6.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.6.0.apk",
+ "sha256": "11aa7fcea41b517facc8f59021856da947575d552ec37e624f79daf7501c48e6",
+ "size": 1062291,
+ "notes": "Whole-app redesign: a floating glass top bar, bottom-sheet menus, settings as cards with new switches, segmented controls in every game, glass control panels, a new start screen with a moving grid, smoother screen transitions, and better fit on small phones."
 }
