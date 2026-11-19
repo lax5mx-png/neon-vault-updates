@@ -1,8 +1,8 @@
 {
- "vc": 38,
- "vn": "3.6.0",
- "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.6.0.apk",
- "sha256": "11aa7fcea41b517facc8f59021856da947575d552ec37e624f79daf7501c48e6",
- "size": 1062291,
- "notes": "Whole-app redesign: a floating glass top bar, bottom-sheet menus, settings as cards with new switches, segmented controls in every game, glass control panels, a new start screen with a moving grid, smoother screen transitions, and better fit on small phones."
+ "vc": 39,
+ "vn": "3.7.0",
+ "apk": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/apk/NeonVault-3.7.0.apk",
+ "sha256": "e5d3c3d08f81b418571abb9af316852d75660e0f0c854b99a33b05c15ed01c65",
+ "size": 1063031,
+ "notes": "Polish and balance: the Bank pays more for longer locks and the cap is now \u00a2500k, Server Farm upgrades pay off faster, the hack job screens look better with the tap button at the bottom, and Plinko pegs glow. Fixed the Corpo Vault odds so Exotics only come from Black ICE and Prime caches."
 }
