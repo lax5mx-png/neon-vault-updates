@@ -149,7 +149,7 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
 @keyframes shk{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg) scale(1.03)}75%{transform:rotate(6deg) scale(1.03)}}
 .prize{font:700 26px "Chakra Petch",system-ui,sans-serif;margin:8px 0 2px}
 .rar{font:700 13px "Chakra Petch",system-ui,sans-serif;letter-spacing:.04em}
-.r-common{color:var(--mute)}.r-rare{color:var(--b)}.r-epic{color:#c79bff}.r-legendary{color:var(--trap)}
+.r-common{color:#c9c9d6}.r-rare{color:#4da3ff}.r-epic{color:#c77dff}.r-legendary{color:#ffc93d}
 #toasts{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top));transform:translateX(-50%);z-index:60;display:grid;gap:8px;width:min(92vw,400px);pointer-events:none}
 .toast{background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:10px 14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:up .25s ease}
 /* minigame DOM */
@@ -217,6 +217,37 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
 .caches{display:grid;gap:10px}
 .cache.vault{background:linear-gradient(120deg,color-mix(in srgb,var(--trap) 16%,var(--bg2)),var(--bg2) 70%);border-color:color-mix(in srgb,var(--trap) 40%,transparent)}.cache.vault svg{color:var(--trap)}
 .cache.vault .btn{background:var(--trap)}
+.hud .nm small{display:block;color:var(--b);font-size:12px;font-weight:600}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:rgba(255,255,255,.06);margin:10px 0 6px}
+.seg button{border:0;background:none;border-radius:9px;min-height:40px;font:600 14px Barlow,system-ui,sans-serif;color:var(--mute)}.seg button.on{background:var(--a);color:#14070b}
+.ihl{color:var(--ink)!important;background:rgba(255,255,255,.06);border-radius:10px;padding:8px 10px;font-size:14px}
+.hl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:6px 0 12px;justify-content:center}
+.hs{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.06);color:var(--mute)}.hs svg{width:18px;height:18px}
+.hs.done{background:var(--b);color:#071216}.hs.cur{outline:2px solid var(--a);color:var(--a)}
+.hlv{display:flex;gap:6px;margin-left:8px}.hlv i{width:10px;height:10px;transform:rotate(45deg);background:var(--a);box-shadow:0 0 8px var(--a)}.hlv i.x{background:rgba(255,255,255,.15);box-shadow:none}
+.ops{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(240px,82%);gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}.ops::-webkit-scrollbar{display:none}
+.op{scroll-snap-align:start;display:flex;flex-direction:column;gap:6px}.op small{color:var(--b);font-weight:600;font-size:12px}.op h3{margin:0;font-size:20px;line-height:1.1}.op p{margin:0;color:var(--mute);font-size:14px;line-height:1.35}.op .grow{flex:1}
+.op .acts2{display:flex;gap:8px;margin-top:4px}.op.locked{opacity:.65}.op .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--a) 18%,transparent);color:var(--a)}.op .ic svg{width:24px;height:24px}
+.op.chal{background:linear-gradient(135deg,color-mix(in srgb,var(--b) 18%,var(--bg2)),var(--bg2) 70%);border-color:color-mix(in srgb,var(--b) 40%,transparent)}
+.op.heist{background:linear-gradient(135deg,color-mix(in srgb,var(--trap) 13%,var(--bg2)),var(--bg2) 70%)}.op.heist .ic{background:color-mix(in srgb,var(--trap) 18%,transparent);color:var(--trap)}
+.bot{display:flex;align-items:center;gap:12px;margin-top:10px}.bot .t{flex:1}.bot .t b{display:block;font:600 16px "Chakra Petch",system-ui,sans-serif}.bot .t small{color:var(--mute);font-size:13px}
+.bot .bi{width:44px;height:44px;flex:none;color:var(--b)}.bot .xpb{margin:6px 0 0}.bot .xpb i{background:var(--b);transition:width 1s linear}
+.skins{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+.sk{border-radius:14px;border:1px solid var(--line);background:var(--bg2);padding:10px;display:flex;flex-direction:column;gap:6px}.sk.eq{border-color:var(--b)}
+.sk b{font:600 14px "Chakra Petch",system-ui,sans-serif;line-height:1.1}.sk .rar{font-size:12px}.sk .btn{min-height:34px;padding:0 8px;font-size:13px}
+.skp{height:30px;border-radius:8px;position:relative}.skp.p{height:12px;border-radius:6px;margin:9px 0}
+.skp.b::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 22%,rgba(0,0,0,.5) 22% 25%);border-radius:inherit}
+.skp.anim{animation:slide 2.4s linear infinite}@keyframes slide{to{background-position:200% 0}}.skp.flk{animation:flk 1.2s steps(2) infinite}@keyframes flk{50%{opacity:.4}}
+.skp.big{height:44px;width:72%;margin:0 auto}.skp.big.p{height:18px;border-radius:9px}
+.reveal{position:relative;height:150px;display:grid;place-items:center;overflow:hidden;margin:-8px -6px 4px;border-radius:16px}
+.rays{position:absolute;inset:-60%;background:repeating-conic-gradient(var(--rc) 0 7deg,transparent 7deg 20deg);opacity:.3;animation:spin 8s linear infinite;-webkit-mask:radial-gradient(circle,#000 10%,transparent 55%);mask:radial-gradient(circle,#000 10%,transparent 55%)}@keyframes spin{to{transform:rotate(1turn)}}
+.reveal svg{position:relative;width:96px;height:96px;color:var(--rc);filter:drop-shadow(0 0 18px var(--rc))}.reveal>.skp{z-index:1}
+.reveal.burst>*:last-child{animation:rpop .55s ease}@keyframes rpop{0%{transform:scale(.6);filter:brightness(3)}60%{transform:scale(1.08)}}
+.reel{font:700 22px "Chakra Petch",system-ui,sans-serif;min-height:32px;margin:8px 0 2px;transition:color .1s}
+.code{display:flex;gap:8px;margin:0 0 14px}.code input,.cmp input{flex:1;width:100%;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:600 16px "Chakra Petch",system-ui,sans-serif;padding:0 10px;min-height:44px}
+.cmp{display:grid;gap:10px;margin-bottom:12px}.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin:4px 0 14px}.vs div{background:rgba(255,255,255,.05);border-radius:12px;padding:10px}.vs b{display:block;font:700 28px "Chakra Petch",system-ui,sans-serif}.vs span{color:var(--mute);font-size:13px;overflow-wrap:anywhere}.vs .win{outline:2px solid var(--b)}
+.pres{display:flex;gap:12px;align-items:center}.pres .t{flex:1}.pres .t b{display:block;font:600 17px "Chakra Petch",system-ui,sans-serif}.pres .t small{color:var(--mute);font-size:13px;line-height:1.35;display:block}
+input[type=range]{width:140px;accent-color:var(--a);min-height:36px}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
 </style>
 </head>
@@ -232,6 +263,9 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
       <h2>Pick a job</h2>
       <p class="sub">Every hack pays out in credits. Better runs, bigger payouts.</p>
       <div id="daily"></div>
+      <div id="botnet"></div>
+      <div class="sec"><span>Ops</span><span>Swipe for more</span></div>
+      <div class="ops" id="ops"></div>
       <div class="sec"><span>Today's contracts</span><span id="ctnote"></span></div>
       <div class="ctr" id="contracts"></div>
       <div class="sec"><span>Jobs</span><span id="jcount"></span></div>
@@ -253,6 +287,12 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
       <div class="card list" id="ups"></div>
       <div class="sec"><span>Consumables</span></div>
       <div class="card list" id="cons"></div>
+      <div class="sec"><span>Botnet</span><span>Earns while you’re away</span></div>
+      <div class="card list" id="botups"></div>
+      <div class="sec"><span>Pointer skins</span><span id="skc"></span></div>
+      <div class="skins" id="skp"></div>
+      <div class="sec"><span>Block skins</span><span>Stack, bricks, worm</span></div>
+      <div class="skins" id="skb"></div>
       <div class="sec"><span>Themes</span></div>
       <div class="themes" id="themes"></div>
     </section>
@@ -261,6 +301,8 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
       <div class="card prof"><div class="ava" id="ava">G</div><div style="flex:1"><input id="handle" maxlength="16" aria-label="Handle" spellcheck="false"><small id="ptitle"></small></div></div>
       <div class="sec"><span>Level progress</span><span id="xpt"></span></div>
       <div class="card"><div class="xpb"><i id="pxp"></i></div><div class="xpl"><span id="pl1"></span><span id="pl2"></span></div></div>
+      <div class="sec"><span>Prestige</span></div>
+      <div id="prest"></div>
       <div class="sec"><span>Titles</span></div>
       <div class="chips" id="titles"></div>
       <div class="sec"><span>Stats</span></div>
@@ -272,6 +314,7 @@ h2{font-size:clamp(26px,7vw,34px);line-height:1.05;margin:18px 0 4px;text-wrap:b
       <div class="sec"><span>Settings</span></div>
       <div class="card list">
         <div class="row"><div class="t"><b>Sound</b><small>Blips and bloops</small></div><button class="btn sm ghost" id="snd"></button></div>
+        <div class="row"><div class="t"><b>Music</b><small>Synthwave, played live by the app</small></div><input type="range" id="mus" min="0" max="1" step="0.05" aria-label="Music volume"></div>
         <div class="row" id="updrow" hidden><div class="t"><b>Updates</b><small id="updinfo">Automatic</small></div><button class="btn sm ghost" id="updchk">Check now</button></div>
         <div class="row"><div class="t"><b>Wipe progress</b><small>Start over from zero</small></div><button class="btn sm ghost" id="wipe">Wipe</button></div>
       </div>
@@ -316,6 +359,7 @@ const THEMES=[
  {id:'void',name:'Void Pulse',a:'#8c7bff',b:'#3dffb0',bg:'#08071a',bg2:'#120f2b',crate:1},
  {id:'mainframe',name:'Mainframe',a:'#3dff7a',b:'#eaffef',bg:'#040c06',bg2:'#0b1a0f',crate:1},
  {id:'koi',name:'Neon Koi',a:'#ff8a3d',b:'#3d8bff',bg:'#0b0a12',bg2:'#17141f',crate:1},
+ {id:'zerocool',name:'Zero Cool',a:'#ffffff',b:'#ff2e88',bg:'#0a0a0a',bg2:'#161616',px:1},
 ];
 const LEVEL_TITLES={3:'Netrunner',6:'Zero Day',10:'Root Access',15:'Ghost in the Wire',20:'Architect'};
 const CRATE_TITLES=['Packet Witch','Glitch Saint','Null Pointer','Firewall Breaker','Daemon Whisperer','Static Prophet','Kernel Panic','Ping of Death','Root Kit','Cache Money','Sudo Make Me'];
@@ -350,14 +394,14 @@ const ICON={
 
 /* ---------- save ---------- */
 const KEY='breach_kit_v1';
-const DEF={cr:250,xp:0,lvl:1,unlocked:['signal','stack'],best:{},plays:{},up:{mult:0,shield:0,slow:0,time:0,xp:0},themes:['breach'],theme:'breach',titles:['Script Kiddie'],title:'Script Kiddie',handle:'ghost_'+ri(100,999),revives:1,earned:0,runs:0,daily:{last:'',streak:0},contracts:{day:'',list:[]},ach:{},mute:false,perfects:0,crates:0,vaults:0,hotRuns:0,filter:'all'};
+const DEF={cr:250,xp:0,lvl:1,unlocked:['signal','stack'],best:{},plays:{},up:{mult:0,shield:0,slow:0,time:0,xp:0},themes:['breach'],theme:'breach',titles:['Script Kiddie'],title:'Script Kiddie',handle:'ghost_'+ri(100,999),revives:1,earned:0,runs:0,daily:{last:'',streak:0},contracts:{day:'',list:[]},ach:{},mute:false,perfects:0,crates:0,vaults:0,hotRuns:0,filter:'all',skins:['p_def','b_def'],skin:{p:'p_def',b:'b_def'},bestH:{},heists:0,heistWins:0,bot:{lvl:0,cap:0,last:0},prestige:0,music:.5,chal:{day:'',best:0,claimed:false,streak:0,last:''}};
 const fresh=()=>JSON.parse(JSON.stringify(DEF));
 let S;
-function load(){try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(fresh(),JSON.parse(raw)):fresh()}catch(e){S=fresh()}S.up=Object.assign({},DEF.up,S.up)}
+function load(){try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(fresh(),JSON.parse(raw)):fresh()}catch(e){S=fresh()}S.up=Object.assign({},DEF.up,S.up);for(const k of ['skin','bot','chal'])S[k]=Object.assign({},DEF[k],S[k])}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 load();
 const T=()=>THEMES.find(t=>t.id===S.theme)||THEMES[0];
-const mult=()=>(1+.15*S.up.mult)*(1+starTotal()*.01),xpMult=()=>1+.2*S.up.xp,slowF=()=>1-.06*S.up.slow,extraT=()=>4*S.up.time;
+const mult=()=>(1+.15*S.up.mult)*(1+starTotal()*.01)*(1+.25*S.prestige),xpMult=()=>(1+.2*S.up.xp)*(1+.25*S.prestige),slowF=()=>1-.06*S.up.slow,extraT=()=>4*S.up.time;
 const xpNeed=l=>Math.round(150*Math.pow(l,1.3));
 const upCost=u=>Math.round(u.base*Math.pow(2.1,S.up[u.id]));
 
@@ -381,7 +425,7 @@ const G=[
     rr(x,pad,by,bw,bh,12);x.fillStyle='rgba(255,255,255,.045)';x.fill();x.strokeStyle='rgba(255,255,255,.16)';x.lineWidth=1;x.stroke();
     for(let i=0;i<=20;i++){x.fillStyle=i%5?'rgba(255,255,255,.14)':'rgba(255,255,255,.35)';x.fillRect(pad+bw*i/20-.5,by+bh+8,1,i%5?6:12)}
     const zx=pad+bw*(zone.c-zone.w/2),zw=bw*zone.w;x.fillStyle=hexA(th.a,.25);x.fillRect(zx,by,zw,bh);x.fillStyle=hexA(th.a,.6);x.fillRect(pad+bw*zone.c-zw*.12,by,zw*.24,bh);x.strokeStyle=th.a;x.lineWidth=2;x.strokeRect(zx+1,by+1,zw-2,bh-2);
-    const cx=pad+bw*pos;x.shadowColor=th.b;x.shadowBlur=20;x.fillStyle=th.b;x.fillRect(cx-2.5,by-16,5,bh+32);x.shadowBlur=0;
+    const cx=pad+bw*pos,pc=PC(now)||th.b;x.shadowColor=pc;x.shadowBlur=20;x.fillStyle=pc;x.fillRect(cx-2.5,by-16,5,bh+32);x.shadowBlur=0;
     rip=rip.filter(r=>(r.t+=dt)<450);for(const r of rip){const k=r.t/450;x.strokeStyle=r.ok?hexA(th.b,1-k):`rgba(255,40,70,${1-k})`;x.lineWidth=3;x.strokeRect(pad+bw*r.x-16-k*70,by-k*36,32+k*140,bh+k*72)}
     x.fillStyle='rgba(255,255,255,.55)';x.font='600 14px Barlow,system-ui,sans-serif';x.textAlign='center';x.fillText(`Zone ${Math.round(zone.w*100)}%   ·   Speed ${(speed/.00055).toFixed(1)}x`,W/2,by+bh+48)}
 }},
@@ -399,7 +443,7 @@ const G=[
     else{combo=0;const cutL=cur.x<top.x;deb.push({x:cutL?cur.x:r,y:yOf(cur.i)-cam,w:cur.w-ov,vy:0,vx:(cutL?-1:1)*.06,r:0,vr:(cutL?-1:1)*.003,i:cur.i});nx=l;nw=ov;api.add(1);sfx.hit()}
     blocks.push({x:nx,w:nw,i:blocks.length});layer++;spawn()});
   api.hint('Tap to drop the block');
-  const col=i=>mix(th.a,th.b,(Math.sin(i*.32)+1)/2);
+  const col=i=>BC(i,performance.now())||mix(th.a,th.b,(Math.sin(i*.32)+1)/2);
   function blk(x,X,Y,w,i,glow){x.fillStyle=col(i);if(glow){x.shadowColor=col(i);x.shadowBlur=22}x.fillRect(X,Y,w,bh-2);x.shadowBlur=0;x.fillStyle='rgba(255,255,255,.35)';x.fillRect(X,Y,w,2);x.fillStyle='rgba(0,0,0,.22)';x.fillRect(X+w*.7,Y+2,w*.3,bh-4)}
   function draw(now){const{x,W,H}=cv;x.clearRect(0,0,W,H);x.fillStyle='rgba(255,255,255,.05)';x.font=`700 ${Math.min(W*.5,220)}px "Chakra Petch",system-ui,sans-serif`;x.textAlign='center';x.textBaseline='middle';x.fillText(layer,W/2,H*.42);
     const gy=yOf(-1)+2;if(gy<H){x.fillStyle='rgba(255,255,255,.06)';x.fillRect(0,gy,W,H-gy);x.fillStyle=hexA(th.b,.5);x.fillRect(0,gy,W,2)}
@@ -426,7 +470,7 @@ const G=[
     x.lineWidth=R*.24;x.strokeStyle=hexA(th.b,.22);x.beginPath();x.arc(cx,cy,R,target-tol,target+tol);x.stroke();
     const tx=cx+Math.cos(target)*R,ty=cy+Math.sin(target)*R;x.shadowColor=th.b;x.shadowBlur=24;x.fillStyle=th.b;x.beginPath();x.arc(tx,ty,R*.09,0,TAU);x.fill();x.shadowBlur=0;
     fx=fx.filter(f=>(f.t+=dt)<400);for(const f of fx){const k=f.t/400;x.strokeStyle=hexA(th.b,1-k);x.lineWidth=3;x.beginPath();x.arc(cx+Math.cos(f.a)*R,cy+Math.sin(f.a)*R,R*(.1+k*.35),0,TAU);x.stroke()}
-    x.save();x.translate(cx,cy);x.rotate(ang);x.shadowColor=th.a;x.shadowBlur=16;x.fillStyle='#fff';rr(x,R*.74,-4,R*.4,8,4);x.fill();x.restore();x.shadowBlur=0;
+    const pc=PC(now);x.save();x.translate(cx,cy);x.rotate(ang);x.shadowColor=pc||th.a;x.shadowBlur=16;x.fillStyle=pc||'#fff';rr(x,R*.74,-4,R*.4,8,4);x.fill();x.restore();x.shadowBlur=0;
     x.textAlign='center';x.textBaseline='middle';x.fillStyle=th.a;x.font=`700 ${R*.58}px "Chakra Petch",system-ui,sans-serif`;x.fillText(pins,cx,cy+R*.02);x.font='600 14px Barlow,system-ui,sans-serif';x.fillStyle='rgba(255,255,255,.6)';x.fillText('pins left',cx,cy+R*.42);x.fillText('Lock '+lock,cx,cy-R*.4);x.textBaseline='alphabetic'}
   return{revive(){place()}};
 }},
@@ -512,7 +556,7 @@ const G=[
     for(const p of pipes){for(const[a,b]of[[0,p.gy-p.gh/2],[p.gy+p.gh/2,FL()]]){x.fillStyle=hexA(th.a,.22);x.fillRect(p.x,a,pw,b-a);x.strokeStyle=th.a;x.lineWidth=2;x.strokeRect(p.x+1,a+1,pw-2,b-a-2);x.fillStyle=hexA(th.a,.35);for(let yy=a+8;yy<b-4;yy+=12)x.fillRect(p.x+6,yy,pw-12,2)}}
     x.fillStyle='rgba(255,255,255,.05)';x.fillRect(0,FL(),W,H-FL());x.fillStyle=hexA(th.b,.5);x.fillRect(0,FL(),W,2);
     trail.forEach((ty,i)=>{x.fillStyle=hexA(th.b,i/trail.length*.25);x.beginPath();x.arc(x0-(trail.length-i)*4,ty,r*(.4+i/trail.length*.5),0,TAU);x.fill()});
-    if(grace>0&&Math.floor(now/90)%2)x.globalAlpha=.4;x.shadowColor=th.b;x.shadowBlur=20;x.fillStyle=th.b;x.beginPath();x.arc(x0,y,r,0,TAU);x.fill();x.shadowBlur=0;x.globalAlpha=1;
+    if(grace>0&&Math.floor(now/90)%2)x.globalAlpha=.4;{const pc=PC(now)||th.b;x.shadowColor=pc;x.shadowBlur=20;x.fillStyle=pc}x.beginPath();x.arc(x0,y,r,0,TAU);x.fill();x.shadowBlur=0;x.globalAlpha=1;
     x.textAlign='center';x.fillStyle='rgba(255,255,255,.07)';x.font=`700 ${Math.min(W*.4,180)}px "Chakra Petch",system-ui,sans-serif`;x.fillText(passed,W/2,H*.5);
     if(ready){x.fillStyle='rgba(255,255,255,.75)';x.font='600 17px Barlow,system-ui,sans-serif';x.fillText('Tap to hop',W/2,H*.62)}}
   return{revive(){pipes=pipes.filter(p=>p.x>X()+cv.W*.4);y=cv.H*.45;vy=0;ready=true;grace=1300}};
@@ -531,7 +575,7 @@ const G=[
   function draw(now,lw,sz,py,rh){const{x,W,H}=cv;x.clearRect(0,0,W,H);x.strokeStyle='rgba(255,255,255,.1)';x.lineWidth=2;x.setLineDash([18,18]);x.lineDashOffset=-(t*.3%36);for(let i=1;i<L;i++){x.beginPath();x.moveTo(i*lw,0);x.lineTo(i*lw,H);x.stroke()}x.setLineDash([]);
     for(const r of rows){r.b.forEach((v,i)=>{if(!v)return;const X=i*lw+8,w=lw-16;x.fillStyle=hexA(th.a,.3);x.fillRect(X,r.y,w,rh);x.strokeStyle=th.a;x.lineWidth=2;x.strokeRect(X+1,r.y+1,w-2,rh-2);x.fillStyle=hexA(th.a,.55);for(let s=X+6;s<X+w-6;s+=14)x.fillRect(s,r.y+4,6,rh-8)});
       if(r.c>=0){const cx=r.c*lw+lw/2,cy=r.y+rh/2,s=sz*.28;x.shadowColor=th.b;x.shadowBlur=16;x.fillStyle=th.b;x.beginPath();x.moveTo(cx,cy-s);x.lineTo(cx+s,cy);x.lineTo(cx,cy+s);x.lineTo(cx-s,cy);x.fill();x.shadowBlur=0}}
-    const cx=lx*lw+lw/2;if(grace>0&&Math.floor(now/90)%2)x.globalAlpha=.4;x.shadowColor=th.b;x.shadowBlur=22;x.fillStyle=th.b;x.beginPath();x.moveTo(cx,py-sz/2);x.lineTo(cx+sz/2,py+sz/2);x.lineTo(cx,py+sz*.25);x.lineTo(cx-sz/2,py+sz/2);x.closePath();x.fill();x.shadowBlur=0;x.globalAlpha=1}
+    const cx=lx*lw+lw/2;if(grace>0&&Math.floor(now/90)%2)x.globalAlpha=.4;{const pc=PC(now)||th.b;x.shadowColor=pc;x.shadowBlur=22;x.fillStyle=pc}x.beginPath();x.moveTo(cx,py-sz/2);x.lineTo(cx+sz/2,py+sz/2);x.lineTo(cx,py+sz*.25);x.lineTo(cx-sz/2,py+sz/2);x.closePath();x.fill();x.shadowBlur=0;x.globalAlpha=1}
   api.hint('Tap left or right side to switch lanes');
   return{revive(){rows=rows.filter(r=>r.y<cv.H*.35);grace=1200}};
 }},
@@ -556,7 +600,7 @@ const G=[
     x.fillStyle='rgba(255,255,255,.05)';for(let i=0;i<C;i++)for(let j=0;j<R;j++)x.fillRect(ox+i*cs+cs/2-1,oy+j*cs+cs/2-1,2,2);
     const pf=.5+Math.sin(now*.008)*.12;x.shadowColor=th.a;x.shadowBlur=14;x.fillStyle=th.a;x.fillRect(ox+food[0]*cs+cs*(1-pf)/2,oy+food[1]*cs+cs*(1-pf)/2,cs*pf,cs*pf);
     if(gold){const gx=ox+(gold.p[0]+.5)*cs,gy=oy+(gold.p[1]+.5)*cs,s=cs*.4;x.shadowColor='#ffc93d';x.fillStyle='#ffc93d';x.beginPath();x.moveTo(gx,gy-s);x.lineTo(gx+s,gy);x.lineTo(gx,gy+s);x.lineTo(gx-s,gy);x.fill();x.shadowBlur=0;x.strokeStyle='rgba(255,201,61,.6)';x.lineWidth=2;x.beginPath();x.arc(gx,gy,cs*.65,-Math.PI/2,-Math.PI/2+TAU*gold.t/5000);x.stroke()}
-    x.shadowBlur=0;sn.forEach((s,i)=>{const k=i/Math.max(1,sn.length-1);x.fillStyle=mix(th.b,th.a,k*.8);if(!i){x.shadowColor=th.b;x.shadowBlur=14}rr(x,ox+s[0]*cs+1.5,oy+s[1]*cs+1.5,cs-3,cs-3,cs*.28);x.fill();x.shadowBlur=0});
+    x.shadowBlur=0;sn.forEach((s,i)=>{const k=i/Math.max(1,sn.length-1);x.fillStyle=BC(i,now)||mix(th.b,th.a,k*.8);if(!i){x.shadowColor=th.b;x.shadowBlur=14}rr(x,ox+s[0]*cs+1.5,oy+s[1]*cs+1.5,cs-3,cs-3,cs*.28);x.fill();x.shadowBlur=0});
     const h=sn[0];x.fillStyle='#0b0b0e';const ex=ox+(h[0]+.5)*cs,ey=oy+(h[1]+.5)*cs,px=-dir[1]*cs*.18,py=dir[0]*cs*.18;for(const sgn of[-1,1]){x.beginPath();x.arc(ex+px*sgn+dir[0]*cs*.12,ey+py*sgn+dir[1]*cs*.12,cs*.09,0,TAU);x.fill()}}
   api.hint('Swipe or tap to steer');
   return{revive(){dead=false;reset();gold=null;food=free();acc=0}};
@@ -584,9 +628,9 @@ const G=[
       bricks=bricks.filter(b=>!b.dead);if(!bricks.length){api.add(20,'WALL CLEARED +20');sfx.perfect();build();park()}}
     for(const p of parts){p.t+=dt;p.vy+=dt*.0012;p.x+=p.vx*dt;p.y+=p.vy*dt}parts=parts.filter(p=>p.t<700);draw()});
   function draw(){const{x,W,H}=cv,r=br();x.clearRect(0,0,W,H);
-    for(const b of bricks){x.fillStyle=mix(th.a,th.b,b.r/Math.max(1,rows-1));x.globalAlpha=b.hp>1?1:.85;rr(x,b.x,b.y,b.w,b.h,4);x.fill();x.globalAlpha=1;x.fillStyle='rgba(255,255,255,.3)';x.fillRect(b.x+3,b.y+2,b.w-6,2);if(b.hp>1){x.strokeStyle='#fff';x.lineWidth=2;rr(x,b.x+3,b.y+3,b.w-6,b.h-6,3);x.stroke()}}
+    const now=performance.now();for(const b of bricks){x.fillStyle=BC(b.r,now)||mix(th.a,th.b,b.r/Math.max(1,rows-1));x.globalAlpha=b.hp>1?1:.85;rr(x,b.x,b.y,b.w,b.h,4);x.fill();x.globalAlpha=1;x.fillStyle='rgba(255,255,255,.3)';x.fillRect(b.x+3,b.y+2,b.w-6,2);if(b.hp>1){x.strokeStyle='#fff';x.lineWidth=2;rr(x,b.x+3,b.y+3,b.w-6,b.h-6,3);x.stroke()}}
     for(const p of parts){x.globalAlpha=1-p.t/700;x.fillStyle=p.c;x.fillRect(p.x,p.y,4,4)}x.globalAlpha=1;
-    x.shadowColor=th.b;x.shadowBlur=18;x.fillStyle=th.b;rr(x,px-pw()/2,PY(),pw(),12,6);x.fill();x.shadowColor='#fff';x.fillStyle='#fff';x.beginPath();x.arc(ball.x,ball.y,r,0,TAU);x.fill();x.shadowBlur=0;
+    {const pc=PC(now)||th.b;x.shadowColor=pc;x.shadowBlur=18;x.fillStyle=pc}rr(x,px-pw()/2,PY(),pw(),12,6);x.fill();x.shadowColor='#fff';x.fillStyle='#fff';x.beginPath();x.arc(ball.x,ball.y,r,0,TAU);x.fill();x.shadowBlur=0;
     if(stuck){x.fillStyle='rgba(255,255,255,.7)';x.font='600 16px Barlow,system-ui,sans-serif';x.textAlign='center';x.fillText('Drag to aim · lift to launch',W/2,PY()-40)}
     x.fillStyle='rgba(255,255,255,.4)';x.font='600 13px Barlow,system-ui,sans-serif';x.textAlign='right';x.fillText('Wall '+wave,W-10,H-10)}
   return{revive(){park()}};
@@ -689,7 +733,7 @@ const starRow=id=>`<span class="stars" title="Stars at ${starT(id).join(' / ')}"
 /* ---------- run engine ---------- */
 let RUN=null;
 const API={
-  get el(){return RUN.el},get theme(){return T()},get slow(){return slowF()},
+  get el(){return RUN.el},get theme(){return T()},get slow(){return slowF()*(RUN&&RUN.hard?1.35:1)},
   get alive(){return !!RUN&&RUN.started&&!RUN.over&&!RUN.paused},
   loop(f){RUN.loops.push(f)},
   listen(t,e,f,o){t.addEventListener(e,f,o);RUN.ls.push([t,e,f])},
@@ -697,7 +741,7 @@ const API={
   onKey(f){RUN.keyFn=f},
   onTap(f){RUN.tapFn=f;API.listen(RUN.el,'pointerdown',e=>{if(e.button>0)return;e.preventDefault();if(API.alive)f(e)})},
   canvas(){const el=RUN.el,c=document.createElement('canvas');el.appendChild(c);const x=c.getContext('2d'),o={c,x,W:1,H:1};const fit=()=>{const r=el.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);o.W=Math.max(1,r.width);o.H=Math.max(1,r.height);c.width=o.W*d;c.height=o.H*d;x.setTransform(d,0,0,d,0,0)};fit();const ro=new ResizeObserver(fit);ro.observe(el);RUN.ros.push(ro);return o},
-  add(n,label){RUN.score+=n;$('#hsc').textContent=fmt(RUN.score);if(label)API.pop(label)},
+  add(n,label){RUN.score+=n;$('#hsc').textContent=fmt(RUN.score);if(label)API.pop(label);if(RUN.heist&&!RUN.cleared&&RUN.score>=RUN.target){RUN.cleared=true;API.pop('TARGET HIT');sfx.perfect();API.after(550,()=>finish('Stage cleared'))}},
   perfect(){RUN.perf++;S.perfects++},
   pop(t,cls=''){const p=document.createElement('div');p.className='pop '+cls;p.textContent=t;$('#stage').appendChild(p);setTimeout(()=>p.remove(),900)},
   hint(t){$('#hint').textContent=t},
@@ -706,11 +750,23 @@ const API={
   penalty(s,label){if(!API.alive)return;RUN.time=Math.max(.01,RUN.time-s);sfx.bad();API.hurt();API.pop(label||('−'+s+'s'),'bad')},
   bonusTime(s){RUN.time+=s;RUN.tMax=Math.max(RUN.tMax,RUN.time)},
 };
-function startRun(id){const g=G.find(x=>x.id===id);$('#stage').innerHTML='';const el=document.createElement('div');el.className='stage-in';$('#stage').appendChild(el);
-  const lives=g.mode==='lives'?3+S.up.shield:1;RUN={g,el,score:0,lives,maxLives:lives,time:g.mode==='timer'?g.time+extraT():0,tMax:0,loops:[],timers:[],ls:[],ros:[],over:false,paused:false,started:false,revived:false,perf:0,inst:null,tapFn:null,keyFn:null,sec:99};RUN.tMax=RUN.time;
-  $('#play').hidden=false;document.body.style.overflow='hidden';$('#hnm').textContent=g.name;$('#hsc').textContent='0';$('#hint').textContent='';hudSub();
-  const modeTxt=g.mode==='lives'?`${lives} lives`:g.mode==='timer'?`${RUN.time} seconds`:'One mistake ends it';
-  const intro=$('#intro');intro.hidden=false;intro.innerHTML=`<div class="card"><div class="ic">${ICON[g.id]}</div><h3>${g.name}</h3><p>${g.how}</p><div class="tags"><span class="chip">${modeTxt}</span><span class="chip">₵${g.rate}${mult()>1?' × '+mult().toFixed(2):''} per point</span><span class="chip">Best ${fmt(S.best[g.id]||0)}</span>${S.contracts.hot===g.id?'<span class="chip on">2× payout today</span>':''}</div><p style="font-size:13px;margin:0 0 14px">Stars at ${starT(g.id).join(' · ')} points</p><button class="btn wide" id="go">Start job</button></div>`;
+const fmt2=n=>n>=10?fmt(n):(Math.round(n*10)/10).toString();
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function modeLine(){const R=RUN;return R.heist?`Heist stage ${R.heist.i+1}/${R.heist.stages.length} · clear at ${fmt(R.target)}`:R.chal?`Daily challenge · beat ${fmt(chalToday().target)}`:R.hard?'Overclocked · 2× pay':''}
+function startRun(id,opts={}){const g=G.find(x=>x.id===id);$('#stage').innerHTML='';const el=document.createElement('div');el.className='stage-in';$('#stage').appendChild(el);
+  const hard=!!(opts.hard||opts.chal),H=opts.heist||null;
+  const lives=g.mode==='lives'?Math.max(1,3+S.up.shield-(hard?1:0)):1,time=g.mode==='timer'?Math.round((g.time+extraT())*(hard?.75:1)):0;
+  RUN={g,el,score:0,lives,maxLives:lives,time,tMax:time,loops:[],timers:[],ls:[],ros:[],over:false,paused:false,started:false,revived:false,perf:0,inst:null,tapFn:null,keyFn:null,sec:99,hard,heist:H,chal:!!opts.chal,target:H?H.target:0,cleared:false};
+  $('#play').hidden=false;document.body.style.overflow='hidden';const ml=modeLine();$('#hnm').innerHTML=g.name+(ml?`<small>${ml}</small>`:'');$('#hsc').textContent='0';$('#hint').textContent='';hudSub();
+  const modeTxt=g.mode==='lives'?`${lives} ${lives>1?'lives':'life'}`:g.mode==='timer'?`${time} seconds`:'One mistake ends it';
+  let top='',btn='Start job';
+  if(H){top=`<p class="ihl">Stage ${H.i+1} of ${H.stages.length} · reach <b>${fmt(H.target)}</b> to clear it · pot ₵${fmt(H.pot)}</p><div class="hl">${heistPips(H)}</div>`;btn='Start stage'}
+  else if(opts.chal){const C=chalToday();top=`<p class="ihl">Daily challenge · Overclocked · beat <b>${fmt(C.target)}</b> for ₵${fmt(chalReward())}</p>`;btn='Start challenge'}
+  else if(stars(id)===3){top=`<div class="seg"><button class="${hard?'':'on'}" data-m="0">Normal</button><button class="${hard?'on':''}" data-m="1">Overclocked · 2×</button></div>${hard?'<p style="font-size:13px;margin:0 0 6px">35% faster, 25% less time, one less life. Double pay.</p>':''}`;if(hard)btn='Start overclocked'}
+  else top='<p style="font-size:13px;margin:0 0 6px">3 stars unlocks Overclocked mode: faster, double pay.</p>';
+  const best=hard&&!opts.chal?S.bestH[g.id]||0:S.best[g.id]||0;
+  const intro=$('#intro');intro.hidden=false;intro.innerHTML=`<div class="card"><div class="ic">${ICON[g.id]}</div><h3>${g.name}</h3><p>${g.how}</p>${top}<div class="tags"><span class="chip">${modeTxt}</span><span class="chip">₵${fmt2(g.rate*mult()*(hard?2:1))} per point</span><span class="chip">${hard&&!opts.chal?'OC best':'Best'} ${fmt(best)}</span>${S.contracts.hot===g.id&&!H?'<span class="chip on">2× payout today</span>':''}</div><p style="font-size:13px;margin:0 0 14px">Stars at ${starT(g.id).join(' · ')} points</p><button class="btn wide" id="go">${btn}</button></div>`;
+  intro.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{sfx.tap();startRun(id,{hard:b.dataset.m==='1'})});
   $('#go').onclick=()=>{sfx.tap();intro.hidden=true;RUN.started=true;RUN.inst=g.start(API)||null;RUN.last=performance.now();RUN.raf=requestAnimationFrame(frame)}}
 function frame(now){const R=RUN;if(!R||R.over)return;const dt=Math.min(50,now-R.last);R.last=now;
   if(!R.paused){if(R.g.mode==='timer'){R.time-=dt/1000;const s=Math.ceil(R.time);if(s<=5&&s<R.sec&&s>0){sfx.tick()}R.sec=s;if(R.time<=0){R.time=0;hudTime();finish('Time up');return}}
@@ -718,27 +774,34 @@ function frame(now){const R=RUN;if(!R||R.over)return;const dt=Math.min(50,now-R.
   if(!R.over)R.raf=requestAnimationFrame(frame)}
 function hudSub(){const h=$('#hsub');if(!RUN)return;if(RUN.g.mode==='timer'){h.innerHTML='<div class="tbar"><i id="tf"></i></div><span id="tnum"></span>';hudTime()}else if(RUN.g.mode==='lives'){h.innerHTML=Array.from({length:RUN.maxLives},(_,i)=>`<span class="pip ${i<RUN.lives?'on':''}"></span>`).join('')}else h.innerHTML=`<span class="oneshot">${RUN.revived?'Revived · last chance':'One shot · don’t miss'}</span>`}
 function hudTime(){if(!RUN||RUN.g.mode!=='timer')return;const f=$('#tf'),n=$('#tnum');if(!f)return;f.style.width=clamp(RUN.time/RUN.tMax*100,0,100)+'%';f.classList.toggle('low',RUN.time<6);n.textContent=Math.ceil(RUN.time)+'s'}
-function gameOver(msg){if(!RUN||RUN.over)return;if(RUN.g.mode!=='timer'&&!RUN.revived&&S.revives>0){RUN.paused=true;
+function gameOver(msg){if(!RUN||RUN.over)return;if(RUN.g.mode!=='timer'&&!RUN.revived&&S.revives>0&&!RUN.heist){RUN.paused=true;
   modal(`<h3>${msg}</h3><p>Burn a revive chip to keep this run going? You have ${S.revives}.</p><div class="big" style="font-size:44px">${fmt(RUN.score)}</div><div class="acts"><button class="btn alt" data-act="rev">Revive</button><button class="btn ghost" data-act="cash">Cash out</button></div>`,{
    rev(){S.revives--;save();RUN.revived=true;RUN.lives=1;hudSub();closeModal();RUN.paused=false;RUN.last=performance.now();RUN.inst&&RUN.inst.revive&&RUN.inst.revive();API.pop('REVIVED')},
    cash(){closeModal();finish(msg)}});return}finish(msg)}
-function finish(msg){const R=RUN;if(!R||R.over)return;R.over=true;cancelAnimationFrame(R.raf);R.timers.forEach(clearTimeout);R.ros.forEach(o=>o.disconnect());R.ls.forEach(([t,e,f])=>t.removeEventListener(e,f));sfx.over();
-  const g=R.g,sc=R.score,prev=S.best[g.id]||0,nb=sc>prev,st0=stars(g.id);if(nb)S.best[g.id]=sc;const st1=stars(g.id);
-  const base=Math.round(sc*g.rate*mult()),bb=nb&&prev>0?Math.round(base*.25):0;ensureContracts();const done=[],hot=S.contracts.hot===g.id&&sc>0,hb=hot?base:0;if(hot)S.hotRuns++;
-  S.contracts.list.forEach(c=>{if(!c.done&&c.g===g.id&&sc>=c.target){c.done=true;done.push(c)}});const cb=done.reduce((s,c)=>s+c.reward,0),tot=base+bb+cb+hb;
-  S.cr+=tot;S.earned+=tot;S.runs++;S.plays[g.id]=(S.plays[g.id]||0)+1;const lv0=S.lvl,ups=addXP(Math.round((base/3+15)*xpMult()));save();
-  const need=xpNeed(S.lvl);
-  modal(`<h3>${msg}</h3><p>${g.name}</p>${nb&&sc>0?'<span class="badge">New best</span>':''}<div style="display:flex;justify-content:center;margin-top:8px">${starRow(g.id)}</div>${st1>st0?`<p style="color:var(--trap);font-weight:600;margin:6px 0 0">${st1-st0>1?st1-st0+' new stars':'New star'}! Every star adds 1% to all payouts.</p>`:''}<div class="big">${fmt(sc)}</div>
-   <div class="earn"><div><span>Job payout</span><b>₵${fmt(base)}</b></div>${bb?`<div><span>Personal best bonus</span><b>₵${fmt(bb)}</b></div>`:''}${hb?`<div><span>Hot job 2×</span><b>₵${fmt(hb)}</b></div>`:''}${done.map(c=>`<div><span>Contract complete</span><b>₵${fmt(c.reward)}</b></div>`).join('')}<div class="tot"><span>Earned</span><b id="cnt">₵0</b></div></div>
+function finish(msg){const R=RUN;if(!R||R.over)return;R.over=true;cancelAnimationFrame(R.raf);R.timers.forEach(clearTimeout);R.ros.forEach(o=>o.disconnect());R.ls.forEach(([t,e,f])=>t.removeEventListener(e,f));
+  if(R.heist){heistStageEnd(R,msg);return}
+  sfx.over();
+  const g=R.g,sc=R.score,st0=stars(g.id),bk=R.hard&&!R.chal?'bestH':'best',prev=S[bk][g.id]||0,nb=sc>prev;if(nb)S[bk][g.id]=sc;if(R.chal&&sc>(S.best[g.id]||0))S.best[g.id]=sc;const st1=stars(g.id);
+  const base=Math.round(sc*g.rate*mult()),hd=R.hard?base:0,bb=nb&&prev>0?Math.round(base*.25):0;ensureContracts();const done=[],hot=S.contracts.hot===g.id&&sc>0,hb=hot?base:0;if(hot)S.hotRuns++;
+  S.contracts.list.forEach(c=>{if(!c.done&&c.g===g.id&&sc>=c.target){c.done=true;done.push(c)}});const cb=done.reduce((s,c)=>s+c.reward,0);
+  let chB=0,code='';if(R.chal){const C=chalToday();if(sc>S.chal.best)S.chal.best=sc;if(sc>=C.target&&!S.chal.claimed){S.chal.claimed=true;S.chal.streak=S.chal.last===yday()?S.chal.streak+1:1;S.chal.last=today();chB=chalReward(S.chal.streak)}code=chalCode()}
+  const tot=base+hd+bb+cb+hb+chB;
+  S.cr+=tot;S.earned+=tot;S.runs++;S.plays[g.id]=(S.plays[g.id]||0)+1;const ups=addXP(Math.round((base/3+15)*xpMult()));save();
+  const need=xpNeed(S.lvl),row=(l,v)=>`<div><span>${l}</span><b>₵${fmt(v)}</b></div>`;
+  modal(`<h3>${msg}</h3><p>${g.name}${R.chal?' · daily challenge':R.hard?' · Overclocked':''}</p>${nb&&sc>0?`<span class="badge">New ${bk==='bestH'?'OC ':''}best</span>`:''}<div style="display:flex;justify-content:center;margin-top:8px">${starRow(g.id)}</div>${st1>st0?`<p style="color:var(--trap);font-weight:600;margin:6px 0 0">${st1-st0>1?st1-st0+' new stars':'New star'}! Every star adds 1% to all payouts.${st1===3?' Overclocked mode unlocked.':''}</p>`:''}<div class="big">${fmt(sc)}</div>
+   <div class="earn">${row('Job payout',base)}${hd?row('Overclocked 2×',hd):''}${bb?row('Personal best bonus',bb):''}${hb?row('Hot job 2×',hb):''}${done.map(c=>row('Contract complete',c.reward)).join('')}${chB?row('Challenge beaten · streak '+S.chal.streak,chB):''}<div class="tot"><span>Earned</span><b id="cnt">₵0</b></div></div>
+   ${R.chal?`<div class="code"><input readonly value="${esc(code)}" id="ccode" aria-label="Your score code"><button class="btn sm alt" data-act="copy">Copy</button></div><p style="font-size:13px;margin:-6px 0 12px">Send this code to a friend. They paste it under Daily challenge → Compare.</p>`:''}
    ${ups.length?`<p style="color:var(--b);font-weight:600;margin:0 0 6px">Level up! Now level ${S.lvl} · +₵${fmt(ups.reduce((s,l)=>s+100*l,0))}</p>`:''}
    <div class="xpl"><span>Level ${S.lvl}</span><span>${fmt(S.xp)} / ${fmt(need)} XP</span></div><div class="xpb"><i id="rx" style="width:0"></i></div>
    <div class="acts" style="margin-top:16px"><button class="btn" data-act="again">Run it back</button><button class="btn ghost" data-act="home">Job board</button></div>`,{
-   again(){closeModal();startRun(g.id)},home(){closeModal();exitPlay()}});
+   again(){closeModal();startRun(g.id,{hard:R.hard&&!R.chal,chal:R.chal})},home(){closeModal();exitPlay()},copy(){copyText($('#ccode'))}});
   requestAnimationFrame(()=>{const x=$('#rx');if(x)x.style.width=(S.xp/need*100)+'%'});
   const t0=performance.now(),el=$('#cnt');const step=t=>{const k=Math.min(1,(t-t0)/700);if(el)el.textContent='₵'+fmt(tot*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);else if(tot>0)sfx.coin()};requestAnimationFrame(step);
   renderTop()}
+function copyText(inp){const v=inp.value;const ok=()=>toast('Copied');const fb=()=>{inp.focus();inp.select();try{document.execCommand('copy');ok()}catch(e){toast('Press and hold the code to copy it')}};try{navigator.clipboard.writeText(v).then(ok,fb)}catch(e){fb()}}
 function exitPlay(){$('#play').hidden=true;document.body.style.overflow='';RUN=null;$('#stage').innerHTML='';renderAll()}
-$('#quit').onclick=()=>{if(!RUN)return;sfx.tap();if(!RUN.started||RUN.over){exitPlay();return}RUN.paused=true;
+$('#quit').onclick=()=>{if(!RUN)return;sfx.tap();if(!RUN.started||RUN.over){if(RUN.heist&&!RUN.started){RUN.paused=true;modal(`<h3>Leave the heist?</h3><p>You’ll walk away with the ₵${fmt(RUN.heist.pot)} already in the pot.</p><div class="acts"><button class="btn" data-act="stay">Stay in</button><button class="btn ghost" data-act="leave">Walk away</button></div>`,{stay(){closeModal();RUN.paused=false},leave(){const H=RUN.heist;S.cr+=H.pot;S.earned+=H.pot;HZ=null;save();closeModal();exitPlay()}});return}exitPlay();return}RUN.paused=true;
+  if(RUN.heist){modal(`<h3>Forfeit this stage?</h3><p>It costs one heist life. You can retry or bail after.</p><div class="acts"><button class="btn" data-act="resume">Keep hacking</button><button class="btn ghost" data-act="out">Forfeit</button></div>`,{resume(){closeModal();RUN.paused=false;RUN.last=performance.now()},out(){closeModal();finish('Stage forfeited')}});return}
   modal(`<h3>Abort job?</h3><p>You'll still get paid for the ${fmt(RUN.score)} points you've scored.</p><div class="acts"><button class="btn" data-act="resume">Keep hacking</button><button class="btn ghost" data-act="out">Cash out</button></div>`,{resume(){closeModal();RUN.paused=false;RUN.last=performance.now()},out(){closeModal();finish('Job aborted')}})};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&RUN&&RUN.started&&!RUN.over&&!RUN.paused)$('#quit').click()});
 window.addEventListener('keydown',e=>{if(!RUN||!API.alive||!$('#modal').hidden)return;if((e.code==='Space'||e.code==='Enter')&&RUN.tapFn){e.preventDefault();RUN.tapFn(e)}else if(RUN.keyFn&&/^(Arrow|Space)/.test(e.code)){e.preventDefault();RUN.keyFn(e.code)}});
@@ -747,11 +810,125 @@ window.addEventListener('keydown',e=>{if(!RUN||!API.alive||!$('#modal').hidden)r
 function addXP(x){S.xp+=x;const ups=[];while(S.xp>=xpNeed(S.lvl)){S.xp-=xpNeed(S.lvl);S.lvl++;S.cr+=100*S.lvl;ups.push(S.lvl);const t=LEVEL_TITLES[S.lvl];if(t&&!S.titles.includes(t)){S.titles.push(t);later(1200,()=>toast('New title unlocked: '+t))}}return ups}
 function spend(n){if(S.cr<n){toast('Not enough credits. Run a job.');sfx.bad();return false}S.cr-=n;sfx.buy();return true}
 function ensureContracts(){if(S.contracts.day===today()&&S.contracts.hot)return;const pool=S.unlocked.filter(g=>CT[g]),list=[],used=new Set();for(let i=0;i<3;i++){let g=pick(pool),n=0;while(used.has(g)&&n++<20)g=pick(pool);used.add(g);list.push({g,target:Math.max(3,Math.round(CT[g]*[.75,1,1.35][i])),reward:[200,350,600][i],done:false})}S.contracts={day:today(),list,hot:pick(S.unlocked)};save()}
-function rollCrate(v){const r=Math.random()*(v?.62:1),lt=THEMES.filter(t=>!S.themes.includes(t.id)&&t.crate),lti=CRATE_TITLES.filter(t=>!S.titles.includes(t));
-  if(r<(v?.2:.1)&&lt.length){const t=pick(lt);S.themes.push(t.id);return{rar:'legendary',label:t.name+' theme',sub:'Cache-only theme. Equip it in the Market.'}}
-  if(r<(v?.38:.3)&&lti.length){const t=pick(lti);S.titles.push(t);return{rar:'epic',label:'“'+t+'”',sub:'Rare title. Wear it on your rig.'}}
-  if(r<.5){const n=v?ri(2,4):ri(1,2);S.revives+=n;return{rar:'rare',label:n+' revive chip'+(n>1?'s':''),sub:'Each one saves a run once.'}}
-  const c=v?pick([1500,2000,2600,3500,5000]):pick([250,300,400,500,650,900,1200,2400]);S.cr+=c;return{rar:c>=900?'rare':'common',label:'₵'+fmt(c),sub:'Straight into your wallet.'}}
+function rollCrate(v){const r=Math.random(),lt=THEMES.filter(t=>!S.themes.includes(t.id)&&t.crate),lti=CRATE_TITLES.filter(t=>!S.titles.includes(t));
+  const pickSkin=()=>{const x=Math.random(),rar=v?(x<.12?'legendary':x<.45?'epic':'rare'):(x<.03?'legendary':x<.13?'epic':x<.4?'rare':'common');for(let k=RAR.indexOf(rar);k>=0;k--){const c=SKINS.filter(s=>!s.px&&s.k!=='def'&&s.rar===RAR[k]&&!S.skins.includes(s.id));if(c.length)return pick(c)}return null};
+  if(r<(v?.14:.07)&&lt.length){const t=pick(lt);S.themes.push(t.id);return{rar:'legendary',label:t.name+' theme',sub:'Cache-only theme. Equip it in the Market.',theme:t}}
+  if(r<(v?.52:.34)){const k=pickSkin();if(k){S.skins.push(k.id);return{rar:k.rar,label:k.name,sub:(k.slot==='p'?'Pointer':'Block')+' skin · equip it in the Market',skin:k}}}
+  if(r<(v?.62:.46)&&lti.length){const t=pick(lti);S.titles.push(t);return{rar:'epic',label:'“'+t+'”',sub:'Rare title. Wear it on your rig.'}}
+  if(r<(v?.74:.6)){const n=v?ri(2,4):ri(1,2);S.revives+=n;return{rar:'rare',label:n+' revive chip'+(n>1?'s':''),sub:'Each one saves a run once.'}}
+  const c=v?pick([1500,2000,2600,3500,5000]):pick([250,300,400,500,650,900,1200,2400]);S.cr+=c;return{rar:c>=2000?'epic':c>=900?'rare':'common',label:'₵'+fmt(c),sub:'Straight into your wallet.'}}
+/* ---------- skins ---------- */
+const SKINS=[
+ {id:'p_def',slot:'p',name:'Stock',rar:'common',k:'def'},
+ {id:'p_ice',slot:'p',name:'Ice pick',rar:'common',k:'solid',c:['#c8f6ff'],cost:900},
+ {id:'p_ember',slot:'p',name:'Ember',rar:'common',k:'solid',c:['#ff7a1a'],cost:900},
+ {id:'p_acid',slot:'p',name:'Acid',rar:'common',k:'solid',c:['#b6ff3b'],cost:900},
+ {id:'p_uv',slot:'p',name:'Ultraviolet',rar:'rare',k:'solid',c:['#a98bff'],cost:2500},
+ {id:'p_gold',slot:'p',name:'Gold leaf',rar:'rare',k:'grad',c:['#ffe58a','#ffb300'],cost:2500},
+ {id:'p_plasma',slot:'p',name:'Plasma',rar:'epic',k:'pulse',c:['#ff3dd2','#3df5ff']},
+ {id:'p_ghost',slot:'p',name:'Ghost',rar:'epic',k:'flicker',c:['#f4f4ff']},
+ {id:'p_prism',slot:'p',name:'Prism',rar:'legendary',k:'rainbow'},
+ {id:'p_nova',slot:'p',name:'Supernova',rar:'legendary',k:'pulse',c:['#ffffff','#ffc93d']},
+ {id:'p_halo',slot:'p',name:'Halo',rar:'legendary',k:'pulse',c:['#ffffff','#ff2e88'],px:2},
+ {id:'b_def',slot:'b',name:'Stock',rar:'common',k:'def'},
+ {id:'b_concrete',slot:'b',name:'Concrete',rar:'common',k:'grad',c:['#8d939b','#5a5f66'],cost:900},
+ {id:'b_lava',slot:'b',name:'Lava',rar:'common',k:'grad',c:['#ff3d1a','#ffb33d'],cost:900},
+ {id:'b_ocean',slot:'b',name:'Ocean',rar:'common',k:'grad',c:['#1a6dff','#3df5ff'],cost:900},
+ {id:'b_candy',slot:'b',name:'Candy',rar:'rare',k:'grad',c:['#ff8fc8','#fff0f8'],cost:2500},
+ {id:'b_matrix',slot:'b',name:'Matrix',rar:'rare',k:'grad',c:['#0f5f2a','#3dff7a'],cost:2500},
+ {id:'b_vapor',slot:'b',name:'Vaporwave',rar:'epic',k:'grad',c:['#ff71ce','#01cdfe']},
+ {id:'b_circuit',slot:'b',name:'Circuit',rar:'epic',k:'pulse',c:['#ffd23d','#3df5ff']},
+ {id:'b_spectrum',slot:'b',name:'Spectrum',rar:'legendary',k:'rainbow'},
+ {id:'b_obsidian',slot:'b',name:'Obsidian',rar:'legendary',k:'pulse',c:['#2a2140','#b18cff']},
+ {id:'b_aurora',slot:'b',name:'Aurora',rar:'legendary',k:'pulse',c:['#3dffb0','#8c7bff'],px:3},
+];
+const RC={common:'#c9c9d6',rare:'#4da3ff',epic:'#c77dff',legendary:'#ffc93d'},RAR=['common','rare','epic','legendary'],cap=t=>t[0].toUpperCase()+t.slice(1);
+const ROM=['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'],rom=n=>ROM[n]||String(n);
+const SK=id=>SKINS.find(x=>x.id===id)||SKINS[0];
+function skinColor(sk,i,now){switch(sk.k){case 'solid':return sk.c[0];case 'grad':return mix(sk.c[0],sk.c[1],(Math.sin(i*.45)+1)/2);case 'pulse':return mix(sk.c[0],sk.c[1],(Math.sin(now*.005+i*.35)+1)/2);case 'rainbow':return `hsl(${Math.round(now*.12+i*28)%360} 95% 62%)`;case 'flicker':return Math.random()<.07?'rgba(255,255,255,.3)':sk.c[0]}return null}
+function PC(now){const k=SK(S.skin.p);return k.k==='def'?null:skinColor(k,0,now)}
+function BC(i,now){const k=SK(S.skin.b);return k.k==='def'?null:skinColor(k,i,now)}
+function swatch(k){if(k.k==='def')return 'background:linear-gradient(90deg,var(--a),var(--b))';if(k.k==='solid'||k.k==='flicker')return `background:${k.c[0]};box-shadow:0 0 16px ${k.c[0]}`;if(k.k==='rainbow')return 'background:linear-gradient(90deg,#ff3d5a,#ffb33d,#fff23d,#3dff7a,#3df5ff,#5c7bff,#ff3dd2,#ff3d5a);background-size:200% 100%';return `background:linear-gradient(90deg,${k.c[0]},${k.c[1]}${k.k==='pulse'?','+k.c[0]:''});background-size:${k.k==='pulse'?'200%':'100%'} 100%;box-shadow:0 0 14px ${k.c[1]}66`}
+const skp=(k,big)=>`<div class="skp ${k.slot} ${big?'big':''} ${k.k==='pulse'||k.k==='rainbow'?'anim':''} ${k.k==='flicker'?'flk':''}" style="${swatch(k)}"></div>`;
+
+/* ---------- heists ---------- */
+const HEISTS=[{name:'Smash & grab',n:3,fee:300,need:4,f:1},{name:'Bank job',n:4,fee:900,need:7,f:1.15},{name:'The big one',n:5,fee:2000,need:10,f:1.3}];
+let HZ=null;
+const heistPips=H=>H.stages.map((id,k)=>`<span class="hs ${k<H.i?'done':k===H.i?'cur':''}">${ICON[id]}</span>`).join('')+`<span class="hlv" title="Heist lives">${'<i></i>'.repeat(H.lives)}${'<i class="x"></i>'.repeat(H.max-H.lives)}</span>`;
+function startHeist(t){const T=HEISTS[t];if(S.unlocked.length<T.need){toast(`Unlock ${T.need} jobs to run this heist`);sfx.bad();return}if(!spend(T.fee))return;
+  const lv=2+Math.min(1,S.prestige);HZ={t,stages:S.unlocked.slice().sort(()=>Math.random()-.5).slice(0,T.n),i:0,lives:lv,max:lv,pot:0};S.heists++;save();renderTop();nextStage()}
+function nextStage(){const id=HZ.stages[HZ.i];HZ.target=Math.max(3,Math.round(starT(id)[0]*HEISTS[HZ.t].f));startRun(id,{heist:HZ})}
+function heistStageEnd(R,msg){const H=R.heist,g=R.g,sc=R.score,T=HEISTS[H.t];if(sc>(S.best[g.id]||0))S.best[g.id]=sc;S.runs++;S.plays[g.id]=(S.plays[g.id]||0)+1;
+  if(R.cleared){const k=1+.5*H.i,pay=Math.round(sc*g.rate*mult()*k);H.pot+=pay;H.i++;addXP(Math.round((pay/3+15)*xpMult()));
+    if(H.i>=H.stages.length){const total=H.pot*2;S.cr+=total;S.earned+=total;S.heistWins++;S.crates++;const loot=rollCrate(false);HZ=null;save();renderTop();sfx.buy();buzz([40,40,90]);
+      modal(`<div class="reveal burst" style="--rc:${RC.legendary}"><div class="rays"></div><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><rect x="8" y="10" width="48" height="44" rx="6"/><circle cx="32" cy="32" r="11"/><path d="M32 21v4M32 39v4M21 32h4M39 32h4"/></svg></div><h3>Heist complete</h3><p>${T.name} · all ${H.stages.length} stages · clean getaway</p><div class="big">₵${fmt(total)}</div><div class="earn"><div><span>Pot</span><b>₵${fmt(H.pot)}</b></div><div><span>Clean getaway 2×</span><b>₵${fmt(H.pot)}</b></div><div class="tot"><span>Bonus loot</span><b class="r-${loot.rar}">${esc(loot.label)}</b></div></div><div class="acts"><button class="btn" data-act="home">Job board</button></div>`,{home(){closeModal();exitPlay()}});return}
+    save();sfx.perfect();const nx=G.find(x=>x.id===H.stages[H.i]);
+    modal(`<h3>Stage cleared</h3><p>${g.name} · ${fmt(sc)} points · ×${k.toFixed(1)} stage bonus</p><div class="hl">${heistPips(H)}</div><div class="big">₵${fmt(H.pot)}</div><p>In the pot. Next: <b>${nx.name}</b> at ×${(1+.5*H.i).toFixed(1)}. Clear every stage and the pot doubles. Get busted and you keep half.</p><div class="acts"><button class="btn" data-act="go">Next stage</button><button class="btn ghost" data-act="walk">Walk away · ₵${fmt(H.pot)}</button></div>`,
+      {go(){closeModal();nextStage()},walk(){closeModal();S.cr+=H.pot;S.earned+=H.pot;HZ=null;save();toast('Walked away with ₵'+fmt(H.pot));exitPlay()}});return}
+  H.lives--;sfx.over();const half=Math.round(H.pot/2);
+  if(H.lives>0){save();modal(`<h3>Stage failed</h3><p>${msg} · needed ${fmt(R.target)}, scored ${fmt(sc)}</p><div class="hl">${heistPips(H)}</div><p>${H.lives} heist ${H.lives>1?'lives':'life'} left · pot ₵${fmt(H.pot)}</p><div class="acts"><button class="btn" data-act="retry">Retry stage</button><button class="btn ghost" data-act="bail">Bail · keep ₵${fmt(half)}</button></div>`,
+      {retry(){closeModal();nextStage()},bail(){closeModal();S.cr+=half;S.earned+=half;HZ=null;save();exitPlay()}});return}
+  S.cr+=half;S.earned+=half;HZ=null;save();renderTop();
+  modal(`<h3>Busted</h3><p>${msg}. The crew scattered.</p><div class="big">₵${fmt(half)}</div><p>You got out with half the pot.</p><div class="acts"><button class="btn ghost" data-act="home">Job board</button></div>`,{home(){closeModal();exitPlay()}})}
+
+/* ---------- daily challenge ---------- */
+const dayNum=()=>{const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)};
+function seedRand(str){let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return()=>{h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296}}
+function chalToday(){const d=today();if(S.chal.day!==d)S.chal=Object.assign({},S.chal,{day:d,best:0,claimed:false});const r=seedRand('bk-'+dayNum());r();r();const g=G[Math.floor(r()*G.length)];return{id:g.id,target:Math.max(3,Math.round(starT(g.id)[1]*.85))}}
+const chalStreak=()=>S.chal.last===today()||S.chal.last===yday()?S.chal.streak:0;
+const chalReward=st=>{st=st||chalStreak()+1;return 600+150*Math.min(st-1,6)};
+const h4=t=>{let h=7;for(let i=0;i<t.length;i++)h=(Math.imul(h,31)+t.charCodeAt(i))>>>0;return ((h^0x5bd1e995)>>>0).toString(36).slice(-4).toUpperCase()};
+function chalCode(){const b=`${dayNum()}.${S.chal.best}`;return `BK.${b}.${h4(b+'|'+S.handle)}.${S.handle}`}
+function parseCode(c){const m=String(c).trim().match(/^BK\.(\d+)\.(\d+)\.([0-9A-Z]{1,4})\.(.+)$/);if(!m)return null;const b=m[1]+'.'+m[2];return{day:+m[1],score:+m[2],ok:h4(b+'|'+m[4])===m[3],handle:m[4]}}
+function compareModal(){chalToday();modal(`<h3>Compare scores</h3><p>Paste a friend’s daily challenge code.</p><div class="cmp"><input id="cin" placeholder="BK.…" autocomplete="off" spellcheck="false"><button class="btn" data-act="cmp">Compare</button></div><div id="cout"></div><div class="acts"><button class="btn ghost" data-act="x">Close</button></div>`,{x(){closeModal()},cmp(){const p=parseCode($('#cin').value),o=$('#cout');
+  if(!p){o.innerHTML='<p>That doesn’t look like a Breach Kit code.</p>';return}if(!p.ok){o.innerHTML='<p>That code has been tampered with.</p>';return}
+  if(p.day!==dayNum()){o.innerHTML=`<p>That code is from ${p.day<dayNum()?(dayNum()-p.day)+' day'+(dayNum()-p.day>1?'s':'')+' ago':'the future'}. Codes only compare on the same day.</p>`;return}
+  const me=S.chal.best,w=me>p.score?'me':me<p.score?'them':'tie';o.innerHTML=`<div class="vs"><div class="${w==='me'?'win':''}"><b>${fmt(me)}</b><span>${esc(S.handle)} (you)</span></div><span>vs</span><div class="${w==='them'?'win':''}"><b>${fmt(p.score)}</b><span>${esc(p.handle)}</span></div></div><p>${w==='me'?'You’re ahead.':w==='them'?'They’re ahead. Run it again.':'Dead even.'}</p>`;sfx[w==='me'?'perfect':'tap']()}})}
+
+/* ---------- botnet ---------- */
+const BOTICON='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="24" r="6" fill="currentColor"/><circle cx="8" cy="10" r="3.5"/><circle cx="40" cy="10" r="3.5"/><circle cx="8" cy="38" r="3.5"/><circle cx="40" cy="38" r="3.5"/><path d="M11 12.5l8 7M37 12.5l-8 7M11 35.5l8-7M37 35.5l-8-7"/></svg>';
+const BOTMAX=12,CAPMAX=5;
+const botRate=()=>S.bot.lvl?Math.round(40*Math.pow(S.bot.lvl,1.4)*(1+.25*S.prestige)):0;
+const botCapH=()=>8+2*S.bot.cap;
+const botPending=()=>S.bot.lvl?Math.floor(Math.min(botCapH()*36e5,Math.max(0,Date.now()-S.bot.last))/36e5*botRate()):0;
+const botNodeCost=()=>Math.round(800*Math.pow(1.8,S.bot.lvl)),botCapCost=()=>Math.round(1500*Math.pow(2,S.bot.cap));
+function botCollect(quiet){const p=botPending();S.bot.last=Date.now();if(p>0){S.cr+=p;S.earned+=p;if(!quiet){sfx.coin();toast('Botnet paid out ₵'+fmt(p))}}save();return p}
+function renderBot(){const el=$('#botnet');if(!S.bot.lvl){el.innerHTML=`<div class="card bot"><div class="bi">${BOTICON}</div><div class="t"><b>Botnet</b><small>Earns credits while you’re away</small></div><button class="btn sm" data-bot="build">Build · ₵${fmt(botNodeCost())}</button></div>`;return}
+  const p=botPending(),full=botCapH()*botRate();el.innerHTML=`<div class="card bot"><div class="bi">${BOTICON}</div><div class="t"><b>Botnet · ${S.bot.lvl} node${S.bot.lvl>1?'s':''}</b><small>₵${fmt(botRate())}/hour · holds ${botCapH()}h${p>=full?' · full':''}</small><div class="xpb"><i id="botbar" style="width:${p/full*100}%"></i></div></div><button class="btn sm alt" data-bot="collect" id="botbtn" ${p<1?'disabled':''}>₵${fmt(p)}</button></div>`}
+setInterval(()=>{if(RUN||!S.bot.lvl||!$('#v-jobs').classList.contains('on'))return;const p=botPending(),b=$('#botbtn'),bar=$('#botbar');if(b){b.textContent='₵'+fmt(p);b.disabled=p<1}if(bar)bar.style.width=(p/(botCapH()*botRate())*100)+'%'},1000);
+
+/* ---------- prestige ---------- */
+const presNeed=()=>15+5*S.prestige;
+function doPrestige(){botCollect(true);S.prestige++;Object.assign(S,{cr:250,xp:0,lvl:1,unlocked:['signal','stack'],up:{mult:0,shield:0,slow:0,time:0,xp:0},bot:{lvl:0,cap:0,last:0},revives:Math.max(1,S.revives),contracts:{day:'',list:[]}});
+  const t='Ghost Protocol '+rom(S.prestige),got=[`“${t}” title`];if(!S.titles.includes(t))S.titles.push(t);S.title=t;
+  if(S.prestige===1&&!S.themes.includes('zerocool')){S.themes.push('zerocool');got.push('Zero Cool theme')}
+  if(S.prestige===2&&!S.skins.includes('p_halo')){S.skins.push('p_halo');got.push('Halo pointer skin')}
+  if(S.prestige===3&&!S.skins.includes('b_aurora')){S.skins.push('b_aurora');got.push('Aurora block skin')}
+  save();renderAll();sfx.buy();buzz([50,40,120]);
+  modal(`<div class="reveal burst" style="--rc:${RC.legendary}"><div class="rays"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M8 12h8M12 8v8" stroke-linecap="round"/></svg></div><h3>Prestige ${rom(S.prestige)}</h3><p>Everything pays +${25*S.prestige}% from now on, forever.</p><div class="earn">${got.map(x=>`<div><span>Unlocked</span><b>${x}</b></div>`).join('')}</div><div class="acts"><button class="btn" data-act="ok">Start again</button></div>`,{ok(){closeModal()}})}
+function renderPrestige(){const ok=S.lvl>=presNeed();$('#prest').innerHTML=`<div class="card pres"><div class="t"><b>${S.prestige?'Rank '+rom(S.prestige)+' · +'+25*S.prestige+'% payouts':'Not prestiged yet'}</b><small>Reset credits, level, unlocked jobs, upgrades and botnet for a permanent +25% to all payouts and XP, plus an exclusive reward. You keep stars, best scores, skins, themes, titles and achievements.</small></div><button class="btn sm" data-pres ${ok?'':'disabled'}>${ok?'Prestige':'Level '+presNeed()}</button></div>`}
+
+/* ---------- music ---------- */
+const MUS={on:false,next:0,step:0,iv:0,g:null,nb:null};
+const NOTE=n=>440*Math.pow(2,(n-69)/12),PROG=[[57,60,64],[53,57,60],[48,52,55],[55,59,62]];
+function musicOn(){if(MUS.on||!(S.music>0))return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){return}
+  MUS.g=AC.createGain();MUS.g.gain.value=S.music*.45;MUS.g.connect(AC.destination);
+  if(!MUS.nb){const b=AC.createBuffer(1,Math.floor(AC.sampleRate*.5),AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;MUS.nb=b}
+  MUS.on=true;MUS.next=AC.currentTime+.08;MUS.iv=setInterval(musSched,40)}
+function musicOff(){if(!MUS.on)return;clearInterval(MUS.iv);MUS.on=false;const g=MUS.g;try{g.gain.setTargetAtTime(0,AC.currentTime,.08);setTimeout(()=>g.disconnect(),500)}catch(e){}}
+function musSched(){if(!AC||AC.state!=='running')return;const sp=60/100/4;if(MUS.next<AC.currentTime)MUS.next=AC.currentTime+.05;while(MUS.next<AC.currentTime+.2){musStep(MUS.step,MUS.next);MUS.next+=sp;MUS.step++}}
+function mOsc(type,f,t,d,v,{f2,cut,att}={}){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+(att||.008));g.gain.exponentialRampToValueAtTime(.0001,t+d);let n=o;if(cut){const fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.value=cut;o.connect(fl);n=fl}n.connect(g).connect(MUS.g);o.start(t);o.stop(t+d+.05)}
+function mNoise(t,d,v,hp){const s=AC.createBufferSource();s.buffer=MUS.nb;const f=AC.createBiquadFilter();f.type='highpass';f.frequency.value=hp;const g=AC.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f).connect(g).connect(MUS.g);s.start(t,Math.random()*.4);s.stop(t+d+.02)}
+function musStep(s,t){const i=s%16,ch=PROG[Math.floor(s/16)%4],sec=Math.floor(s/64)%4,busy=!!RUN&&RUN.started;
+  if(i%4===0)mOsc('sine',150,t,.3,.85,{f2:42});
+  if(i===4||i===12){mNoise(t,.18,.32,1600);mOsc('triangle',190,t,.1,.18)}
+  if(i%2===1||busy)mNoise(t,.035,i%4===2?.09:.06,7000);
+  if(i%2===0)mOsc('sawtooth',NOTE(ch[0]-24+(i%8===6?12:0)),t,.2,.2,{cut:650});
+  if(sec>0||busy){const a=ch[(i+(i>>2))%3]+12+(i%8>5?12:0);mOsc('square',NOTE(a),t,.11,.04,{cut:2600})}
+  if(i===0)ch.forEach(n=>mOsc('sawtooth',NOTE(n),t,2.35,.028,{cut:1100,att:.35}))}
+document.addEventListener('pointerdown',()=>{if(S.music>0&&!MUS.on)musicOn()},true);
+document.addEventListener('visibilitychange',()=>{try{if(!AC)return;if(document.hidden)AC.suspend();else AC.resume()}catch(e){}});
+
 const ACH=[
  {id:'first',name:'Hello, world',desc:'Finish your first job',r:100,ok:()=>S.runs>=1},
  {id:'ten',name:'Regular',desc:'Finish 25 jobs',r:500,ok:()=>S.runs>=25},
@@ -774,6 +951,16 @@ const ACH=[
  {id:'hot',name:'Hot streak',desc:'Finish today\u2019s 2× job',r:300,ok:()=>S.hotRuns>=1},
  {id:'e250',name:'Kingpin',desc:'Earn ₵250,000 in total',r:15000,ok:()=>S.earned>=250000},
  {id:'lvl20',name:'Architect',desc:'Reach level 20',r:6000,ok:()=>S.lvl>=20},
+ {id:'heist',name:'Inside job',desc:'Pull off a heist',r:1000,ok:()=>S.heistWins>=1},
+ {id:'heist5',name:'Crew boss',desc:'Pull off 5 heists',r:4000,ok:()=>S.heistWins>=5},
+ {id:'oc',name:'Redline',desc:'Earn a star’s worth on Overclocked',r:800,ok:()=>G.some(g=>(S.bestH[g.id]||0)>=starT(g.id)[0])},
+ {id:'skin5',name:'Drip check',desc:'Collect 5 skins',r:600,ok:()=>S.skins.length-2>=5},
+ {id:'leg',name:'Legendary pull',desc:'Find a legendary skin',r:2000,ok:()=>S.skins.some(id=>SK(id).rar==='legendary'&&!SK(id).px)},
+ {id:'bot',name:'Zombie army',desc:'Build a botnet',r:300,ok:()=>S.bot.lvl>=1||S.prestige>0},
+ {id:'bot10',name:'Command & control',desc:'Grow your botnet to 10 nodes',r:5000,ok:()=>S.bot.lvl>=10},
+ {id:'chal',name:'Challenger',desc:'Beat a daily challenge',r:500,ok:()=>!!S.chal.last},
+ {id:'chal7',name:'Unstoppable',desc:'Beat 7 daily challenges in a row',r:5000,ok:()=>S.chal.streak>=7},
+ {id:'pres',name:'New game+',desc:'Prestige once',r:5000,ok:()=>S.prestige>=1},
 ];
 
 /* ---------- UI ---------- */
@@ -791,43 +978,64 @@ function renderJobs(){ensureContracts();const dd=S.daily.last===today(),st=S.dai
   const F=[['all','All'],['reflex','Reflex'],['brain','Brain'],['arcade','Arcade'],['locked','Locked']];$('#jf').innerHTML=F.map(([k,l])=>`<button class="chip ${S.filter===k?'on':''}" data-f="${k}">${l}</button>`).join('');
   const list=G.filter(g=>S.filter==='all'||(S.filter==='locked'?!S.unlocked.includes(g.id):g.cat===S.filter));
   $('#jobs').innerHTML=(list.length?'':'<p class="sub">Nothing here. Every job in this group is unlocked.</p>')+list.map(g=>{const u=S.unlocked.includes(g.id),hot=u&&S.contracts.hot===g.id,md=hot?'2× today':g.mode==='timer'?g.time+extraT()+'s':g.mode==='lives'?(3+S.up.shield)+' lives':'1 shot';
-    return `<button class="job ${u?'':'locked'} ${hot?'hot':''}" data-g="${g.id}" ${u?'':'tabindex="-1"'}><span class="mode ${hot?'hot':''}">${md}</span><div class="ic">${ICON[g.id]}</div><h3>${g.name}</h3>${u?starRow(g.id):''}<p>${g.tag}</p><div class="meta">${u?`<span>Best ${fmt(S.best[g.id]||0)}</span><span class="rate">₵${g.rate}/pt</span>`:`<span class="btn sm" data-unlock="${g.id}">Unlock · ₵${fmt(g.cost)}</span>`}</div></button>`}).join('')}
+    return `<button class="job ${u?'':'locked'} ${hot?'hot':''}" data-g="${g.id}" ${u?'':'tabindex="-1"'}><span class="mode ${hot?'hot':''}">${md}</span><div class="ic">${ICON[g.id]}</div><h3>${g.name}</h3>${u?starRow(g.id):''}<p>${g.tag}</p><div class="meta">${u?`<span>Best ${fmt(S.best[g.id]||0)}${S.bestH[g.id]?' · OC '+fmt(S.bestH[g.id]):''}</span><span class="rate">₵${g.rate}/pt</span>`:`<span class="btn sm" data-unlock="${g.id}">Unlock · ₵${fmt(g.cost)}</span>`}</div></button>`}).join('')}
 function renderMarket(){
   $('#ups').innerHTML=UPS.map(u=>{const l=S.up[u.id],mx=l>=u.max,c=upCost(u);return `<div class="row"><div class="t"><b>${u.name}</b><small>${u.desc}</small><div class="pips">${Array.from({length:u.max},(_,i)=>`<i class="${i<l?'on':''}"></i>`).join('')}</div></div><button class="btn sm" data-up="${u.id}" ${mx?'disabled':''}>${mx?'Maxed':'₵'+fmt(c)}</button></div>`}).join('');
   $('#cons').innerHTML=`<div class="row"><div class="t"><b>Revive chip</b><small>Continue once after you fail. Own ${S.revives}.</small></div><button class="btn sm" data-rev>₵300</button></div>`;
-  $('#themes').innerHTML=THEMES.map(t=>{const own=S.themes.includes(t.id),eq=S.theme===t.id;return `<div class="th ${eq?'eq':''}"><div class="sw" style="background:linear-gradient(135deg,${t.bg2},${t.bg});box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="position:absolute;left:10px;top:10px;right:40px;height:10px;border-radius:5px;background:${t.a};box-shadow:0 0 14px ${t.a}"></div><div style="position:absolute;left:10px;top:28px;width:40%;height:6px;border-radius:3px;background:${t.a};opacity:.5"></div><i style="background:${t.b};box-shadow:0 0 12px ${t.b}"></i></div><b>${t.name}</b>${eq?'<button class="btn sm ghost" disabled>Equipped</button>':own?`<button class="btn sm ghost" data-eq="${t.id}">Equip</button>`:t.crate?'<button class="btn sm ghost" disabled>Cache only</button>':`<button class="btn sm" data-bt="${t.id}">₵${fmt(t.cost)}</button>`}</div>`}).join('')}
-function renderProfile(){const h=$('#handle');if(document.activeElement!==h)h.value=S.handle;$('#ava').textContent=(S.handle[0]||'G').toUpperCase();$('#ptitle').textContent=S.title+' · Level '+S.lvl;
+  $('#themes').innerHTML=THEMES.map(t=>{const own=S.themes.includes(t.id),eq=S.theme===t.id;return `<div class="th ${eq?'eq':''}"><div class="sw" style="background:linear-gradient(135deg,${t.bg2},${t.bg});box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)"><div style="position:absolute;left:10px;top:10px;right:40px;height:10px;border-radius:5px;background:${t.a};box-shadow:0 0 14px ${t.a}"></div><div style="position:absolute;left:10px;top:28px;width:40%;height:6px;border-radius:3px;background:${t.a};opacity:.5"></div><i style="background:${t.b};box-shadow:0 0 12px ${t.b}"></i></div><b>${t.name}</b>${eq?'<button class="btn sm ghost" disabled>Equipped</button>':own?`<button class="btn sm ghost" data-eq="${t.id}">Equip</button>`:t.px?`<button class="btn sm ghost" disabled>Prestige ${rom(t.px)}</button>`:t.crate?'<button class="btn sm ghost" disabled>Cache only</button>':`<button class="btn sm" data-bt="${t.id}">₵${fmt(t.cost)}</button>`}</div>`}).join('')}
+function renderProfile(){const h=$('#handle');if(document.activeElement!==h)h.value=S.handle;$('#ava').textContent=(S.handle[0]||'G').toUpperCase();$('#ptitle').textContent=S.title+' · Level '+S.lvl+(S.prestige?' · Prestige '+rom(S.prestige):'');
   const need=xpNeed(S.lvl);$('#pxp').style.width=(S.xp/need*100)+'%';$('#pl1').textContent='Level '+S.lvl;$('#pl2').textContent=fmt(S.xp)+' / '+fmt(need)+' XP';$('#xpt').textContent=fmt(need-S.xp)+' XP to go';
-  $('#titles').innerHTML=S.titles.map(t=>`<button class="chip ${t===S.title?'on':''}" data-ti="${t}">${t}</button>`).join('')+`<span class="chip" style="opacity:.5;border-style:dashed">${CRATE_TITLES.length+Object.keys(LEVEL_TITLES).length+1-S.titles.length} more to find</span>`;
-  $('#stats').innerHTML=[['Job stars',starTotal()+'/'+G.length*3+' · +'+starTotal()+'%'],['Credits earned','₵'+fmt(S.earned)],['Jobs run',fmt(S.runs)],['Perfect hits',fmt(S.perfects)],['Caches cracked',fmt(S.crates)],['Revive chips',fmt(S.revives)],['Themes owned',S.themes.length+'/'+THEMES.length]].map(([k,v])=>`<div class="card stat"><b>${v}</b><span>${k}</span></div>`).join('');
-  $('#bests').innerHTML=G.map(g=>`<div class="row"><div class="t">${g.name}</div>${S.unlocked.includes(g.id)?starRow(g.id):''}<span class="n" style="min-width:56px;text-align:right">${S.unlocked.includes(g.id)?fmt(S.best[g.id]||0):'Locked'}</span></div>`).join('');
+  $('#titles').innerHTML=S.titles.map(t=>`<button class="chip ${t===S.title?'on':''}" data-ti="${t}">${t}</button>`).join('')+`<span class="chip" style="opacity:.5;border-style:dashed">${[...CRATE_TITLES,...Object.values(LEVEL_TITLES)].filter(t=>!S.titles.includes(t)).length} more to find</span>`;
+  $('#stats').innerHTML=[['Job stars',starTotal()+'/'+G.length*3+' · +'+starTotal()+'%'],['Credits earned','₵'+fmt(S.earned)],['Jobs run',fmt(S.runs)],['Perfect hits',fmt(S.perfects)],['Caches cracked',fmt(S.crates)],['Revive chips',fmt(S.revives)],['Themes owned',S.themes.length+'/'+THEMES.length],['Skins owned',S.skins.length+'/'+SKINS.length],['Heists pulled',S.heistWins+' of '+S.heists]].map(([k,v])=>`<div class="card stat"><b>${v}</b><span>${k}</span></div>`).join('');
+  $('#bests').innerHTML=G.map(g=>`<div class="row"><div class="t">${g.name}</div>${S.unlocked.includes(g.id)?starRow(g.id):''}<span class="n" style="min-width:56px;text-align:right">${S.unlocked.includes(g.id)?fmt(S.best[g.id]||0)+(S.bestH[g.id]?`<small style="display:block;font:600 12px Barlow,sans-serif;color:var(--b)">OC ${fmt(S.bestH[g.id])}</small>`:''):'Locked'}</span></div>`).join('');
   $('#achc').textContent=Object.keys(S.ach).length+'/'+ACH.length;
   $('#achs').innerHTML=ACH.map(a=>{const got=S.ach[a.id],ok=a.ok();return `<div class="row ach ${got?'got':''}"><div class="t"><b>${a.name}</b><small>${a.desc} · ₵${fmt(a.r)}</small></div>${got?'<span class="oneshot">Claimed</span>':ok?`<button class="btn sm alt" data-ach="${a.id}">Claim</button>`:'<span class="oneshot">Locked</span>'}</div>`}).join('');
   $('#snd').textContent=S.mute?'Off':'On';if(window.BK){$('#updrow').hidden=false;try{$('#updinfo').textContent=BK.info()+' · updates install automatically'}catch(e){}}}
-function renderAll(){renderTop();renderJobs();renderMarket();renderProfile()}
+function renderOps(){const C=chalToday(),cg=G.find(x=>x.id===C.id),st=chalStreak();
+  $('#ops').innerHTML=`<div class="card op chal"><div class="ic">${ICON[C.id]}</div><small>Daily challenge · new one at midnight</small><h3>${cg.name}</h3><p class="grow">Overclocked. Beat ${fmt(C.target)} for ₵${fmt(chalReward())}${st?` · streak ${st}`:''}.<br>Your best today: ${fmt(S.chal.best)}${S.chal.claimed?' · beaten':''}</p><div class="acts2"><button class="btn sm" data-chal>Play</button><button class="btn sm ghost" data-cmp>Compare</button></div></div>`+
+  HEISTS.map((T,k)=>{const lk=S.unlocked.length<T.need;return `<div class="card op heist ${lk?'locked':''}"><div class="ic">${ICON.breach}</div><small>Heist · ${T.n} random jobs · ${HZ?'':''}${2+Math.min(1,S.prestige)} lives</small><h3>${T.name}</h3><p class="grow">Clear each job’s target. Stage bonus climbs to ×${(1+.5*(T.n-1)).toFixed(1)}. Finish clean and the pot doubles, plus free loot.</p><div class="acts2"><button class="btn sm" data-heist="${k}" ${lk?'disabled':''}>${lk?`Unlock ${T.need} jobs`:'Start · ₵'+fmt(T.fee)}</button></div></div>`}).join('')}
+function renderSkins(){const tile=k=>{const own=S.skins.includes(k.id),eq=S.skin[k.slot]===k.id;return `<div class="sk ${eq?'eq':''}">${skp(k)}<b>${k.name}</b><span class="rar r-${k.rar}">${cap(k.rar)}</span>${eq?'<button class="btn sm ghost" disabled>Equipped</button>':own?`<button class="btn sm ghost" data-sk="${k.id}">Equip</button>`:k.px?`<button class="btn sm ghost" disabled>Prestige ${rom(k.px)}</button>`:k.cost?`<button class="btn sm" data-bsk="${k.id}">₵${fmt(k.cost)}</button>`:'<button class="btn sm ghost" disabled>Cache only</button>'}</div>`};
+  $('#skp').innerHTML=SKINS.filter(k=>k.slot==='p').map(tile).join('');$('#skb').innerHTML=SKINS.filter(k=>k.slot==='b').map(tile).join('');$('#skc').textContent=(S.skins.length)+'/'+SKINS.length+' owned';
+  $('#botups').innerHTML=`<div class="row"><div class="t"><b>Nodes</b><small>${S.bot.lvl?`${S.bot.lvl}/${BOTMAX} · ₵${fmt(botRate())}/hour`:'Build your first node to start earning'}</small><div class="pips">${Array.from({length:BOTMAX},(_,i)=>`<i class="${i<S.bot.lvl?'on':''}"></i>`).join('')}</div></div><button class="btn sm" data-botup="node" ${S.bot.lvl>=BOTMAX?'disabled':''}>${S.bot.lvl>=BOTMAX?'Maxed':'₵'+fmt(botNodeCost())}</button></div><div class="row"><div class="t"><b>Storage</b><small>Holds ${botCapH()} hours of earnings</small><div class="pips">${Array.from({length:CAPMAX},(_,i)=>`<i class="${i<S.bot.cap?'on':''}"></i>`).join('')}</div></div><button class="btn sm" data-botup="cap" ${S.bot.cap>=CAPMAX||!S.bot.lvl?'disabled':''}>${S.bot.cap>=CAPMAX?'Maxed':!S.bot.lvl?'Needs a node':'₵'+fmt(botCapCost())}</button></div>`}
+function renderAll(){renderTop();renderJobs();renderBot();renderOps();renderMarket();renderSkins();renderProfile();renderPrestige();const m=$('#mus');if(m&&document.activeElement!==m)m.value=S.music}
 
 document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;sfx.tap();document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.tab));renderAll();window.scrollTo({top:0})});
 $('#v-jobs').addEventListener('click',e=>{
   if(e.target.closest('[data-daily]')){const st=S.daily.last===yday()?S.daily.streak+1:1,rew=150+100*Math.min(st,7);S.daily={last:today(),streak:st};S.cr+=rew;S.earned+=rew;save();sfx.buy();toast('Daily drop: +₵'+fmt(rew));renderAll();return}
   const un=e.target.closest('[data-unlock]');if(un){const g=G.find(x=>x.id===un.dataset.unlock);if(spend(g.cost)){S.unlocked.push(g.id);save();toast(g.name+' unlocked');renderAll()}return}
+  const bt=e.target.closest('[data-bot]');if(bt){if(bt.dataset.bot==='build'){if(spend(botNodeCost())){S.bot.lvl=1;S.bot.last=Date.now();save();toast('Botnet online. It earns while you’re away.');renderAll()}}else{botCollect();renderAll()}return}
+  const hz=e.target.closest('[data-heist]');if(hz){startHeist(+hz.dataset.heist);return}
+  if(e.target.closest('[data-chal]')){sfx.tap();startRun(chalToday().id,{chal:true});return}
+  if(e.target.closest('[data-cmp]')){compareModal();return}
   const f=e.target.closest('[data-f]');if(f){S.filter=f.dataset.f;save();sfx.tap();renderJobs();return}
   const j=e.target.closest('.job');if(j&&!j.classList.contains('locked')){sfx.tap();startRun(j.dataset.g)}});
+const CRATE_SVG='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="M32 6 56 18v28L32 58 8 46V18z"/><path d="M8 18l24 12 24-12M32 30v28"/></svg>';
+function openCrate(v){const price=v?2500:600;if(!spend(price))return;S.crates++;if(v)S.vaults++;const res=rollCrate(v);save();renderTop();
+  const pool=[...SKINS.filter(k=>k.k!=='def'&&!k.px).map(k=>[k.name,k.rar]),...THEMES.filter(t=>t.crate).map(t=>[t.name+' theme','legendary']),['₵500','common'],['₵1,200','rare'],['Revive chip','rare'],['₵2,400','epic']];
+  modal(`<div class="reveal" style="--rc:${RC.rare}"><div class="rays"></div>${CRATE_SVG.replace('<svg','<svg class="crate shake"')}</div><div class="reel" id="reel">Decrypting…</div><p>Brute-forcing the ${v?'vault':'cache'}</p>`);
+  let n=0,d=55;const spin=()=>{const r=$('#reel');if(!r)return;n++;if(d>260){land();return}const[p,rar]=pick(pool);r.textContent=p;r.style.color=RC[rar];tone(380+n*25,.035,'square',.025);d*=1.13;setTimeout(spin,d)};setTimeout(spin,250);
+  function land(){const big=res.rar==='legendary'||res.rar==='epic';big?(sfx.buy(),buzz(res.rar==='legendary'?[60,40,140]:[50])):sfx.perfect();
+    const art=res.skin?skp(res.skin,true):res.theme?`<div class="skp big b" style="background:linear-gradient(90deg,${res.theme.a},${res.theme.b})"></div>`:CRATE_SVG;
+    modal(`<div class="reveal burst" style="--rc:${RC[res.rar]}"><div class="rays"></div>${art}</div><div class="rar r-${res.rar}">${cap(res.rar)}</div><div class="prize">${esc(res.label)}</div><p>${res.sub}</p><div class="acts">${res.skin?'<button class="btn" data-act="eq">Equip now</button>':''}<button class="btn alt" data-act="again">Another · ₵${v?'2,500':'600'}</button><button class="btn ghost" data-act="ok">Nice</button></div>`,
+      {ok(){closeModal()},again(){closeModal();openCrate(v)},eq(){S.skin[res.skin.slot]=res.skin.id;save();closeModal();renderAll();toast(res.skin.name+' equipped')}});renderAll()}}
 $('#v-market').addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;
   if(t.dataset.up){const u=UPS.find(x=>x.id===t.dataset.up);if(S.up[u.id]<u.max&&spend(upCost(u))){S.up[u.id]++;save();toast(u.name+' level '+S.up[u.id])}}
   else if('rev' in t.dataset){if(spend(300)){S.revives++;save();toast('Revive chip added')}}
   else if(t.dataset.eq){S.theme=t.dataset.eq;save();applyTheme();sfx.tap()}
   else if(t.dataset.bt){const th=THEMES.find(x=>x.id===t.dataset.bt);if(spend(th.cost)){S.themes.push(th.id);S.theme=th.id;save();applyTheme();toast(th.name+' theme equipped')}}
-  else if('crate' in t.dataset){const v=t.dataset.crate==='1',price=v?2500:600;if(!spend(price))return;S.crates++;if(v)S.vaults++;const res=rollCrate(v);save();renderTop();
-    modal(`<svg class="crate shake" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="M32 6 56 18v28L32 58 8 46V18z"/><path d="M8 18l24 12 24-12M32 30v28"/></svg><h3>Decrypting…</h3><p>Brute-forcing the ${v?'vault':'cache'}</p>`);
-    let k=0;const iv=setInterval(()=>{tone(400+k*60,.04,'square',.03);k++},90);
-    setTimeout(()=>{clearInterval(iv);sfx.perfect();modal(`<svg class="crate" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" style="color:var(--b)"><path d="M32 6 56 18v28L32 58 8 46V18z" opacity=".35"/><path d="M8 18 32 6l24 12" /><circle cx="32" cy="34" r="9" fill="currentColor" stroke="none" opacity=".9"/></svg><div class="rar r-${res.rar}">${res.rar[0].toUpperCase()+res.rar.slice(1)}</div><div class="prize">${res.label}</div><p>${res.sub}</p><div class="acts"><button class="btn alt" data-act="again">Another · ₵${v?'2,500':'600'}</button><button class="btn ghost" data-act="ok">Nice</button></div>`,{ok(){closeModal()},again(){closeModal();document.querySelector(`[data-crate="${v?1:0}"]`).click()}});renderAll()},1300)}
+  else if('crate' in t.dataset){openCrate(t.dataset.crate==='1');return}
+  else if(t.dataset.sk){const k=SK(t.dataset.sk);S.skin[k.slot]=k.id;save();sfx.tap()}
+  else if(t.dataset.bsk){const k=SK(t.dataset.bsk);if(!S.skins.includes(k.id)&&spend(k.cost)){S.skins.push(k.id);S.skin[k.slot]=k.id;save();toast(k.name+' equipped')}}
+  else if(t.dataset.botup){if(t.dataset.botup==='node'){if(S.bot.lvl<BOTMAX&&spend(botNodeCost())){if(S.bot.lvl)botCollect(true);else S.bot.last=Date.now();S.bot.lvl++;save();toast('Botnet: '+S.bot.lvl+' nodes')}}else if(S.bot.lvl&&S.bot.cap<CAPMAX&&spend(botCapCost())){S.bot.cap++;save();toast('Botnet storage: '+botCapH()+'h')}}
   renderAll()});
 $('#v-profile').addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
   if(t.dataset.ti){S.title=t.dataset.ti;save();sfx.tap();renderProfile()}
   else if(t.dataset.ach){const a=ACH.find(x=>x.id===t.dataset.ach);if(a&&a.ok()&&!S.ach[a.id]){S.ach[a.id]=1;S.cr+=a.r;save();sfx.buy();toast(a.name+': +₵'+fmt(a.r));renderAll()}}
   else if(t.id==='updchk'){try{BK.check();toast('Checking for updates…')}catch(e){}}
   else if(t.id==='snd'){S.mute=!S.mute;save();renderProfile();sfx.tap()}
+  else if('pres' in t.dataset){if(S.lvl<presNeed())return;modal(`<h3>Prestige to rank ${rom(S.prestige+1)}?</h3><p>Your credits (₵${fmt(S.cr)}), level, unlocked jobs, upgrades and botnet reset. Stars, best scores, skins, themes, titles and achievements stay.</p><div class="earn"><div><span>Permanent bonus</span><b>+${25*(S.prestige+1)}% payouts & XP</b></div><div><span>Exclusive</span><b>${['','Zero Cool theme','Halo pointer skin','Aurora block skin'][S.prestige+1]||'Ghost Protocol title'}</b></div></div><div class="acts"><button class="btn" data-act="yes">Prestige</button><button class="btn ghost" data-act="no">Not yet</button></div>`,{no(){closeModal()},yes(){closeModal();doPrestige()}})}
   else if(t.id==='wipe'){modal('<h3>Wipe everything?</h3><p>Credits, upgrades, themes and best scores all go. This can’t be undone.</p><div class="acts"><button class="btn" data-act="no">Keep it</button><button class="btn ghost" data-act="yes">Wipe</button></div>',{no(){closeModal()},yes(){try{localStorage.removeItem(KEY)}catch(_){}S=fresh();save();applyTheme();closeModal();renderAll();toast('Fresh start')}})}});
+$('#mus').addEventListener('input',e=>{S.music=+e.target.value;save();if(S.music>0){musicOn();try{MUS.g.gain.setTargetAtTime(S.music*.45,AC.currentTime,.05)}catch(_){}}else musicOff()});
 $('#handle').addEventListener('change',e=>{const v=e.target.value.trim().slice(0,16);if(v){S.handle=v;save()}renderProfile()});
 /* app shell hooks (Android) */
 window.__back=()=>{if(!$('#modal').hidden)return true;if(RUN){$('#quit').click();return true}const on=document.querySelector('.tabs button.on');if(on&&on.dataset.tab!=='jobs'){document.querySelector('[data-tab=jobs]').click();return true}return false};
