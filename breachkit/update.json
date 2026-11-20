@@ -1,0 +1,15 @@
+{
+ "content": {
+  "v": 4,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/breachkit/index.html",
+  "sha256": "4064683abf39e687c7cd429427d59dd52ee1371fe988362a3eeb2c07c0d54c45"
+ },
+ "apk": {
+  "vc": 4,
+  "vn": "1.3",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/breachkit/BreachKit-1.3.apk",
+  "sha256": "b2f7c1716da97701f6716d13de65103732f0c602c56e1244ddff7985d88bf6a7",
+  "size": 325005
+ },
+ "notes": "Breach Kit now updates itself."
+}
