@@ -19,6 +19,6 @@ The Android app (`com.breachkit.app`) checks `breachkit/update.json` on launch a
 
 ## App update (only when the Java shell changes)
 1. Edit `source/src/...`, bump `versionCode` / `versionName` in `source/AndroidManifest.xml`. Set `assets/content_version.txt` to the current content build.
-2. Build with `source/build.sh` (needs Android build-tools 34 + platform 34) and sign with the **same keystore** (`breachkit.keystore`, kept by the owner, never committed). A different key = Android refuses the update.
+2. Build with `KEYSTORE=/path/breachkit.keystore KS_PASS=<password> breachkit/source/build.sh` (needs Android build-tools 34 + platform 34; copy `breachkit/index.html` to `source/assets/index.html` and add `source/assets/content_version.txt` first). It signs with the **same keystore** (`breachkit.keystore`, kept by the owner, never committed). A different key = Android refuses the update.
 3. Upload `BreachKit-<vn>.apk`, set `apk.vc`, `apk.vn`, `apk.url`, `apk.sha256`, `apk.size`, push.
    First self-update asks the player to approve once; after that (Android 12+) updates install silently when the app is closed.
