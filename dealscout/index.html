@@ -668,7 +668,7 @@ function maybeMore() {
   if (view !== 'deals' || searchMode || dloading || (dend && !dpool.length) || !dcount) return;
   const shown = [...document.querySelectorAll('#dlist .deal')].filter(e => e.style.display !== 'none').length;
   const pending = [...document.querySelectorAll('#dlist .deal')].some(e => !COMPAT[e.dataset.ck]);
-  if (S.genres.length || (S.hideOwned && OWNED.size)) $('#dstat').textContent = shown + ' deals shown' + (S.genres.length ? ' · ' + S.genres.map(gLabel).join(', ') : '') + (pending ? ' · checking more…' : '');
+  if (!PRESETS[S.preset].avg && (S.genres.length || (S.hideOwned && OWNED.size))) $('#dstat').textContent = shown + ' deals shown' + (S.genres.length ? ' · ' + S.genres.map(gLabel).join(', ') : '') + (pending ? ' · checking more…' : '');
   if (shown < 14 && !pending && dpage < 12) loadDeals(false);
 }
 
@@ -840,24 +840,68 @@ let TAVG = lsGet('tavg.v1') || {};
 for (const k in TAVG) if (Date.now() - TAVG[k].t > 3 * 864e5) delete TAVG[k];
 let tavgT = 0; const saveTavg = () => { clearTimeout(tavgT); tavgT = setTimeout(() => lsSet('tavg.v1', TAVG), 500); };
 const histSince = () => new Date(Date.now() - 456 * 864e5).toISOString().slice(0, 10) + 'T00:00:00Z';
+async function fetchYear(d) {
+  // returns true when done (saved or nothing to find), false when asked to slow down
+  const key = encodeURIComponent(S.itadKey.trim());
+  let id = d.steamAppID ? (await itadIds([d.steamAppID]))[d.steamAppID] : null;
+  if (!id && d.title) { const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + '&title=' + encodeURIComponent(cleanTitle(d.title)), 7 * 864e5, true); id = lk && lk.found && lk.game ? lk.game.id : null; }
+  if (!id) { TAVG[d.gameID] = {a:0, n:0, t:Date.now()}; return true; }
+  const y = yearAvg(await get(ITAD + 'games/history/v2?key=' + key + '&id=' + id + '&country=US&since=' + histSince()));
+  TAVG[d.gameID] = y ? {a:Math.round(y.avg * 100) / 100, n:y.n, t:Date.now()} : {a:0, n:0, t:Date.now()};
+  return true;
+}
 async function yearAverages(deals, progress) {
   if (!S.itadKey || Date.now() < itadCool) return;
-  // most promising deals first, and at most 40 per load (the rest get checked on later loads; results are kept 3 days)
-  const todo = [...new Map(deals.filter(d => d.steamAppID && !TAVG[d.gameID]).map(d => [d.gameID, d])).values()].sort(byReal).slice(0, 40);
+  // the most promising ~24 right away so the list appears fast; the rest are filled in by the background queue
+  const todo = [...new Map(deals.filter(d => !TAVG[d.gameID]).map(d => [d.gameID, d])).values()].sort(byReal).slice(0, 24);
   if (!todo.length) return;
-  const key = encodeURIComponent(S.itadKey.trim());
-  let map; try { map = await itadIds(todo.map(d => d.steamAppID)); } catch (e) { if (/429/.test(String(e))) itadCool = Date.now() + 150000; return; }
-  const jobs = todo.filter(d => map[d.steamAppID]); let done = 0, slow = 0;
-  const one = async d => {
-    for (let tries = 0; tries < 2 && slow < 3; tries++) {
-      try { const h = await get(ITAD + 'games/history/v2?key=' + key + '&id=' + map[d.steamAppID] + '&country=US&since=' + histSince()); const y = yearAvg(h);
-        TAVG[d.gameID] = y ? {a:Math.round(y.avg * 100) / 100, n:y.n, t:Date.now()} : {a:0, n:0, t:Date.now()}; break; }
-      catch (e) { if (/429/.test(String(e))) { slow++; if (slow >= 3) itadCool = Date.now() + 150000; await wait(2500); } else break; } // asked to slow down: pause, retry once, back off after a few
-    }
-    done++; progress && progress(done, jobs.length);
-  };
-  const q = jobs.slice(); await Promise.all(Array.from({length:4}, async () => { while (q.length && slow < 3) await one(q.shift()); }));
+  try { await itadIds(deals.filter(d => d.steamAppID).map(d => d.steamAppID)); } catch (e) { if (/429/.test(String(e))) itadCool = Date.now() + 150000; return; }
+  let done = 0; const q = todo.slice();
+  await Promise.all(Array.from({length:4}, async () => { while (q.length && Date.now() >= itadCool) { const d = q.shift();
+    try { await fetchYear(d); } catch (e) { if (/429/.test(String(e))) itadCool = Date.now() + 150000; }
+    done++; progress && progress(done, todo.length); } }));
   saveTavg();
+}
+/* background: keep checking every remaining game at a gentle pace (about 35 a minute) */
+let bgQ = [], bgOn = false, dshown = [];
+function queueYear(deals) {
+  if (!S.itadKey) return;
+  const have = new Set(bgQ.map(d => d.gameID));
+  deals.forEach(d => { if (!TAVG[d.gameID] && !have.has(d.gameID)) { have.add(d.gameID); bgQ.push(d); } });
+  runYearQueue();
+}
+function yearStat() {
+  if (view !== 'deals' || searchMode || !PRESETS[S.preset].avg) return;
+  const all = dshown.concat(dpool), missing = all.filter(d => !TAVG[d.gameID]).length, el = $('#dstat');
+  const base = dcount + ' deals · ranked by how far below their average price over the past year, across stores';
+  el.textContent = missing ? base + ' · checking yearly prices: ' + (all.length - missing) + ' of ' + all.length + (Date.now() < itadCool ? ' (pausing briefly)' : '') : base;
+}
+async function runYearQueue() {
+  if (bgOn) return; bgOn = true;
+  try { await itadIds(bgQ.filter(d => d.steamAppID).map(d => d.steamAppID)); } catch (e) {}
+  while (bgQ.length && S.itadKey) {
+    if (Date.now() < itadCool) { yearStat(); await wait(Math.min(15000, itadCool - Date.now() + 500)); continue; }
+    const d = bgQ[0];
+    if (TAVG[d.gameID]) { bgQ.shift(); continue; }
+    try { await fetchYear(d); bgQ.shift(); }
+    catch (e) { if (/429/.test(String(e))) { itadCool = Date.now() + 150000; continue; } bgQ.shift(); TAVG[d.gameID] = {a:0, n:0, t:Date.now()}; }
+    saveTavg(); refreshCard(d); yearStat();
+    if (!bgQ.length) resortShown();
+    await wait(1700);
+  }
+  bgOn = false; yearStat();
+}
+function refreshCard(d) {
+  if (!PRESETS[S.preset].avg || searchMode) return;
+  const el = document.querySelector('#dlist .deal[data-game="' + d.gameID + '"]'); if (!el) return;
+  el.outerHTML = dealCard(d);
+}
+// once every shown game has its yearly average, put them in the right order (only if you're still near the top)
+function resortShown() {
+  if (view !== 'deals' || searchMode || !PRESETS[S.preset].avg || !dshown.length) return;
+  const sorted = dshown.slice().sort(byReal); if (sorted.every((d, i) => d === dshown[i])) return;
+  if ($('#main').scrollTop < 150) { dshown = sorted; $('#dlist').innerHTML = dshown.map(dealCard).join(''); applyVis(); toast('Ranked by yearly average for all ' + dshown.length + ' deals'); }
+  else { const st = $('#dstat'); st.innerHTML = esc(st.textContent) + ' · <button class="more" data-act="resort" style="display:inline;padding:0">Re-sort</button>'; }
 }
 // What a deal is compared against: the past-year average if known, otherwise today's average across stores
 function baseline(d) { const t = TAVG[d.gameID]; if (t && t.n && t.a > 0) return {avg:t.a, n:t.n, year:true}; const a = AVG[d.gameID]; if (a && a.n >= 2 && a.avg > 0) return {avg:a.avg, n:a.n, year:false}; return null; }
@@ -896,7 +940,9 @@ async function loadDeals(reset) {
       if (S.itadKey) await yearAverages(got, (a, n) => { if (reset && n > 8) { const el = document.querySelector('#dlist .empty p'); if (el) el.textContent = 'Checking a year of prices at every store… ' + a + ' of ' + n; } });
       dpool = dpool.concat(got).sort(byReal);
       fresh = dend ? dpool.splice(0) : dpool.splice(0, 30);
-      if (reset) $('#dlist').innerHTML = '';
+      if (reset) { $('#dlist').innerHTML = ''; dshown = []; }
+      dshown = dshown.concat(fresh);
+      queueYear(dshown.concat(dpool));
     } else {
       const data = await cached(dealsUrl(dpage), 15 * 6e4, dpage === 0);
       if (reset) $('#dlist').innerHTML = '';
@@ -906,6 +952,7 @@ async function loadDeals(reset) {
     $('#dlist').insertAdjacentHTML('beforeend', fresh.map(dealCard).join(''));
     fresh.forEach(d => requestCompat(d.steamAppID, d.title));
     dcount += fresh.length;
+    if (PRESETS[S.preset].avg && S.itadKey) setTimeout(yearStat, 0);
     $('#dstat').textContent = PRESETS[S.preset].avg ? dcount + ' deals · ranked by how far below ' + (S.itadKey ? 'their average price over the past year, across stores' : 'the average price across stores') : dcount + ' deals from ' + (S.stores || []).length + ' official stores';
     fresh.forEach(d => { if (S.ph[d.gameID]) recordPrice(d.gameID, +d.salePrice); });
     setTimeout(maybeMore, 50);
@@ -1377,6 +1424,7 @@ document.addEventListener('click', e => {
   else if (a === 'genres') openFilters();
   else if (a === 'rate') { S.minRate = S.minRate === 0 ? 80 : S.minRate === 80 ? 90 : 0; save(); renderPresets(); loadDeals(true); }
   else if (a === 'more') loadDeals(false);
+  else if (a === 'resort') { dshown = dshown.slice().sort(byReal); $('#dlist').innerHTML = dshown.map(dealCard).join(''); applyVis(); $('#main').scrollTop = 0; yearStat(); }
   else if (a === 'budget') openSheet(`<div class="pad"><h2>Budget</h2><p class="sub">See how your list compares with what you want to spend.</p><label class="f" for="bud">Budget ($)</label><input class="inp" id="bud" type="number" inputmode="decimal" min="0" step="1" value="${S.budget || ''}" placeholder="e.g. 60"><div class="chips">${[20, 40, 60, 100].map(v => `<button class="chip" onclick="document.getElementById('bud').value=${v}">$${v}</button>`).join('')}</div><div class="row2"><button class="btn ghost" data-act="close">Cancel</button><button class="btn" data-act="budget2">Save</button></div><p class="note">Leave it empty to remove the budget.</p></div>`);
   else if (a === 'lshare') shareList();
   else if (a === 'lclear') { if (confirmClear) { S.list = []; save(); renderList(); confirmClear = false; toast('List cleared'); } else { confirmClear = true; toast('Tap Clear list again to remove all ' + S.list.length + ' games'); setTimeout(() => confirmClear = false, 3500); } }

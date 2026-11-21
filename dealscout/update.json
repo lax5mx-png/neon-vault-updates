@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 7,
+  "v": 8,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "95a9d71328a718af55f420bcc4600b3dc4a1c25f9bf1541e1c13cf3b3d64557a",
+  "sha256": "6ad8b6182d2de58edff554c1cb392939431f264a015f460ab19f23141152c3bf",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "2f6300eeaf3f6bedfb017d7e8a873aefa59d66dc2ec20627f1570b11676aa7f2",
   "size": 131207
  },
- "notes": "Biggest discounts now compares each deal with what the game has actually cost over the past year at every store (with your IsThereAnyDeal key), not the listed price."
+ "notes": "Biggest discounts now gets the past-year average price for every game in the list, checking the rest in the background."
 }
