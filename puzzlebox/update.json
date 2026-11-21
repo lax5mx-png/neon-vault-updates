@@ -1,0 +1,16 @@
+{
+ "content": {
+  "v": 1,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/index.html",
+  "sha256": "85c74c19df0274f089138ac19a52141518a6cb465feabfcaa506c55cfad10975",
+  "minVc": 4
+ },
+ "apk": {
+  "vc": 4,
+  "vn": "3.0.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/Puzzlebox-3.0.0.apk",
+  "sha256": "88f4d16a77711a74a6d38a5bc936b60e6a36069b430019379893212667c6e12b",
+  "size": 929955
+ },
+ "notes": "Six new puzzles (2048, FreeCell, Sokoban, Bridges, Kakuro, Fill-In), achievements, full stats, backups and automatic updates."
+}

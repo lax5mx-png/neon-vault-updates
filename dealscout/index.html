@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>DealScout</title>
+<style>
+:root{
+  --sat:0px;--sab:0px;
+  --bg:#F2F4F1;--card:#FFFFFF;--ink:#111A14;--mute:#5E6B62;--line:#DDE3DD;--soft:#E7ECE6;
+  --acc:#14A44D;--onacc:#FFFFFF;--hot:#E5484D;--gold:#C98A00;--blue:#2D6BD9;
+  --good:#14A44D;--goodbg:#DFF5E6;--warn:#B76E00;--warnbg:#FFF0D6;--bad:#D12F35;--badbg:#FDE3E3;--unk:#6B7280;--unkbg:#ECEEF0;
+  --shadow:0 1px 2px rgba(10,30,15,.06),0 6px 16px rgba(10,30,15,.06);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0C110E;--card:#161D18;--ink:#E8F0EA;--mute:#93A398;--line:#253028;--soft:#1E2720;
+  --acc:#7BE495;--onacc:#06220F;--hot:#FF6B6E;--gold:#F2C14E;--blue:#8CB8FF;
+  --good:#7BE495;--goodbg:#173322;--warn:#F2C14E;--warnbg:#3A2E12;--bad:#FF7A7D;--badbg:#3D1A1C;--unk:#A3ACB5;--unkbg:#232A30;
+  --shadow:0 1px 2px rgba(0,0,0,.45);
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;min-width:0}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overscroll-behavior:none}
+button,input,select{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer;padding:0}
+img{display:block}
+#app{display:flex;flex-direction:column;height:100%;padding-top:var(--sat)}
+main{flex:1;overflow-y:auto;padding:0 14px calc(90px + var(--sab))}
+.view{display:none}.view.on{display:block}
+.top{display:flex;align-items:center;gap:10px;padding:14px 2px 6px}
+.logo{width:30px;height:30px;border-radius:9px;background:var(--acc);display:grid;place-items:center;color:var(--onacc)}
+.logo svg{width:20px;height:20px}
+.brand{flex:1}.brand b{display:block;font-size:17px;font-weight:850;line-height:1.1}.brand span{font-size:12px;color:var(--mute)}
+.rig{display:flex;align-items:center;gap:6px;background:var(--card);box-shadow:var(--shadow);border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:750;white-space:nowrap}
+.rig svg{width:16px;height:16px;color:var(--acc)}
+h1{font-size:28px;line-height:1.1;margin:10px 2px 2px;letter-spacing:-.5px;font-weight:850}
+.sub{color:var(--mute);font-size:14px;margin:0 2px}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:14px;padding:0 12px;margin:12px 0 4px;box-shadow:var(--shadow)}
+.search input{flex:1;border:0;background:none;padding:13px 0;outline:none;font-size:16px}
+.search svg{width:18px;height:18px;color:var(--mute);flex:none}
+.search button{color:var(--mute);width:32px;height:32px;display:grid;place-items:center}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 14px;border-radius:999px;background:var(--soft);font-weight:700;font-size:14px;min-height:38px;white-space:nowrap}
+.chip.on{background:var(--acc);color:var(--onacc)}
+.chip.icon{display:flex;align-items:center;gap:6px}.chip.icon svg{width:16px;height:16px}
+.chip .n{background:var(--acc);color:var(--onacc);border-radius:9px;font-size:11px;padding:1px 6px;margin-left:2px}
+.statline{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mute);margin:4px 2px 8px}
+.list{display:flex;flex-direction:column;gap:10px}
+.deal{display:flex;gap:12px;background:var(--card);border-radius:16px;padding:10px;box-shadow:var(--shadow);text-align:left;width:100%;position:relative}
+.deal .img{flex:none;width:118px;height:55px;border-radius:9px;overflow:hidden;background:var(--soft)}
+.deal .img img{width:100%;height:100%;object-fit:cover}
+.deal .mid{flex:1;display:flex;flex-direction:column;gap:4px}
+.deal .t{font-weight:750;font-size:15px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deal .meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.deal .right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.price{font-weight:850;font-size:18px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.price.free{color:var(--acc)}
+.was{font-size:12px;color:var(--mute);text-decoration:line-through;white-space:nowrap}
+.off{background:var(--hot);color:#fff;font-weight:850;font-size:12px;border-radius:7px;padding:2px 6px;white-space:nowrap}
+.tag{font-size:11.5px;font-weight:750;border-radius:7px;padding:2px 7px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+.tag img{width:14px;height:14px;border-radius:3px}
+.tag.store{background:var(--soft);color:var(--ink)}
+.tag.rate{background:var(--soft)}
+.tag.g{background:var(--goodbg);color:var(--good)}.tag.w{background:var(--warnbg);color:var(--warn)}.tag.b{background:var(--badbg);color:var(--bad)}.tag.u{background:var(--unkbg);color:var(--unk)}
+.r-hi{color:var(--good)}.r-mid{color:var(--warn)}.r-lo{color:var(--bad)}
+.more{display:flex;justify-content:center;padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:13px;font-weight:800;background:var(--acc);color:var(--onacc)}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.block{width:100%}
+.btn.sm{min-height:38px;padding:0 14px;font-size:14px;border-radius:11px}
+.empty{text-align:center;padding:40px 16px;color:var(--mute)}
+.empty h3{color:var(--ink);margin:6px 0;font-size:19px}
+.spin{width:30px;height:30px;border-radius:50%;border:4px solid var(--soft);border-top-color:var(--acc);animation:sp .8s linear infinite;margin:24px auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.skel{height:76px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--soft),var(--card));background-size:200% 100%;animation:sk 1.2s infinite}
+@keyframes sk{to{background-position:-200% 0}}
+/* free tab */
+.fcard{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);margin-top:12px}
+.fcard .hero{aspect-ratio:16/8.5;background:var(--soft);position:relative}
+.fcard .hero img{width:100%;height:100%;object-fit:cover}
+.fcard .hero img[alt='']{color:transparent}
+.fcard .hero .badge{position:absolute;left:10px;top:10px;background:var(--acc);color:var(--onacc);font-weight:850;font-size:13px;border-radius:8px;padding:4px 9px}
+.fcard .hero .badge.soon{background:#1E2720;color:#E8F0EA}
+.fcard .body{padding:12px 14px 14px;display:flex;align-items:center;gap:10px}
+.fcard .body .t{flex:1}.fcard .body b{display:block;font-size:17px}.fcard .body span{font-size:13px;color:var(--mute)}
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin:22px 2px 6px}
+.sec h2{font-size:17px;margin:0}
+.sec span{font-size:13px;color:var(--mute)}
+/* guide */
+.gcard{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;margin-top:12px}
+.gcard h3{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:8px}
+.gcard h3 i{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-style:normal;font-size:14px;background:var(--goodbg);color:var(--good);font-weight:850}
+.when{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:14.5px}
+.when b{white-space:nowrap}
+.site{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);text-align:left;width:100%}
+.site:first-of-type{border-top:0}
+.site .ic{width:38px;height:38px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font-weight:850;font-size:14px;flex:none}
+.site .tx{flex:1}.site .tx b{display:block;font-size:15px}.site .tx span{font-size:13px;color:var(--mute)}
+.site svg{width:18px;height:18px;color:var(--mute);flex:none}
+.cal{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.cal:first-of-type{border-top:0}
+.cal .d{flex:none;width:58px;text-align:center;background:var(--soft);border-radius:10px;padding:6px 0;font-weight:850;font-size:13px;line-height:1.15}
+.cal .d small{display:block;font-weight:700;color:var(--mute);font-size:11px}
+.cal .x{flex:1;font-size:14px}.cal .x b{display:block}
+.cal.live .d{background:var(--acc);color:var(--onacc)}.cal.live .d small{color:var(--onacc)}
+/* nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:var(--sab);z-index:6}
+nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 10px;font-size:12px;font-weight:700;color:var(--mute);position:relative}
+nav.tabs button svg{width:24px;height:24px}
+nav.tabs button.on{color:var(--acc)}
+nav.tabs .dot{position:absolute;top:5px;left:calc(50% + 8px);background:var(--hot);color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:grid;place-items:center;padding:0 4px}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-radius:24px 24px 0 0;z-index:21;transform:translateY(105%);transition:transform .25s cubic-bezier(.2,.8,.2,1);max-height:94%;overflow-y:auto;padding-bottom:calc(18px + var(--sab))}
+.sheet.on{transform:none}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:10px auto}
+.sheet .pad{padding:0 18px}
+.sheet h2{margin:4px 0 4px;font-size:22px;line-height:1.15}
+.dhero{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--soft)}
+.verdict{border-radius:14px;padding:12px 14px;margin-top:12px}
+.verdict b{display:flex;align-items:center;gap:8px;font-size:16px}
+.verdict.g{background:var(--goodbg);color:var(--good)}.verdict.w{background:var(--warnbg);color:var(--warn)}.verdict.b{background:var(--badbg);color:var(--bad)}.verdict.u{background:var(--unkbg);color:var(--unk)}
+.verdict p{margin:4px 0 0;font-size:13.5px;color:var(--ink);opacity:.85}
+.reqs{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px;margin-top:8px;color:var(--ink)}
+.reqs dt{font-weight:750;color:var(--mute)}.reqs dd{margin:0}
+.ptable{margin-top:8px}
+.prow{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.prow:first-child{border-top:0}
+.prow img{width:22px;height:22px;border-radius:5px;flex:none}
+.prow .s{flex:1;font-weight:700;font-size:14.5px}.prow .s small{display:block;font-weight:500;color:var(--mute);font-size:12px}
+.prow .pp{text-align:right;font-variant-numeric:tabular-nums}.prow .pp b{display:block;font-size:16px}.prow .pp small{font-size:12px;color:var(--mute)}
+.prow.best{background:var(--goodbg);margin:0 -10px;padding:10px;border-radius:12px;border-top:0}
+.prow.off{opacity:.45}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.facts div{background:var(--soft);border-radius:12px;padding:9px 10px}
+.facts b{display:block;font-size:16px;font-variant-numeric:tabular-nums}
+.facts span{font-size:11.5px;color:var(--mute)}
+.desc{font-size:14px;color:var(--mute);margin-top:12px;line-height:1.5}
+.row2{display:flex;gap:10px;margin-top:14px}.row2 .btn{flex:1}
+label.f{display:block;font-size:13px;font-weight:750;color:var(--mute);margin:14px 0 6px}
+.inp{width:100%;min-height:46px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:10px 12px;font-size:16px;outline:none}
+.inp:focus{border-color:var(--acc)}
+.li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);min-height:56px}
+.li:first-child{border-top:0}
+.li .t{flex:1}.li .t small{display:block;color:var(--mute);font-size:12.5px}
+.sw{width:50px;height:30px;border-radius:15px;background:var(--line);position:relative;flex:none;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:12px;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.sw.on{background:var(--acc)}.sw.on::after{transform:translateX(20px)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--soft);border-radius:12px;padding:3px;gap:3px}
+.seg button{min-height:40px;border-radius:10px;font-weight:700;font-size:14px}
+.seg button.on{background:var(--card);color:var(--acc);box-shadow:var(--shadow)}
+.storegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.storegrid button{display:flex;align-items:center;gap:8px;padding:10px;border-radius:12px;background:var(--soft);font-size:13.5px;font-weight:700;text-align:left;opacity:.5}
+.storegrid button.on{opacity:1;outline:2px solid var(--acc)}
+.storegrid img{width:20px;height:20px;border-radius:5px}
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--sab));transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;transition:.2s;z-index:50;pointer-events:none;max-width:92%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.wrow{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:16px;padding:10px;box-shadow:var(--shadow);width:100%;text-align:left}
+.wrow .img{flex:none;width:92px;height:43px;border-radius:8px;overflow:hidden;background:var(--soft)}
+.wrow .img img{width:100%;height:100%;object-fit:cover}
+.wrow .mid{flex:1}.wrow .mid b{display:block;font-size:15px;line-height:1.2}.wrow .mid span{font-size:12.5px;color:var(--mute)}
+.hit{outline:2.5px solid var(--acc)}
+.note{font-size:12.5px;color:var(--mute);margin:10px 2px 0;line-height:1.45}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.tag.own{background:#E0EAFF;color:#2D55B5}
+@media (prefers-color-scheme:dark){.tag.own{background:#1B2A4A;color:#9DBBFF}}
+.ownbar{display:inline-block;margin:6px 0 2px;padding:5px 10px;border-radius:999px;background:#E0EAFF;color:#2D55B5;font-weight:800;font-size:13px}
+@media (prefers-color-scheme:dark){.ownbar{background:#1B2A4A;color:#9DBBFF}}
+.chips.wrap{flex-wrap:wrap;overflow:visible}
+.seg.sm{max-width:220px;margin:0 0 8px auto}.seg.sm button{min-height:32px;font-size:13px}
+.phbox{position:relative;background:var(--card);border-radius:14px;padding:10px 10px 4px;box-shadow:var(--shadow);min-height:60px}
+.phsvg{width:100%;height:180px;display:block;touch-action:pan-y}
+.phsvg text{font-size:11px;fill:var(--mute);font-weight:600}
+.phsvg .gl{stroke:var(--line);stroke-width:1}
+.phsvg .reg{stroke:var(--mute);stroke-width:1.2;stroke-dasharray:4 4;opacity:.7}
+.phsvg .ln{fill:none;stroke:var(--acc);stroke-width:2.4;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.phsvg .ar{fill:var(--acc);opacity:.12}
+.phsvg .lo{fill:var(--gold);stroke:var(--card);stroke-width:2}
+.phsvg .nw{fill:var(--acc);stroke:var(--card);stroke-width:2}
+.phsvg .cur{stroke:var(--ink);stroke-width:1;opacity:.5}
+.phtip{display:none;position:absolute;top:44px;width:120px;background:var(--ink);color:var(--bg);font-size:12.5px;padding:6px 8px;border-radius:9px;pointer-events:none;line-height:1.3}
+.phleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--mute);font-weight:600;margin-top:4px}
+.phleg .k{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px;background:var(--acc)}
+.phleg .k.reg{background:none;border-top:2px dashed var(--mute);height:0}.phleg .k.lo{width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.phempty{padding:6px 4px}.phempty b{font-size:15px}.phempty p{margin:4px 0;font-size:13.5px;color:var(--mute)}
+</style>
+</head>
+<body>
+<div id="app">
+<main id="main">
+  <div class="top">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/></svg></div>
+    <div class="brand"><b>DealScout</b><span>PC deals that run on your laptop</span></div>
+    <button class="rig" id="rigbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M1 20h22"/></svg><span id="rigtxt"></span></button>
+  </div>
+
+  <section class="view on" id="v-deals">
+    <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search any PC game" enterkeyhint="search" autocomplete="off"><button id="qx" style="display:none" aria-label="Clear">✕</button></div>
+    <div class="chips" id="presets"></div>
+    <div class="chips" id="fchips" style="padding-top:0"></div>
+    <div class="statline"><span id="dstat"></span><span id="dupd"></span></div>
+    <div class="list" id="dlist"></div>
+    <div class="more" id="dmore"></div>
+  </section>
+
+  <section class="view" id="v-free">
+    <h1>Free games</h1>
+    <p class="sub">Free to keep forever once you claim them. Epic gives away a new one every Thursday.</p>
+    <div id="flist"></div>
+  </section>
+
+  <section class="view" id="v-watch">
+    <h1>Watchlist</h1>
+    <p class="sub" id="wsub"></p>
+    <div class="list" id="wlist" style="margin-top:12px"></div>
+  </section>
+
+  <section class="view" id="v-guide">
+    <h1>Deal guide</h1>
+    <p class="sub">When to check, where to check, and how to buy safely.</p>
+    <div id="glist"></div>
+  </section>
+</main>
+<nav class="tabs" id="tabs">
+  <button data-v="deals" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3" fill="currentColor"/></svg>Deals</button>
+  <button data-v="free"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5" rx="1"/><path d="M12 8v13M5 13v8h14v-8M12 8S10.5 3 7.5 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Free<span class="dot" id="freedot" style="display:none"></span></button>
+  <button data-v="watch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>Watchlist<span class="dot" id="watchdot" style="display:none"></span></button>
+  <button data-v="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Guide</button>
+</nav>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+<script>
+/* Shared update UI for the personal apps: update banner, "what's new", version info. */
+(function () {
+  var A = window.Android || null;
+  var css = '.upd-bar{position:fixed;left:12px;right:12px;bottom:calc(86px + var(--sab,0px));z-index:60;background:#111A2E;color:#fff;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;font:15px/1.4 system-ui,sans-serif;transform:translateY(120%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility .3s}' +
+    '.upd-bar.on{transform:none;opacity:1;visibility:visible;pointer-events:auto}.upd-bar b{font-size:16px}.upd-bar p{margin:0;opacity:.85;font-size:13.5px}' +
+    '.upd-row{display:flex;gap:8px}.upd-row button{flex:1;min-height:44px;border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer}' +
+    '.upd-go{background:#7BE495;color:#06220F}.upd-no{background:rgba(255,255,255,.12);color:#fff}' +
+    '.upd-toast{position:fixed;left:50%;top:calc(14px + var(--sat,0px));transform:translate(-50%,-20px);background:#111A2E;color:#fff;padding:11px 16px;border-radius:12px;font:700 14px system-ui,sans-serif;opacity:0;transition:.2s;z-index:61;pointer-events:none;max-width:90%;text-align:center}.upd-toast.on{opacity:1;transform:translate(-50%,0)}';
+  function boot() {
+    var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+    var bar = document.createElement('div'); bar.className = 'upd-bar'; document.body.appendChild(bar);
+    var t = document.createElement('div'); t.className = 'upd-toast'; document.body.appendChild(t);
+    var tt;
+    function toast(msg) { t.textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove('on'); }, 3200); }
+    if (!window.__toast) window.__toast = toast;
+    function show(html, buttons) {
+      bar.innerHTML = html + '<div class="upd-row">' + buttons.map(function (b, i) { return '<button class="' + b[1] + '" data-i="' + i + '">' + b[0] + '</button>'; }).join('') + '</div>';
+      bar.onclick = function (e) { var x = e.target.closest('button'); if (!x) return; var b = buttons[+x.dataset.i]; bar.classList.remove('on'); if (b[2]) b[2](); };
+      requestAnimationFrame(function () { bar.classList.add('on'); });
+    }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    window.__apkReady = function (vn, notes) {
+      show('<b>Update ready: version ' + esc(vn) + '</b>' + (notes ? '<p>' + esc(notes) + '</p>' : '') + '<p>Android will ask you to confirm the install. After the first time, updates install by themselves.</p>',
+        [['Later', 'upd-no'], ['Install now', 'upd-go', function () { A && A.installUpdate(); }]]);
+    };
+    window.UPD = {
+      info: function () { try { return A ? A.appInfo() : 'browser preview'; } catch (e) { return ''; } },
+      check: function () { if (A && A.checkUpdates) { A.checkUpdates(); toast('Checking for updates…'); } else toast('Updates work in the Android app'); }
+    };
+    if (A && A.takeNotes) {
+      var n = ''; try { n = A.takeNotes(); } catch (e) {}
+      if (n) setTimeout(function () { show('<b>Updated</b><p>' + esc(n) + '</p>', [['Nice', 'upd-go']]); }, 800);
+    }
+    try { A && A.ready && A.ready(); } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+</script>
+<script>
+/* DealScout: live PC game deals (CheapShark + Epic + Steam), checked against the user's laptop */
+{
+const A = window.Android || null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = v => { const n = +v; return n === 0 ? 'Free' : '$' + n.toFixed(2); };
+const CS = 'https://www.cheapshark.com/api/1.0/';
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fdate = d => { const x = new Date(d); return MON[x.getMonth()] + ' ' + x.getDate() + (x.getFullYear() !== new Date().getFullYear() ? ', ' + x.getFullYear() : ''); };
+
+/* ---------- networking (native bridge on Android, fetch in a browser) ---------- */
+let rid = 0; const pend = {};
+window.__httpCb = (id, code, body) => { const p = pend[id]; if (!p) return; delete pend[id]; if (code >= 200 && code < 300) { try { p.res(JSON.parse(body)); } catch (e) { p.rej(new Error('Bad response')); } } else p.rej(new Error(code ? 'HTTP ' + code : (body || 'No connection'))); };
+function get(url) {
+  if (A && A.http) return new Promise((res, rej) => { const id = 'r' + (++rid); pend[id] = {res, rej}; A.http(id, url); setTimeout(() => { if (pend[id]) { delete pend[id]; rej(new Error('Timed out')); } }, 30000); });
+  return fetch(url).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+const mem = {};
+function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { try { for (const key of Object.keys(localStorage)) if (key.startsWith('c:')) localStorage.removeItem(key); localStorage.setItem(k, JSON.stringify(v)); } catch (e2) {} } }
+async function cached(url, ttl, persist) {
+  const now = Date.now(), m = mem[url];
+  if (m && now - m.t < ttl) return m.d;
+  if (persist) { const p = lsGet('c:' + url); if (p && now - p.t < ttl) { mem[url] = p; return p.d; } }
+  const d = await get(url); mem[url] = {t:now, d}; if (persist) lsSet('c:' + url, {t:now, d}); return d;
+}
+
+/* ---------- state ---------- */
+const KEY = 'dealscout.v1';
+const GPUS = [
+  ['RTX 4050 Laptop (6 GB)', 8.5, 6], ['RTX 3050 Laptop (4 GB)', 5.5, 4], ['RTX 3060 Laptop (6 GB)', 9, 6], ['RTX 4060 Laptop (8 GB)', 10.5, 8], ['RTX 4070 Laptop (8 GB)', 12.5, 8],
+  ['RTX 5060 Laptop (8 GB)', 12, 8], ['GTX 1650 (4 GB)', 3.5, 4], ['GTX 1660 Ti (6 GB)', 5.8, 6], ['RTX 2060 (6 GB)', 7.2, 6], ['RTX 3060 (12 GB)', 8.7, 12],
+  ['RTX 4060 (8 GB)', 10.5, 8], ['RTX 4070 (12 GB)', 17.5, 12], ['RX 6600 (8 GB)', 8.3, 8], ['RX 7600 (8 GB)', 10.5, 8], ['Integrated graphics only', 1.2, 1]
+];
+function blank() { return {gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}}; }
+let S = Object.assign(blank(), lsGet(KEY) || {});
+function save() { lsSet(KEY, S); syncNative(); }
+function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target})), free:S.freeNote})); } catch (e) {} }
+function pushReminder() { if (!A) return; const [h, m] = S.dailyT.split(':').map(Number); try { A.setReminder(!!S.daily, h, m); } catch (e) {} }
+const rig = () => ({gpu:GPUS[S.gpu][1], vram:GPUS[S.gpu][2], name:GPUS[S.gpu][0], ram:S.ram, disk:S.disk});
+
+/* ---------- stores ---------- */
+let STORES = {};
+const DEFAULT_OFF = new Set(['35']); // lesser-known stores start switched off
+async function loadStores() {
+  try { const s = await cached(CS + 'stores', 864e5, true); s.forEach(x => STORES[x.storeID] = {name:x.storeName.replace('GreenManGaming', 'Green Man Gaming').replace('Humble Store', 'Humble').replace('Uplay', 'Ubisoft Store'), active:x.isActive === 1, icon:'https://www.cheapshark.com' + x.images.icon}); }
+  catch (e) { [['1','Steam'],['3','Green Man Gaming'],['7','GOG'],['11','Humble'],['15','Fanatical'],['25','Epic Games Store']].forEach(([id, n]) => STORES[id] = {name:n, active:true, icon:''}); }
+  if (!S.stores) { S.stores = Object.keys(STORES).filter(id => STORES[id].active && !DEFAULT_OFF.has(id)); save(); }
+}
+const storeOn = id => S.stores && S.stores.includes(String(id));
+const storeTag = id => { const s = STORES[id] || {name:'Store ' + id}; return `<span class="tag store">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}${esc(s.name)}</span>`; };
+
+/* ---------- will it run? (Steam requirements vs the laptop) ---------- */
+const G = (re, s) => [new RegExp(re, 'i'), s];
+const GPU_TABLE = [
+  // NVIDIA RTX 50/40/30/20
+  G('\\b(?:rtx\\s*)?5090', 48), G('\\b(?:rtx\\s*)?5080', 32), G('\\b(?:rtx\\s*)?5070[\\s-]*ti', 26), G('\\b(?:rtx\\s*)?5070(?![\\s-]*ti)', 22), G('\\b(?:rtx\\s*)?5060[\\s-]*ti', 15), G('\\b(?:rtx\\s*)?5060(?![\\s-]*ti)', 12.5), G('\\b(?:rtx\\s*)?5050', 9.5),
+  G('\\b(?:rtx\\s*)?4090', 36), G('\\b(?:rtx\\s*)?4080', 28), G('\\b(?:rtx\\s*)?4070[\\s-]*ti', 22), G('\\b(?:rtx\\s*)?4070[\\s-]*super', 20), G('\\b(?:rtx\\s*)?4070(?!\\s*(ti|super))', 17.5), G('\\b(?:rtx\\s*)?4060[\\s-]*ti', 13.5), G('\\b(?:rtx\\s*)?4060(?![\\s-]*ti)', 10.5), G('\\b(?:rtx\\s*)?4050', 8.5),
+  G('\\b(?:rtx\\s*)?3090', 19.5), G('\\b(?:rtx\\s*)?3080[\\s-]*ti', 19), G('\\b(?:rtx\\s*)?3080(?![\\s-]*ti)', 17.5), G('\\b(?:rtx\\s*)?3070[\\s-]*ti', 14.5), G('\\b(?:rtx\\s*)?3070(?![\\s-]*ti)', 13.5), G('\\b(?:rtx\\s*)?3060[\\s-]*ti', 11.5), G('\\b(?:rtx\\s*)?3060(?![\\s-]*ti)', 8.7), G('\\b(?:rtx\\s*)?3050', 6.2),
+  G('\\b(?:rtx\\s*)?2080[\\s-]*ti', 13.5), G('\\b(?:rtx\\s*)?2080', 11.2), G('\\b(?:rtx\\s*)?2070[\\s-]*super', 10), G('\\b(?:rtx\\s*)?2070(?![\\s-]*super)', 9), G('\\b(?:rtx\\s*)?2060[\\s-]*super', 8.5), G('\\b(?:rtx\\s*)?2060(?![\\s-]*super)', 7.2),
+  // GTX
+  G('(gtx|geforce)\\s*1660\\s*(ti|super)', 5.8), G('(gtx|geforce)\\s*1660(?!\\s*(ti|super))', 5.0), G('(gtx|geforce)\\s*1650[\\s-]*super', 4.6), G('(gtx|geforce)\\s*1650(?![\\s-]*super)', 3.5), G('(gtx|geforce)\\s*1630', 2.2),
+  G('(gtx|geforce)\\s*1080[\\s-]*ti', 9), G('(gtx|geforce)\\s*1080(?![\\s-]*ti)', 6.8), G('(gtx|geforce)\\s*1070[\\s-]*ti', 6.2), G('(gtx|geforce)\\s*1070(?![\\s-]*ti)', 5.5), G('(gtx|geforce)\\s*1060', 3.8), G('(gtx|geforce)\\s*1050[\\s-]*ti', 2.8), G('(gtx|geforce)\\s*1050(?![\\s-]*ti)', 2.3), G('(gt|geforce)\\s*1030', 1.0),
+  G('(gtx|geforce)[\\s-]*titan', 5), G('(gtx|geforce)\\s*980[\\s-]*ti', 5.6), G('(gtx|geforce)\\s*980(?![\\s-]*ti)', 4.6), G('(gtx|geforce)\\s*970', 4.2), G('(gtx|geforce)\\s*960', 3.0), G('(gtx|geforce)\\s*950', 2.5),
+  G('(gtx|geforce)\\s*780', 3.6), G('(gtx|geforce)\\s*770', 3.0), G('(gtx|geforce)\\s*760', 2.4), G('(gtx|geforce)\\s*750[\\s-]*ti', 2.0), G('(gtx|geforce)\\s*750(?![\\s-]*ti)', 1.7), G('(gtx|geforce)\\s*6[5-9]0', 2.0), G('(gtx|geforce)\\s*[45][6-9]0', 1.6), G('(gtx|geforce)\\s*[45][0-5]0', 1.0),
+  G('(gt|geforce)\\s*7[1-4]0', 0.8), G('(gt|geforce)\\s*6[0-4]0', 0.7), G('(9800|8800)\\s*gt', 0.6), G('(gt|geforce)\\s*[2-4][0-4]0', 0.5),
+  // AMD
+  G('rx\\s*9070[\\s-]*xt', 29), G('rx\\s*9070(?![\\s-]*xt)', 25), G('rx\\s*9060', 15), G('rx\\s*7900[\\s-]*xtx', 30), G('rx\\s*7900[\\s-]*xt(?!x)', 27), G('rx\\s*7900', 22), G('rx\\s*7800', 19.5), G('rx\\s*7700', 16.5), G('rx\\s*7600', 10.5),
+  G('rx\\s*6950', 21), G('rx\\s*6900', 19.5), G('rx\\s*6800[\\s-]*xt', 18), G('rx\\s*6800(?![\\s-]*xt)', 15.5), G('rx\\s*67[05]0', 12.3), G('rx\\s*6650', 10), G('rx\\s*6600[\\s-]*xt', 9.5), G('rx\\s*6600(?![\\s-]*xt)', 8.3), G('rx\\s*6500', 4.5), G('rx\\s*6400', 3.6),
+  G('rx\\s*5700[\\s-]*xt', 9.5), G('rx\\s*5700(?![\\s-]*xt)', 8.6), G('rx\\s*5600', 7.5), G('rx\\s*5500', 4.8), G('rx\\s*vega\\s*64|vega\\s*64', 7), G('rx\\s*vega\\s*56|vega\\s*56', 6), G('radeon\\s*vii', 8.5),
+  G('rx\\s*590', 4.7), G('rx\\s*580', 4.3), G('rx\\s*570', 3.8), G('rx\\s*480', 4.2), G('rx\\s*470', 3.5), G('rx\\s*560', 2.3), G('rx\\s*460', 2.0), G('rx\\s*550', 1.4),
+  G('r9\\s*fury', 4.8), G('r9\\s*390', 4.4), G('r9\\s*290', 3.9), G('r9\\s*380', 3.0), G('r9\\s*280', 2.7), G('r9\\s*270', 2.0), G('r7\\s*3[67]0', 1.5), G('r7\\s*2[4-6]0', 0.9),
+  G('hd\\s*79[0-9]0', 2.7), G('hd\\s*78[0-9]0', 2.1), G('hd\\s*77[0-9]0', 1.2), G('hd\\s*[56]8[0-9]0', 1.0), G('hd\\s*[456][0-7][0-9]0', 0.6),
+  G('radeon\\s*(780|890)m', 3.2), G('radeon\\s*(680|760)m', 2.4), G('radeon\\s*(740|660|610)m', 1.6), G('radeon\\s*vega\\s*(8|11)', 1.2),
+  // Intel
+  G('arc\\s*b580', 11), G('arc\\s*b570', 9.5), G('arc\\s*a770', 10), G('arc\\s*a750', 9), G('arc\\s*a580', 8), G('arc\\s*a380', 4), G('arc\\s*a3[0-5]0m?', 2.5), G('iris\\s*xe', 1.4), G('intel\\s*arc(?!\\s*[ab]\\d)', 3.0),
+  G('uhd\\s*(graphics\\s*)?7[0-9]0', 1.0), G('uhd\\s*(graphics\\s*)?6[0-9]0', 0.6), G('uhd', 0.6), G('iris', 0.9), G('hd\\s*graphics\\s*[0-9]{3,4}', 0.4), G('intel\\s*hd', 0.4), G('(dx|directx)\\s*9|shader\\s*model\\s*[23]', 0.4)
+];
+const strip = h => String(h || '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/li>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ');
+function field(t, name) { const m = t.match(new RegExp(name + '\\s*:\\s*([^\\n]*)', 'i')); return m ? m[1].trim() : ''; }
+function gb(s) { const m = String(s).match(/([\d.]+)\s*(GB|MB|TB)/i); if (!m) return null; const v = parseFloat(m[1]); return m[2].toUpperCase() === 'MB' ? v / 1024 : m[2].toUpperCase() === 'TB' ? v * 1024 : v; }
+function gpuScore(s) {
+  if (!s) return null; let best = null;
+  const parts = s.split(/\s+or\s+|\/|,|;|\|/i);
+  for (const part of parts) { for (const [re, sc] of GPU_TABLE) if (re.test(part)) { best = best === null ? sc : Math.min(best, sc); break; } }
+  return best;
+}
+function parseReq(html) {
+  const t = strip(html); if (!t.trim()) return null;
+  const g = field(t, 'Graphics') || field(t, 'Video Card') || field(t, 'Video'), mem = field(t, 'Memory'), st = field(t, 'Storage') || field(t, 'Hard Drive') || field(t, 'Hard Disk Space');
+  const vr = (g.match(/(\d+)\s*GB\+?\s*(of\s*)?(VRAM|video)/i) || [])[1];
+  return {gpuText:g.replace(/\s+/g, ' ').slice(0, 160), gpu:gpuScore(g), ram:gb(mem), storage:gb(st), vram:vr ? +vr : null};
+}
+function summarize(d) {
+  const req = d.pc_requirements && !Array.isArray(d.pc_requirements) ? d.pc_requirements : {};
+  return {name:d.name, win:!d.platforms || d.platforms.windows !== false, min:parseReq(req.minimum), rec:parseReq(req.recommended),
+    desc:strip(d.short_description).trim(), genres:(d.genres || []).map(x => x.description).slice(0, 4), release:d.release_date && d.release_date.date || '', header:d.header_image || '',
+    meta:d.metacritic ? {score:d.metacritic.score, url:d.metacritic.url} : null, free:!!d.is_free};
+}
+function verdict(c) {
+  if (!c) return {k:'u', label:'Not checked', why:'No Steam listing to check requirements against.'};
+  const R = rig(), notes = [];
+  if (!c.win) return {k:'b', label:'Not on Windows', why:'This game doesn’t list Windows support.'};
+  const m = c.min, r = c.rec;
+  if (!m && !r) return {k:'u', label:'Not checked', why:'The store page doesn’t list system requirements.'};
+  const over = x => x !== null && x !== undefined;
+  if (m && over(m.gpu) && m.gpu > R.gpu * 1.3) return {k:'b', label:'May not run', why:'Its minimum graphics card is clearly stronger than your ' + R.name + '.'};
+  if (m && over(m.ram) && m.ram > R.ram) return {k:'b', label:'May not run', why:'It needs at least ' + m.ram + ' GB of RAM; you have ' + R.ram + ' GB.'};
+  if (m && over(m.gpu) && m.gpu > R.gpu * 1.05) return {k:'w', label:'May struggle', why:'Its minimum graphics card is about level with or a bit above yours, so expect low settings.', notes};
+  if (m && over(m.vram) && m.vram > R.vram) return {k:'w', label:'May struggle', why:'It asks for ' + m.vram + ' GB of video memory and your card has ' + R.vram + ' GB, so use low textures.', notes};
+  const need = (r && r.storage) || (m && m.storage);
+  if (need && need > R.disk) notes.push('Needs about ' + Math.round(need) + ' GB of space; you set ' + R.disk + ' GB free.');
+  if (r && over(r.gpu) && r.gpu <= R.gpu * 1.05 && (!over(r.ram) || r.ram <= R.ram) && (!over(r.vram) || r.vram <= R.vram)) return {k:'g', label:'Runs great', why:'Your laptop meets the recommended specs.', notes};
+  if (r && (over(r.gpu) || over(r.ram))) return {k:'w', label:'Runs on lower settings', why:'Above the minimum but below the recommended specs, so use medium settings or DLSS.', notes};
+  if (m && over(m.gpu)) return {k:'g', label:'Should run well', why:'Your laptop is well above the minimum specs.', notes};
+  return {k:'g', label:'Should run', why:'Nothing in the listed requirements is above your laptop.', notes};
+}
+const COMPAT_KEY = 'compat.v1';
+let COMPAT = lsGet(COMPAT_KEY) || {};
+const queue = [], waiting = {}; let active = 0;
+const ckey = (appid, title) => appid ? String(appid) : 't:' + cleanTitle(title).toLowerCase();
+function cleanTitle(t) {
+  return String(t || '').replace(/[™®©]/g, '')
+    .replace(/\s*[-–:(]?\s*\b(digital\s+)?(deluxe|ultimate|gold|complete|definitive|premium|standard|game of the year|goty|elite|collector'?s|special|anniversary|enhanced|launch|director'?s cut|legendary|platinum|year \d+|super deluxe|ultimate deluxe|royal|bonus|cross-gen|next level|hd)\b.*$/i, '')
+    .replace(/\s*[-–:(]?\s*\b(edition|bundle|pack|collection)\b.*$/i, '').replace(/\s+/g, ' ').trim();
+}
+function requestCompat(appid, title) {
+  const k = ckey(appid, title); if (!appid && !title) return k;
+  if (COMPAT[k] || waiting[k]) return k; waiting[k] = true; queue.push([k, appid, title]); pump(); return k;
+}
+async function steamDetails(id) { const j = await get('https://store.steampowered.com/api/appdetails?appids=' + id + '&cc=us&l=en'); const e = j && j[id]; return e && e.success && e.data && e.data.type === 'game' ? e.data : null; }
+async function steamFind(title) {
+  const q = cleanTitle(title); if (!q) return null;
+  const r = await get('https://store.steampowered.com/api/storesearch/?term=' + encodeURIComponent(q) + '&l=english&cc=US');
+  const items = (r && r.items || []).filter(i => i.type === 'app'); if (!items.length) return null;
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, ''); const nq = norm(q);
+  const hit = items.find(i => norm(i.name) === nq) || items.find(i => nq.startsWith(norm(i.name)) || norm(i.name).startsWith(nq));
+  return hit ? hit.id : null;
+}
+function pump() {
+  while (active < 3 && queue.length) {
+    const [k, appid, title] = queue.shift(); active++;
+    (async () => {
+      let d = null;
+      if (appid) d = await steamDetails(appid).catch(() => null);
+      if (!d && title) { const id = await steamFind(title).catch(() => null); if (id && String(id) !== String(appid)) d = await steamDetails(id).catch(() => null); }
+      COMPAT[k] = d ? summarize(d) : {none:true, t:Date.now()};
+    })().finally(() => { active--; delete waiting[k]; lsSet(COMPAT_KEY, COMPAT); updateBadges(k); setTimeout(pump, 200); });
+  }
+}
+function vtag(k) {
+  if (!k || k === 't:') return '<span class="tag u">? Not checked</span>';
+  const c = COMPAT[k]; if (!c) return '<span class="tag u">Checking…</span>';
+  const v = verdict(c.none ? null : c); const ic = v.k === 'g' ? '✓' : v.k === 'w' ? '~' : v.k === 'b' ? '✗' : '?';
+  return `<span class="tag ${v.k}">${ic} ${v.label}</span>`;
+}
+function updateBadges(k) {
+  document.querySelectorAll('[data-vapp]').forEach(e => { if (e.dataset.vapp === k) e.innerHTML = vtag(k); });
+  document.querySelectorAll('.deal[data-ck]').forEach(e => { if (e.dataset.ck === k) e.style.display = cardHidden(e) ? 'none' : ''; });
+  if (S.genres.length || (S.hideOwned && OWNED.size)) { clearTimeout(moreT); moreT = setTimeout(maybeMore, 400); }
+  if (curGame && curGame.ck === k && sheetOpen && sheetMode === 'game') renderGame();
+}
+const rateTag = d => { const p = +d.steamRatingPercent; if (!p) return ''; const cls = p >= 80 ? 'r-hi' : p >= 60 ? 'r-mid' : 'r-lo'; return `<span class="tag rate"><b class="${cls}">${p}%</b> ${esc(d.steamRatingText || '')}</span>`; };
+const img = (appid, thumb) => appid ? `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg` : thumb;
+
+/* ---------- owned games ---------- */
+let OWNED = new Set();
+const normT = t => cleanTitle(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+function rebuildOwned() { OWNED = new Set((S.owned.apps || []).map(String)); S.mine.forEach(m => { if (m.appid) OWNED.add(String(m.appid)); OWNED.add('g:' + m.id); OWNED.add('t:' + normT(m.title)); }); (S.owned.titles || []).forEach(t => OWNED.add('t:' + t)); }
+const isOwned = (appid, title, gameID) => (appid && OWNED.has(String(appid))) || (gameID && OWNED.has('g:' + gameID)) || (title && OWNED.has('t:' + normT(title)));
+async function steamImport(quiet) {
+  const key = (S.steamKey || '').trim(), user = (S.steamUser || '').trim();
+  if (!key || !user) { if (!quiet) toast('Add your Steam profile and Web API key first'); return false; }
+  let id = '';
+  const m = user.match(/(?:profiles\/)?(7656\d{13})/), v = user.match(/\/id\/([^\/?#\s]+)/);
+  if (m) id = m[1];
+  else {
+    const name = v ? v[1] : user.replace(/^https?:\/\/\S*\//, '').replace(/\/$/, '');
+    const r = await get('https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=' + encodeURIComponent(key) + '&vanityurl=' + encodeURIComponent(name)).catch(e => ({err:e}));
+    if (r && r.response && r.response.success === 1) id = r.response.steamid;
+    else { if (!quiet) toast(r && r.err && /403|401/.test(String(r.err)) ? 'Steam rejected that API key' : 'Couldn’t find that Steam profile'); return false; }
+  }
+  let r;
+  try { r = await get('https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=' + encodeURIComponent(key) + '&steamid=' + id + '&include_appinfo=1&include_played_free_games=1&format=json'); }
+  catch (e) { if (!quiet) toast(/403|401/.test(String(e)) ? 'Steam rejected that API key' : 'Couldn’t reach Steam'); return false; }
+  const games = r && r.response && r.response.games;
+  if (!games) { if (!quiet) toast('Your game list is private. Set Game details to Public in Steam privacy settings.'); return false; }
+  S.steamId = id; S.owned = {apps:games.map(g => g.appid), titles:games.map(g => normT(g.name)).filter(Boolean), at:new Date().toISOString().slice(0, 10)};
+  rebuildOwned(); save(); if (!quiet) toast('Imported ' + games.length + ' Steam games'); return true;
+}
+
+/* ---------- genres ---------- */
+const GENRES = ['Action', 'Adventure', 'RPG', 'Strategy', 'Simulation', 'Indie', 'Casual', 'Racing', 'Sports', 'Massively Multiplayer', 'Free to Play', 'Early Access'];
+const gLabel = g => g === 'Massively Multiplayer' ? 'MMO' : g;
+function genreOk(k) { if (!S.genres.length) return true; const c = COMPAT[k]; if (!c) return null; if (c.none) return false; return (c.genres || []).some(g => S.genres.includes(g)); }
+// one place that decides whether a deal card is shown
+function cardHidden(el) {
+  const k = el.dataset.ck, c = COMPAT[k];
+  if (S.hideOwned && isOwned(el.dataset.app, el.dataset.title, el.dataset.game)) return true;
+  if (S.hideNo && c && !c.none && verdict(c).k === 'b') return true;
+  if (S.genres.length && genreOk(k) !== true) return true;
+  return false;
+}
+function applyVis(root) { (root || document).querySelectorAll('.deal[data-ck]').forEach(e => { e.style.display = cardHidden(e) ? 'none' : ''; }); }
+let moreT = 0;
+function maybeMore() {
+  if (view !== 'deals' || searchMode || dloading || dend || !dcount) return;
+  const shown = [...document.querySelectorAll('#dlist .deal')].filter(e => e.style.display !== 'none').length;
+  const pending = [...document.querySelectorAll('#dlist .deal')].some(e => !COMPAT[e.dataset.ck]);
+  if (S.genres.length || (S.hideOwned && OWNED.size)) $('#dstat').textContent = shown + ' deals shown' + (S.genres.length ? ' · ' + S.genres.map(gLabel).join(', ') : '') + (pending ? ' · checking more…' : '');
+  if (shown < 14 && !pending && dpage < 12) loadDeals(false);
+}
+
+/* ---------- price history ---------- */
+function recordPrice(gameID, price) {
+  if (!(price >= 0)) return; const day = new Date().toISOString().slice(0, 10), h = S.ph[gameID] = S.ph[gameID] || [];
+  const last = h[h.length - 1]; if (last && last[0] === day) last[1] = Math.min(last[1], price); else h.push([day, price]);
+  if (h.length > 400) h.splice(0, h.length - 400);
+  const ids = Object.keys(S.ph); if (ids.length > 300) ids.sort((a, b) => S.ph[a][S.ph[a].length - 1][0] < S.ph[b][S.ph[b].length - 1][0] ? -1 : 1).slice(0, ids.length - 300).forEach(i => delete S.ph[i]);
+}
+const ITAD = 'https://api.isthereanydeal.com/';
+async function itadHistory(appid, title) {
+  const key = encodeURIComponent(S.itadKey.trim());
+  const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + (appid ? '&appid=' + appid : '&title=' + encodeURIComponent(title)), 7 * 864e5, true);
+  if (!lk || !lk.found || !lk.game) return null;
+  const since = new Date(Date.now() - 3 * 365 * 864e5).toISOString().replace(/\.\d+Z$/, 'Z');
+  const h = await cached(ITAD + 'games/history/v2?key=' + key + '&id=' + lk.game.id + '&country=US&since=' + encodeURIComponent(since), 12 * 36e5, true);
+  if (!Array.isArray(h)) return null;
+  // build "best price across stores" over time
+  const ev = h.filter(x => x && x.deal && x.deal.price).map(x => ({t:Date.parse(x.timestamp), shop:x.shop ? x.shop.name : '', p:+x.deal.price.amount, reg:x.deal.regular ? +x.deal.regular.amount : null})).filter(x => x.t).sort((a, b) => a.t - b.t);
+  const cur = {}, pts = []; let reg = 0;
+  for (const e of ev) { cur[e.shop] = e.p; if (e.reg) reg = Math.max(reg, e.reg); const b = Math.min(...Object.values(cur)); const sh = Object.keys(cur).find(k => cur[k] === b); const lp = pts[pts.length - 1];
+    if (lp && lp.t === e.t) { lp.p = b; lp.shop = sh; } else if (!lp || lp.p !== b) pts.push({t:e.t, p:b, shop:sh}); }
+  return pts.length ? {pts, reg, src:'itad'} : null;
+}
+let PH = null, phRange = 365;
+async function loadHistory() {
+  const g = curGame; if (!g) return; PH = {loading:true, id:g.id};
+  let r = null, err = '';
+  if (S.itadKey) { try { r = await itadHistory(g.appid, g.title); } catch (e) { err = /40[13]/.test(String(e)) ? 'IsThereAnyDeal rejected your API key.' : 'Couldn’t reach IsThereAnyDeal.'; } }
+  if (!r) { const loc = (S.ph[g.id] || []).map(([d, p]) => ({t:Date.parse(d + 'T12:00:00'), p})); r = {pts:loc, reg:Math.max(...g.g.deals.map(d => +d.retailPrice)), src:'local'}; }
+  r.err = err; r.id = g.id;
+  if (curGame && curGame.id === g.id) { PH = r; drawHistory(); }
+}
+function drawHistory() {
+  const box = document.getElementById('phbox'); if (!box || !PH || PH.id !== (curGame && curGame.id)) return;
+  if (PH.loading) { box.innerHTML = '<div class="spin"></div>'; return; }
+  const now = Date.now(), from = now - phRange * 864e5, nowP = Math.min(...curGame.g.deals.map(d => +d.price));
+  let pts = PH.pts.filter(p => p.t >= from); const before = PH.pts.filter(p => p.t < from).pop();
+  if (before) pts.unshift({t:from, p:before.p, shop:before.shop});
+  pts.push({t:now, p:nowP, shop:''});
+  const low = curGame.g.cheapestPriceEver;
+  const tabs = PH.src === 'itad' ? `<div class="seg sm" id="phr">${[[90, '3M'], [180, '6M'], [365, '1Y'], [1095, '3Y']].map(([d, l]) => `<button data-phr="${d}" class="${phRange === d ? 'on' : ''}">${l}</button>`).join('')}</div>` : '';
+  if (pts.length < 2 || (PH.src === 'local' && PH.pts.length < 2)) {
+    box.innerHTML = `${PH.err ? `<p class="note" style="color:var(--bad)">${PH.err}</p>` : ''}<div class="phempty"><b>Price history builds up over time</b><p>DealScout records this game’s best price each time it checks. ${S.itadKey ? '' : 'For years of history from every store right away, add a free IsThereAnyDeal key in Settings.'}</p>${low ? `<p>Lowest price ever: <b>${money(low.price)}</b> on ${fdate(low.date * 1000)}.</p>` : ''}</div>`;
+    return;
+  }
+  const W = 340, H = 170, L = 40, R = 10, T = 12, B = 24;
+  const ps = pts.map(p => p.p), maxP = Math.max(PH.reg || 0, ...ps) * 1.08 || 1, minP = 0;
+  const x = t => L + (t - pts[0].t) / Math.max(1, now - pts[0].t) * (W - L - R), y = p => T + (1 - (p - minP) / (maxP - minP)) * (H - T - B);
+  let d = `M${x(pts[0].t).toFixed(1)},${y(pts[0].p).toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) d += `H${x(pts[i].t).toFixed(1)}V${y(pts[i].p).toFixed(1)}`;
+  const area = d + `V${H - B}H${x(pts[0].t).toFixed(1)}Z`;
+  const minIn = pts.reduce((a, b) => b.p < a.p ? b : a);
+  const ticks = [0, .5, 1].map(f => maxP * f / 1.08).map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="gl"/><text x="${L - 5}" y="${y(v) + 4}" text-anchor="end">${v ? '$' + Math.round(v) : '$0'}</text>`).join('');
+  const dl = t => { const z = new Date(t); return MON[z.getMonth()] + (phRange > 200 || z.getFullYear() !== new Date().getFullYear() ? ' ’' + String(z.getFullYear()).slice(2) : ' ' + z.getDate()); };
+  let sales = 0, inSale = false; const reg = PH.reg || Math.max(...ps);
+  pts.forEach(p => { const s = p.p < reg * 0.9; if (s && !inSale) sales++; inSale = s; });
+  box.innerHTML = `${tabs}<svg class="phsvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${ticks}
+    ${PH.reg ? `<line x1="${L}" x2="${W - R}" y1="${y(PH.reg)}" y2="${y(PH.reg)}" class="reg"/>` : ''}
+    <path d="${area}" class="ar"/><path d="${d}" class="ln"/>
+    <circle cx="${x(minIn.t)}" cy="${y(minIn.p)}" r="4" class="lo"/><circle cx="${x(now)}" cy="${y(nowP)}" r="4.5" class="nw"/>
+    <text x="${L}" y="${H - 6}">${dl(pts[0].t)}</text><text x="${W - R}" y="${H - 6}" text-anchor="end">Today</text>
+    <line id="phx" class="cur" y1="${T}" y2="${H - B}" style="display:none"/></svg>
+    <div class="phtip" id="phtip"></div>
+    <div class="phleg"><span><i class="k ln"></i>Best price</span>${PH.reg ? '<span><i class="k reg"></i>Full price</span>' : ''}<span><i class="k lo"></i>Lowest: ${money(minIn.p)}${minIn.t < now - 864e5 ? ', ' + fdate(minIn.t) : ''}</span></div>
+    <p class="note">${PH.src === 'itad' ? `On sale ${sales} ${sales === 1 ? 'time' : 'times'} in this period, across all stores IsThereAnyDeal tracks.` : `Recorded by DealScout since ${fdate(pts[0].t)}.`}${low ? ' Lowest ever: ' + money(low.price) + ' (' + fdate(low.date * 1000) + ').' : ''}${PH.err ? ' ' + PH.err : ''}</p>`;
+  const svg = box.querySelector('svg'), tip = box.querySelector('#phtip'), xl = box.querySelector('#phx');
+  const move = ev => { const r = svg.getBoundingClientRect(), cx = ((ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left) / r.width * W; const t = pts[0].t + (cx - L) / (W - L - R) * (now - pts[0].t);
+    let q = pts[0]; for (const p of pts) if (p.t <= t) q = p; if (cx < L || cx > W - R) return;
+    xl.setAttribute('x1', cx); xl.setAttribute('x2', cx); xl.style.display = ''; tip.style.display = 'block'; tip.style.left = Math.min(r.width - 120, Math.max(0, cx / W * r.width - 60)) + 'px';
+    tip.innerHTML = `<b>${money(q.p)}</b> ${fdate(Math.min(t, now))}${q.shop ? '<br>' + esc(q.shop) : ''}`; };
+  svg.addEventListener('touchstart', move, {passive:true}); svg.addEventListener('touchmove', move, {passive:true}); svg.addEventListener('mousemove', move);
+  svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; xl.style.display = 'none'; });
+}
+
+/* ---------- deals list ---------- */
+const PRESETS = {
+  best:{label:'Best deals', q:'sortBy=Deal%20Rating'},
+  top:{label:'Top rated', q:'sortBy=Reviews&steamRating=85'},
+  big:{label:'Big games', q:'sortBy=Deal%20Rating&AAA=1'},
+  u5:{label:'Under $5', q:'sortBy=Deal%20Rating&upperPrice=5'},
+  u10:{label:'Under $10', q:'sortBy=Deal%20Rating&upperPrice=10'},
+  off:{label:'Biggest discounts', q:'sortBy=Savings&steamRating=70'},
+  meta:{label:'Critics’ picks', q:'sortBy=Metacritic&metacritic=80'},
+  new:{label:'Just dropped', q:'sortBy=Recent&steamRating=70'}
+};
+let dpage = 0, dseen = new Set(), dloading = false, dend = false, dcount = 0, searchMode = false;
+function renderPresets() {
+  $('#presets').innerHTML = Object.entries(PRESETS).map(([k, p]) => `<button class="chip${S.preset === k ? ' on' : ''}" data-preset="${k}">${p.label}</button>`).join('');
+  const nStores = (S.stores || []).length, tot = Object.values(STORES).filter(s => s.active).length;
+  $('#fchips').innerHTML = `<button class="chip icon" data-act="filters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filters</button>
+    <button class="chip${S.hideNo ? ' on' : ''}" data-act="hideno">Runs on my laptop</button>
+    <button class="chip${S.genres.length ? ' on' : ''}" data-act="genres">${S.genres.length ? S.genres.map(gLabel).join(', ') : 'All genres'} ▾</button>
+    ${(S.owned.apps || []).length || S.mine.length ? `<button class="chip${S.hideOwned ? ' on' : ''}" data-act="hideown">Hide games I own</button>` : ''}
+    <button class="chip${S.minRate ? ' on' : ''}" data-act="rate">${S.minRate ? 'Rated ' + S.minRate + '%+' : 'Any rating'}</button>
+    <button class="chip" data-act="filters">${nStores === tot ? 'All stores' : nStores + ' stores'}</button>`;
+}
+function dealsUrl(page) {
+  let q = PRESETS[S.preset].q;
+  if (S.minRate && !/steamRating=/.test(q)) q += '&steamRating=' + S.minRate; else if (S.minRate) q = q.replace(/steamRating=\d+/, 'steamRating=' + Math.max(S.minRate, +q.match(/steamRating=(\d+)/)[1]));
+  return CS + 'deals?onSale=1&pageSize=40&pageNumber=' + page + '&' + q + '&storeID=' + encodeURIComponent((S.stores || []).join(','));
+}
+async function loadDeals(reset) {
+  if (dloading) return; if (reset) { dpage = 0; dseen = new Set(); dend = false; dcount = 0; $('#dlist').innerHTML = '<div class="skel"></div>'.repeat(6); $('#dmore').innerHTML = ''; $('#main').scrollTop = 0; }
+  if (dend) return; dloading = true;
+  if (!reset) $('#dmore').innerHTML = '<div class="spin"></div>';
+  try {
+    if (!(S.stores || []).length) throw new Error('nostores');
+    const data = await cached(dealsUrl(dpage), 15 * 6e4, dpage === 0);
+    if (reset) $('#dlist').innerHTML = '';
+    const fresh = data.filter(d => { if (dseen.has(d.gameID)) return false; dseen.add(d.gameID); return true; });
+    $('#dlist').insertAdjacentHTML('beforeend', fresh.map(dealCard).join(''));
+    fresh.forEach(d => requestCompat(d.steamAppID, d.title));
+    dcount += fresh.length; dpage++; if (data.length < 40 || dpage > 25) dend = true;
+    $('#dstat').textContent = dcount + ' deals from ' + (S.stores || []).length + ' official stores';
+    fresh.forEach(d => { if (S.ph[d.gameID]) recordPrice(d.gameID, +d.salePrice); });
+    setTimeout(maybeMore, 50);
+    $('#dupd').textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+    $('#dmore').innerHTML = dend ? '<span class="sub">That’s everything for this filter.</span>' : '<button class="btn ghost" data-act="more">Load more deals</button>';
+    if (!dcount) $('#dlist').innerHTML = '<div class="empty"><h3>No deals match</h3><p>Try another tab above or loosen the filters.</p></div>';
+  } catch (e) {
+    if (reset || !dcount) $('#dlist').innerHTML = `<div class="empty"><h3>${e.message === 'nostores' ? 'No stores selected' : 'Couldn’t load deals'}</h3><p>${e.message === 'nostores' ? 'Turn on at least one store in Filters.' : 'Check your internet connection and try again.'}</p><button class="btn" data-act="retry">Try again</button></div>`;
+    $('#dmore').innerHTML = dcount ? '<button class="btn ghost" data-act="more">Try again</button>' : '';
+  }
+  dloading = false;
+}
+function dealCard(d) {
+  const k = ckey(d.steamAppID, d.title);
+  const hidden = cardHidden({dataset:{ck:k, app:d.steamAppID || '', title:d.title, game:d.gameID}}), own = isOwned(d.steamAppID, d.title, d.gameID);
+  const sale = +d.salePrice, off = Math.round(+d.savings);
+  return `<button class="deal" data-game="${d.gameID}" data-deal="${esc(d.dealID)}" data-app="${d.steamAppID || ''}" data-ck="${esc(k)}" data-title="${esc(d.title)}"${hidden ? ' style="display:none"' : ''}>
+    <div class="img"><img loading="lazy" src="${esc(img(d.steamAppID, d.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(d.thumb)}'}" alt=""></div>
+    <div class="mid"><div class="t">${esc(d.title)}</div><div class="meta">${own ? '<span class="tag own">✓ You own this</span>' : ''}${storeTag(d.storeID)}${rateTag(d)}</div><div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div></div>
+    <div class="right"><span class="price${sale === 0 ? ' free' : ''}">${money(sale)}</span>${+d.normalPrice > sale ? `<span class="was">${money(d.normalPrice)}</span>` : ''}${off > 0 ? `<span class="off">-${off}%</span>` : ''}</div></button>`;
+}
+async function doSearch(q) {
+  searchMode = true; $('#dlist').innerHTML = '<div class="spin"></div>'; $('#dmore').innerHTML = ''; $('#dstat').textContent = 'Search results for “' + q + '”'; $('#dupd').textContent = '';
+  try {
+    const r = await cached(CS + 'games?title=' + encodeURIComponent(q) + '&limit=30', 6e5);
+    if (!r.length) { $('#dlist').innerHTML = '<div class="empty"><h3>No games found</h3><p>Check the spelling, or try fewer words.</p></div>'; return; }
+    $('#dlist').innerHTML = r.map(g => `<button class="deal" data-game="${g.gameID}" data-app="${g.steamAppID || ''}"><div class="img"><img loading="lazy" src="${esc(img(g.steamAppID, g.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(g.thumb)}'}" alt=""></div>
+      <div class="mid"><div class="t">${esc(g.external)}</div><div class="meta">${isOwned(g.steamAppID, g.external, g.gameID) ? '<span class="tag own">✓ You own this</span>' : '<span class="tag store">Cheapest now</span>'}</div><div class="meta" data-vapp="${esc(ckey(g.steamAppID, g.external))}">${vtag(ckey(g.steamAppID, g.external))}</div></div>
+      <div class="right"><span class="price">${money(g.cheapest)}</span><span class="was" style="text-decoration:none">see all stores</span></div></button>`).join('');
+    r.forEach(g => requestCompat(g.steamAppID, g.external));
+  } catch (e) { $('#dlist').innerHTML = '<div class="empty"><h3>Search failed</h3><p>Check your internet connection.</p></div>'; }
+}
+function exitSearch() { searchMode = false; $('#q').value = ''; $('#qx').style.display = 'none'; loadDeals(true); }
+
+/* ---------- detail ---------- */
+let sheetOpen = false, curGame = null, sheetMode = '';
+function openSheet(h, mode) { sheetMode = mode || ''; $('#sheet').innerHTML = '<div class="grab"></div>' + h; $('#sheet').scrollTop = 0; $('#sheet').classList.add('on'); $('#scrim').classList.add('on'); sheetOpen = true; }
+function closeSheet() { $('#sheet').classList.remove('on'); $('#scrim').classList.remove('on'); sheetOpen = false; }
+$('#scrim').addEventListener('click', closeSheet);
+function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2200); }
+const buzz = ms => { try { A && A.vibrate(ms); } catch (e) {} };
+function openUrl(u) { if (A && A.openUrl) A.openUrl(u); else window.open(u, '_blank'); }
+async function openGame(gameID, appid) {
+  openSheet('<div class="spin"></div>');
+  let g;
+  try { g = await cached(CS + 'games?id=' + gameID, 10 * 6e4); } catch (e) { openSheet('<div class="pad"><div class="empty"><h3>Couldn’t load this game</h3><p>Check your connection and try again.</p></div></div>'); return; }
+  appid = appid || g.info.steamAppID; const ck = requestCompat(appid, g.info.title);
+  curGame = {id:gameID, title:g.info.title, appid, thumb:g.info.thumb, g, ck};
+  recordPrice(gameID, Math.min(...g.deals.map(d => +d.price))); save();
+  PH = null; renderGame(); loadHistory();
+}
+function renderGame() {
+  if (!curGame || !sheetOpen) return;
+  const {g, appid, title, ck} = curGame, c = COMPAT[ck] || null, v = verdict(c && !c.none ? c : null);
+  const deals = g.deals.slice().sort((a, b) => a.price - b.price), best = deals.find(d => storeOn(d.storeID)) || deals[0];
+  const low = g.cheapestPriceEver, w = S.watch.find(x => x.id === curGame.id);
+  const atLow = low && best && +best.price <= +low.price + 0.01;
+  const req = (lab, r) => r && (r.gpuText || r.ram || r.storage) ? `<dt>${lab}</dt><dd>${esc(r.gpuText || '—')}${r.ram ? ' · ' + r.ram + ' GB RAM' : ''}${r.storage ? ' · ' + Math.round(r.storage) + ' GB' : ''}</dd>` : '';
+  const loadingC = !!ck && ck !== 't:' && !c;
+  openSheet(`${appid ? `<img class="dhero" src="${esc((c && c.header) || img(appid, curGame.thumb))}" onerror="this.style.display='none'" alt="">` : ''}
+  <div class="pad">
+    <h2>${esc(title)}</h2>${isOwned(appid, title, curGame.id) ? `<div class="ownbar">✓ ${S.mine.some(m => m.id === curGame.id) ? 'You marked this as owned' : 'In your Steam library'}</div>` : ''}
+    <div class="sub">${c && !c.none ? esc([c.genres.join(', '), c.release].filter(Boolean).join(' · ')) : ''}</div>
+    <div class="facts">
+      <div><b>${best ? money(best.price) : '—'}</b><span>Best price now</span></div>
+      <div><b>${low ? money(low.price) : '—'}</b><span>Lowest ever${low ? ' (' + fdate(low.date * 1000) + ')' : ''}</span></div>
+      <div><b>${best ? '-' + Math.round(+best.savings) + '%' : '—'}</b><span>Off ${best ? money(best.retailPrice) : ''}</span></div>
+    </div>
+    ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
+    <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'g' ? '✓ ' : v.k === 'w' ? '~ ' : v.k === 'b' ? '✗ ' : '? ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
+      ${loadingC ? '' : `<p>${esc(v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
+      ${c && !c.none && (c.min || c.rec) ? `<dl class="reqs">${req('Minimum', c.min)}${req('Recommended', c.rec)}<dt>Yours</dt><dd>${esc(rig().name)} · ${rig().ram} GB RAM · ${rig().disk} GB free</dd></dl>` : ''}
+    </div>
+    <div class="sec"><h2>Price history</h2><span>${S.itadKey ? 'All stores' : 'Best price seen'}</span></div>
+    <div id="phbox" class="phbox"></div>
+    <div class="sec"><h2>Prices by store</h2><span>${deals.length} ${deals.length === 1 ? 'store' : 'stores'}</span></div>
+    <div class="ptable">${deals.map(d => { const on = storeOn(d.storeID), s = STORES[d.storeID] || {name:'Store ' + d.storeID};
+      return `<div class="prow${d === best ? ' best' : ''}${on ? '' : ' off'}">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}<div class="s">${esc(s.name)}<small>${+d.savings >= 1 ? '-' + Math.round(+d.savings) + '% off ' + money(d.retailPrice) : 'Full price'}${on ? '' : ' · store switched off'}</small></div>
+      <div class="pp"><b>${money(d.price)}</b></div><button class="btn sm${d === best ? '' : ' ghost'}" data-buy="${esc(d.dealID)}">Buy</button></div>`; }).join('')}</div>
+    <p class="note">Buy opens the store’s own page in your browser, where you sign in and pay as normal. DealScout never sees your payment details.</p>
+    ${c && !c.none && c.desc ? `<p class="desc">${esc(c.desc)}</p>` : ''}
+    ${c && !c.none && c.meta ? `<p class="note">Metacritic score: <b>${c.meta.score}</b></p>` : ''}
+    <div class="row2">
+      <button class="btn ${w ? 'ghost' : ''}" data-act="watch">${w ? '★ Watching under ' + money(w.target) : '☆ Watch price'}</button>
+      ${appid ? `<button class="btn ghost" data-act="steam">Steam page</button>` : ''}
+    </div>
+    <button class="btn ghost block" style="margin-top:10px" data-act="own">${S.mine.some(m => m.id === curGame.id) ? 'I don’t own this' : isOwned(appid, title, curGame.id) ? '' : 'I already own this'}</button>
+  </div>`, 'game');
+  const ob = document.querySelector('[data-act=own]'); if (ob && !ob.textContent) ob.remove();
+  drawHistory();
+}
+function watchSheet() {
+  const w = S.watch.find(x => x.id === curGame.id), best = Math.min(...curGame.g.deals.map(d => +d.price)), low = curGame.g.cheapestPriceEver;
+  const sugg = Math.max(0, Math.floor(Math.min(best * 0.85, low ? +low.price + 1 : best) ) - 0.01);
+  openSheet(`<div class="pad"><h2>Watch ${esc(curGame.title)}</h2><p class="sub">Get a notification when any store sells it for your target price or less.</p>
+    <label class="f" for="tgt">Notify me at or under</label><input class="inp" id="tgt" type="number" inputmode="decimal" step="0.01" min="0" value="${(w ? w.target : sugg).toFixed(2)}">
+    <div class="chips">${[best, low ? +low.price : null, 20, 15, 10, 5, 2].filter(v => v !== null && v > 0 && (v === best || v < best)).filter((v, i, a) => a.indexOf(v) === i).slice(0, 5).map(v => `<button class="chip" data-tgt="${v}">${v === best ? 'Now ' : v === (low && +low.price) ? 'Lowest ever ' : ''}${money(v)}</button>`).join('')}</div>
+    <p class="note">Now ${money(best)}${low ? ' · lowest ever ' + money(low.price) : ''}. DealScout checks your watchlist once a day.</p>
+    <div class="row2">${w ? '<button class="btn ghost" data-act="unwatch">Stop watching</button>' : '<button class="btn ghost" data-act="back">Cancel</button>'}<button class="btn" data-act="savewatch">Save</button></div></div>`);
+}
+
+/* ---------- free games ---------- */
+async function loadFree() {
+  $('#flist').innerHTML = '<div class="spin"></div>';
+  let epicNow = [], epicNext = [], others = [], err = 0;
+  try {
+    const e = await cached('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US', 30 * 6e4);
+    for (const x of e.data.Catalog.searchStore.elements) {
+      const pr = x.promotions || {}; const pick = arr => { for (const a of arr || []) for (const o of a.promotionalOffers || []) if (o.discountSetting && o.discountSetting.discountPercentage === 0) return o; return null; };
+      const now = pick(pr.promotionalOffers), next = pick(pr.upcomingPromotionalOffers);
+      const im = (x.keyImages || []).find(k => k.type === 'OfferImageWide') || (x.keyImages || []).find(k => k.type === 'Thumbnail') || (x.keyImages || [])[0];
+      const slug = x.productSlug && x.productSlug !== '[]' ? x.productSlug : (x.offerMappings && x.offerMappings[0] && x.offerMappings[0].pageSlug) || (x.catalogNs && x.catalogNs.mappings && x.catalogNs.mappings[0] && x.catalogNs.mappings[0].pageSlug) || '';
+      const item = {title:x.title, img:im ? im.url : '', url:slug ? 'https://store.epicgames.com/p/' + slug.replace(/\/home$/, '') : 'https://store.epicgames.com/free-games', worth:x.price && x.price.totalPrice ? x.price.totalPrice.originalPrice / 100 : 0};
+      if (now) epicNow.push(Object.assign(item, {end:now.endDate})); else if (next) epicNext.push(Object.assign(item, {start:next.startDate, end:next.endDate}));
+    }
+  } catch (e) { err++; }
+  try { const f = await cached(CS + 'deals?upperPrice=0&pageSize=30&storeID=' + encodeURIComponent((S.stores || []).join(',')), 30 * 6e4); others = f.filter(d => !epicNow.some(e => e.title.toLowerCase() === d.title.toLowerCase())); } catch (e) { err++; }
+  S.seenFree = epicNow.map(e => e.title).concat(others.map(o => o.title)); save(); updateDots();
+  if (err === 2) { $('#flist').innerHTML = '<div class="empty"><h3>Couldn’t load free games</h3><p>Check your internet connection.</p><button class="btn" data-act="freeretry">Try again</button></div>'; return; }
+  const fcard = (e, soon) => `<div class="fcard"><div class="hero">${e.img ? `<img loading="lazy" src="${esc(e.img)}" alt="">` : ''}<span class="badge${soon ? ' soon' : ''}">${soon ? 'Free from ' + fdate(e.start) : 'Free until ' + fdate(e.end)}</span></div>
+    <div class="body"><div class="t"><b>${esc(e.title)}</b><span>${isOwned(null, e.title) ? '✓ You own this · ' : ''}Epic Games Store${e.worth ? ' · normally ' + money(e.worth) : ''}</span></div>${soon ? '' : `<button class="btn sm" data-open="${esc(e.url)}">Claim</button>`}</div></div>`;
+  let h = `<div class="sec"><h2>Free now on Epic</h2><span>Claim it and it’s yours</span></div>` + (epicNow.length ? epicNow.map(e => fcard(e)).join('') : '<p class="sub">No free game listed right now. Check again Thursday.</p>');
+  if (epicNext.length) h += `<div class="sec"><h2>Coming next</h2><span>Free from Thursday</span></div>` + epicNext.map(e => fcard(e, true)).join('');
+  if (others.length) h += `<div class="sec"><h2>Free at other stores</h2><span>Limited time</span></div><div class="list">` + others.map(dealCard).join('') + '</div>';
+  h += `<p class="note">You need a free Epic Games account and the Epic launcher to play Epic freebies. Claiming takes a minute and the game stays in your library for good.</p>`;
+  $('#flist').innerHTML = h; others.forEach(d => requestCompat(d.steamAppID, d.title));
+}
+
+/* ---------- watchlist ---------- */
+async function renderWatch(refresh) {
+  const n = S.watch.length;
+  $('#wsub').textContent = n ? `Checked every day at ${fmtTime(S.dailyT)}. You’ll get a notification when a price hits your target.` : '';
+  if (!n) { $('#wlist').innerHTML = '<div class="empty"><h3>Nothing on your watchlist</h3><p>Open any game and tap “Watch price”. DealScout checks once a day and tells you when it hits your price.</p></div>'; updateDots(); return; }
+  const draw = () => { $('#wlist').innerHTML = S.watch.map(w => { const hit = w.now != null && w.now <= w.target;
+    return `<button class="wrow${hit ? ' hit' : ''}" data-game="${w.id}" data-app="${w.appid || ''}"><div class="img"><img loading="lazy" src="${esc(img(w.appid, w.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(w.thumb)}'}" alt=""></div>
+      <div class="mid"><b>${esc(w.title)}</b><span>Target ${money(w.target)}${w.low != null ? ' · lowest ever ' + money(w.low) : ''}</span></div>
+      <div class="right" style="display:flex;flex-direction:column;align-items:flex-end"><span class="price${hit ? ' free' : ''}">${w.now != null ? money(w.now) : '…'}</span>${hit ? '<span class="tag g">At your price</span>' : w.now != null ? `<span class="was" style="text-decoration:none">${money(w.now - w.target)} to go</span>` : ''}</div></button>`; }).join(''); updateDots(); };
+  draw();
+  if (!refresh) return;
+  try {
+    for (let i = 0; i < n; i += 25) {
+      const chunk = S.watch.slice(i, i + 25), r = await cached(CS + 'games?ids=' + chunk.map(w => w.id).join(','), 10 * 6e4);
+      chunk.forEach(w => { const g = r[w.id]; if (!g) return; w.now = Math.min(...g.deals.map(d => +d.price)); recordPrice(w.id, w.now); w.low = g.cheapestPriceEver ? +g.cheapestPriceEver.price : null; });
+    }
+    save(); draw();
+  } catch (e) { toast('Couldn’t refresh prices'); }
+}
+const fmtTime = t => { const [h, m] = t.split(':').map(Number); return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + (h < 12 ? ' AM' : ' PM'); };
+function updateDots() {
+  const hits = S.watch.filter(w => w.now != null && w.now <= w.target).length; const d = $('#watchdot'); d.style.display = hits ? '' : 'none'; d.textContent = hits;
+}
+
+/* ---------- guide ---------- */
+function renderGuide() {
+  const today = new Date(), y = today.getFullYear();
+  const cal = [
+    {d:'Thu', s:'weekly', t:'Epic free game', x:'A new game to keep, free for one week.', live:today.getDay() === 4},
+    {d:'Nov 17', s:'– Dec 1', t:'Epic Black Friday sale', x:'Ends Dec 1 at 9 AM your time.', from:'2026-11-17', to:'2026-12-01'},
+    {d:'Nov 27', s:'Black Friday', t:'Fanatical Black Friday sale', x:'Official Steam keys, often cheaper than Steam. Flash deals change every day.', from:'2026-11-27', to:'2026-12-02'},
+    {d:'Nov 30', s:'Cyber Monday', t:'Last day for most Black Friday deals', x:'Green Man Gaming, GOG and Humble usually end around now.', from:'2026-11-30', to:'2026-11-30'},
+    {d:'Dec 17', s:'– Jan 4', t:'Steam Winter Sale', x:'The biggest sale of the year. Most games hit their lowest price.', from:'2026-12-17', to:'2027-01-04'},
+    {d:'Mid-Dec', s:'– late Dec', t:'Epic holiday mystery games', x:'Usually a free game every day for about two weeks.'},
+    {d:'Mar', s:'2027', t:'Steam Spring Sale', x:'About one week, dates announced by Valve.'},
+    {d:'Late Jun', s:'2027', t:'Steam Summer Sale', x:'Two weeks, the second biggest sale.'}
+  ];
+  const iso = today.toISOString().slice(0, 10);
+  $('#glist').innerHTML = `
+  <div class="gcard"><h3><i>⏱</i>How often to check</h3><div class="when">
+    <b>Daily</b><span>Nothing to do: DealScout checks your watchlist and Epic’s free games for you and sends a notification.</span>
+    <b>2–3× a week</b><span>Open the Deals tab. New deals appear every day, and Fanatical and Green Man Gaming flash deals only last 24 hours.</span>
+    <b>Thursdays</b><span>Claim Epic’s free game after 9 AM your time. It’s only free for a week.</span>
+    <b>Big sales</b><span>Check every day during Black Friday week and the Steam Winter Sale (Dec 17 – Jan 4).</span>
+    <b>Before buying</b><span>Search the game here first. If “lowest ever” is much lower, add it to your watchlist and wait.</span></div></div>
+  <div class="gcard"><h3><i>📅</i>Sale calendar</h3>${cal.map(c => `<div class="cal${c.live || (c.from && iso >= c.from && iso <= c.to) ? ' live' : ''}"><div class="d">${c.d}<small>${c.s}</small></div><div class="x"><b>${c.t}</b>${c.x}</div></div>`).join('')}
+    <p class="note">Dates after Dec 2026 are typical, not confirmed.</p></div>
+  <div class="gcard"><h3><i>🔎</i>Where to check</h3>${[
+    ['gg', 'gg.deals', 'One search shows a game’s price at every store, plus price history.', 'https://gg.deals'],
+    ['ITAD', 'IsThereAnyDeal', 'Price history charts, to tell a real deal from a fake one.', 'https://isthereanydeal.com'],
+    ['S', 'Steam', 'Wishlist games and Steam emails you when they go on sale.', 'https://store.steampowered.com'],
+    ['E', 'Epic Games Store', 'Free game every Thursday, plus big sales.', 'https://store.epicgames.com'],
+    ['GOG', 'GOG', 'Classic games that are yours to keep, no launcher needed.', 'https://www.gog.com'],
+    ['H', 'Humble Bundle', 'Bundles of several games for a few dollars.', 'https://www.humblebundle.com'],
+    ['F', 'Fanatical', 'Official Steam keys and flash deals.', 'https://www.fanatical.com'],
+    ['GMG', 'Green Man Gaming', 'Official Steam keys and good sales.', 'https://www.greenmangaming.com'],
+    ['r/', 'r/GameDeals', 'Reddit community that posts every good deal fast.', 'https://www.reddit.com/r/GameDeals/'],
+    ['r/', 'r/FreeGameFindings', 'Every free giveaway, from every store.', 'https://www.reddit.com/r/FreeGameFindings/']
+  ].map(([ic, n, x, u]) => `<button class="site" data-open="${u}"><span class="ic">${ic}</span><span class="tx"><b>${n}</b><span>${x}</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></button>`).join('')}</div>
+  <div class="gcard"><h3><i>🛡</i>Buying safely</h3><div class="when">
+    <b>Stick to</b><span>The stores in this app. They sell official keys straight from publishers.</span>
+    <b>Avoid</b><span>G2A, Kinguin and Eneba. Anyone can resell keys there, and keys sometimes get revoked.</span>
+    <b>Keys</b><span>Steam keys go in Steam → Games → Activate a Product on Steam. Ubisoft games also need a free Ubisoft Connect account.</span>
+    <b>Refunds</b><span>Steam refunds within 2 hours of play. Key stores usually only refund keys you haven’t revealed yet.</span></div></div>
+  <p class="note" style="text-align:center;margin-top:16px">Deals from CheapShark, free games from Epic, requirements from Steam.</p>`;
+}
+
+/* ---------- settings ---------- */
+function openSettings() {
+  const act = Object.entries(STORES).filter(([, s]) => s.active);
+  openSheet(`<div class="pad"><h2>Your laptop & settings</h2><p class="sub">Every game is checked against these specs.</p>
+    <label class="f" for="sgpu">Graphics card</label><select class="inp" id="sgpu">${GPUS.map((g, i) => `<option value="${i}"${i === S.gpu ? ' selected' : ''}>${g[0]}</option>`).join('')}</select>
+    <label class="f">Memory (RAM)</label><div class="seg" id="sram">${[8, 16, 32].map(v => `<button data-ram="${v}" class="${S.ram === v ? 'on' : ''}">${v} GB</button>`).join('')}</div>
+    <label class="f" for="sdisk">Free storage (GB)</label><input class="inp" id="sdisk" type="number" inputmode="numeric" value="${S.disk}">
+    <p class="note">Your HP Victus 15: Ryzen 7 7445HS, RTX 4050 Laptop (6 GB), 16 GB RAM, about 94 GB free when we checked.</p>
+    <label class="f">Daily check</label>
+    <div class="li"><div class="t">Watchlist & free game alerts<small>A notification when a watched game hits your price or Epic adds a free game</small></div><button class="sw${S.daily ? ' on' : ''}" data-tg="daily"></button></div>
+    <div class="li"><div class="t">Check time</div><input type="time" class="inp" style="width:auto" id="stime" value="${S.dailyT}"></div>
+    <div class="li"><div class="t">Include free game alerts</div><button class="sw${S.freeNote ? ' on' : ''}" data-tg="freeNote"></button></div>
+    <div class="li"><div class="t">Send a test alert<small>Runs the daily check now</small></div><button class="btn sm ghost" data-act="test">Test</button></div>
+    <label class="f">Stores to include</label><div class="storegrid">${act.map(([id, s]) => `<button data-store="${id}" class="${storeOn(id) ? 'on' : ''}">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}${esc(s.name)}</button>`).join('')}</div>
+    <p class="note">All of these are official, licensed sellers. DreamGame starts switched off because it’s less well known.</p>
+    <label class="f">Games you own</label>
+    <p class="note" style="margin-top:0">${(S.owned.apps || []).length ? `<b>${S.owned.apps.length} Steam games imported</b> on ${fdate(S.owned.at + 'T12:00:00')}. ` : ''}${S.mine.length ? S.mine.length + ' marked by hand. ' : ''}Import your Steam library so DealScout can hide games you already have. Steam needs a free Web API key for this.</p>
+    <input class="inp" id="suser" placeholder="Steam profile link or ID" value="${esc(S.steamUser)}" autocomplete="off" autocapitalize="off">
+    <input class="inp" id="skey" placeholder="Steam Web API key" value="${esc(S.steamKey)}" autocomplete="off" autocapitalize="off" style="margin-top:8px">
+    <div class="row2" style="margin-top:8px"><button class="btn ghost" data-open="https://steamcommunity.com/dev/apikey">Get a Steam key</button><button class="btn" data-act="import">Import library</button></div>
+    <div class="li"><div class="t">Hide games I own<small>From your Steam library and games you mark as owned</small></div><button class="sw${S.hideOwned ? ' on' : ''}" data-tg="hideOwned"></button></div>
+    <label class="f">Price history</label>
+    <p class="note" style="margin-top:0">Without a key, DealScout charts the prices it sees from now on. With a free IsThereAnyDeal key you get years of history from every store.</p>
+    <input class="inp" id="sitad" placeholder="IsThereAnyDeal API key" value="${esc(S.itadKey)}" autocomplete="off" autocapitalize="off">
+    <div class="row2" style="margin-top:8px"><button class="btn ghost" data-open="https://isthereanydeal.com/apps/my/">Get an ITAD key</button><button class="btn ghost" data-act="itadtest">Test key</button></div>
+    <label class="f">Updates</label>
+    <div class="li"><div class="t">Version ${window.UPD ? esc(UPD.info()) : ''}<small>Fixes and new features install by themselves</small></div><button class="btn sm ghost" data-act="updchk">Check now</button></div>
+    <button class="btn block" style="margin-top:16px" data-act="done">Done</button></div>`);
+}
+function openFilters() {
+  const act = Object.entries(STORES).filter(([, s]) => s.active);
+  openSheet(`<div class="pad"><h2>Filters</h2>
+    <label class="f">Minimum Steam rating</label><div class="seg" id="frate">${[0, 70, 80, 90].map(v => `<button data-rate="${v}" class="${S.minRate === v ? 'on' : ''}">${v ? v + '%+' : 'Any'}</button>`).join('')}</div>
+    <div class="li" style="margin-top:8px"><div class="t">Only games that run on my laptop<small>Hides games whose minimum specs are above yours</small></div><button class="sw${S.hideNo ? ' on' : ''}" data-tg="hideNo"></button></div>
+    <div class="li"><div class="t">Hide games I own<small>${(S.owned.apps || []).length ? S.owned.apps.length + ' Steam games imported' : 'Import your Steam library in Settings'}${S.mine.length ? ' · ' + S.mine.length + ' marked by hand' : ''}</small></div><button class="sw${S.hideOwned ? ' on' : ''}" data-tg="hideOwned"></button></div>
+    <label class="f">Genres <button class="chip" style="margin-left:8px;min-height:28px;padding:3px 10px;font-size:12px" data-act="anygenre">Any</button></label>
+    <div class="chips wrap" id="fgen">${GENRES.map(g => `<button class="chip${S.genres.includes(g) ? ' on' : ''}" data-genre="${esc(g)}">${gLabel(g)}</button>`).join('')}</div>
+    <p class="note" style="margin-top:4px">Shows games in any of the genres you pick, using Steam’s genre tags.</p>
+    <label class="f">Stores <button class="chip" style="margin-left:8px;min-height:28px;padding:3px 10px;font-size:12px" data-act="allstores">All</button></label><div class="storegrid">${act.map(([id, s]) => `<button data-store="${id}" class="${storeOn(id) ? 'on' : ''}">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}${esc(s.name)}</button>`).join('')}</div>
+    <button class="btn block" style="margin-top:16px" data-act="apply">Show deals</button></div>`);
+}
+
+/* ---------- events ---------- */
+let filtersDirty = false;
+$('#sheet').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.buy) { openUrl('https://www.cheapshark.com/redirect?dealID=' + b.dataset.buy); return; }
+  if (b.dataset.open) { openUrl(b.dataset.open); return; }
+  if (b.dataset.tgt) { $('#tgt').value = (+b.dataset.tgt).toFixed(2); return; }
+  if (b.dataset.genre) { const g = b.dataset.genre; S.genres = S.genres.includes(g) ? S.genres.filter(x => x !== g) : S.genres.concat(g); b.classList.toggle('on'); save(); filtersDirty = true; return; }
+  if (b.dataset.phr) { phRange = +b.dataset.phr; drawHistory(); return; }
+  if (b.dataset.store) { const id = b.dataset.store; S.stores = storeOn(id) ? S.stores.filter(x => x !== id) : S.stores.concat(id); b.classList.toggle('on'); save(); filtersDirty = true; return; }
+  if (b.dataset.rate) { S.minRate = +b.dataset.rate; [...b.parentNode.children].forEach(x => x.classList.toggle('on', x === b)); save(); filtersDirty = true; return; }
+  if (b.dataset.ram) { S.ram = +b.dataset.ram; [...b.parentNode.children].forEach(x => x.classList.toggle('on', x === b)); save(); filtersDirty = true; return; }
+  if (b.dataset.tg) { S[b.dataset.tg] = !S[b.dataset.tg]; b.classList.toggle('on'); save(); if (b.dataset.tg === 'daily') { pushReminder(); toast(S.daily ? 'Daily check on at ' + fmtTime(S.dailyT) : 'Daily check off'); } if (b.dataset.tg === 'hideNo' || b.dataset.tg === 'hideOwned') filtersDirty = true; return; }
+  const a = b.dataset.act;
+  if (a === 'watch') watchSheet();
+  else if (a === 'back') renderGame();
+  else if (a === 'steam') openUrl('https://store.steampowered.com/app/' + curGame.appid);
+  else if (a === 'savewatch') {
+    const t = parseFloat($('#tgt').value); if (!(t >= 0)) { toast('Enter a price'); return; }
+    let w = S.watch.find(x => x.id === curGame.id);
+    if (!w) { w = {id:curGame.id, title:curGame.title, appid:curGame.appid, thumb:curGame.thumb}; S.watch.unshift(w); }
+    w.target = t; w.now = Math.min(...curGame.g.deals.map(d => +d.price)); w.low = curGame.g.cheapestPriceEver ? +curGame.g.cheapestPriceEver.price : null;
+    if (!S.daily) { S.daily = true; } save(); pushReminder(); buzz(15); toast('Watching. You’ll get a notification at ' + money(t) + ' or less'); renderGame(); if (view === 'watch') renderWatch();
+  }
+  else if (a === 'unwatch') { S.watch = S.watch.filter(x => x.id !== curGame.id); save(); toast('Removed from watchlist'); renderGame(); if (view === 'watch') renderWatch(); }
+  else if (a === 'test') { if (A) { if (!A.canNotify()) { A.askNotifyPerm(); toast('Allow notifications, then tap Test again'); return; } syncNative(); A.testReminder(); toast('Checking now…'); } else toast('Alerts work in the Android app'); }
+  else if (a === 'done' || a === 'apply') { closeSheet(); if (filtersDirty) { filtersDirty = false; renderRig(); renderPresets(); if (!searchMode) loadDeals(true); } }
+  else if (a === 'anygenre') { S.genres = []; save(); filtersDirty = true; document.querySelectorAll('#fgen .chip').forEach(x => x.classList.remove('on')); }
+  else if (a === 'own') { const i = S.mine.findIndex(m => m.id === curGame.id); if (i >= 0) S.mine.splice(i, 1); else S.mine.push({id:curGame.id, appid:curGame.appid || '', title:curGame.title}); rebuildOwned(); save(); toast(i >= 0 ? 'Unmarked' : 'Marked as owned' + (S.hideOwned ? '. It’s hidden from deals now.' : '')); renderGame(); filtersDirty = true; applyVis(); renderPresets(); }
+  else if (a === 'import') { S.steamUser = $('#suser').value.trim(); S.steamKey = $('#skey').value.trim(); save(); b.disabled = true; b.textContent = 'Importing…'; steamImport(false).then(ok => { if (ok) { filtersDirty = true; openSettings(); } else { b.disabled = false; b.textContent = 'Import library'; } }); }
+  else if (a === 'itadtest') { S.itadKey = $('#sitad').value.trim(); save(); if (!S.itadKey) { toast('Paste your key first'); return; } get(ITAD + 'games/lookup/v1?key=' + encodeURIComponent(S.itadKey) + '&appid=1086940').then(r => toast(r && r.found ? 'Key works' : 'Key accepted, but the test game wasn’t found')).catch(e => toast(/40[13]/.test(String(e)) ? 'IsThereAnyDeal rejected that key' : 'Couldn’t reach IsThereAnyDeal')); }
+  else if (a === 'updchk') { window.UPD && UPD.check(); }
+  else if (a === 'allstores') { S.stores = Object.keys(STORES).filter(id => STORES[id].active); save(); filtersDirty = true; openFilters(); }
+});
+$('#sheet').addEventListener('change', e => {
+  if (e.target.id === 'sgpu') { S.gpu = +e.target.value; save(); filtersDirty = true; }
+  if (e.target.id === 'sdisk') { S.disk = Math.max(0, +e.target.value || 0); save(); }
+  if (e.target.id === 'stime' && e.target.value) { S.dailyT = e.target.value; save(); pushReminder(); }
+  if (e.target.id === 'suser') { S.steamUser = e.target.value.trim(); save(); }
+  if (e.target.id === 'skey') { S.steamKey = e.target.value.trim(); save(); }
+  if (e.target.id === 'sitad') { S.itadKey = e.target.value.trim(); save(); }
+});
+document.addEventListener('click', e => {
+  if (e.target.closest('#sheet')) return;
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.game) { openGame(b.dataset.game, b.dataset.app); return; }
+  if (b.dataset.preset) { S.preset = b.dataset.preset; save(); renderPresets(); if (searchMode) { searchMode = false; $('#q').value = ''; $('#qx').style.display = 'none'; } loadDeals(true); return; }
+  if (b.dataset.open) { openUrl(b.dataset.open); return; }
+  if (b.dataset.v) { go(b.dataset.v); return; }
+  const a = b.dataset.act;
+  if (a === 'filters') openFilters();
+  else if (a === 'hideno') { S.hideNo = !S.hideNo; save(); renderPresets(); loadDeals(true); }
+  else if (a === 'hideown') { S.hideOwned = !S.hideOwned; save(); renderPresets(); loadDeals(true); }
+  else if (a === 'genres') openFilters();
+  else if (a === 'rate') { S.minRate = S.minRate === 0 ? 80 : S.minRate === 80 ? 90 : 0; save(); renderPresets(); loadDeals(true); }
+  else if (a === 'more') loadDeals(false);
+  else if (a === 'retry') loadDeals(true);
+  else if (a === 'freeretry') loadFree();
+  else if (b.id === 'rigbtn') openSettings();
+  else if (b.id === 'qx') exitSearch();
+});
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter') { const q = e.target.value.trim(); if (q) { e.target.blur(); doSearch(q); } } });
+$('#q').addEventListener('input', e => { $('#qx').style.display = e.target.value ? '' : 'none'; });
+$('#main').addEventListener('scroll', () => { const m = $('#main'); if (view === 'deals' && !searchMode && !dend && !dloading && dcount && m.scrollTop + m.clientHeight > m.scrollHeight - 600) loadDeals(false); });
+
+let view = 'deals';
+function go(v) {
+  view = v; document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); $('#main').scrollTop = 0;
+  if (v === 'free') loadFree(); else if (v === 'watch') renderWatch(true); else if (v === 'guide') renderGuide();
+}
+function renderRig() { $('#rigtxt').textContent = GPUS[S.gpu][0].replace(/ Laptop| \(.*\)/g, '') + ' · ' + S.ram + ' GB'; }
+window.onAndroidBack = () => { if (sheetOpen) { closeSheet(); return true; } if (searchMode) { exitSearch(); return true; } if (view !== 'deals') { go('deals'); return true; } return false; };
+window.onAppResume = () => { syncNative(); };
+window.__ds = {S:() => S, COMPAT:() => COMPAT, verdict, parseReq, gpuScore, openGame, go, rebuildOwned, steamImport, itadHistory, get PH() { return PH; }};
+window.__toast = toast;
+window.__canReload = () => !sheetOpen;
+(async () => {
+  for (const k in blank()) if (S[k] === undefined) S[k] = blank()[k];
+  rebuildOwned(); renderRig(); await loadStores(); renderPresets(); loadDeals(true); syncNative(); pushReminder();
+  // keep the Steam library fresh (weekly)
+  if (S.steamKey && S.steamUser && (!S.owned.at || Date.now() - Date.parse(S.owned.at) > 7 * 864e5)) steamImport(true).then(ok => { if (ok) applyVis(); });
+})();
+}
+
+</script>
+</body>
+</html>

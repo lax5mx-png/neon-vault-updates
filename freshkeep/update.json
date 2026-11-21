@@ -1,0 +1,16 @@
+{
+ "content": {
+  "v": 1,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/freshkeep/index.html",
+  "sha256": "a76df060693c6fe072aa7a523b3d2129be04c3462aac54e809ec7f7bb952b9b6",
+  "minVc": 2
+ },
+ "apk": {
+  "vc": 2,
+  "vn": "1.1.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/freshkeep/FreshKeep-1.1.0.apk",
+  "sha256": "5b96568ee6dcc3574ca380a88b5596494ae46da1075fbfe7c7141d85d3f5a539",
+  "size": 206023
+ },
+ "notes": "Barcode scanning, recipe ideas from what's expiring, backup to a file, and automatic updates."
+}

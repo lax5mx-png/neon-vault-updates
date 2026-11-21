@@ -1,0 +1,16 @@
+{
+ "content": {
+  "v": 1,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
+  "sha256": "cc8aeb8bec3e64b2c7809bc4bf13ff6050ec37a38dcd43066b8b00ca709a33ce",
+  "minVc": 2
+ },
+ "apk": {
+  "vc": 2,
+  "vn": "1.1.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.1.0.apk",
+  "sha256": "90034a50073ed0825ce9d856933615a731acb93b48a6a34b183db419a14eb37d",
+  "size": 117315
+ },
+ "notes": "Hide games you own, price history charts, genre filters and automatic updates."
+}
