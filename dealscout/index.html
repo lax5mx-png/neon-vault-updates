@@ -310,6 +310,8 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 /* Shared update UI for the personal apps: update banner, "what's new", version info. */
 (function () {
   var A = window.Android || null;
+  var bootErr = false;
+  window.addEventListener('error', function (e) { if (e && e.error !== undefined && !(e.target && e.target !== window)) bootErr = true; });
   var css = '.upd-bar{position:fixed;left:12px;right:12px;bottom:calc(86px + var(--sab,0px));z-index:60;background:#111A2E;color:#fff;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;font:15px/1.4 system-ui,sans-serif;transform:translateY(120%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility .3s}' +
     '.upd-bar.on{transform:none;opacity:1;visibility:visible;pointer-events:auto}.upd-bar b{font-size:16px}.upd-bar p{margin:0;opacity:.85;font-size:13.5px}' +
     '.upd-row{display:flex;gap:8px}.upd-row button{flex:1;min-height:44px;border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer}' +
@@ -340,7 +342,9 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
       var n = ''; try { n = A.takeNotes(); } catch (e) {}
       if (n) setTimeout(function () { show('<b>Updated</b><p>' + esc(n) + '</p>', [['Nice', 'upd-go']]); }, 800);
     }
-    try { A && A.ready && A.ready(); } catch (e) {}
+    // Tell the app this build started fine. If the app's own code crashed while starting, stay quiet:
+    // the native side then rolls a downloaded update back to the previous working version.
+    setTimeout(function () { if (!bootErr) { try { A && A.ready && A.ready(); } catch (e) {} } }, 1500);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
@@ -373,6 +377,8 @@ function post(url, body) {
 const mem = {};
 function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { try { for (const key of Object.keys(localStorage)) if (key.startsWith('c:')) localStorage.removeItem(key); localStorage.setItem(k, JSON.stringify(v)); } catch (e2) {} } }
+// Saved responses older than 3 days are never used again; clear them at startup so storage doesn't fill up.
+try { const now = Date.now(); for (const k of Object.keys(localStorage)) if (k.startsWith('c:')) { const v = JSON.parse(localStorage.getItem(k)); if (!v || now - v.t > 3 * 864e5) localStorage.removeItem(k); } } catch (e) {}
 async function cached(url, ttl, persist) {
   const now = Date.now(), m = mem[url];
   if (m && now - m.t < ttl) return m.d;
@@ -675,7 +681,7 @@ async function itadHistory(appid, title) {
   const key = encodeURIComponent(S.itadKey.trim());
   const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + (appid ? '&appid=' + appid : '&title=' + encodeURIComponent(title)), 7 * 864e5, true);
   if (!lk || !lk.found || !lk.game) return null;
-  const since = new Date(Date.now() - 3 * 365 * 864e5).toISOString().replace(/\.\d+Z$/, 'Z');
+  const since = new Date(Date.now() - 3 * 365 * 864e5).toISOString().slice(0, 10) + 'T00:00:00Z'; // whole days, so the saved copy is reused
   const h = await cached(ITAD + 'games/history/v2?key=' + key + '&id=' + lk.game.id + '&country=US&since=' + encodeURIComponent(since), 12 * 36e5, true);
   if (!Array.isArray(h)) return null;
   // build "best price across stores" over time
@@ -688,7 +694,7 @@ async function itadHistory(appid, title) {
   const reg = +(Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x])[0] || 0);
   return pts.length ? {pts, reg, src:'itad'} : null;
 }
-const shopKey = n => norm(n).replace(/^(.+?)(store|com|us|uk|de|eu|fr)$/, '$1').replace(/^uplay$/, 'ubisoft').replace(/^gamesplanet.*/, 'gamesplanet');
+const shopKey = n => norm(n).replace(/^(.+?)(store|com|us|uk|de|eu|fr)$/, '$1').replace(/^(.+?)games?$/, '$1').replace(/^uplay$/, 'ubisoft').replace(/^gamesplanet.*/, 'gamesplanet').replace(/^humblebundle$/, 'humble');
 async function itadPrices(appid, title) {
   const key = encodeURIComponent(S.itadKey.trim());
   const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + (appid ? '&appid=' + appid : '&title=' + encodeURIComponent(title)), 7 * 864e5, true);
@@ -995,7 +1001,7 @@ function watchSheet() {
 /* ---------- free games ---------- */
 async function loadFree() {
   $('#flist').innerHTML = '<div class="spin"></div>';
-  let epicNow = [], epicNext = [], others = [], gp = [], err = 0;
+  let epicNow = [], epicNext = [], others = [], gp = [], err = 0, epicErr = false;
   try {
     const e = await cached('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US', 30 * 6e4);
     for (const x of e.data.Catalog.searchStore.elements) {
@@ -1006,7 +1012,7 @@ async function loadFree() {
       const item = {title:x.title, img:im ? im.url : '', url:slug ? 'https://store.epicgames.com/p/' + slug.replace(/\/home$/, '') : 'https://store.epicgames.com/free-games', worth:x.price && x.price.totalPrice ? x.price.totalPrice.originalPrice / 100 : 0};
       if (now) epicNow.push(Object.assign(item, {end:now.endDate})); else if (next) epicNext.push(Object.assign(item, {start:next.startDate, end:next.endDate}));
     }
-  } catch (e) { err++; }
+  } catch (e) { err++; epicErr = true; }
   try { const f = await cached(CS + 'deals?upperPrice=0&pageSize=30&storeID=' + encodeURIComponent((S.stores || []).join(',')), 30 * 6e4); others = f.filter(d => !epicNow.some(e => e.title.toLowerCase() === d.title.toLowerCase())); } catch (e) { err++; }
   try {
     const r = await cached('https://www.gamerpower.com/api/giveaways?platform=pc&type=game', 30 * 6e4);
@@ -1024,7 +1030,7 @@ async function loadFree() {
   if (err === 2 && !gp.length) { $('#flist').innerHTML = '<div class="empty"><h3>Couldn’t load free games</h3><p>Check your internet connection.</p><button class="btn" data-act="freeretry">Try again</button></div>'; return; }
   const fcard = (e, soon) => `<div class="fcard"><div class="hero">${e.img ? `<img loading="lazy" src="${esc(e.img)}" alt="">` : ''}<span class="badge${soon ? ' soon' : ''}">${soon ? 'Free from ' + fdate(e.start) : 'Free until ' + fdate(e.end)}</span></div>
     <div class="body"><div class="t"><b>${esc(e.title)}</b><span>${isOwned(null, e.title) ? '✓ You own this · ' : ''}Epic Games Store${e.worth ? ' · normally ' + money(e.worth) : ''}</span></div>${soon ? '' : `<button class="btn sm" data-open="${esc(e.url)}">Claim</button>`}</div></div>`;
-  let h = `<div class="sec"><h2>Free now on Epic</h2><span>Claim it and it’s yours</span></div>` + (epicNow.length ? epicNow.map(e => fcard(e)).join('') : '<p class="sub">No free game listed right now. Check again Thursday.</p>');
+  let h = `<div class="sec"><h2>Free now on Epic</h2><span>Claim it and it’s yours</span></div>` + (epicNow.length ? epicNow.map(e => fcard(e)).join('') : (epicErr ? '<p class="sub">Couldn’t reach the Epic store just now. <button class="more" data-act="freeretry" style="display:inline;padding:0">Try again</button></p>' : '<p class="sub">No free game listed right now. Check again Thursday.</p>'));
   if (epicNext.length) h += `<div class="sec"><h2>Coming next</h2><span>Free from Thursday</span></div>` + epicNext.map(e => fcard(e, true)).join('');
   if (gp.length) h += `<div class="sec"><h2>Giveaways at other stores</h2><span>${gp.length} right now</span></div><div class="list">` + gp.map(x => { const k = x.bundle ? '' : requestCompat(null, x.title);
     return `<div class="gpc"><div class="img">${x.img ? `<img loading="lazy" src="${esc(x.img)}" alt="" onerror="this.style.visibility='hidden'">` : ''}</div><div class="mid"><b>${esc(x.title)}</b>

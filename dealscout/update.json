@@ -1,16 +1,16 @@
 {
  "content": {
-  "v": 4,
+  "v": 5,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "ca76c9113f3c7f7acad616add4f1b08e1aa43e288bc04179c0078c3107b562a2",
+  "sha256": "8c1d16b4a0eed79e8fdda9d442036b814dcd7f57fc61201b1fcffad0a0fbf871",
   "minVc": 2
  },
  "apk": {
-  "vc": 4,
-  "vn": "1.3.0",
-  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.3.0.apk",
-  "sha256": "f06b267b2e276aef5354bea7b66d7b6f1cafb4465102db8be7fc394297657aef",
-  "size": 130619
+  "vc": 5,
+  "vn": "1.3.1",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.3.1.apk",
+  "sha256": "2f6300eeaf3f6bedfb017d7e8a873aefa59d66dc2ec20627f1570b11676aa7f2",
+  "size": 131207
  },
- "notes": "More places checked: giveaways from Steam, GOG, IndieGala, itch.io and more in the Free tab (with alerts), and extra stores like the Microsoft Store and Battle.net on every game when you add an IsThereAnyDeal key."
+ "notes": "Fixes: Epic no longer shows twice on game pages, a clear message if Epic can't be reached, price history loads faster and uses less storage."
 }

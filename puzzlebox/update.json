@@ -1,16 +1,16 @@
 {
  "content": {
-  "v": 1,
+  "v": 2,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/index.html",
-  "sha256": "85c74c19df0274f089138ac19a52141518a6cb465feabfcaa506c55cfad10975",
+  "sha256": "0e9f2968ac2efa8e4cbbbec9d21555e90fa6644c7444baa4f0714a0b84f987f5",
   "minVc": 4
  },
  "apk": {
-  "vc": 4,
-  "vn": "3.0.0",
-  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/Puzzlebox-3.0.0.apk",
-  "sha256": "88f4d16a77711a74a6d38a5bc936b60e6a36069b430019379893212667c6e12b",
-  "size": 929955
+  "vc": 5,
+  "vn": "3.0.1",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/Puzzlebox-3.0.1.apk",
+  "sha256": "30244cb67cbdc533c0b3f44fab72a5ed73837e168f4fa45aeafbf04fa0c29c7f",
+  "size": 931831
  },
- "notes": "Six new puzzles (2048, FreeCell, Sokoban, Bridges, Kakuro, Fill-In), achievements, full stats, backups and automatic updates."
+ "notes": "Fix: days you finished before the new puzzles arrived keep their original three puzzles, so your streak and days done are safe. The new puzzles join the dailies from Nov 22."
 }

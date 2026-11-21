@@ -2271,6 +2271,8 @@ register({
 /* Shared update UI for the personal apps: update banner, "what's new", version info. */
 (function () {
   var A = window.Android || null;
+  var bootErr = false;
+  window.addEventListener('error', function (e) { if (e && e.error !== undefined && !(e.target && e.target !== window)) bootErr = true; });
   var css = '.upd-bar{position:fixed;left:12px;right:12px;bottom:calc(86px + var(--sab,0px));z-index:60;background:#111A2E;color:#fff;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;font:15px/1.4 system-ui,sans-serif;transform:translateY(120%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility .3s}' +
     '.upd-bar.on{transform:none;opacity:1;visibility:visible;pointer-events:auto}.upd-bar b{font-size:16px}.upd-bar p{margin:0;opacity:.85;font-size:13.5px}' +
     '.upd-row{display:flex;gap:8px}.upd-row button{flex:1;min-height:44px;border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer}' +
@@ -2301,7 +2303,9 @@ register({
       var n = ''; try { n = A.takeNotes(); } catch (e) {}
       if (n) setTimeout(function () { show('<b>Updated</b><p>' + esc(n) + '</p>', [['Nice', 'upd-go']]); }, 800);
     }
-    try { A && A.ready && A.ready(); } catch (e) {}
+    // Tell the app this build started fine. If the app's own code crashed while starting, stay quiet:
+    // the native side then rolls a downloaded update back to the previous working version.
+    setTimeout(function () { if (!bootErr) { try { A && A.ready && A.ready(); } catch (e) {} } }, 1500);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
@@ -2339,7 +2343,18 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e
 const runOf = id => S.run[id] || (S.run[id] = {lvl:0, best:0, solved:0, fails:0, cur:null, bestT:{}});
 
 /* ---------- daily ---------- */
-const picks = date => shuffle(DAILY_POOL.slice(), rngFrom(date + ':picks')).slice(0, 3);
+// Daily picks must never change for a day once it exists. The six puzzles added in 3.0 joined the daily
+// pool from NEW_POOL_FROM; earlier days keep the original 14-puzzle pool (in its original order).
+const OLD_POOL = ['sudoku', 'kenken', 'nono', 'queens', 'binary', 'flow', 'pipes', 'lights', 'words', 'search', 'hive', 'anagram', 'mines', 'code'];
+const NEW_POOL_FROM = '2026-11-22';
+const pickFrom = (pool, date) => shuffle(pool.slice(), rngFrom(date + ':picks')).slice(0, 3);
+const pickCache = {};
+function picks(date) {
+  if (date >= NEW_POOL_FROM) return pickFrom(DAILY_POOL, date);
+  const r = S.daily[date] || {}, n = ids => ids.filter(id => r[id] || S.dst[date + ':' + id]).length;
+  const a = pickCache['o' + date] || (pickCache['o' + date] = pickFrom(OLD_POOL, date)), b = pickCache['n' + date] || (pickCache['n' + date] = pickFrom(DAILY_POOL, date));
+  return n(b) > n(a) ? b : a; // a day already started on 3.0 keeps the 3.0 picks
+}
 const dayRec = date => S.daily[date] || (S.daily[date] = {});
 const dDone = (date, id) => !!(S.daily[date] && S.daily[date][id] && S.daily[date][id].done);
 const allDone = date => picks(date).every(id => dDone(date, id));

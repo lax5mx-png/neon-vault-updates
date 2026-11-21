@@ -258,6 +258,8 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
 /* Shared update UI for the personal apps: update banner, "what's new", version info. */
 (function () {
   var A = window.Android || null;
+  var bootErr = false;
+  window.addEventListener('error', function (e) { if (e && e.error !== undefined && !(e.target && e.target !== window)) bootErr = true; });
   var css = '.upd-bar{position:fixed;left:12px;right:12px;bottom:calc(86px + var(--sab,0px));z-index:60;background:#111A2E;color:#fff;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;font:15px/1.4 system-ui,sans-serif;transform:translateY(120%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility .3s}' +
     '.upd-bar.on{transform:none;opacity:1;visibility:visible;pointer-events:auto}.upd-bar b{font-size:16px}.upd-bar p{margin:0;opacity:.85;font-size:13.5px}' +
     '.upd-row{display:flex;gap:8px}.upd-row button{flex:1;min-height:44px;border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer}' +
@@ -288,7 +290,9 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
       var n = ''; try { n = A.takeNotes(); } catch (e) {}
       if (n) setTimeout(function () { show('<b>Updated</b><p>' + esc(n) + '</p>', [['Nice', 'upd-go']]); }, 800);
     }
-    try { A && A.ready && A.ready(); } catch (e) {}
+    // Tell the app this build started fine. If the app's own code crashed while starting, stay quiet:
+    // the native side then rolls a downloaded update back to the previous working version.
+    setTimeout(function () { if (!bootErr) { try { A && A.ready && A.ready(); } catch (e) {} } }, 1500);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
@@ -985,6 +989,7 @@ $('#bkpick').addEventListener('change', e => {
 });
 $('#updchk').addEventListener('click', () => window.UPD && UPD.check());
 
+window.__fk = {get S() { return S; }, go, addDemo};
 load(); render(); syncNative(); pushReminder();
 try { if (window.UPD) $('#verinfo').textContent = 'Version ' + UPD.info() + '. Updates install by themselves.'; } catch (e) {}
 if (!S.seen) { S.seen = true; save(); }
