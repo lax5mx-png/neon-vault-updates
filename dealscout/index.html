@@ -251,6 +251,9 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 .gpc details{margin-top:4px;font-size:12.5px}.gpc summary{color:var(--acc);font-weight:700;cursor:pointer}.gpc details p{margin:4px 0 0;color:var(--mute);line-height:1.45}
 .gpc .btn{flex:none;align-self:center}
 .itx{flex:none;width:22px;height:22px;border-radius:6px;background:var(--soft);display:grid;place-items:center;font-weight:900;font-size:12px;color:var(--mute)}
+.right .was.avg{text-decoration:none}
+.right .off.none{background:var(--soft);color:var(--mute)}
+.avgline{margin-top:10px;font-size:14px;background:var(--goodbg);color:var(--ink);border-radius:12px;padding:9px 12px}.avgline b{color:var(--good)}
 </style>
 </head>
 <body>
@@ -662,7 +665,7 @@ function cardHidden(el) {
 function applyVis(root) { (root || document).querySelectorAll('.deal[data-ck]').forEach(e => { e.style.display = cardHidden(e) ? 'none' : ''; }); }
 let moreT = 0;
 function maybeMore() {
-  if (view !== 'deals' || searchMode || dloading || dend || !dcount) return;
+  if (view !== 'deals' || searchMode || dloading || (dend && !dpool.length) || !dcount) return;
   const shown = [...document.querySelectorAll('#dlist .deal')].filter(e => e.style.display !== 'none').length;
   const pending = [...document.querySelectorAll('#dlist .deal')].some(e => !COMPAT[e.dataset.ck]);
   if (S.genres.length || (S.hideOwned && OWNED.size)) $('#dstat').textContent = shown + ' deals shown' + (S.genres.length ? ' · ' + S.genres.map(gLabel).join(', ') : '') + (pending ? ' · checking more…' : '');
@@ -771,11 +774,40 @@ const PRESETS = {
   big:{label:'Big games', q:'sortBy=Deal%20Rating&AAA=1'},
   u5:{label:'Under $5', q:'sortBy=Deal%20Rating&upperPrice=5'},
   u10:{label:'Under $10', q:'sortBy=Deal%20Rating&upperPrice=10'},
-  off:{label:'Biggest discounts', q:'sortBy=Savings&steamRating=70'},
+  off:{label:'Biggest discounts', q:'sortBy=Savings&steamRating=70', avg:true},
   meta:{label:'Critics’ picks', q:'sortBy=Metacritic&metacritic=80'},
   new:{label:'Just dropped', q:'sortBy=Recent&steamRating=70'}
 };
-let dpage = 0, dseen = new Set(), dloading = false, dend = false, dcount = 0, searchMode = false;
+let dpage = 0, dseen = new Set(), dloading = false, dend = false, dcount = 0, searchMode = false, dpool = [];
+
+/* ---------- real discount: compared with the average price across stores ---------- */
+const AVG = {}; // CheapShark gameID -> {prices:[{shop, p}], avg, n, it}
+function finishAvg(a) { const ps = a.prices.map(x => x.p).filter(x => x >= 0); a.n = ps.length; a.avg = ps.length ? ps.reduce((x, y) => x + y, 0) / ps.length : 0; return a; }
+async function storeAverages(deals) {
+  const need = [...new Set(deals.map(d => d.gameID))].filter(id => !AVG[id]);
+  for (let i = 0; i < need.length; i += 25) {
+    const chunk = need.slice(i, i + 25);
+    let r = {}; try { r = await cached(CS + 'games?ids=' + chunk.join(','), 15 * 6e4); } catch (e) {}
+    chunk.forEach(id => { const g = r && r[id]; if (g && g.deals) AVG[id] = finishAvg({prices:g.deals.map(x => ({shop:shopKey((STORES[x.storeID] || {}).name || ('cs' + x.storeID)), p:+x.price}))}); });
+  }
+  // With an IsThereAnyDeal key, add the stores CheapShark doesn't track (Microsoft Store, Battle.net, ...)
+  if (!S.itadKey) return;
+  try {
+    const todo = deals.filter(d => d.steamAppID && AVG[d.gameID] && !AVG[d.gameID].it);
+    if (!todo.length) return;
+    const key = encodeURIComponent(S.itadKey.trim()), map = await post(ITAD + 'lookup/id/shop/61/v1?key=' + key, [...new Set(todo.map(d => 'app/' + d.steamAppID))]);
+    const byItad = {}; todo.forEach(d => { const id = map && map['app/' + d.steamAppID]; if (id) (byItad[id] = byItad[id] || []).push(d.gameID); });
+    const ids = Object.keys(byItad);
+    for (let i = 0; i < ids.length; i += 100) {
+      const res = await post(ITAD + 'games/prices/v3?key=' + key + '&country=US', ids.slice(i, i + 100));
+      (Array.isArray(res) ? res : []).forEach(e => (byItad[e.id] || []).forEach(gid => { const a = AVG[gid]; if (!a) return; const have = new Set(a.prices.map(x => x.shop));
+        (e.deals || []).forEach(x => { const k = shopKey(x.shop && x.shop.name); const pr = +(x.price && x.price.amount); if (k && !have.has(k) && pr >= 0) { have.add(k); a.prices.push({shop:k, p:pr}); } }); finishAvg(a); }));
+    }
+    todo.forEach(d => { if (AVG[d.gameID]) AVG[d.gameID].it = true; });
+  } catch (e) {}
+}
+function realOff(d) { const a = AVG[d.gameID]; if (!a || a.n < 2 || !(a.avg > 0)) return null; return Math.max(0, Math.round((1 - (+d.salePrice) / a.avg) * 100)); }
+const byReal = (x, y) => { const a = realOff(x), b = realOff(y); if (a === null || b === null) return (a === null) - (b === null) || (+y.savings) - (+x.savings); return b - a || (+y.savings) - (+x.savings); };
 function renderPresets() {
   $('#presets').innerHTML = Object.entries(PRESETS).map(([k, p]) => `<button class="chip${S.preset === k ? ' on' : ''}" data-preset="${k}">${p.label}</button>`).join('');
   const nStores = (S.stores || []).length, tot = Object.values(STORES).filter(s => s.active).length;
@@ -793,21 +825,36 @@ function dealsUrl(page) {
 }
 async function loadDeals(reset) {
   if (dloading) return; if (reset) { dpage = 0; dseen = new Set(); dend = false; dcount = 0; $('#dlist').innerHTML = '<div class="skel"></div>'.repeat(6); $('#dmore').innerHTML = ''; $('#main').scrollTop = 0; }
-  if (dend) return; dloading = true;
+  if (dend && !dpool.length) return; dloading = true;
   if (!reset) $('#dmore').innerHTML = '<div class="spin"></div>';
   try {
     if (!(S.stores || []).length) throw new Error('nostores');
-    const data = await cached(dealsUrl(dpage), 15 * 6e4, dpage === 0);
-    if (reset) $('#dlist').innerHTML = '';
-    const fresh = data.filter(d => { if (dseen.has(d.gameID)) return false; dseen.add(d.gameID); return true; });
+    if (reset) dpool = [];
+    let fresh;
+    if (PRESETS[S.preset].avg) {
+      // Pull a bigger batch, look up every store's price, then rank by how far below the average each deal is
+      if (reset) $('#dlist').innerHTML = '<div class="empty"><div class="spin"></div><p>Comparing prices across every store…</p></div>';
+      const raw = [];
+      for (let k = 0; k < (reset ? 3 : 2) && !dend; k++) { const data = await cached(dealsUrl(dpage), 15 * 6e4, dpage === 0); raw.push(...data); dpage++; if (data.length < 40 || dpage > 25) dend = true; }
+      const got = raw.filter(d => { if (dseen.has(d.gameID)) return false; dseen.add(d.gameID); return true; });
+      await storeAverages(got);
+      dpool = dpool.concat(got).sort(byReal);
+      fresh = dend ? dpool.splice(0) : dpool.splice(0, 30);
+      if (reset) $('#dlist').innerHTML = '';
+    } else {
+      const data = await cached(dealsUrl(dpage), 15 * 6e4, dpage === 0);
+      if (reset) $('#dlist').innerHTML = '';
+      fresh = data.filter(d => { if (dseen.has(d.gameID)) return false; dseen.add(d.gameID); return true; });
+      dpage++; if (data.length < 40 || dpage > 25) dend = true;
+    }
     $('#dlist').insertAdjacentHTML('beforeend', fresh.map(dealCard).join(''));
     fresh.forEach(d => requestCompat(d.steamAppID, d.title));
-    dcount += fresh.length; dpage++; if (data.length < 40 || dpage > 25) dend = true;
-    $('#dstat').textContent = dcount + ' deals from ' + (S.stores || []).length + ' official stores';
+    dcount += fresh.length;
+    $('#dstat').textContent = PRESETS[S.preset].avg ? dcount + ' deals · ranked by how far below the average price across stores' : dcount + ' deals from ' + (S.stores || []).length + ' official stores';
     fresh.forEach(d => { if (S.ph[d.gameID]) recordPrice(d.gameID, +d.salePrice); });
     setTimeout(maybeMore, 50);
     $('#dupd').textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
-    $('#dmore').innerHTML = dend ? '<span class="sub">That’s everything for this filter.</span>' : '<button class="btn ghost" data-act="more">Load more deals</button>';
+    $('#dmore').innerHTML = dend && !dpool.length ? '<span class="sub">That’s everything for this filter.</span>' : '<button class="btn ghost" data-act="more">Load more deals</button>';
     if (!dcount) $('#dlist').innerHTML = '<div class="empty"><h3>No deals match</h3><p>Try another tab above or loosen the filters.</p></div>';
   } catch (e) {
     if (reset || !dcount) $('#dlist').innerHTML = `<div class="empty"><h3>${e.message === 'nostores' ? 'No stores selected' : 'Couldn’t load deals'}</h3><p>${e.message === 'nostores' ? 'Turn on at least one store in Filters.' : 'Check your internet connection and try again.'}</p><button class="btn" data-act="retry">Try again</button></div>`;
@@ -818,11 +865,12 @@ async function loadDeals(reset) {
 function dealCard(d) {
   const k = ckey(d.steamAppID, d.title);
   const hidden = cardHidden({dataset:{ck:k, app:d.steamAppID || '', title:d.title, game:d.gameID}}), own = isOwned(d.steamAppID, d.title, d.gameID);
-  const sale = +d.salePrice, off = Math.round(+d.savings);
+  const sale = +d.salePrice, off = Math.round(+d.savings), avgMode = !!PRESETS[S.preset].avg && !searchMode, av = AVG[d.gameID], ro = avgMode ? realOff(d) : null;
+  const avgTag = !avgMode ? '' : ro !== null ? `<span class="tag store">vs ${av.n} stores</span>` : '<span class="tag store">Only at 1 store</span>';
   return `<button class="deal" data-game="${d.gameID}" data-deal="${esc(d.dealID)}" data-app="${d.steamAppID || ''}" data-ck="${esc(k)}" data-title="${esc(d.title)}"${hidden ? ' style="display:none"' : ''}>
     <div class="img"><img loading="lazy" src="${esc(img(d.steamAppID, d.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(d.thumb)}'}" alt=""></div>
-    <div class="mid"><div class="t">${esc(d.title)}</div><div class="meta">${own ? '<span class="tag own">✓ You own this</span>' : ''}${storeTag(d.storeID)}${rateTag(d)}</div><div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div></div>
-    <div class="right"><span class="price${sale === 0 ? ' free' : ''}">${money(sale)}</span>${+d.normalPrice > sale ? `<span class="was">${money(d.normalPrice)}</span>` : ''}${off > 0 ? `<span class="off">-${off}%</span>` : ''}</div></button>`;
+    <div class="mid"><div class="t">${esc(d.title)}</div><div class="meta">${own ? '<span class="tag own">✓ You own this</span>' : ''}${storeTag(d.storeID)}${avgTag}${avgMode ? '' : rateTag(d)}</div><div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div></div>
+    <div class="right"><span class="price${sale === 0 ? ' free' : ''}">${money(sale)}</span>${avgMode && ro !== null ? `<span class="was avg">avg ${money(av.avg)}</span>${ro > 0 ? `<span class="off">-${ro}%</span>` : '<span class="off none">avg price</span>'}` : `${+d.normalPrice > sale ? `<span class="was">${money(d.normalPrice)}</span>` : ''}${off > 0 ? `<span class="off${avgMode ? ' none' : ''}">-${off}%</span>` : ''}`}</div></button>`;
 }
 async function doSearch(q) {
   searchMode = true; $('#dlist').innerHTML = '<div class="spin"></div>'; $('#dmore').innerHTML = ''; $('#dstat').textContent = 'Search results for “' + q + '”'; $('#dupd').textContent = '';
@@ -908,7 +956,9 @@ function renderGame() {
   const csBest = deals.find(d => storeOn(d.storeID)) || deals[0], exBest = extra.slice().sort((a, b) => a.price - b.price)[0];
   const best = exBest && (!csBest || exBest.price < +csBest.price - 0.004) ? {price:exBest.price, savings:exBest.cut, retailPrice:exBest.regular, shop:exBest.shop} : csBest;
   const low0 = g.cheapestPriceEver, itLow = curGame.itad && curGame.itad.low;
-  const low = itLow != null && (!low0 || itLow < +low0.price) ? {price:itLow, date:null} : low0, w = S.watch.find(x => x.id === curGame.id);
+  let low = itLow != null && (!low0 || itLow < +low0.price) ? {price:itLow, date:null} : low0;
+  if (best && (!low || +best.price < +low.price)) low = {price:+best.price, date:Date.now() / 1000}; // today's price is the new record
+  const w = S.watch.find(x => x.id === curGame.id);
   const atLow = low && best && +best.price <= +low.price + 0.01;
   const loadingC = !!ck && ck !== 't:' && !c0;
   const sid = c ? c.sid : appid;
@@ -935,6 +985,8 @@ function renderGame() {
       <div><b>${low ? money(low.price) : '—'}</b><span>Lowest ever${low && low.date ? ' (' + fdate(low.date * 1000) + ')' : ''}</span></div>
       <div><b>${best && +best.savings >= 1 ? '-' + Math.round(+best.savings) + '%' : 'Full price'}</b><span>${best && +best.savings >= 1 ? 'Off ' + money(best.retailPrice) : 'Not on sale now'}</span></div>
     </div>
+    ${(() => { const ps = deals.map(d => +d.price).concat(extra.map(x => x.price)).filter(x => x >= 0); if (ps.length < 2 || !best) return ''; const avg = ps.reduce((a, b) => a + b, 0) / ps.length, ro = Math.round((1 - (+best.price) / avg) * 100);
+      return `<div class="avgline">${+best.price === 0 ? `<b>Free right now.</b> It averages ${money(avg)} across ${ps.length} stores.` : ro > 0 ? `<b>${ro}% below</b> the average price across ${ps.length} stores (${money(avg)})` : `About the same as the average price across ${ps.length} stores (${money(avg)})`}</div>`; })()}
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
     <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'g' ? '✓ ' : v.k === 'w' ? '~ ' : v.k === 'b' ? '✗ ' : '? ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
       ${loadingC ? '' : `<p>${esc(c0 && c0.none ? 'This game isn’t on Steam, so there are no listed requirements to check.' : v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}

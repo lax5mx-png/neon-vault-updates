@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 5,
+  "v": 6,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "8c1d16b4a0eed79e8fdda9d442036b814dcd7f57fc61201b1fcffad0a0fbf871",
+  "sha256": "68045404478154c4bd4471e7b739cdf6164c1ec44b15378db2a17e3203f0706d",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "2f6300eeaf3f6bedfb017d7e8a873aefa59d66dc2ec20627f1570b11676aa7f2",
   "size": 131207
  },
- "notes": "Fixes: Epic no longer shows twice on game pages, a clear message if Epic can't be reached, price history loads faster and uses less storage."
+ "notes": "Biggest discounts now ranks deals by how far below the average price across all stores they are, not the store's listed price. Game pages show the store average too."
 }
