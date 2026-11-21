@@ -104,7 +104,7 @@ h1{font-size:28px;line-height:1.1;margin:10px 2px 2px;letter-spacing:-.5px;font-
 .cal .x{flex:1;font-size:14px}.cal .x b{display:block}
 .cal.live .d{background:var(--acc);color:var(--onacc)}.cal.live .d small{color:var(--onacc)}
 /* nav */
-nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:var(--sab);z-index:6}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:var(--sab);z-index:6}
 nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 10px;font-size:12px;font-weight:700;color:var(--mute);position:relative}
 nav.tabs button svg{width:24px;height:24px}
 nav.tabs button.on{color:var(--acc)}
@@ -184,6 +184,65 @@ label.f{display:block;font-size:13px;font-weight:750;color:var(--mute);margin:14
 .phleg .k{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px;background:var(--acc)}
 .phleg .k.reg{background:none;border-top:2px dashed var(--mute);height:0}.phleg .k.lo{width:9px;height:9px;border-radius:50%;background:var(--gold)}
 .phempty{padding:6px 4px}.phempty b{font-size:15px}.phempty p{margin:4px 0;font-size:13.5px;color:var(--mute)}
+.dheroW{position:relative;background:var(--soft)}
+.dheroW.small .dhero{object-fit:contain;aspect-ratio:460/215}
+.hcount{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.62);color:#fff;font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px}
+.dtitle{margin:14px 0 2px;font-size:22px;line-height:1.2}
+.gchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.gchips span{background:var(--soft);border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700}
+.gchips.feat{margin-top:10px}.gchips.feat span{background:transparent;border:1.5px solid var(--line);font-weight:600;color:var(--mute)}
+.dlcbar{margin-top:10px;background:var(--warnbg);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:13.5px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.dlcbar .btn{margin-left:auto}
+.exp{display:flex;align-items:center;gap:10px;margin-top:10px;background:var(--card);border-radius:10px;padding:8px 10px;color:var(--ink)}
+.exp span{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}.exp b{font-size:14px!important}
+.gal{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px;scrollbar-width:none;margin:0 -2px}
+.gal::-webkit-scrollbar{display:none}
+.gi{flex:none;width:168px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:var(--soft);scroll-snap-align:start;position:relative;padding:0}
+.gi img{width:100%;height:100%;object-fit:cover;display:block}
+.gi.vid::after{content:"▶";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:26px;background:rgba(0,0,0,.28);text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.gi.sk{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.rqs{display:flex;flex-direction:column;gap:8px}
+.rq{background:var(--soft);border-radius:12px;padding:9px 11px}
+.rqh{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);margin-bottom:4px}
+.rqr{display:grid;grid-template-columns:36px 1fr 20px;gap:6px;align-items:start;font-size:13.5px;padding:2px 0}
+.rqr .lab{font-weight:800;color:var(--mute);font-size:12px;padding-top:1px}
+.rqr.you{border-top:1px dashed var(--line);margin-top:3px;padding-top:5px}.rqr.you .val{font-weight:700;color:var(--acc)}
+.st{font-style:normal;font-weight:900;text-align:center;border-radius:6px;font-size:12px;line-height:18px}
+.st.ok{background:var(--goodbg);color:var(--good)}.st.warn{background:var(--warnbg);color:var(--warn)}.st.bad{background:var(--badbg);color:var(--bad)}
+.rqraw{margin:2px 0;font-size:13px;line-height:1.45}
+.about{font-size:14.5px;line-height:1.55;max-height:190px;overflow:hidden;position:relative}
+.about:not(.open)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,var(--card))}
+.about.open{max-height:none}.about p{margin:0 0 10px}.about .lead{font-weight:600}
+button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info div{background:var(--soft);border-radius:12px;padding:8px 10px}.info span{display:block;font-size:11.5px;color:var(--mute);font-weight:700}.info b{font-size:14px}
+#lb{position:fixed;inset:0;background:#000;z-index:80;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+#lb.on{opacity:1;visibility:visible}
+.lbtop{display:flex;justify-content:space-between;align-items:center;padding:calc(10px + var(--sat)) 14px 10px;color:#fff;font-weight:700}
+.lbtop button{color:#fff;font-size:22px;width:44px;height:44px}
+.lbs{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.lbs::-webkit-scrollbar{display:none}
+.lbslide{flex:none;width:100%;height:100%;scroll-snap-align:center;display:grid;place-items:center;position:relative}
+.lbslide img,.lbslide video{max-width:100%;max-height:100%;object-fit:contain}
+.lbslide video{width:100%}
+.lbfail{display:none;position:absolute;inset:auto 0 18% 0;flex-direction:column;align-items:center;color:#fff;gap:6px}
+.lsum{background:linear-gradient(135deg,var(--acc),#0E7A39);color:#fff;border-radius:18px;padding:16px;margin-top:12px}
+@media (prefers-color-scheme:dark){.lsum{background:linear-gradient(135deg,#1D5C35,#123D24)}}
+.lsum .big{font-size:32px;font-weight:900;line-height:1.1}
+.lsum .row{display:flex;gap:16px;margin-top:8px;font-size:13px;opacity:.92}.lsum .row b{display:block;font-size:16px}
+.lbar{height:8px;border-radius:4px;background:rgba(255,255,255,.25);margin-top:12px;overflow:hidden}.lbar i{display:block;height:100%;background:#fff;border-radius:4px}
+.lbar.over i{background:#FFB4B4}
+.lsum .bud{display:flex;justify-content:space-between;font-size:12.5px;margin-top:5px;font-weight:700}
+.lsum button{color:#fff;text-decoration:underline;font-weight:700;font-size:13px;padding:0}
+.lrow{display:flex;align-items:stretch;background:var(--card);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.lrow .lo{flex:1;display:flex;gap:11px;align-items:center;padding:10px;text-align:left;min-width:0}
+.lrow .img{flex:none;width:96px;height:45px;border-radius:8px;overflow:hidden;background:var(--soft)}.lrow .img img{width:100%;height:100%;object-fit:cover}
+.lrow .mid{flex:1;min-width:0}.lrow .t{font-weight:800;font-size:14.5px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lrow .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.lrow .right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding-right:4px}
+.lrow .x{flex:none;width:40px;color:var(--mute);font-size:16px;border-left:1px solid var(--line)}
+.tag.low{background:var(--goodbg);color:var(--good)}
 </style>
 </head>
 <body>
@@ -210,6 +269,12 @@ label.f{display:block;font-size:13px;font-weight:750;color:var(--mute);margin:14
     <div id="flist"></div>
   </section>
 
+  <section class="view" id="v-list">
+    <h1>My list</h1>
+    <p class="sub">Games you plan to get. Prices update every time you open this.</p>
+    <div id="llist"></div>
+  </section>
+
   <section class="view" id="v-watch">
     <h1>Watchlist</h1>
     <p class="sub" id="wsub"></p>
@@ -225,6 +290,7 @@ label.f{display:block;font-size:13px;font-weight:750;color:var(--mute);margin:14
 <nav class="tabs" id="tabs">
   <button data-v="deals" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3" fill="currentColor"/></svg>Deals</button>
   <button data-v="free"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5" rx="1"/><path d="M12 8v13M5 13v8h14v-8M12 8S10.5 3 7.5 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Free<span class="dot" id="freedot" style="display:none"></span></button>
+  <button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h9.1a1.5 1.5 0 0 0 1.5-1.1L22 7H6.2"/></svg>My list<span class="dot" id="listdot" style="display:none"></span></button>
   <button data-v="watch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>Watchlist<span class="dot" id="watchdot" style="display:none"></span></button>
   <button data-v="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>Guide</button>
 </nav>
@@ -307,12 +373,15 @@ const GPUS = [
   ['RTX 5060 Laptop (8 GB)', 12, 8], ['GTX 1650 (4 GB)', 3.5, 4], ['GTX 1660 Ti (6 GB)', 5.8, 6], ['RTX 2060 (6 GB)', 7.2, 6], ['RTX 3060 (12 GB)', 8.7, 12],
   ['RTX 4060 (8 GB)', 10.5, 8], ['RTX 4070 (12 GB)', 17.5, 12], ['RX 6600 (8 GB)', 8.3, 8], ['RX 7600 (8 GB)', 10.5, 8], ['Integrated graphics only', 1.2, 1]
 ];
-function blank() { return {gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}}; }
+const CPUS = [
+  ['Ryzen 7 7445HS', 7.0], ['Ryzen 5 7535HS', 6.0], ['Ryzen 7 7840HS', 9.5], ['Ryzen 7 8845HS', 9.8], ['Core i5-12450H', 6.3], ['Core i5-13420H', 7.0], ['Core i7-12650H', 8.0], ['Core i7-13620H', 8.8], ['Core i7-13700H', 9.5], ['Core i5-12400 (desktop)', 6.6], ['Ryzen 5 5600 (desktop)', 7.0], ['Older quad-core', 2.5]
+];
+function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
 let S = Object.assign(blank(), lsGet(KEY) || {});
 function save() { lsSet(KEY, S); syncNative(); }
 function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target})), free:S.freeNote})); } catch (e) {} }
 function pushReminder() { if (!A) return; const [h, m] = S.dailyT.split(':').map(Number); try { A.setReminder(!!S.daily, h, m); } catch (e) {} }
-const rig = () => ({gpu:GPUS[S.gpu][1], vram:GPUS[S.gpu][2], name:GPUS[S.gpu][0], ram:S.ram, disk:S.disk});
+const rig = () => ({gpu:GPUS[S.gpu][1], vram:GPUS[S.gpu][2], name:GPUS[S.gpu][0], ram:S.ram, disk:S.disk, cpu:CPUS[S.cpu || 0][1], cpuName:CPUS[S.cpu || 0][0]});
 
 /* ---------- stores ---------- */
 let STORES = {};
@@ -351,26 +420,89 @@ const GPU_TABLE = [
   G('arc\\s*b580', 11), G('arc\\s*b570', 9.5), G('arc\\s*a770', 10), G('arc\\s*a750', 9), G('arc\\s*a580', 8), G('arc\\s*a380', 4), G('arc\\s*a3[0-5]0m?', 2.5), G('iris\\s*xe', 1.4), G('intel\\s*arc(?!\\s*[ab]\\d)', 3.0),
   G('uhd\\s*(graphics\\s*)?7[0-9]0', 1.0), G('uhd\\s*(graphics\\s*)?6[0-9]0', 0.6), G('uhd', 0.6), G('iris', 0.9), G('hd\\s*graphics\\s*[0-9]{3,4}', 0.4), G('intel\\s*hd', 0.4), G('(dx|directx)\\s*9|shader\\s*model\\s*[23]', 0.4)
 ];
-const strip = h => String(h || '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/li>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ');
-function field(t, name) { const m = t.match(new RegExp(name + '\\s*:\\s*([^\\n]*)', 'i')); return m ? m[1].trim() : ''; }
-function gb(s) { const m = String(s).match(/([\d.]+)\s*(GB|MB|TB)/i); if (!m) return null; const v = parseFloat(m[1]); return m[2].toUpperCase() === 'MB' ? v / 1024 : m[2].toUpperCase() === 'TB' ? v * 1024 : v; }
-function gpuScore(s) {
-  if (!s) return null; let best = null;
-  const parts = s.split(/\s+or\s+|\/|,|;|\|/i);
-  for (const part of parts) { for (const [re, sc] of GPU_TABLE) if (re.test(part)) { best = best === null ? sc : Math.min(best, sc); break; } }
-  return best;
+const GPU_LOOSE = [
+  G('geforce\\s*(7|8|9)\\s*series', 0.5), G('geforce\\s*(10|1000|10xx)\\s*series', 2.3), G('geforce\\s*(900|9xx)\\s*series', 2.5), G('geforce\\s*(700|7xx)\\s*series', 1.7), G('geforce\\s*(600|6xx)\\s*series', 1.2), G('geforce\\s*16\\s*series', 3.5), G('geforce\\s*(rtx\\s*)?20\\s*series', 7.2), G('geforce\\s*(rtx\\s*)?30\\s*series', 6.2),
+  G('radeon\\s*r7\\s*series', 0.9), G('radeon\\s*r9\\s*series', 2.0), G('rx\\s*400\\s*series|rx400', 2.0), G('rx\\s*500\\s*series|rx500', 2.3),
+  G('gts\\s*\\d{3}', 0.5), G('gtx\\s*2[6-9]\\d', 0.4), G('(geforce|nvidia)\\s*(gt\\s*)?[89]\\d00', 0.3), G('(gt|gtx)\\s*7[1-4]0', 0.8), G('x1[0-9]00|hd\\s*[23]\\d{3}', 0.25), G('radeon\\s*4[6-8]\\d0', 0.35), G('hd\\s*69[0-9]0', 1.2),
+  G('dedicated', 1.5), G('integrated|onboard|on-board|igpu', 0.6),
+  G('directx\\s*12|dx\\s*12|dx12|feature level 12', 0.6), G('vulkan', 0.6), G('directx\\s*11|dx\\s*11|dx11', 0.5), G('opengl\\s*4', 0.5), G('directx\\s*10|dx\\s*10|dx10|shader\\s*model\\s*[45]', 0.4), G('opengl\\s*3', 0.4), G('opengl', 0.3), G('directx|dx\\s*9', 0.3)
+];
+const strip = h => String(h || '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/li>/gi, '\n').replace(/<\/?(p|div|h\d)[^>]*>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/[ \t]+/g, ' ');
+function field(t, names) { for (const name of names) { const m = t.match(new RegExp('(?:^|\\n)\\s*' + name + '\\s*\\*?\\s*:\\s*([^\\n]*)', 'i')); if (m && m[1].trim()) return m[1].trim(); } return ''; }
+function gb(s) { const m = String(s).match(/([\d.,]+)\s*(GB|MB|TB|G\b)/i); if (!m) return null; const v = parseFloat(m[1].replace(',', '.')); const u = m[2].toUpperCase(); return u === 'MB' ? v / 1024 : u === 'TB' ? v * 1024 : v; }
+const gpuNorm = s => String(s).replace(/\b(nvidia|geforce)\s+(?=(9[5-8]0|10[5-8]0|16[3-6]0)\b)/ig, '$1 gtx ').replace(/\b(nvidia|geforce)\s+(?=(20[6-8]0|30[5-9]0|40[5-9]0|50[5-9]0)\b)/ig, '$1 rtx ');
+function vramOf(g) {
+  const m = g.match(/(\d+(?:\.\d+)?)\s*(GB|MB)\+?\s*(?:of\s*)?(?:dedicated\s*)?(?:VRAM|video|graphics|display)/i) || g.match(/VRAM[^\d]{0,12}(\d+(?:\.\d+)?)\s*(GB|MB)/i) || g.match(/with\s*(?:min\s*)?(\d+(?:\.\d+)?)\s*(GB|MB)/i) || g.match(/(?:^|[\s(,])(\d+(?:\.\d+)?)\s*(GB|MB)(?:\s|\)|$|,)/i);
+  if (!m) return null; const v = +m[1]; return /mb/i.test(m[2]) ? v / 1024 : v;
 }
+function gpuScore(s) {
+  if (!s) return null; s = gpuNorm(s); let best = null;
+  const parts = s.split(/\s+or\s+|\/|,|;|\|/i);
+  for (const part of parts) for (const [re, sc] of GPU_TABLE) if (re.test(part)) { best = best === null ? sc : Math.min(best, sc); break; }
+  if (best !== null) return best;
+  for (const part of parts) for (const [re, sc] of GPU_LOOSE) if (re.test(part)) { best = best === null ? sc : Math.min(best, sc); break; }
+  if (best !== null) return best;
+  const v = vramOf(s); return v ? Math.min(3, Math.max(0.25, v * 0.75)) : null;
+}
+function cpuOne(p) {
+  p = p.toLowerCase(); let m;
+  if ((m = p.match(/core\s*ultra\s*([579])/))) return {5:7, 7:9, 9:11}[m[1]];
+  if ((m = p.match(/\bi([3579])[\s-]*(\d{4,5})/))) { const tier = {3:1, 5:1.5, 7:2, 9:2.6}[m[1]], n = m[2], gen = n.length === 5 ? +n.slice(0, 2) : +n[0];
+    const gm = gen <= 2 ? 1.4 : gen === 3 ? 1.5 : gen === 4 ? 1.6 : gen === 5 ? 1.7 : gen === 6 ? 1.9 : gen === 7 ? 2.0 : gen === 8 ? 2.6 : gen === 9 ? 2.8 : gen === 10 ? 3.0 : gen === 11 ? 3.4 : gen === 12 ? 4.4 : gen === 13 ? 5 : 5.2; return +(tier * gm).toFixed(2); }
+  if ((m = p.match(/ryzen\s*([3579])\s*(?:pro\s*)?(\d)\d{3}/))) return +({3:1, 5:1.5, 7:2, 9:2.6}[m[1]] * {1:2.6, 2:2.9, 3:3.9, 4:4.1, 5:4.8, 6:5, 7:5.5, 8:5.5, 9:6.2}[m[2]]).toFixed(2);
+  if ((m = p.match(/ryzen\s*([3579])/))) return {3:2.6, 5:3.9, 7:5.2, 9:6.8}[m[1]];
+  if ((m = p.match(/\bi([3579])\b/))) return {3:1.6, 5:2.4, 7:3.2, 9:4}[m[1]];
+  if ((m = p.match(/\bfx[\s-]*(\d)/))) return {4:1.0, 6:1.5, 8:2.0, 9:2.2}[m[1]] || 1.2;
+  if (/phenom|athlon\s*ii\s*x4/.test(p)) return 1.0;
+  if (/athlon/.test(p)) return 0.6;
+  if (/core\s*2\s*quad|\bq[6-9]\d{3}/.test(p)) return 0.8;
+  if (/core\s*2|\be[4-8]\d{3}\b|core\s*duo/.test(p)) return 0.4;
+  if (/pentium|celeron|atom/.test(p)) return 0.5;
+  if (/(six|6|8|eight)[\s-]*cores?/.test(p)) return 3.5;
+  if (/(quad|4)[\s-]*cores?/.test(p)) return 1.3;
+  if (/(dual|2)[\s-]*cores?/.test(p)) return 0.5;
+  if ((m = p.match(/(\d(?:\.\d+)?)\s*ghz/))) return 0.6;
+  return null;
+}
+function cpuScore(s) { if (!s) return null; let best = null; for (const part of s.split(/\s+or\s+|\/|,|;|\|/i)) { const v = cpuOne(part); if (v != null) best = best === null ? v : Math.min(best, v); } return best; }
+const cap = (x, n) => (x || '').replace(/\s+/g, ' ').trim().slice(0, n || 150);
 function parseReq(html) {
   const t = strip(html); if (!t.trim()) return null;
-  const g = field(t, 'Graphics') || field(t, 'Video Card') || field(t, 'Video'), mem = field(t, 'Memory'), st = field(t, 'Storage') || field(t, 'Hard Drive') || field(t, 'Hard Disk Space');
-  const vr = (g.match(/(\d+)\s*GB\+?\s*(of\s*)?(VRAM|video)/i) || [])[1];
-  return {gpuText:g.replace(/\s+/g, ' ').slice(0, 160), gpu:gpuScore(g), ram:gb(mem), storage:gb(st), vram:vr ? +vr : null};
+  const gpu = field(t, ['Graphics', 'Graphics Card', 'Video Card', 'Video', 'GPU']), mem = field(t, ['Memory', 'RAM', 'System Memory']), cpu = field(t, ['Processor', 'CPU']);
+  const st = field(t, ['Storage', 'Hard Drive', 'Hard Disk Space', 'Hard Disk', 'Disk Space', 'Free Disk Space']);
+  let gpuL = '', cpuL = '', memL = '', stL = '', osL = '';
+  if (!gpu || !cpu || !mem || !st) for (const ln0 of t.split('\n')) { const ln = ln0.trim(); if (!ln || /:\s*\S/.test(ln.slice(0, 22)) && !/@/.test(ln)) continue;
+    if (!gpuL && /geforce|radeon|nvidia|gtx|rtx|intel\s*(hd|uhd|iris|arc)|video card|graphics card/i.test(ln)) gpuL = ln;
+    else if (!cpuL && /\b(intel|amd)\b.*(core|ryzen|i[3579]|fx|athlon|pentium|ghz)|processor|cpu/i.test(ln)) cpuL = ln;
+    else if (!memL && /\b\d+\s*gb\b.*\b(ram|memory)\b|\b(ram|memory)\b.*\d+\s*gb/i.test(ln)) memL = ln;
+    else if (!stL && /(free|hard|disk|drive|storage|space)/i.test(ln) && /\d\s*(gb|mb)/i.test(ln)) stL = ln;
+    else if (!osL && /\bwin(dows)?\s*(xp|vista|7|8|10|11)/i.test(ln)) osL = ln; }
+  const G2 = gpu || gpuL, C2 = cpu || cpuL, M2 = mem || memL, S2 = st || stL;
+  const r = {os:cap(field(t, ['OS', 'Operating System']) || osL), cpuText:cap(C2), memText:cap(M2, 60), gpuText:cap(G2, 180), dx:cap(field(t, ['DirectX', 'Direct X']), 60), stText:cap(S2, 80),
+    net:cap(field(t, ['Network']), 60), notes:cap(field(t, ['Additional Notes', 'Notes']), 200),
+    gpu:gpuScore(G2), cpu:cpuScore(C2), ram:gb(M2), storage:gb(S2), vram:null};
+  const v = G2 && vramOf(G2); if (v && /vram|video|graphics|display|dedicated|gb\+|\(\d/i.test(G2)) r.vram = Math.round(v * 10) / 10;
+  if (!r.os && !r.cpuText && !r.memText && !r.gpuText && !r.stText) { const raw = cap(t, 300); return raw ? {raw, gpu:null, cpu:null, ram:null, storage:null, vram:null} : null; }
+  return r;
 }
-function summarize(d) {
+function summarize(d, extra) {
   const req = d.pc_requirements && !Array.isArray(d.pc_requirements) ? d.pc_requirements : {};
-  return {name:d.name, win:!d.platforms || d.platforms.windows !== false, min:parseReq(req.minimum), rec:parseReq(req.recommended),
-    desc:strip(d.short_description).trim(), genres:(d.genres || []).map(x => x.description).slice(0, 4), release:d.release_date && d.release_date.date || '', header:d.header_image || '',
-    meta:d.metacritic ? {score:d.metacritic.score, url:d.metacritic.url} : null, free:!!d.is_free};
+  return Object.assign({name:d.name, sid:d.steam_appid, win:!d.platforms || d.platforms.windows !== false, min:parseReq(req.minimum), rec:parseReq(req.recommended),
+    desc:strip(d.short_description).trim(), genres:(d.genres || []).map(x => x.description).slice(0, 4), release:d.release_date && d.release_date.date || '', soon:!!(d.release_date && d.release_date.coming_soon), header:d.header_image || '',
+    meta:d.metacritic ? {score:d.metacritic.score, url:d.metacritic.url} : null, free:!!d.is_free, dev:(d.developers || []).slice(0, 2), pub:(d.publishers || []).slice(0, 2),
+    cats:(d.categories || []).map(x => x.description).slice(0, 14), ctrl:d.controller_support || '', recs:d.recommendations ? d.recommendations.total : 0, age:+d.required_age || 0,
+    nshots:(d.screenshots || []).length, t:Date.now()}, extra || {});
+}
+function expected(c) {
+  let e = expected0(c); const R = rig(), r = c.rec;
+  if (r && e.startsWith('High') && ((r.vram && r.vram > R.vram) || (r.ram && r.ram > R.ram))) e = r.vram && r.vram > R.vram ? 'Medium to high settings at 1080p, with lower textures' : 'Medium to high settings at 1080p';
+  return e;
+}
+function expected0(c) {
+  const R = rig(), m = c.min, r = c.rec;
+  if (r && r.gpu) { const q = R.gpu / r.gpu; if (q >= 1.5) return 'High to max settings at 1080p'; if (q >= 1) return 'High settings at 1080p'; if (q >= 0.75) return 'Medium settings at 1080p'; }
+  if (m && m.gpu) { const q = R.gpu / m.gpu; if (q >= 4) return r && r.gpu ? 'Medium settings at 1080p' : 'High to max settings at 1080p'; if (q >= 2) return 'Medium settings at 1080p'; if (q >= 1.3) return 'Low to medium settings at 1080p'; return 'Low settings, maybe below 1080p'; }
+  return '';
 }
 function verdict(c) {
   if (!c) return {k:'u', label:'Not checked', why:'No Steam listing to check requirements against.'};
@@ -379,48 +511,78 @@ function verdict(c) {
   const m = c.min, r = c.rec;
   if (!m && !r) return {k:'u', label:'Not checked', why:'The store page doesn’t list system requirements.'};
   const over = x => x !== null && x !== undefined;
+  const exp = expected(c);
   if (m && over(m.gpu) && m.gpu > R.gpu * 1.3) return {k:'b', label:'May not run', why:'Its minimum graphics card is clearly stronger than your ' + R.name + '.'};
   if (m && over(m.ram) && m.ram > R.ram) return {k:'b', label:'May not run', why:'It needs at least ' + m.ram + ' GB of RAM; you have ' + R.ram + ' GB.'};
-  if (m && over(m.gpu) && m.gpu > R.gpu * 1.05) return {k:'w', label:'May struggle', why:'Its minimum graphics card is about level with or a bit above yours, so expect low settings.', notes};
-  if (m && over(m.vram) && m.vram > R.vram) return {k:'w', label:'May struggle', why:'It asks for ' + m.vram + ' GB of video memory and your card has ' + R.vram + ' GB, so use low textures.', notes};
+  if (m && over(m.cpu) && m.cpu > R.cpu * 1.6) return {k:'b', label:'May not run', why:'Its minimum processor is much stronger than your ' + R.cpuName + '.'};
+  if (r && over(r.cpu) && r.cpu > R.cpu * 1.15) notes.push('Its recommended processor is stronger than your ' + R.cpuName + ', so busy scenes may dip.');
   const need = (r && r.storage) || (m && m.storage);
   if (need && need > R.disk) notes.push('Needs about ' + Math.round(need) + ' GB of space; you set ' + R.disk + ' GB free.');
-  if (r && over(r.gpu) && r.gpu <= R.gpu * 1.05 && (!over(r.ram) || r.ram <= R.ram) && (!over(r.vram) || r.vram <= R.vram)) return {k:'g', label:'Runs great', why:'Your laptop meets the recommended specs.', notes};
-  if (r && (over(r.gpu) || over(r.ram))) return {k:'w', label:'Runs on lower settings', why:'Above the minimum but below the recommended specs, so use medium settings or DLSS.', notes};
-  if (m && over(m.gpu)) return {k:'g', label:'Should run well', why:'Your laptop is well above the minimum specs.', notes};
-  return {k:'g', label:'Should run', why:'Nothing in the listed requirements is above your laptop.', notes};
+  if (m && over(m.gpu) && m.gpu > R.gpu * 1.05) return {k:'w', label:'May struggle', why:'Its minimum graphics card is about level with or a bit above yours, so expect low settings.', notes, exp};
+  if (m && over(m.cpu) && m.cpu > R.cpu * 1.2) return {k:'w', label:'May struggle', why:'Its minimum processor is a bit stronger than yours, so it may stutter in busy scenes.', notes, exp};
+  if (m && over(m.vram) && m.vram > R.vram) return {k:'w', label:'May struggle', why:'It asks for ' + m.vram + ' GB of video memory and your card has ' + R.vram + ' GB, so use low textures.', notes, exp};
+  if (r && over(r.gpu) && r.gpu <= R.gpu * 1.05 && (!over(r.ram) || r.ram <= R.ram) && (!over(r.vram) || r.vram <= R.vram)) return {k:'g', label:'Runs great', why:'Your laptop meets the recommended specs.', notes, exp};
+  if (r && (over(r.gpu) || over(r.ram))) return {k:'w', label:'Runs on lower settings', why:'Above the minimum but below the recommended specs, so use medium settings or DLSS.', notes, exp};
+  if (m && over(m.gpu)) return {k:'g', label:'Should run well', why:'Your laptop is well above the minimum specs.', notes, exp};
+  return {k:'g', label:'Should run', why:'Nothing in the listed requirements is above your laptop.', notes, exp};
 }
-const COMPAT_KEY = 'compat.v1';
+const COMPAT_KEY = 'compat.v2';
+try { localStorage.removeItem('compat.v1'); } catch (e) {}
 let COMPAT = lsGet(COMPAT_KEY) || {};
+for (const k in COMPAT) if (COMPAT[k].none && Date.now() - (COMPAT[k].t || 0) > 7 * 864e5) delete COMPAT[k];
+let compatT = 0;
+function saveCompat() { clearTimeout(compatT); compatT = setTimeout(() => { const ks = Object.keys(COMPAT); if (ks.length > 900) ks.sort((a, b) => (COMPAT[a].t || 0) - (COMPAT[b].t || 0)).slice(0, ks.length - 800).forEach(k => delete COMPAT[k]); lsSet(COMPAT_KEY, COMPAT); }, 800); }
 const queue = [], waiting = {}; let active = 0;
 const ckey = (appid, title) => appid ? String(appid) : 't:' + cleanTitle(title).toLowerCase();
 function cleanTitle(t) {
   return String(t || '').replace(/[™®©]/g, '')
-    .replace(/\s*[-–:(]?\s*\b(digital\s+)?(deluxe|ultimate|gold|complete|definitive|premium|standard|game of the year|goty|elite|collector'?s|special|anniversary|enhanced|launch|director'?s cut|legendary|platinum|year \d+|super deluxe|ultimate deluxe|royal|bonus|cross-gen|next level|hd)\b.*$/i, '')
-    .replace(/\s*[-–:(]?\s*\b(edition|bundle|pack|collection)\b.*$/i, '').replace(/\s+/g, ' ').trim();
+    .replace(/^(.{3,}?)\s*[-–:(]?\s*\b(digital\s+)?(deluxe|ultimate|gold|complete|definitive|premium|standard|game of the year|goty|elite|collector'?s|special|anniversary|enhanced|launch|director'?s cut|legendary|platinum|year \d+|super deluxe|ultimate deluxe|royal|bonus|cross-gen|next level|hd|palace|originals|karakuri|galactic|fighterz|prince'?s)\b.*$/i, '$1')
+    .replace(/^(.{3,}?)\s*[-–:(]?\s*\b(edition|bundle|pack|collection)\b.*$/i, '$1').replace(/\s+/g, ' ').trim();
 }
 function requestCompat(appid, title) {
   const k = ckey(appid, title); if (!appid && !title) return k;
   if (COMPAT[k] || waiting[k]) return k; waiting[k] = true; queue.push([k, appid, title]); pump(); return k;
 }
-async function steamDetails(id) { const j = await get('https://store.steampowered.com/api/appdetails?appids=' + id + '&cc=us&l=en'); const e = j && j[id]; return e && e.success && e.data && e.data.type === 'game' ? e.data : null; }
+const steamRaw = id => cached('https://store.steampowered.com/api/appdetails?appids=' + id + '&cc=us&l=en', 6 * 36e5).then(j => { const e = j && j[id]; return e && e.success && e.data ? e.data : null; });
+async function steamDetails(id) { const d = await steamRaw(id); return d && (d.type === 'game' || d.type === 'dlc') ? d : null; }
+const norm = s => String(s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
+function titleVariants(t) {
+  const out = [], add = x => { x = String(x || '').replace(/\s+/g, ' ').replace(/[\s:–-]+$/, '').trim(); if (x.length >= 3 && !out.includes(x)) out.push(x); };
+  const c = cleanTitle(t); add(c);
+  add(c.replace(/\b(anthology|trilogy|franchise|bundle|pack|collection|\d+\s*pack|the\s+\w+\s+bundle)\b.*$/i, ''));
+  add(c.split(/\s*[:–]\s*|\s+-\s+/)[0]);
+  let w = c.split(' '); while (w.length > 2 && out.length < 5) { w = w.slice(0, -1); add(w.join(' ')); }
+  return out.slice(0, 4);
+}
 async function steamFind(title) {
-  const q = cleanTitle(title); if (!q) return null;
-  const r = await get('https://store.steampowered.com/api/storesearch/?term=' + encodeURIComponent(q) + '&l=english&cc=US');
-  const items = (r && r.items || []).filter(i => i.type === 'app'); if (!items.length) return null;
-  const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, ''); const nq = norm(q);
-  const hit = items.find(i => norm(i.name) === nq) || items.find(i => nq.startsWith(norm(i.name)) || norm(i.name).startsWith(nq));
-  return hit ? hit.id : null;
+  const nt = norm(cleanTitle(title));
+  for (const q of titleVariants(title)) {
+    const r = await cached('https://store.steampowered.com/api/storesearch/?term=' + encodeURIComponent(q) + '&l=english&cc=US', 864e5);
+    const items = (r && r.items || []).filter(i => i.type === 'app'); if (!items.length) continue;
+    const nq = norm(q);
+    const hit = items.find(i => norm(i.name) === nt) || items.find(i => norm(i.name) === nq) || items.find(i => nt.startsWith(norm(i.name)) && norm(i.name).length >= 5) || items.find(i => norm(i.name).startsWith(nq) && nq.length >= 6);
+    if (hit) return {id:hit.id, name:hit.name, exact:norm(hit.name) === nt || nt.startsWith(norm(hit.name))};
+  }
+  return null;
+}
+async function resolveSteam(appid, title) {
+  let d = null, approx = '';
+  if (appid) d = await steamDetails(appid).catch(() => null);
+  if (!d && title) { const f = await steamFind(title).catch(() => null); if (f && String(f.id) !== String(appid)) { d = await steamDetails(f.id).catch(() => null); if (d && !f.exact) approx = d.name; } }
+  if (!d) return null;
+  if (d.type === 'dlc' && d.fullgame && d.fullgame.appid) {
+    const base = await steamDetails(d.fullgame.appid).catch(() => null);
+    const s = summarize(d, {dlcOf:{id:+d.fullgame.appid, name:d.fullgame.name}, approx});
+    if (base) { const b = summarize(base); if (!s.min && !s.rec) { s.min = b.min; s.rec = b.rec; s.reqFrom = b.name; } if (!s.genres.length) s.genres = b.genres; s.win = s.win && b.win; }
+    return s;
+  }
+  return summarize(d, {approx});
 }
 function pump() {
   while (active < 3 && queue.length) {
     const [k, appid, title] = queue.shift(); active++;
-    (async () => {
-      let d = null;
-      if (appid) d = await steamDetails(appid).catch(() => null);
-      if (!d && title) { const id = await steamFind(title).catch(() => null); if (id && String(id) !== String(appid)) d = await steamDetails(id).catch(() => null); }
-      COMPAT[k] = d ? summarize(d) : {none:true, t:Date.now()};
-    })().finally(() => { active--; delete waiting[k]; lsSet(COMPAT_KEY, COMPAT); updateBadges(k); setTimeout(pump, 200); });
+    resolveSteam(appid, title).catch(() => null).then(c => { COMPAT[k] = c || {none:true, t:Date.now()}; })
+      .finally(() => { active--; delete waiting[k]; saveCompat(); updateBadges(k); setTimeout(pump, 150); });
   }
 }
 function vtag(k) {
@@ -432,6 +594,7 @@ function vtag(k) {
 function updateBadges(k) {
   document.querySelectorAll('[data-vapp]').forEach(e => { if (e.dataset.vapp === k) e.innerHTML = vtag(k); });
   document.querySelectorAll('.deal[data-ck]').forEach(e => { if (e.dataset.ck === k) e.style.display = cardHidden(e) ? 'none' : ''; });
+  const c = COMPAT[k]; if (c && c.header) document.querySelectorAll('[data-ck] .img img').forEach(im => { const el = im.closest('[data-ck]'); if (el.dataset.ck !== k || im.dataset.up) return; if (!el.dataset.app || im.dataset.f || im.naturalWidth && im.naturalWidth < 300) { im.dataset.up = 1; im.dataset.f = 1; im.style.visibility = ''; im.src = c.header; } });
   if (S.genres.length || (S.hideOwned && OWNED.size)) { clearTimeout(moreT); moreT = setTimeout(maybeMore, 400); }
   if (curGame && curGame.ck === k && sheetOpen && sheetMode === 'game') renderGame();
 }
@@ -635,7 +798,7 @@ function exitSearch() { searchMode = false; $('#q').value = ''; $('#qx').style.d
 /* ---------- detail ---------- */
 let sheetOpen = false, curGame = null, sheetMode = '';
 function openSheet(h, mode) { sheetMode = mode || ''; $('#sheet').innerHTML = '<div class="grab"></div>' + h; $('#sheet').scrollTop = 0; $('#sheet').classList.add('on'); $('#scrim').classList.add('on'); sheetOpen = true; }
-function closeSheet() { $('#sheet').classList.remove('on'); $('#scrim').classList.remove('on'); sheetOpen = false; }
+function closeSheet() { if (curGame) curGame.shown = false; $('#sheet').classList.remove('on'); $('#scrim').classList.remove('on'); sheetOpen = false; }
 $('#scrim').addEventListener('click', closeSheet);
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2200); }
 const buzz = ms => { try { A && A.vibrate(ms); } catch (e) {} };
@@ -645,50 +808,135 @@ async function openGame(gameID, appid) {
   let g;
   try { g = await cached(CS + 'games?id=' + gameID, 10 * 6e4); } catch (e) { openSheet('<div class="pad"><div class="empty"><h3>Couldn’t load this game</h3><p>Check your connection and try again.</p></div></div>'); return; }
   appid = appid || g.info.steamAppID; const ck = requestCompat(appid, g.info.title);
-  curGame = {id:gameID, title:g.info.title, appid, thumb:g.info.thumb, g, ck};
+  curGame = {id:gameID, title:g.info.title, appid, thumb:g.info.thumb, g, ck, raw:undefined};
   recordPrice(gameID, Math.min(...g.deals.map(d => +d.price))); save();
   PH = null; renderGame(); loadHistory();
 }
+/* gallery + specs helpers */
+const shot = u => String(u || '').replace(/^http:/, 'https:');
+function galleryItems(raw) {
+  if (!raw) return [];
+  const vids = (raw.movies || []).map(m => ({video:true, thumb:shot(m.thumbnail), src:m.hls_h264 || (m.mp4 && (m.mp4.max || m.mp4['480'])) || (m.webm && (m.webm.max || m.webm['480'])) || '', name:m.name})).filter(v => v.src).slice(0, 2);
+  const pics = (raw.screenshots || []).slice(0, 24).map(x => ({thumb:shot(x.path_thumbnail), full:shot(x.path_full)}));
+  return vids.concat(pics);
+}
+function aboutText(raw) {
+  if (!raw) return '';
+  return strip(raw.about_the_game || raw.detailed_description || '').split('\n').map(x => x.trim()).filter(x => x && x.length > 1).join('\n\n').slice(0, 4000);
+}
+function specStatus(kind, q) {
+  const R = rig(); if (!q) return '';
+  switch (kind) {
+    case 'os': return q.os ? (/mac\s*os|linux|steamos/i.test(q.os) && !/windows/i.test(q.os) ? 'bad' : 'ok') : '';
+    case 'cpu': return q.cpu == null ? '' : q.cpu <= R.cpu ? 'ok' : q.cpu <= R.cpu * 1.2 ? 'warn' : 'bad';
+    case 'ram': return q.ram == null ? '' : q.ram <= R.ram ? 'ok' : 'bad';
+    case 'gpu': return q.gpu == null ? '' : q.gpu <= R.gpu * 1.05 ? 'ok' : q.gpu <= R.gpu * 1.3 ? 'warn' : 'bad';
+    case 'vram': return q.vram == null ? '' : q.vram <= R.vram ? 'ok' : 'warn';
+    case 'dx': return q.dx ? (/1[3-9]/.test(q.dx) ? 'warn' : 'ok') : '';
+    case 'storage': return q.storage == null ? '' : q.storage <= R.disk ? 'ok' : 'warn';
+  }
+  return '';
+}
+const ST_IC = {ok:'✓', warn:'~', bad:'✗'};
+function specBlock(c) {
+  const R = rig(), m = c.min, r = c.rec;
+  const rows = [['OS', 'os', q => q.os, 'Windows 11 (64-bit)'], ['Processor', 'cpu', q => q.cpuText, R.cpuName], ['Memory', 'ram', q => q.memText || (q.ram ? q.ram + ' GB RAM' : ''), R.ram + ' GB RAM'],
+    ['Graphics', 'gpu', q => q.gpuText, R.name], ['Video memory', 'vram', q => q.vram ? q.vram + ' GB' : '', R.vram + ' GB'], ['DirectX', 'dx', q => q.dx, 'DirectX 12 Ultimate'],
+    ['Storage', 'storage', q => q.stText || (q.storage ? Math.round(q.storage) + ' GB' : ''), R.disk + ' GB free'], ['Network', 'net', q => q.net, '']];
+  const cell = (lab, q, kind, get) => { const t = q && get(q); if (!t) return ''; const st = specStatus(kind, q);
+    return `<div class="rqr"><span class="lab">${lab}</span><span class="val">${esc(t)}</span>${st ? `<i class="st ${st}">${ST_IC[st]}</i>` : '<i class="st"></i>'}</div>`; };
+  let h = '';
+  for (const [name, kind, get, yours] of rows) {
+    const a = cell('Min', m, kind, get), b = cell('Rec', r, kind, get); if (!a && !b) continue;
+    h += `<div class="rq"><div class="rqh">${name}</div>${a}${b}${yours ? `<div class="rqr you"><span class="lab">You</span><span class="val">${esc(yours)}</span><i class="st"></i></div>` : ''}</div>`;
+  }
+  const notes = [m && m.notes, r && r.notes].filter(Boolean), raw = [m && m.raw, r && r.raw].filter(Boolean);
+  if (raw.length) h += `<div class="rq"><div class="rqh">As listed on Steam</div>${raw.map(x => `<p class="rqraw">${esc(x)}</p>`).join('')}</div>`;
+  if (notes.length) h += `<div class="rq"><div class="rqh">Notes from the developer</div>${[...new Set(notes)].map(x => `<p class="rqraw">${esc(x)}</p>`).join('')}</div>`;
+  return h;
+}
+const nfmt = n => Number(n).toLocaleString('en-US');
 function renderGame() {
   if (!curGame || !sheetOpen) return;
-  const {g, appid, title, ck} = curGame, c = COMPAT[ck] || null, v = verdict(c && !c.none ? c : null);
+  const {g, appid, title, ck} = curGame, c0 = COMPAT[ck] || null, c = c0 && !c0.none ? c0 : null, v = verdict(c);
   const deals = g.deals.slice().sort((a, b) => a.price - b.price), best = deals.find(d => storeOn(d.storeID)) || deals[0];
   const low = g.cheapestPriceEver, w = S.watch.find(x => x.id === curGame.id);
   const atLow = low && best && +best.price <= +low.price + 0.01;
-  const req = (lab, r) => r && (r.gpuText || r.ram || r.storage) ? `<dt>${lab}</dt><dd>${esc(r.gpuText || '—')}${r.ram ? ' · ' + r.ram + ' GB RAM' : ''}${r.storage ? ' · ' + Math.round(r.storage) + ' GB' : ''}</dd>` : '';
-  const loadingC = !!ck && ck !== 't:' && !c;
-  openSheet(`${appid ? `<img class="dhero" src="${esc((c && c.header) || img(appid, curGame.thumb))}" onerror="this.style.display='none'" alt="">` : ''}
+  const loadingC = !!ck && ck !== 't:' && !c0;
+  const sid = c ? c.sid : appid;
+  if (c && c.sid && curGame.raw === undefined) { curGame.raw = null; const id = curGame.id; steamRaw(c.sid).then(d => { if (curGame && curGame.id === id) { curGame.raw = d || false; renderGame(); } }).catch(() => { if (curGame && curGame.id === id) curGame.raw = false; }); }
+  const raw = curGame.raw || null, gal = curGame.gal = galleryItems(raw), about = aboutText(raw);
+  const heroSrc = (c && c.header) || (appid ? img(appid, curGame.thumb) : curGame.thumb);
+  const keep = curGame.shown ? $('#sheet').scrollTop : 0;
+  const facts = c ? [
+    ['Developer', c.dev && c.dev.join(', ')], ['Publisher', c.pub && c.pub.join(', ')], ['Release date', c.release + (c.soon ? ' (coming soon)' : '')],
+    ['Steam reviews', c.recs ? nfmt(c.recs) + ' reviews' : ''], ['Metacritic', c.meta ? c.meta.score + ' / 100' : ''],
+    ['Controller', c.ctrl === 'full' ? 'Full controller support' : c.ctrl === 'partial' ? 'Partial controller support' : 'Keyboard and mouse'],
+    ['Age rating', c.age >= 13 ? c.age + '+' : ''], ['Install size', (c.rec && c.rec.storage) || (c.min && c.min.storage) ? 'About ' + Math.round((c.rec && c.rec.storage) || c.min.storage) + ' GB' : '']
+  ].filter(x => x[1]) : [];
+  const feats = c ? (c.cats || []).filter(x => !/Steam Trading Cards|Steam Leaderboards|Valve Anti-Cheat|Includes level editor|Stats|Remote Play on (Phone|Tablet|TV)|Commentary|Captions|Steam Timeline|Family Sharing|Profile Features|Tracked Controller|Includes Source SDK/i.test(x)).slice(0, 10) : [];
+  openSheet(`<div class="dheroW${c && c.header || appid ? '' : ' small'}"><img class="dhero" src="${esc(heroSrc)}" onerror="if(this.dataset.f){this.style.display='none'}else{this.dataset.f=1;this.src='${esc(curGame.thumb)}'}" alt="">
+    ${gal.length ? `<span class="hcount">${gal.filter(x => !x.video).length} screenshots${gal.some(x => x.video) ? ' · trailer' : ''}</span>` : ''}</div>
   <div class="pad">
-    <h2>${esc(title)}</h2>${isOwned(appid, title, curGame.id) ? `<div class="ownbar">✓ ${S.mine.some(m => m.id === curGame.id) ? 'You marked this as owned' : 'In your Steam library'}</div>` : ''}
-    <div class="sub">${c && !c.none ? esc([c.genres.join(', '), c.release].filter(Boolean).join(' · ')) : ''}</div>
+    <h2 class="dtitle">${esc(title)}</h2>${isOwned(appid, title, curGame.id) ? `<div class="ownbar">✓ ${S.mine.some(m => m.id === curGame.id) ? 'You marked this as owned' : 'In your Steam library'}</div>` : ''}
+    <div class="sub">${c ? esc([c.dev && c.dev[0], c.release].filter(Boolean).join(' · ')) : ''}</div>
+    ${c && c.genres.length ? `<div class="gchips">${c.genres.map(x => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
+    ${c && c.dlcOf ? `<div class="dlcbar"><b>This is DLC.</b> You need <b>${esc(c.dlcOf.name)}</b> to play it.<button class="btn sm ghost" data-search="${esc(c.dlcOf.name)}">Find deals on it</button></div>` : ''}
     <div class="facts">
       <div><b>${best ? money(best.price) : '—'}</b><span>Best price now</span></div>
       <div><b>${low ? money(low.price) : '—'}</b><span>Lowest ever${low ? ' (' + fdate(low.date * 1000) + ')' : ''}</span></div>
-      <div><b>${best ? '-' + Math.round(+best.savings) + '%' : '—'}</b><span>Off ${best ? money(best.retailPrice) : ''}</span></div>
+      <div><b>${best && +best.savings >= 1 ? '-' + Math.round(+best.savings) + '%' : 'Full price'}</b><span>${best && +best.savings >= 1 ? 'Off ' + money(best.retailPrice) : 'Not on sale now'}</span></div>
     </div>
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
     <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'g' ? '✓ ' : v.k === 'w' ? '~ ' : v.k === 'b' ? '✗ ' : '? ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
-      ${loadingC ? '' : `<p>${esc(v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
-      ${c && !c.none && (c.min || c.rec) ? `<dl class="reqs">${req('Minimum', c.min)}${req('Recommended', c.rec)}<dt>Yours</dt><dd>${esc(rig().name)} · ${rig().ram} GB RAM · ${rig().disk} GB free</dd></dl>` : ''}
+      ${loadingC ? '' : `<p>${esc(c0 && c0.none ? 'This game isn’t on Steam, so there are no listed requirements to check.' : v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
+      ${v.exp ? `<div class="exp"><span>Expected</span><b>${esc(v.exp)}</b></div>` : ''}
     </div>
-    <div class="sec"><h2>Price history</h2><span>${S.itadKey ? 'All stores' : 'Best price seen'}</span></div>
-    <div id="phbox" class="phbox"></div>
+    ${gal.length ? `<div class="sec"><h2>Screenshots</h2><span>Tap to view</span></div><div class="gal">${gal.map((it, i) => `<button class="gi${it.video ? ' vid' : ''}" data-gal="${i}"><img loading="lazy" src="${esc(it.thumb)}" alt=""></button>`).join('')}</div>`
+      : c && c.sid && curGame.raw === null ? '<div class="sec"><h2>Screenshots</h2></div><div class="gal"><div class="gi sk"></div><div class="gi sk"></div><div class="gi sk"></div></div>' : ''}
     <div class="sec"><h2>Prices by store</h2><span>${deals.length} ${deals.length === 1 ? 'store' : 'stores'}</span></div>
     <div class="ptable">${deals.map(d => { const on = storeOn(d.storeID), s = STORES[d.storeID] || {name:'Store ' + d.storeID};
       return `<div class="prow${d === best ? ' best' : ''}${on ? '' : ' off'}">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}<div class="s">${esc(s.name)}<small>${+d.savings >= 1 ? '-' + Math.round(+d.savings) + '% off ' + money(d.retailPrice) : 'Full price'}${on ? '' : ' · store switched off'}</small></div>
       <div class="pp"><b>${money(d.price)}</b></div><button class="btn sm${d === best ? '' : ' ghost'}" data-buy="${esc(d.dealID)}">Buy</button></div>`; }).join('')}</div>
     <p class="note">Buy opens the store’s own page in your browser, where you sign in and pay as normal. DealScout never sees your payment details.</p>
-    ${c && !c.none && c.desc ? `<p class="desc">${esc(c.desc)}</p>` : ''}
-    ${c && !c.none && c.meta ? `<p class="note">Metacritic score: <b>${c.meta.score}</b></p>` : ''}
+    <button class="btn block${onList(curGame.id) ? ' ghost' : ''}" style="margin-top:12px" data-act="list">${onList(curGame.id) ? '✓ On my list · remove' : '+ Add to my list'}</button>
     <div class="row2">
       <button class="btn ${w ? 'ghost' : ''}" data-act="watch">${w ? '★ Watching under ' + money(w.target) : '☆ Watch price'}</button>
-      ${appid ? `<button class="btn ghost" data-act="steam">Steam page</button>` : ''}
+      ${sid ? `<button class="btn ghost" data-act="steam">Steam page</button>` : ''}
     </div>
-    <button class="btn ghost block" style="margin-top:10px" data-act="own">${S.mine.some(m => m.id === curGame.id) ? 'I don’t own this' : isOwned(appid, title, curGame.id) ? '' : 'I already own this'}</button>
+    ${c && (c.min || c.rec) ? `<div class="sec"><h2>System requirements</h2><span>vs your laptop</span></div>
+      ${c.approx || c.reqFrom ? `<p class="note" style="margin-top:0">From the Steam listing for <b>${esc(c.reqFrom || c.approx)}</b>.</p>` : ''}
+      <div class="rqs">${specBlock(c)}</div><p class="note">✓ meets it · ~ close · ✗ below it. Checked against the laptop in Settings.</p>` : ''}
+    ${c && (c.desc || about) ? `<div class="sec"><h2>About this game</h2></div>
+      <div class="about${curGame.aboutOpen ? ' open' : ''}">${c.desc ? `<p class="lead">${esc(c.desc)}</p>` : ''}${about ? about.split('\n\n').map(x => `<p>${esc(x)}</p>`).join('') : ''}</div>
+      ${about && about.length > 300 ? `<button class="more" data-act="about">${curGame.aboutOpen ? 'Show less' : 'Read more'}</button>` : ''}` : ''}
+    ${facts.length ? `<div class="sec"><h2>Details</h2></div><div class="info">${facts.map(([k, x]) => `<div><span>${k}</span><b>${esc(x)}</b></div>`).join('')}</div>` : ''}
+    ${feats.length ? `<div class="gchips feat">${feats.map(x => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
+    <div class="sec"><h2>Price history</h2><span>${S.itadKey ? 'All stores' : 'Best price seen'}</span></div>
+    <div id="phbox" class="phbox"></div>
+    <button class="btn ghost block" style="margin-top:14px" data-act="own">${S.mine.some(m => m.id === curGame.id) ? 'I don’t own this' : isOwned(appid, title, curGame.id) ? '' : onList(curGame.id) ? 'I bought it' : 'I already own this'}</button>
+    <p class="note" style="text-align:center">Details, screenshots and requirements from Steam · prices from CheapShark</p>
   </div>`, 'game');
+  if (keep) $('#sheet').scrollTop = keep; curGame.shown = true;
   const ob = document.querySelector('[data-act=own]'); if (ob && !ob.textContent) ob.remove();
   drawHistory();
 }
+
+/* ---------- screenshot viewer ---------- */
+let LB = null;
+function openLB(i) {
+  const items = curGame && curGame.gal; if (!items || !items.length) return;
+  let el = $('#lb'); if (!el) { el = document.createElement('div'); el.id = 'lb'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="lbtop"><span id="lbn"></span><button id="lbx" aria-label="Close">✕</button></div><div class="lbs" id="lbs">${items.map(it => it.video
+    ? `<div class="lbslide"><video controls playsinline preload="none" poster="${esc(it.thumb)}" src="${esc(it.src)}" onerror="this.parentNode.querySelector('.lbfail').style.display='flex'"></video><div class="lbfail"><p>This trailer can’t play here.</p><button class="btn sm" data-open="https://store.steampowered.com/app/${esc(String((COMPAT[curGame.ck] || {}).sid || curGame.appid))}">Watch on Steam</button></div></div>`
+    : `<div class="lbslide"><img src="${esc(it.full)}" alt="" loading="lazy"></div>`).join('')}</div>`;
+  el.classList.add('on'); LB = {n:items.length};
+  const sc = $('#lbs'); const upd = () => { const k = Math.round(sc.scrollLeft / sc.clientWidth); $('#lbn').textContent = (k + 1) + ' / ' + items.length; sc.querySelectorAll('video').forEach((vd, j) => { if (vd.closest('.lbslide') !== sc.children[k]) vd.pause(); }); };
+  requestAnimationFrame(() => { sc.scrollLeft = i * sc.clientWidth; upd(); });
+  sc.addEventListener('scroll', () => { clearTimeout(LB.t); LB.t = setTimeout(upd, 60); });
+  el.onclick = e => { const b = e.target.closest('button'); if (!b) return; if (b.id === 'lbx') closeLB(); else if (b.dataset.open) openUrl(b.dataset.open); };
+}
+function closeLB() { const el = $('#lb'); if (!el) return; el.querySelectorAll('video').forEach(v => v.pause()); el.classList.remove('on'); setTimeout(() => { if (!LB) el.innerHTML = ''; }, 250); LB = null; }
 function watchSheet() {
   const w = S.watch.find(x => x.id === curGame.id), best = Math.min(...curGame.g.deals.map(d => +d.price)), low = curGame.g.cheapestPriceEver;
   const sugg = Math.max(0, Math.floor(Math.min(best * 0.85, low ? +low.price + 1 : best) ) - 0.01);
@@ -726,6 +974,52 @@ async function loadFree() {
   $('#flist').innerHTML = h; others.forEach(d => requestCompat(d.steamAppID, d.title));
 }
 
+/* ---------- my list (games to get) ---------- */
+const onList = id => S.list.some(x => x.id === id);
+function bestDeal(g) { const ds = g.deals.slice().sort((a, b) => a.price - b.price); return ds.find(d => storeOn(d.storeID)) || ds[0]; }
+function listAdd() {
+  const g = curGame.g, b = bestDeal(g);
+  S.list.unshift({id:curGame.id, title:curGame.title, appid:curGame.appid || '', thumb:curGame.thumb, ck:curGame.ck, added:Date.now(), now:+b.price, retail:+b.retailPrice, store:b.storeID, dealID:b.dealID, low:g.cheapestPriceEver ? +g.cheapestPriceEver.price : null, was:+b.price});
+  save(); updateDots();
+}
+async function renderList(refresh) {
+  const L = S.list, box = $('#llist');
+  if (!L.length) { box.innerHTML = '<div class="empty"><h3>Your list is empty</h3><p>Open any game and tap “Add to my list” to start planning what to get. You’ll see the total and how much you save.</p><button class="btn" data-v="deals">Browse deals</button></div>'; updateDots(); return; }
+  const draw = () => {
+    const tot = L.reduce((a, x) => a + (x.now || 0), 0), full = L.reduce((a, x) => a + Math.max(x.retail || 0, x.now || 0), 0), save$ = full - tot;
+    const atLow = L.filter(x => x.low != null && x.now <= x.low + 0.01).length, drops = L.filter(x => x.was != null && x.now < x.was - 0.009).length;
+    const sorted = L.slice().sort(S.listSort === 'cheap' ? (a, b) => a.now - b.now : S.listSort === 'off' ? (a, b) => (b.retail ? 1 - b.now / b.retail : 0) - (a.retail ? 1 - a.now / a.retail : 0) : S.listSort === 'pricey' ? (a, b) => b.now - a.now : (a, b) => b.added - a.added);
+    const bud = S.budget, pct = bud ? Math.min(100, tot / bud * 100) : 0;
+    box.innerHTML = `<div class="lsum"><div style="font-size:13px;font-weight:700;opacity:.9">${L.length} ${L.length === 1 ? 'game' : 'games'} · total at today’s best prices</div><div class="big">${money(tot)}</div>
+      <div class="row"><div><b>${money(full)}</b>full price</div><div><b>${money(save$)}</b>you save${full ? ' (' + Math.round(save$ / full * 100) + '%)' : ''}</div>${atLow ? `<div><b>${atLow}</b>at lowest ever</div>` : ''}</div>
+      ${bud ? `<div class="lbar${tot > bud ? ' over' : ''}"><i style="width:${pct}%"></i></div><div class="bud"><span>${tot > bud ? money(tot - bud) + ' over' : money(bud - tot) + ' left'} of your ${money(bud)} budget</span><button data-act="budget">Change</button></div>` : `<div class="bud" style="margin-top:10px"><button data-act="budget">Set a budget</button></div>`}</div>
+      ${drops ? `<p class="note"><b style="color:var(--good)">${drops} ${drops === 1 ? 'game has' : 'games have'} dropped in price</b> since you added ${drops === 1 ? 'it' : 'them'}.</p>` : ''}
+      <div class="seg" style="margin:12px 0 10px">${[['added', 'Newest'], ['cheap', 'Cheapest'], ['off', 'Best deal'], ['pricey', 'Priciest']].map(([k, l]) => `<button data-lsort="${k}" class="${S.listSort === k ? 'on' : ''}">${l}</button>`).join('')}</div>
+      <div class="list">${sorted.map(x => { const ck = x.ck || ckey(x.appid, x.title), hitLow = x.low != null && x.now <= x.low + 0.01, off = x.retail > x.now ? Math.round((1 - x.now / x.retail) * 100) : 0;
+        return `<div class="lrow" data-ck="${esc(ck)}" data-app="${esc(x.appid)}"><button class="lo" data-game="${x.id}" data-app="${esc(x.appid)}"><div class="img"><img loading="lazy" src="${esc((COMPAT[ck] && COMPAT[ck].header) || img(x.appid, x.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(x.thumb)}'}" alt=""></div>
+          <div class="mid"><div class="t">${esc(x.title)}</div><div class="meta">${storeTag(x.store)}${hitLow ? '<span class="tag low">Lowest ever</span>' : ''}${x.was != null && x.now < x.was - 0.009 ? `<span class="tag low">↓ ${money(x.was - x.now)}</span>` : ''}</div><div class="meta" data-vapp="${esc(ck)}">${vtag(ck)}</div></div>
+          <div class="right"><span class="price${x.now === 0 ? ' free' : ''}">${money(x.now)}</span>${off ? `<span class="off">-${off}%</span>` : ''}</div></button>
+          <button class="x" data-lrm="${x.id}" aria-label="Remove">✕</button></div>`; }).join('')}</div>
+      <div class="row2" style="margin-top:14px"><button class="btn ghost" data-act="lshare">Share list</button><button class="btn ghost" data-act="lclear">Clear list</button></div>
+      <p class="note">Tap a game to compare stores and buy. When you’ve bought one, open it and tap “I bought it” to take it off your list.</p>`;
+    L.forEach(x => requestCompat(x.appid, x.title)); updateDots();
+  };
+  draw();
+  if (!refresh) return;
+  try {
+    for (let i = 0; i < L.length; i += 25) {
+      const chunk = L.slice(i, i + 25), r = await cached(CS + 'games?ids=' + chunk.map(x => x.id).join(','), 10 * 6e4);
+      chunk.forEach(x => { const g = r[x.id]; if (!g || !g.deals || !g.deals.length) return; const b = bestDeal({deals:g.deals}); x.now = +b.price; x.retail = +b.retailPrice; x.store = b.storeID; x.dealID = b.dealID; x.low = g.cheapestPriceEver ? +g.cheapestPriceEver.price : x.low; recordPrice(x.id, x.now); });
+    }
+    save(); if (view === 'list') draw();
+  } catch (e) { toast('Couldn’t refresh prices'); }
+}
+function shareList() {
+  const tot = S.list.reduce((a, x) => a + x.now, 0);
+  const txt = 'My game list (' + S.list.length + ' games, ' + money(tot) + ' total):\n' + S.list.map(x => '• ' + x.title + ' – ' + money(x.now) + ' at ' + ((STORES[x.store] || {}).name || 'store')).join('\n');
+  if (A && A.share) A.share(txt); else { try { navigator.clipboard.writeText(txt); } catch (e) {} toast('List copied'); }
+}
+
 /* ---------- watchlist ---------- */
 async function renderWatch(refresh) {
   const n = S.watch.length;
@@ -747,6 +1041,7 @@ async function renderWatch(refresh) {
 }
 const fmtTime = t => { const [h, m] = t.split(':').map(Number); return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + (h < 12 ? ' AM' : ' PM'); };
 function updateDots() {
+  const ld = $('#listdot'); if (ld) { ld.style.display = S.list.length ? '' : 'none'; ld.textContent = S.list.length; ld.style.background = 'var(--acc)'; ld.style.color = 'var(--onacc)'; }
   const hits = S.watch.filter(w => w.now != null && w.now <= w.target).length; const d = $('#watchdot'); d.style.display = hits ? '' : 'none'; d.textContent = hits;
 }
 
@@ -798,6 +1093,7 @@ function openSettings() {
   const act = Object.entries(STORES).filter(([, s]) => s.active);
   openSheet(`<div class="pad"><h2>Your laptop & settings</h2><p class="sub">Every game is checked against these specs.</p>
     <label class="f" for="sgpu">Graphics card</label><select class="inp" id="sgpu">${GPUS.map((g, i) => `<option value="${i}"${i === S.gpu ? ' selected' : ''}>${g[0]}</option>`).join('')}</select>
+    <label class="f" for="scpu">Processor</label><select class="inp" id="scpu">${CPUS.map((c, i) => `<option value="${i}"${i === (S.cpu || 0) ? ' selected' : ''}>${c[0]}</option>`).join('')}</select>
     <label class="f">Memory (RAM)</label><div class="seg" id="sram">${[8, 16, 32].map(v => `<button data-ram="${v}" class="${S.ram === v ? 'on' : ''}">${v} GB</button>`).join('')}</div>
     <label class="f" for="sdisk">Free storage (GB)</label><input class="inp" id="sdisk" type="number" inputmode="numeric" value="${S.disk}">
     <p class="note">Your HP Victus 15: Ryzen 7 7445HS, RTX 4050 Laptop (6 GB), 16 GB RAM, about 94 GB free when we checked.</p>
@@ -836,7 +1132,7 @@ function openFilters() {
 }
 
 /* ---------- events ---------- */
-let filtersDirty = false;
+let filtersDirty = false, confirmClear = false;
 $('#sheet').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.dataset.buy) { openUrl('https://www.cheapshark.com/redirect?dealID=' + b.dataset.buy); return; }
@@ -844,14 +1140,20 @@ $('#sheet').addEventListener('click', e => {
   if (b.dataset.tgt) { $('#tgt').value = (+b.dataset.tgt).toFixed(2); return; }
   if (b.dataset.genre) { const g = b.dataset.genre; S.genres = S.genres.includes(g) ? S.genres.filter(x => x !== g) : S.genres.concat(g); b.classList.toggle('on'); save(); filtersDirty = true; return; }
   if (b.dataset.phr) { phRange = +b.dataset.phr; drawHistory(); return; }
+  if (b.dataset.gal) { openLB(+b.dataset.gal); return; }
+  if (b.dataset.search) { closeSheet(); go('deals'); $('#q').value = b.dataset.search; $('#qx').style.display = ''; doSearch(b.dataset.search); return; }
   if (b.dataset.store) { const id = b.dataset.store; S.stores = storeOn(id) ? S.stores.filter(x => x !== id) : S.stores.concat(id); b.classList.toggle('on'); save(); filtersDirty = true; return; }
   if (b.dataset.rate) { S.minRate = +b.dataset.rate; [...b.parentNode.children].forEach(x => x.classList.toggle('on', x === b)); save(); filtersDirty = true; return; }
   if (b.dataset.ram) { S.ram = +b.dataset.ram; [...b.parentNode.children].forEach(x => x.classList.toggle('on', x === b)); save(); filtersDirty = true; return; }
   if (b.dataset.tg) { S[b.dataset.tg] = !S[b.dataset.tg]; b.classList.toggle('on'); save(); if (b.dataset.tg === 'daily') { pushReminder(); toast(S.daily ? 'Daily check on at ' + fmtTime(S.dailyT) : 'Daily check off'); } if (b.dataset.tg === 'hideNo' || b.dataset.tg === 'hideOwned') filtersDirty = true; return; }
   const a = b.dataset.act;
+  if (a === 'close') { closeSheet(); return; }
+  if (a === 'list') { if (onList(curGame.id)) { S.list = S.list.filter(x => x.id !== curGame.id); save(); toast('Removed from your list'); } else { listAdd(); toast('Added to your list'); buzz(15); } updateDots(); renderGame(); if (view === 'list') renderList(); return; }
+  if (a === 'budget2') { const v = parseFloat($('#bud').value); S.budget = v > 0 ? v : 0; save(); closeSheet(); renderList(); return; }
+  if (a === 'about') { curGame.aboutOpen = !curGame.aboutOpen; renderGame(); return; }
   if (a === 'watch') watchSheet();
   else if (a === 'back') renderGame();
-  else if (a === 'steam') openUrl('https://store.steampowered.com/app/' + curGame.appid);
+  else if (a === 'steam') openUrl('https://store.steampowered.com/app/' + ((COMPAT[curGame.ck] || {}).sid || curGame.appid));
   else if (a === 'savewatch') {
     const t = parseFloat($('#tgt').value); if (!(t >= 0)) { toast('Enter a price'); return; }
     let w = S.watch.find(x => x.id === curGame.id);
@@ -863,7 +1165,7 @@ $('#sheet').addEventListener('click', e => {
   else if (a === 'test') { if (A) { if (!A.canNotify()) { A.askNotifyPerm(); toast('Allow notifications, then tap Test again'); return; } syncNative(); A.testReminder(); toast('Checking now…'); } else toast('Alerts work in the Android app'); }
   else if (a === 'done' || a === 'apply') { closeSheet(); if (filtersDirty) { filtersDirty = false; renderRig(); renderPresets(); if (!searchMode) loadDeals(true); } }
   else if (a === 'anygenre') { S.genres = []; save(); filtersDirty = true; document.querySelectorAll('#fgen .chip').forEach(x => x.classList.remove('on')); }
-  else if (a === 'own') { const i = S.mine.findIndex(m => m.id === curGame.id); if (i >= 0) S.mine.splice(i, 1); else S.mine.push({id:curGame.id, appid:curGame.appid || '', title:curGame.title}); rebuildOwned(); save(); toast(i >= 0 ? 'Unmarked' : 'Marked as owned' + (S.hideOwned ? '. It’s hidden from deals now.' : '')); renderGame(); filtersDirty = true; applyVis(); renderPresets(); }
+  else if (a === 'own') { const wasOnList = onList(curGame.id); if (wasOnList) { S.list = S.list.filter(x => x.id !== curGame.id); if (view === 'list') renderList(); updateDots(); } const i = S.mine.findIndex(m => m.id === curGame.id); if (i >= 0) S.mine.splice(i, 1); else S.mine.push({id:curGame.id, appid:curGame.appid || '', title:curGame.title}); rebuildOwned(); save(); toast(i >= 0 ? 'Unmarked' : 'Marked as owned' + (S.hideOwned ? '. It’s hidden from deals now.' : '')); renderGame(); filtersDirty = true; applyVis(); renderPresets(); }
   else if (a === 'import') { S.steamUser = $('#suser').value.trim(); S.steamKey = $('#skey').value.trim(); save(); b.disabled = true; b.textContent = 'Importing…'; steamImport(false).then(ok => { if (ok) { filtersDirty = true; openSettings(); } else { b.disabled = false; b.textContent = 'Import library'; } }); }
   else if (a === 'itadtest') { S.itadKey = $('#sitad').value.trim(); save(); if (!S.itadKey) { toast('Paste your key first'); return; } get(ITAD + 'games/lookup/v1?key=' + encodeURIComponent(S.itadKey) + '&appid=1086940').then(r => toast(r && r.found ? 'Key works' : 'Key accepted, but the test game wasn’t found')).catch(e => toast(/40[13]/.test(String(e)) ? 'IsThereAnyDeal rejected that key' : 'Couldn’t reach IsThereAnyDeal')); }
   else if (a === 'updchk') { window.UPD && UPD.check(); }
@@ -871,6 +1173,7 @@ $('#sheet').addEventListener('click', e => {
 });
 $('#sheet').addEventListener('change', e => {
   if (e.target.id === 'sgpu') { S.gpu = +e.target.value; save(); filtersDirty = true; }
+  if (e.target.id === 'scpu') { S.cpu = +e.target.value; save(); filtersDirty = true; }
   if (e.target.id === 'sdisk') { S.disk = Math.max(0, +e.target.value || 0); save(); }
   if (e.target.id === 'stime' && e.target.value) { S.dailyT = e.target.value; save(); pushReminder(); }
   if (e.target.id === 'suser') { S.steamUser = e.target.value.trim(); save(); }
@@ -884,6 +1187,8 @@ document.addEventListener('click', e => {
   if (b.dataset.preset) { S.preset = b.dataset.preset; save(); renderPresets(); if (searchMode) { searchMode = false; $('#q').value = ''; $('#qx').style.display = 'none'; } loadDeals(true); return; }
   if (b.dataset.open) { openUrl(b.dataset.open); return; }
   if (b.dataset.v) { go(b.dataset.v); return; }
+  if (b.dataset.lrm) { const x = S.list.find(y => y.id === b.dataset.lrm); S.list = S.list.filter(y => y.id !== b.dataset.lrm); save(); renderList(); toast('Removed ' + (x ? x.title : '')); return; }
+  if (b.dataset.lsort) { S.listSort = b.dataset.lsort; save(); renderList(); return; }
   const a = b.dataset.act;
   if (a === 'filters') openFilters();
   else if (a === 'hideno') { S.hideNo = !S.hideNo; save(); renderPresets(); loadDeals(true); }
@@ -891,6 +1196,9 @@ document.addEventListener('click', e => {
   else if (a === 'genres') openFilters();
   else if (a === 'rate') { S.minRate = S.minRate === 0 ? 80 : S.minRate === 80 ? 90 : 0; save(); renderPresets(); loadDeals(true); }
   else if (a === 'more') loadDeals(false);
+  else if (a === 'budget') openSheet(`<div class="pad"><h2>Budget</h2><p class="sub">See how your list compares with what you want to spend.</p><label class="f" for="bud">Budget ($)</label><input class="inp" id="bud" type="number" inputmode="decimal" min="0" step="1" value="${S.budget || ''}" placeholder="e.g. 60"><div class="chips">${[20, 40, 60, 100].map(v => `<button class="chip" onclick="document.getElementById('bud').value=${v}">$${v}</button>`).join('')}</div><div class="row2"><button class="btn ghost" data-act="close">Cancel</button><button class="btn" data-act="budget2">Save</button></div><p class="note">Leave it empty to remove the budget.</p></div>`);
+  else if (a === 'lshare') shareList();
+  else if (a === 'lclear') { if (confirmClear) { S.list = []; save(); renderList(); confirmClear = false; toast('List cleared'); } else { confirmClear = true; toast('Tap Clear list again to remove all ' + S.list.length + ' games'); setTimeout(() => confirmClear = false, 3500); } }
   else if (a === 'retry') loadDeals(true);
   else if (a === 'freeretry') loadFree();
   else if (b.id === 'rigbtn') openSettings();
@@ -904,12 +1212,12 @@ let view = 'deals';
 function go(v) {
   view = v; document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); $('#main').scrollTop = 0;
-  if (v === 'free') loadFree(); else if (v === 'watch') renderWatch(true); else if (v === 'guide') renderGuide();
+  if (v === 'free') loadFree(); else if (v === 'list') renderList(true); else if (v === 'watch') renderWatch(true); else if (v === 'guide') renderGuide();
 }
 function renderRig() { $('#rigtxt').textContent = GPUS[S.gpu][0].replace(/ Laptop| \(.*\)/g, '') + ' · ' + S.ram + ' GB'; }
-window.onAndroidBack = () => { if (sheetOpen) { closeSheet(); return true; } if (searchMode) { exitSearch(); return true; } if (view !== 'deals') { go('deals'); return true; } return false; };
+window.onAndroidBack = () => { if (LB) { closeLB(); return true; } if (sheetOpen) { closeSheet(); return true; } if (searchMode) { exitSearch(); return true; } if (view !== 'deals') { go('deals'); return true; } return false; };
 window.onAppResume = () => { syncNative(); };
-window.__ds = {S:() => S, COMPAT:() => COMPAT, verdict, parseReq, gpuScore, openGame, go, rebuildOwned, steamImport, itadHistory, get PH() { return PH; }};
+window.__ds = {requestCompat, ckey, S:() => S, COMPAT:() => COMPAT, verdict, parseReq, gpuScore, openGame, go, rebuildOwned, steamImport, itadHistory, get PH() { return PH; }};
 window.__toast = toast;
 window.__canReload = () => !sheetOpen;
 (async () => {
