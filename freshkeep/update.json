@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 2,
+  "v": 3,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/freshkeep/index.html",
-  "sha256": "5801ddefc0d8d44cfd47ec03a8c4229fd680894d083d5c2851818ce397970621",
+  "sha256": "b0b149c1ca6327e35d1648845a554935a3ca607ffe02202794827fb099d38e89",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "65d3e43a8e10397b73b2f23969140c92fc14213dd5ab84df6a006691efa9bdfb",
   "size": 207583
  },
- "notes": "Behind-the-scenes fixes: reminders keep working after updates and restarts, and a bad update can now roll itself back."
+ "notes": "Simpler: tap Scan in when you put food away and Scan out when you use it. The camera stays open for a whole bag of groceries and FreshKeep estimates when each thing goes bad."
 }

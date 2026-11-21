@@ -172,6 +172,28 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
 .ing small{margin-left:auto;color:var(--mute);white-space:nowrap}
 .steps{font-size:15px;line-height:1.55;white-space:pre-line;margin-top:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.scanrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 6px}
+.bigscan{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px;border-radius:18px;text-align:left;box-shadow:var(--shadow)}
+.bigscan svg{width:28px;height:28px;margin-bottom:6px}.bigscan b{font-size:18px}.bigscan small{font-size:12.5px;opacity:.85;font-weight:600}
+.bigscan.in{background:var(--pri);color:var(--onpri)}.bigscan.out{background:var(--card);color:var(--ink)}
+.linkbtn{display:block;margin:2px auto 8px;color:var(--mute);font-weight:700;font-size:14px;text-decoration:underline;padding:6px}
+.smode{display:inline-flex;background:rgba(0,0,0,.55);border-radius:999px;padding:4px;gap:4px}
+.smode button{color:#fff;font-weight:800;font-size:15px;padding:9px 16px;border-radius:999px}
+.smode button.on{background:#fff;color:#111}
+.smode button[data-m=in].on{background:#7BE495}.smode button[data-m=out].on{background:#FFB37A}
+#scard:empty{display:none}
+#scard{background:var(--card);color:var(--ink);border-radius:18px;padding:12px;margin-bottom:12px;text-align:left;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.sc{display:flex;gap:12px;align-items:center}.sc .badge{flex:none}
+.sc b{display:block;font-size:17px;line-height:1.2}.sc span{display:block;font-size:13.5px;color:var(--mute);margin-top:2px}
+.sc span.ok{color:var(--ok);font-weight:700}.sc span.warn{color:var(--warn);font-weight:700}
+.scbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.scbtns button{flex:1;min-width:64px;padding:9px 6px;border-radius:11px;background:var(--chip);color:var(--ink);font-weight:800;font-size:13.5px}
+.scbtns button.pri{background:var(--pri);color:var(--onpri)}
+#scard .inp{margin-top:8px}
+.datechips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.datechips span{font-size:13px;color:var(--mute);font-weight:700;margin-right:2px}
+.datechips button,.datechips label{padding:8px 11px;border-radius:10px;background:var(--chip);font-weight:800;font-size:13.5px;color:var(--ink)}
+.datechips input{position:absolute;opacity:0;width:1px;height:1px}
 </style>
 </head>
 <body>
@@ -184,6 +206,8 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
       <h1 id="headline">Your kitchen</h1>
       <div class="sub" id="subline"></div>
     </header>
+    <div class="scanrow"><button class="bigscan in" id="scanin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"/></svg><b>Scan in</b><small>Putting food away</small></button><button class="bigscan out" id="scanout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"/></svg><b>Scan out</b><small>Used something up</small></button></div>
+    <button class="linkbtn" id="addname">No barcode? Add it by name</button>
     <div class="tally" id="tally"></div>
     <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search your food" autocomplete="off"></div>
     <div class="chips" id="locchips"></div>
@@ -233,7 +257,7 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
     <p class="hint" style="text-align:center;margin-top:18px" id="ver">Your food list stays on this phone. FreshKeep only goes online to look up barcodes, find recipes and check for updates.</p>
   </section>
 </main>
-<button class="fab" id="fab" aria-label="Add food"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+<button class="fab" id="fab" aria-label="Scan in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"/></svg></button>
 <nav class="tabs" id="tabs">
   <button data-v="kitchen" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M5 10h14M15.5 5.5v2M15.5 13v3"/></svg>Kitchen</button>
   <button data-v="cook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13.9A4 4 0 0 1 7 6a5 5 0 0 1 10 0 4 4 0 0 1 1 7.9V20H6z"/><path d="M6 17h12"/></svg>Recipes</button>
@@ -247,8 +271,9 @@ textarea.inp{min-height:110px;font-size:13px;font-family:ui-monospace,monospace}
 <div class="sheet" id="sheet"></div>
 <div class="scrim" id="mscrim"></div>
 <div class="modal" id="modal"></div>
-<div class="scanner" id="scanner"><video id="scanvid" playsinline muted></video><div class="frame"></div><div class="stop">Scan a barcode</div>
-  <div class="sbar"><p id="scanmsg">Line the barcode up inside the box</p><div class="row"><button class="btn ghost" id="scanclose">Cancel</button><button class="btn" id="scantype">Type the number</button></div></div></div>
+<div class="scanner" id="scanner"><video id="scanvid" playsinline muted></video><div class="frame"></div>
+  <div class="stop"><div class="smode" id="smode"><button data-m="in" class="on">Putting in</button><button data-m="out">Used up</button></div></div>
+  <div class="sbar"><div id="scard"></div><p id="scanmsg">Point at a barcode</p><div class="row"><button class="btn ghost" id="scantype">Type the number</button><button class="btn" id="scanclose">Done</button></div></div></div>
 <div class="snack" id="snack"><span id="snacktxt"></span><button id="snackbtn">Undo</button></div>
 
 <script>
@@ -460,6 +485,9 @@ function load() {
   try { S = JSON.parse(localStorage.getItem(KEY)) || blank(); } catch (e) { S = blank(); }
   const b = blank(); for (const k in b) if (S[k] === undefined) S[k] = b[k];
   S.set = Object.assign(blank().set, S.set);
+  S.codes = S.codes || {};
+  // amounts are just a count now (no grams or fluid ounces)
+  S.items.forEach(i => { if (i.unit && i.unit !== 'pcs') { i.qty = 1; i.unit = 'pcs'; } i.qty = Math.max(1, Math.round(i.qty || 1)); });
 }
 function save() {
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
@@ -485,7 +513,7 @@ function status(it) {
   if (d <= S.set.soon) return {k:'warn', d, label: d === 1 ? 'Use by tomorrow' : 'Use within ' + d + ' days', pill: d === 1 ? 'Tomorrow' : d + ' days'};
   return {k:'ok', d, label: d < 14 ? d + ' days left' : 'Good until ' + nice(it.exp), pill: d < 14 ? d + ' days' : nice(it.exp)};
 }
-const qtyText = it => (it.qty && !(it.qty == 1 && (!it.unit || it.unit === 'pcs'))) ? it.qty + (it.unit && it.unit !== 'pcs' ? ' ' + it.unit : '') : '';
+const qtyText = it => it.qty > 1 ? '×' + it.qty : '';
 
 /* ---------- kitchen view ---------- */
 let locF = 'all', statF = null, query = '';
@@ -505,7 +533,7 @@ function renderKitchen() {
   let rows = all.filter(x => (locF === 'all' || x.i.loc === locF) && (!statF || x.s.k === statF) && (!query || x.i.name.toLowerCase().includes(query)));
   rows.sort((a, b) => a.i.exp.localeCompare(b.i.exp) || a.i.name.localeCompare(b.i.name));
   if (!all.length) {
-    $('#itemlist').innerHTML = `<div class="empty">${fridgeArt()}<h3>Your fridge is empty</h3><p>Add what you buy and FreshKeep tells you what to eat first, before it goes off.</p><div class="row" style="justify-content:center;gap:10px;flex-wrap:wrap"><button class="btn" id="emptyadd">Add food</button><button class="btn ghost" id="demo">Try examples</button></div></div>`;
+    $('#itemlist').innerHTML = `<div class="empty">${fridgeArt()}<h3>Your fridge is empty</h3><p>Scan things in when you put them away and scan them out when you use them. FreshKeep works out when they go bad.</p><div class="row" style="justify-content:center;gap:10px;flex-wrap:wrap"><button class="btn" id="emptyadd">Scan something in</button><button class="btn ghost" id="demo">Try examples</button></div></div>`;
     return;
   }
   if (!rows.length) { $('#itemlist').innerHTML = `<div class="empty"><h3>Nothing here</h3><p>No items match this filter.</p></div>`; return; }
@@ -551,36 +579,30 @@ let draft = null;
 function openEditor(item, preset) {
   const isNew = !item;
   draft = item ? Object.assign({}, item) : Object.assign({id:uid(), name:'', cat:'other', loc:'fridge', qty:1, unit:'pcs', added:today(), exp:addDays(today(), 5), auto:true}, preset || {});
-  openSheet(`<h2>${isNew ? 'Add food' : 'Edit item'}</h2>
-    <label class="f" for="fname">What is it? <button class="scanbtn" id="fscan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M7 8v8M10 8v8M13 8v8M17 8v8"/></svg>Scan barcode</button></label>
-    <input class="inp" id="fname" placeholder="e.g. Milk, spinach, leftover curry" value="${esc(draft.name)}" autocomplete="off">
+  openSheet(`<h2>${isNew ? 'Add by name' : 'Edit'}</h2>
+    <label class="f" for="fname">What is it?</label>
+    <input class="inp" id="fname" placeholder="e.g. Bananas, leftover pasta" value="${esc(draft.name)}" autocomplete="off">
     <div class="sugg" id="fsugg" style="display:none"></div>
-    <div id="ffound"></div>
     <label class="f">Where is it?</label>
     <div class="seg" id="floc">${Object.keys(LOCS).map(l => `<button data-l="${l}" class="${draft.loc === l ? 'on' : ''}">${LOCS[l]}</button>`).join('')}</div>
-    <label class="f">Use by</label>
+    <label class="f">Good until</label>
     <input type="date" class="inp" id="fexp" value="${draft.exp}">
     <div class="chips" id="fquick">${[['Today',0],['+3 days',3],['+1 week',7],['+2 weeks',14],['+1 month',30],['+3 months',90]].map(([l, n]) => `<button class="chip" data-n="${n}">${l}</button>`).join('')}</div>
     <div class="hint" id="fhint"></div>
-    <label class="f">How much</label>
-    <div class="row" style="gap:10px;flex-wrap:wrap"><div class="stepper"><button id="qm">−</button><input class="inp" id="fqty" inputmode="decimal" value="${draft.qty}"><button id="qp">+</button></div>
-    <select class="inp" id="funit" style="width:auto;flex:1">${['pcs','pack','g','kg','ml','L','oz','lb'].map(u => `<option ${draft.unit === u ? 'selected' : ''}>${u}</option>`).join('')}</select></div>
-    <label class="f">Type</label>
-    <div class="chips" id="fcat" style="flex-wrap:wrap">${Object.entries(CATS).map(([k, c]) => `<button class="chip${draft.cat === k ? ' on' : ''}" data-c="${k}">${c.e} ${c.n}</button>`).join('')}</div>
-    <div class="actions">${isNew ? `<button class="btn ghost" id="fsave2">Save + add more</button>` : `<button class="btn ghost" id="fcancel">Cancel</button>`}<button class="btn" id="fsave">Save</button></div>`);
+    <input type="hidden" id="fqty" value="${draft.qty || 1}"><input type="hidden" id="funit" value="pcs">
+    <div class="actions">${isNew ? `<button class="btn ghost" id="fsave2">Save + add another</button>` : `<button class="btn ghost" id="fcancel">Cancel</button>`}<button class="btn" id="fsave">Save</button></div>`);
   updHint();
   if (isNew && !draft.name) setTimeout(() => $('#fname').focus(), 260);
 }
 function updHint() {
   const f = findFood(draft.name); const n = lifeFor(f, draft.loc);
-  $('#fhint').textContent = draft.auto && draft.name ? `Set from typical shelf life: about ${n >= 60 ? Math.round(n / 30) + ' months' : n + ' days'} in the ${LOCS[draft.loc].toLowerCase()}. Change it to match the label.` : 'Tip: use the date on the label if it has one.';
+  $('#fhint').textContent = draft.auto && draft.name ? `Estimated: ${draft.name} usually keeps about ${n >= 60 ? Math.round(n / 30) + ' months' : n + ' days'} in the ${LOCS[draft.loc].toLowerCase()}.` : '';
 }
 function applyFood(f) {
   draft.name = f.n; draft.cat = f.c; if (draft.auto) draft.loc = f.loc;
   draft.exp = addDays(today(), lifeFor(f, draft.loc)); draft.auto = true;
   $('#fname').value = f.n; $('#fexp').value = draft.exp; $('#fsugg').style.display = 'none';
   document.querySelectorAll('#floc button').forEach(b => b.classList.toggle('on', b.dataset.l === draft.loc));
-  document.querySelectorAll('#fcat .chip').forEach(b => b.classList.toggle('on', b.dataset.c === draft.cat));
   updHint();
 }
 function suggest(q, box, onPick) {
@@ -594,12 +616,13 @@ function suggest(q, box, onPick) {
 function commitDraft(again) {
   draft.name = $('#fname').value.trim();
   if (!draft.name) { $('#fname').focus(); $('#fname').style.borderColor = 'var(--bad)'; return; }
-  draft.qty = parseFloat($('#fqty').value) || 1; draft.unit = $('#funit').value; draft.exp = $('#fexp').value || draft.exp;
+  draft.exp = $('#fexp').value || draft.exp;
   const f = findFood(draft.name); if (f && draft.cat === 'other') draft.cat = f.c;
   const idx = S.items.findIndex(i => i.id === draft.id);
-  const rec = {id:draft.id, name:draft.name, cat:draft.cat, loc:draft.loc, qty:draft.qty, unit:draft.unit, added:draft.added, exp:draft.exp};
+  const rec = {id:draft.id, name:draft.name, cat:draft.cat, loc:draft.loc, qty:Math.max(1, Math.round(draft.qty || 1)), unit:'pcs', added:draft.added, exp:draft.exp, code:draft.code, auto:draft.auto};
   if (idx >= 0) S.items[idx] = rec; else S.items.push(rec);
-  if (draft.code) { S.codes = S.codes || {}; S.codes[draft.code] = {name:rec.name, cat:rec.cat, loc:rec.loc, life:Math.max(1, diff(today(), rec.exp))}; }
+  if (draft.code) rec.code = draft.code;
+  if (rec.code) S.codes[rec.code] = {name:rec.name, cat:rec.cat, loc:rec.loc, life:Math.max(1, diff(rec.added, rec.exp))};
   save(); render(); buzz(15);
   if (again) { snack(rec.name + ' added'); openEditor(null, {loc:draft.loc}); }
   else { closeSheet(); snack(idx >= 0 ? 'Saved' : rec.name + ' added'); }
@@ -613,8 +636,6 @@ $('#sheet').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.closest('#floc')) { draft.loc = t.dataset.l; document.querySelectorAll('#floc button').forEach(b => b.classList.toggle('on', b === t)); if (draft.auto) { draft.exp = addDays(today(), lifeFor(findFood(draft.name), draft.loc)); $('#fexp').value = draft.exp; } updHint(); }
   else if (t.closest('#fquick')) { draft.exp = addDays(today(), +t.dataset.n); draft.auto = false; $('#fexp').value = draft.exp; updHint(); }
-  else if (t.closest('#fcat')) { draft.cat = t.dataset.c; document.querySelectorAll('#fcat .chip').forEach(b => b.classList.toggle('on', b === t)); }
-  else if (t.id === 'qm' || t.id === 'qp') { const q = parseFloat($('#fqty').value) || 1; const step = q > 10 ? (q >= 100 ? 50 : 5) : 1; $('#fqty').value = Math.max(t.id === 'qm' ? 0.5 : 1, q + (t.id === 'qm' ? -step : step)); }
   else if (t.id === 'fsave') commitDraft(false);
   else if (t.id === 'fsave2') commitDraft(true);
   else if (t.id === 'fcancel' || t.id === 'dclose') closeSheet();
@@ -625,20 +646,27 @@ $('#sheet').addEventListener('click', e => {
 let cur = null;
 function openItem(id) {
   cur = S.items.find(i => i.id === id); if (!cur) return;
-  const s = status(cur); const q = qtyText(cur);
-  const canFreeze = cur.loc !== 'freezer';
-  openSheet(`<div class="dhead"><div class="badge">${emojiFor(cur)}</div><div><h2 style="margin:0">${esc(cur.name)}</h2><div class="sub">${LOCS[cur.loc]}${q ? ' · ' + esc(q) : ''} · added ${diff(cur.added, today()) === 0 ? 'today' : nice(cur.added)}</div></div></div>
-  <div style="margin-top:14px" class="row"><span class="pill ${s.k}" style="font-size:15px;padding:8px 14px">${s.label}</span><span class="sub">Use by ${nice(cur.exp)}</span></div>
+  const s = status(cur), canFreeze = cur.loc !== 'freezer';
+  openSheet(`<div class="dhead"><div class="badge">${emojiFor(cur)}</div><div><h2 style="margin:0">${esc(cur.name)}${cur.qty > 1 ? ' <span class="sub">×' + cur.qty + '</span>' : ''}</h2><div class="sub">${LOCS[cur.loc]} · added ${diff(cur.added, today()) === 0 ? 'today' : nice(cur.added)}</div></div></div>
+  <div style="margin-top:14px" class="row"><span class="pill ${s.k}" style="font-size:15px;padding:8px 14px">${s.label}</span><span class="sub">${s.d >= 14 ? s.d + ' days left' : 'Until ' + nice(cur.exp)}${cur.auto ? ' · estimated' : ''}</span></div>
+  <div class="datechips"><span>Change date:</span><button data-dd="-1">−1 day</button><button data-dd="1">+1 day</button><button data-dd="7">+1 week</button><label>Pick…<input type="date" id="idate" value="${cur.exp}"></label></div>
   <div class="acts">
-    <button class="act good" data-act="eat">Used it up<span>Ate or cooked it all</span></button>
+    ${cur.qty > 1 ? `<button class="act good" data-act="some">Used one<span>${cur.qty} → ${cur.qty - 1} left</span></button>` : ''}
+    <button class="act good" data-act="eat">Used it up<span>${cur.qty > 1 ? 'All ' + cur.qty + ' gone' : 'Ate or cooked it'}</span></button>
     <button class="act badc" data-act="toss">Threw it out<span>Counts toward waste</span></button>
-    ${cur.qty > 1 ? `<button class="act" data-act="some">Used one<span>${esc(q)} → ${cur.qty - 1}</span></button>` : ''}
     ${canFreeze ? `<button class="act" data-act="freeze">Move to freezer<span>Keeps about ${fmtLife(lifeFor(findFood(cur.name), 'freezer'))}</span></button>` : `<button class="act" data-act="thaw">Thaw in fridge<span>Use within 2 days</span></button>`}
     <button class="act" data-act="shop">Add to shopping<span>Buy it again</span></button>
-    <button class="act" data-act="edit">Edit<span>Name, date, amount</span></button>
+    <button class="act" data-act="edit">Rename<span>Or change where it is</span></button>
   </div>
   <button class="btn ghost block" style="margin-top:12px" id="dclose">Close</button>`);
 }
+function setItemDate(exp) {
+  if (!cur || !exp) return; cur.exp = exp; cur.auto = false;
+  if (cur.code && S.codes[cur.code]) S.codes[cur.code].life = Math.max(1, diff(cur.added, exp)); // remember it for next time
+  save(); render(); openItem(cur.id); buzz(10);
+}
+$('#sheet').addEventListener('click', e => { const b = e.target.closest('[data-dd]'); if (b && cur) setItemDate(addDays(cur.exp, +b.dataset.dd)); });
+$('#sheet').addEventListener('change', e => { if (e.target.id === 'idate') setItemDate(e.target.value); });
 const fmtLife = n => n >= 60 ? Math.round(n / 30) + ' months' : n + ' days';
 function logIt(it, how) { S.log.push({name:it.name, cat:it.cat, how, date:today()}); if (S.log.length > 2000) S.log = S.log.slice(-2000); }
 function itemAction(a) {
@@ -767,13 +795,16 @@ function go(v) {
   if (v === 'cook') renderCook();
 }
 $('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(b.dataset.v); });
-$('#fab').addEventListener('click', () => openEditor(null, locF !== 'all' ? {loc:locF} : null));
+$('#fab').addEventListener('click', () => startScan('in'));
+$('#scanin').addEventListener('click', () => startScan('in'));
+$('#scanout').addEventListener('click', () => startScan('out'));
+$('#addname').addEventListener('click', () => openEditor(null, locF !== 'all' ? {loc:locF} : null));
 $('#v-kitchen').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.dataset.id) openItem(t.dataset.id);
   else if (t.dataset.loc) { locF = t.dataset.loc; render(); }
   else if (t.dataset.st) { statF = statF === t.dataset.st ? null : t.dataset.st; render(); }
-  else if (t.id === 'emptyadd') openEditor();
+  else if (t.id === 'emptyadd') startScan('in');
   else if (t.id === 'demo') addDemo();
 });
 $('#q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); renderKitchen(); });
@@ -807,8 +838,11 @@ window.__canReload = () => !sheetOpen && !modalOpen && !scanning;
 
 /* ---------- barcode scanning ---------- */
 let scanning = false, scanStream = null, zreader = null, scanTimer = null;
-async function startScan() {
-  scanning = true; $('#scanner').classList.add('on'); $('#scanmsg').textContent = 'Line the barcode up inside the box';
+let scanMode = 'in', scanBusy = false, lastCode = '', lastAt = 0, lastAct = null;
+async function startScan(mode) {
+  scanMode = mode || 'in'; scanning = true; scanBusy = false; lastCode = ''; lastAct = null;
+  $('#scard').innerHTML = ''; setScanMode(scanMode);
+  $('#scanner').classList.add('on');
   const video = $('#scanvid');
   try {
     let native = null;
@@ -816,7 +850,7 @@ async function startScan() {
     if (native) {
       scanStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment', width:{ideal:1280}}});
       video.srcObject = scanStream; await video.play();
-      const tick = async () => { if (!scanning) return; try { const c = await native.detect(video); if (c.length) { gotCode(c[0].rawValue); return; } } catch (e) {} scanTimer = setTimeout(tick, 200); };
+      const tick = async () => { if (!scanning) return; try { const c = await native.detect(video); if (c.length) gotCode(c[0].rawValue); } catch (e) {} scanTimer = setTimeout(tick, 250); };
       tick();
     } else if (window.ZXing) {
       const hints = new Map(); hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.EAN_8, ZXing.BarcodeFormat.UPC_A, ZXing.BarcodeFormat.UPC_E]);
@@ -824,22 +858,34 @@ async function startScan() {
       await zreader.decodeFromConstraints({video:{facingMode:'environment', width:{ideal:1280}}}, video, res => { if (res && scanning) gotCode(res.getText()); });
     } else throw new Error('no scanner');
   } catch (e) {
-    $('#scanmsg').textContent = 'Couldn\u2019t open the camera. Allow camera access, or type the number under the barcode.';
+    $('#scanmsg').textContent = 'Couldn’t open the camera. Allow camera access, or tap “Type the number”.';
   }
+}
+function setScanMode(m) {
+  scanMode = m; document.querySelectorAll('#smode button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  $('#scanmsg').textContent = m === 'in' ? 'Scan each thing you’re putting away' : 'Scan each thing you’ve used up';
 }
 function stopScan() {
   scanning = false; clearTimeout(scanTimer); $('#scanner').classList.remove('on');
   try { zreader && zreader.reset(); } catch (e) {} zreader = null;
   if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; }
   try { $('#scanvid').srcObject = null; } catch (e) {}
+  render();
 }
-function gotCode(code) { stopScan(); buzz(40); lookupCode(String(code).replace(/\D/g, '')); }
-$('#scanclose').addEventListener('click', stopScan);
-$('#scantype').addEventListener('click', () => {
-  stopScan();
-  confirmBox('Type the barcode', '', 'Look up', () => { const v = ($('#mcode').value || '').replace(/\D/g, ''); if (v.length >= 6) lookupCode(v); else snack('That number looks too short'); });
-  $('#modal p').innerHTML = '<input class="inp" id="mcode" inputmode="numeric" placeholder="e.g. 5000159484695">'; setTimeout(() => $('#mcode') && $('#mcode').focus(), 200);
-});
+// The camera stays open: every barcode is handled straight away, the same one is ignored for a few seconds
+function gotCode(raw) {
+  const code = String(raw).replace(/\D/g, ''); if (code.length < 6) return;
+  // ignore the same barcode while it stays in view (it has to be out of sight for 2.5s to count again), even mid-lookup
+  if (code === lastCode && Date.now() - lastAt < 2500) { lastAt = Date.now(); return; }
+  if (scanBusy) return;
+  lastCode = code; lastAt = Date.now(); buzz(35);
+  handleCode(code);
+}
+async function handleCode(code) {
+  scanBusy = true;
+  try { if (scanMode === 'in') await scanIn(code); else scanOut(code); }
+  finally { if (!$('#sname')) scanBusy = false; }
+}
 const OFF_CATS = [
   [/frozen/, 'frozen', 'freezer'], [/(ice-creams|sorbets)/, 'frozen', 'freezer'],
   [/(milks|dairies|cheeses|yogurts|butters|creams|eggs)/, 'dairy', 'fridge'], [/(meats|poultr|sausages|hams|bacon)/, 'meat', 'fridge'],
@@ -848,46 +894,116 @@ const OFF_CATS = [
   [/(sauces|condiments|spreads|jams|honeys|dressings|mayonnaise|ketchup)/, 'sauces', 'pantry'],
   [/(ready-meals|prepared|meals|pizzas)/, 'left', 'fridge'], [/(cereals|pastas|rices|snacks|chocolates|crisps|chips|canned|legumes|nuts|flours|sugars|coffees|teas)/, 'other', 'pantry']
 ];
+// Typical keeping time by product type (days), checked against Open Food Facts category tags, most specific first
+const LIFE_TAGS = [
+  [/(ice-creams|sorbets|frozen)/, 90], [/(skyr|yogurts|yoghurts|fermented-milk)/, 14], [/milks/, 7], [/(cheeses)/, 21], [/(butters|margarines)/, 30], [/eggs/, 28], [/creams/, 7],
+  [/(hams|sausages|bacon|deli|cold-cuts|salami)/, 7], [/(meats|poultr|chicken|beef|pork)/, 3], [/(fishes|seafood|fish)/, 2], [/(salads|leafy)/, 4], [/herbs/, 5],
+  [/(fruits|vegetables)/, 7], [/(breads|tortillas|bagels)/, 5], [/(biscuits|cookies|crackers)/, 60], [/(cakes|pastries)/, 4], [/(fruit-juices|juices|smoothies)/, 7],
+  [/(sodas|waters|soft-drinks|carbonated|beers|wines|energy-drinks)/, 180], [/(jams|honeys|nut-butters|peanut-butters|spreads)/, 90],
+  [/(sauces|condiments|dressings|mayonnaise|ketchup|mustards|pickles)/, 60], [/(ready-meals|pizzas|prepared|sandwiches)/, 3], [/(tofu|hummus|dips)/, 7],
+  [/(cereals|pastas|rices|flours|sugars|legumes|canned|nuts|snacks|chips|crisps|chocolates|candies|coffees|teas)/, 180]
+];
 function guessFromProduct(name, cats) {
   const lower = name.toLowerCase();
   const hit = FOODS.slice().sort((a, b) => b.n.length - a.n.length).find(f => new RegExp('\\b' + f.n.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/s$/, '') + 's?\\b').test(lower));
   if (hit) return {cat:hit.c, loc:hit.loc, life:lifeFor(hit, hit.loc), food:hit};
   const tags = (cats || []).join(' ');
-  for (const [re, cat, loc] of OFF_CATS) if (re.test(tags)) { const chill = /(chilled|fresh)/.test(tags) && loc === 'pantry' ? 'fridge' : loc; return {cat, loc:chill, life:DEF_LIFE[chill]}; }
+  const lt = LIFE_TAGS.find(([re]) => re.test(tags));
+  for (const [re, cat, loc] of OFF_CATS) if (re.test(tags)) { const chill = /(chilled|fresh)/.test(tags) && loc === 'pantry' ? 'fridge' : loc; return {cat, loc:chill, life:chill === 'freezer' ? 90 : lt ? lt[1] : DEF_LIFE[chill]}; }
+  if (lt) return {cat:'other', loc:lt[1] >= 60 ? 'pantry' : 'fridge', life:lt[1]};
   return {cat:'other', loc:'pantry', life:DEF_LIFE.pantry};
 }
-async function lookupCode(code) {
-  if (!sheetOpen || !draft || !$('#fname')) openEditor();
-  const box = () => $('#ffound');
-  const known = S.codes && S.codes[code];
-  if (known) { applyScan(code, known.name, known.cat, known.loc, known.life, 'You\u2019ve scanned this before.'); return; }
-  box().innerHTML = '<div class="found">Looking up barcode ' + esc(code) + '\u2026</div>';
-  try {
-    const r = await get('https://world.openfoodfacts.org/api/v2/product/' + code + '.json?fields=product_name,product_name_en,generic_name,brands,categories_tags,quantity');
-    const p = r && r.product;
-    const name = p && (p.product_name_en || p.product_name || p.generic_name || '').trim();
-    if (!name) throw new Error('missing');
-    const g = guessFromProduct(name, p.categories_tags);
-    const brand = (p.brands || '').split(',')[0].trim();
-    let nice = name.length > 40 ? name.slice(0, 40).trim() + '\u2026' : name;
-    applyScan(code, nice, g.cat, g.loc, g.life, 'Found: ' + nice + (brand ? ' (' + brand + ')' : '') + (p.quantity ? ' \u00b7 ' + p.quantity : '') + '. Check the date on the pack.', p.quantity);
-  } catch (e) {
-    draft.code = code;
-    box().innerHTML = '<div class="found miss">' + (e.message === 'missing' || /404/.test(e.message) ? 'This barcode isn\u2019t in the product database yet. Type the name and FreshKeep will remember it next time.' : 'Couldn\u2019t look it up (no connection?). Type the name and FreshKeep will remember this barcode.') + '</div>';
-    $('#fname').focus();
+async function productFor(code) {
+  const known = S.codes[code]; if (known) return Object.assign({}, known);
+  $('#scard').innerHTML = '<div class="sc"><div class="badge">🔎</div><div><b>Looking it up…</b><span>Barcode ' + esc(code) + '</span></div></div>';
+  const r = await get('https://world.openfoodfacts.org/api/v2/product/' + code + '.json?fields=product_name,product_name_en,generic_name,brands,categories_tags');
+  const p = r && r.product, name = p && (p.product_name_en || p.product_name || p.generic_name || '').trim();
+  if (!name) { const e = new Error('missing'); throw e; }
+  const g = guessFromProduct(name, p.categories_tags);
+  return {name:name.length > 40 ? name.slice(0, 40).trim() + '…' : name, cat:g.cat, loc:g.loc, life:g.life};
+}
+async function scanIn(code) {
+  let info;
+  try { info = await productFor(code); }
+  catch (e) { askName(code, e.message === 'missing' || /404/.test(e.message) ? 'New product! What is it?' : 'No connection. What is it?'); return; }
+  addScanned(code, info);
+}
+function addScanned(code, info) {
+  const exp = addDays(today(), info.life);
+  let it = S.items.find(i => i.code === code && i.exp === exp && i.loc === info.loc);
+  if (it) it.qty = (it.qty || 1) + 1;
+  else { it = {id:uid(), name:info.name, cat:info.cat, loc:info.loc, qty:1, unit:'pcs', added:today(), exp, code, auto:true}; S.items.push(it); }
+  S.codes[code] = {name:info.name, cat:info.cat, loc:info.loc, life:info.life};
+  save(); lastAct = {kind:'in', id:it.id}; inCard(it);
+}
+function inCard(it) {
+  const s = status(it), n = diff(today(), it.exp);
+  $('#scard').innerHTML = `<div class="sc"><div class="badge">${emojiFor(it)}</div><div><b>${esc(it.name)}${it.qty > 1 ? ' ×' + it.qty : ''}</b>
+    <span class="${s.k === 'ok' ? 'ok' : 'warn'}">✓ Added · good until ${it.auto ? 'about ' : ''}${nice(it.exp)} (${n === 0 ? 'today' : n === 1 ? '1 day' : n + ' days'})</span><span>${LOCS[it.loc]}${it.auto ? ' · estimated from the type of food' : ''}</span></div></div>
+    <div class="scbtns"><button data-sc="-1">−1 day</button><button data-sc="1">+1 day</button><button data-sc="7">+1 week</button><button data-sc="where">${it.loc === 'freezer' ? 'Fridge' : 'Freezer'}</button></div>
+    <div class="scbtns"><button data-sc="plus">+1 more of these</button><button data-sc="undo">Undo</button></div>`;
+}
+function scanOut(code) {
+  const known = S.codes[code];
+  let pool = S.items.filter(i => i.code === code);
+  if (!pool.length && known) pool = S.items.filter(i => i.name.toLowerCase() === known.name.toLowerCase());
+  if (!pool.length) { $('#scard').innerHTML = `<div class="sc"><div class="badge">🤷</div><div><b>${known ? esc(known.name) : 'Not in your list'}</b><span>${known ? 'There’s none of this in your list right now.' : 'This barcode hasn’t been scanned in yet.'}</span></div></div>`; lastAct = null; return; }
+  const it = pool.sort((a, b) => a.exp.localeCompare(b.exp))[0], before = JSON.stringify(S);
+  const left = (it.qty || 1) - 1;
+  if (left > 0) it.qty = left; else S.items = S.items.filter(i => i !== it);
+  logIt(it, 'eaten'); save();
+  lastAct = {kind:'out', before, name:it.name, cat:it.cat};
+  const more = S.items.filter(i => i.name.toLowerCase() === it.name.toLowerCase()).reduce((a, i) => a + (i.qty || 1), 0);
+  $('#scard').innerHTML = `<div class="sc"><div class="badge">${emojiFor(it)}</div><div><b>${esc(it.name)}</b><span class="ok">✓ Used · ${more ? more + ' left' : 'all gone'}</span></div></div>
+    <div class="scbtns"><button data-sc="toss">I threw it out</button>${more ? '' : `<button data-sc="shop">Add to shopping</button>`}<button data-sc="undo">Undo</button></div>`;
+}
+function askName(code, title) {
+  scanBusy = true;
+  $('#scard').innerHTML = `<div class="sc"><div class="badge">🏷️</div><div><b>${title}</b><span>Type a name once and FreshKeep remembers this barcode.</span></div></div>
+    <input class="inp" id="sname" placeholder="e.g. Greek yogurt" autocomplete="off"><div class="sugg" id="ssugg" style="display:none"></div>
+    <div class="scbtns"><button data-sc="skip">Skip</button><button class="pri" data-sc="savename" data-code="${esc(code)}">Add it</button></div>`;
+  setTimeout(() => $('#sname') && $('#sname').focus(), 100);
+}
+function saveName(code, name) {
+  name = (name || '').trim(); if (!name) { $('#sname').focus(); return; }
+  const f = findFood(name), loc = f ? f.loc : 'fridge';
+  addScanned(code, {name, cat:f ? f.c : 'other', loc, life:lifeFor(f, loc)});
+  scanBusy = false;
+}
+$('#scard').addEventListener('input', e => { if (e.target.id === 'sname') suggest(e.target.value, $('#ssugg'), f => { $('#sname').value = f.n; $('#ssugg').style.display = 'none'; }); });
+$('#scard').addEventListener('keydown', e => { if (e.target.id === 'sname' && e.key === 'Enter') { const b = $('#scard [data-sc=savename]'); saveName(b.dataset.code, e.target.value); } });
+$('#scard').addEventListener('click', e => {
+  const b = e.target.closest('[data-sc]'); if (!b) return; const a = b.dataset.sc;
+  if (a === 'savename') return saveName(b.dataset.code, $('#sname').value);
+  if (a === 'skip') { $('#scard').innerHTML = ''; scanBusy = false; return; }
+  if (!lastAct) return;
+  if (lastAct.kind === 'in') {
+    const it = S.items.find(i => i.id === lastAct.id); if (!it) return;
+    if (a === 'undo') { if (it.qty > 1) it.qty--; else S.items = S.items.filter(i => i !== it); save(); $('#scard').innerHTML = '<div class="sc"><div class="badge">↩️</div><div><b>Removed</b><span>' + esc(it.name) + '</span></div></div>'; lastAct = null; lastCode = ''; return; }
+    if (a === 'plus') { it.qty = (it.qty || 1) + 1; save(); buzz(15); inCard(it); return; }
+    if (a === 'where') { it.loc = it.loc === 'freezer' ? 'fridge' : 'freezer'; it.exp = addDays(today(), lifeFor(findFood(it.name), it.loc)); it.auto = true; }
+    else { it.exp = addDays(it.exp, +a); if (it.exp < today()) it.exp = today(); it.auto = false; }
+    if (it.code && S.codes[it.code]) { S.codes[it.code].life = Math.max(0, diff(it.added, it.exp)); S.codes[it.code].loc = it.loc; } // remembered for next time
+    save(); buzz(10); inCard(it);
+  } else {
+    if (a === 'undo') { S = JSON.parse(lastAct.before); save(); $('#scard').innerHTML = '<div class="sc"><div class="badge">↩️</div><div><b>Put back</b><span>' + esc(lastAct.name) + '</span></div></div>'; lastAct = null; lastCode = ''; return; }
+    if (a === 'toss') { const l = S.log[S.log.length - 1]; if (l) l.how = 'tossed'; save(); b.textContent = '✓ Counted as thrown out'; b.disabled = true; }
+    if (a === 'shop') { addShop(lastAct.name, lastAct.cat); save(); b.textContent = '✓ On your list'; b.disabled = true; }
   }
-}
-function applyScan(code, name, cat, loc, life, msg, quantity) {
-  draft.code = code; draft.name = name; draft.cat = cat; draft.loc = loc; draft.exp = addDays(today(), life); draft.auto = false;
-  const q = String(quantity || '').match(/([\d.]+)\s*(g|kg|ml|l|cl|oz|lb)\b/i);
-  if (q) { let n = parseFloat(q[1]), u = q[2].toLowerCase(); if (u === 'cl') { n = n * 10; u = 'ml'; } draft.qty = n; draft.unit = u === 'l' ? 'L' : u; $('#fqty').value = draft.qty; $('#funit').value = draft.unit; }
-  $('#fname').value = name; $('#fexp').value = draft.exp; $('#fsugg').style.display = 'none';
-  document.querySelectorAll('#floc button').forEach(b => b.classList.toggle('on', b.dataset.l === loc));
-  document.querySelectorAll('#fcat .chip').forEach(b => b.classList.toggle('on', b.dataset.c === cat));
-  $('#ffound').innerHTML = '<div class="found">' + esc(msg) + '</div>'; updHint();
-}
-$('#sheet').addEventListener('click', e => { if (e.target.closest('#fscan')) { e.preventDefault(); e.stopPropagation(); startScan(); } }, true);
-
+});
+$('#smode').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) { setScanMode(b.dataset.m); $('#scard').innerHTML = ''; lastAct = null; lastCode = ''; scanBusy = false; } });
+$('#scanclose').addEventListener('click', stopScan);
+$('#scantype').addEventListener('click', () => {
+  const was = scanBusy; scanBusy = true;
+  $('#scard').innerHTML = `<div class="sc"><div class="badge">⌨️</div><div><b>Type the barcode number</b><span>The digits under the stripes</span></div></div><input class="inp" id="tcode" inputmode="numeric" placeholder="e.g. 0012000161155"><div class="scbtns"><button data-tc="cancel">Cancel</button><button class="pri" data-tc="go">${scanMode === 'in' ? 'Add it' : 'Mark as used'}</button></div>`;
+  setTimeout(() => $('#tcode') && $('#tcode').focus(), 100);
+});
+$('#scard').addEventListener('click', e => {
+  const b = e.target.closest('[data-tc]'); if (!b) return;
+  if (b.dataset.tc === 'cancel') { $('#scard').innerHTML = ''; scanBusy = false; return; }
+  const v = ($('#tcode').value || '').replace(/\D/g, ''); if (v.length < 6) { $('#tcode').focus(); return; }
+  scanBusy = false; lastCode = ''; gotCode(v);
+});
 /* ---------- what can I make? (TheMealDB) ---------- */
 const MDB = 'https://www.themealdb.com/api/json/v1/1/';
 let ingList = null;
@@ -989,7 +1105,7 @@ $('#bkpick').addEventListener('change', e => {
 });
 $('#updchk').addEventListener('click', () => window.UPD && UPD.check());
 
-window.__fk = {get S() { return S; }, go, addDemo};
+window.__fk = {get S() { return S; }, go, addDemo, startScan, gotCode, stopScan};
 load(); render(); syncNative(); pushReminder();
 try { if (window.UPD) $('#verinfo').textContent = 'Version ' + UPD.info() + '. Updates install by themselves.'; } catch (e) {}
 if (!S.seen) { S.seen = true; save(); }
