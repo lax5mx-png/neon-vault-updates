@@ -1,0 +1,16 @@
+{
+ "content": {
+  "v": 1,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/simmer/index.html",
+  "sha256": "c41741c1cd7e0fae5565fffefdf233f7ebb1e6a7bc126d14bc108d414cbec537",
+  "minVc": 1
+ },
+ "apk": {
+  "vc": 1,
+  "vn": "1.0.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/simmer/Simmer-1.0.0.apk",
+  "sha256": "eb9cf7522987c273fdc13e338a6d2a73f927c385dd4f71853c7d7db6580ac2b3",
+  "size": 502683
+ },
+ "notes": "Welcome to Simmer: millions of recipes, a shopping list, and step-by-step cooking with timers."
+}

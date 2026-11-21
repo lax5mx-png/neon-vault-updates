@@ -1,6 +1,6 @@
-# Releasing FreshKeep, Puzzlebox and DealScout
+# Releasing Simmer, Puzzlebox and DealScout
 
-Each folder (`freshkeep/`, `puzzlebox/`, `dealscout/`) has:
+Each folder (`simmer/`, `puzzlebox/`, `dealscout/`) has:
 
 - `update.json`, which the app downloads every 6 hours while open
 - `index.html`, the whole app UI as one file (a "content" update)
