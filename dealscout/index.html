@@ -194,7 +194,7 @@ label.f{display:block;font-size:13px;font-weight:750;color:var(--mute);margin:14
 .dlcbar{margin-top:10px;background:var(--warnbg);color:var(--ink);border-radius:12px;padding:10px 12px;font-size:13.5px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .dlcbar .btn{margin-left:auto}
 .exp{display:flex;align-items:center;gap:10px;margin-top:10px;background:var(--card);border-radius:10px;padding:8px 10px;color:var(--ink)}
-.exp span{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}.exp b{font-size:14px!important}
+.exp span{flex:none;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}.exp b{font-size:14px!important}
 .gal{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px;scrollbar-width:none;margin:0 -2px}
 .gal::-webkit-scrollbar{display:none}
 .gi{flex:none;width:168px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:var(--soft);scroll-snap-align:start;position:relative;padding:0}
@@ -243,6 +243,14 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 .lrow .right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding-right:4px}
 .lrow .x{flex:none;width:40px;color:var(--mute);font-size:16px;border-left:1px solid var(--line)}
 .tag.low{background:var(--goodbg);color:var(--good)}
+.gpc{display:flex;gap:11px;align-items:flex-start;background:var(--card);border-radius:16px;padding:10px;box-shadow:var(--shadow)}
+.gpc .img{flex:none;width:104px;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:var(--soft)}.gpc .img img{width:100%;height:100%;object-fit:cover}
+.gpc .mid{flex:1;min-width:0}.gpc .mid>b{display:block;font-size:14.5px;line-height:1.25}
+.gpc .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.gpw{display:block;font-size:12.5px;color:var(--mute);margin-top:4px}
+.gpc details{margin-top:4px;font-size:12.5px}.gpc summary{color:var(--acc);font-weight:700;cursor:pointer}.gpc details p{margin:4px 0 0;color:var(--mute);line-height:1.45}
+.gpc .btn{flex:none;align-self:center}
+.itx{flex:none;width:22px;height:22px;border-radius:6px;background:var(--soft);display:grid;place-items:center;font-weight:900;font-size:12px;color:var(--mute)}
 </style>
 </head>
 <body>
@@ -355,6 +363,12 @@ window.__httpCb = (id, code, body) => { const p = pend[id]; if (!p) return; dele
 function get(url) {
   if (A && A.http) return new Promise((res, rej) => { const id = 'r' + (++rid); pend[id] = {res, rej}; A.http(id, url); setTimeout(() => { if (pend[id]) { delete pend[id]; rej(new Error('Timed out')); } }, 30000); });
   return fetch(url).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+function post(url, body) {
+  const b = JSON.stringify(body);
+  if (A && A.httpPost) return new Promise((res, rej) => { const id = 'r' + (++rid); pend[id] = {res, rej}; A.httpPost(id, url, b); setTimeout(() => { if (pend[id]) { delete pend[id]; rej(new Error('Timed out')); } }, 30000); });
+  if (A) return Promise.reject(new Error('needs-update'));
+  return fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:b}).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
 }
 const mem = {};
 function lsGet(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
@@ -671,6 +685,25 @@ async function itadHistory(appid, title) {
     if (lp && lp.t === e.t) { lp.p = b; lp.shop = sh; } else if (!lp || lp.p !== b) pts.push({t:e.t, p:b, shop:sh}); }
   return pts.length ? {pts, reg, src:'itad'} : null;
 }
+const shopKey = n => norm(n).replace(/^(.+?)(store|com|us|uk|de|eu|fr)$/, '$1').replace(/^uplay$/, 'ubisoft').replace(/^gamesplanet.*/, 'gamesplanet');
+async function itadPrices(appid, title) {
+  const key = encodeURIComponent(S.itadKey.trim());
+  const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + (appid ? '&appid=' + appid : '&title=' + encodeURIComponent(title)), 7 * 864e5, true);
+  if (!lk || !lk.found || !lk.game) return {rows:[], none:true};
+  const k = 'itadp:' + lk.game.id, m = mem[k];
+  if (m && Date.now() - m.t < 15 * 6e4) return m.d;
+  const r = await post(ITAD + 'games/prices/v3?key=' + key + '&country=US', [lk.game.id]);
+  const e = Array.isArray(r) ? r[0] : null;
+  const rows = ((e && e.deals) || []).map(d => ({shop:d.shop && d.shop.name || 'Store', price:+(d.price && d.price.amount), regular:+(d.regular && d.regular.amount) || 0, cut:+d.cut || 0, url:d.url || '', drm:(d.drm || []).map(x => x && x.name || x).filter(Boolean).join(', '), voucher:d.voucher || ''})).filter(x => x.price >= 0 && x.url);
+  const low = e && e.historyLow && e.historyLow.all ? +e.historyLow.all.amount : null;
+  const d = {rows, low}; mem[k] = {t:Date.now(), d}; return d;
+}
+function loadItadPrices() {
+  const g = curGame; if (!g || !S.itadKey || g.itad !== undefined) return; g.itad = null;
+  const c = COMPAT[g.ck];
+  itadPrices((c && c.sid) || g.appid, g.title).then(d => { if (curGame === g) { g.itad = d; renderGame(); } })
+    .catch(e => { if (curGame === g) { g.itad = {rows:[], err:String(e.message || e)}; renderGame(); } });
+}
 let PH = null, phRange = 365;
 async function loadHistory() {
   const g = curGame; if (!g) return; PH = {loading:true, id:g.id};
@@ -808,7 +841,7 @@ async function openGame(gameID, appid) {
   let g;
   try { g = await cached(CS + 'games?id=' + gameID, 10 * 6e4); } catch (e) { openSheet('<div class="pad"><div class="empty"><h3>Couldn’t load this game</h3><p>Check your connection and try again.</p></div></div>'); return; }
   appid = appid || g.info.steamAppID; const ck = requestCompat(appid, g.info.title);
-  curGame = {id:gameID, title:g.info.title, appid, thumb:g.info.thumb, g, ck, raw:undefined};
+  curGame = {id:gameID, title:g.info.title, appid, thumb:g.info.thumb, g, ck, raw:undefined, itad:undefined};
   recordPrice(gameID, Math.min(...g.deals.map(d => +d.price))); save();
   PH = null; renderGame(); loadHistory();
 }
@@ -859,8 +892,14 @@ const nfmt = n => Number(n).toLocaleString('en-US');
 function renderGame() {
   if (!curGame || !sheetOpen) return;
   const {g, appid, title, ck} = curGame, c0 = COMPAT[ck] || null, c = c0 && !c0.none ? c0 : null, v = verdict(c);
-  const deals = g.deals.slice().sort((a, b) => a.price - b.price), best = deals.find(d => storeOn(d.storeID)) || deals[0];
-  const low = g.cheapestPriceEver, w = S.watch.find(x => x.id === curGame.id);
+  const deals = g.deals.slice().sort((a, b) => a.price - b.price);
+  loadItadPrices();
+  const csKeys = new Set(deals.map(d => shopKey((STORES[d.storeID] || {}).name)));
+  const extra = curGame.itad && curGame.itad.rows ? curGame.itad.rows.filter(x => !csKeys.has(shopKey(x.shop))) : [];
+  const csBest = deals.find(d => storeOn(d.storeID)) || deals[0], exBest = extra.slice().sort((a, b) => a.price - b.price)[0];
+  const best = exBest && (!csBest || exBest.price < +csBest.price - 0.004) ? {price:exBest.price, savings:exBest.cut, retailPrice:exBest.regular, shop:exBest.shop} : csBest;
+  const low0 = g.cheapestPriceEver, itLow = curGame.itad && curGame.itad.low;
+  const low = itLow != null && (!low0 || itLow < +low0.price) ? {price:itLow, date:null} : low0, w = S.watch.find(x => x.id === curGame.id);
   const atLow = low && best && +best.price <= +low.price + 0.01;
   const loadingC = !!ck && ck !== 't:' && !c0;
   const sid = c ? c.sid : appid;
@@ -884,7 +923,7 @@ function renderGame() {
     ${c && c.dlcOf ? `<div class="dlcbar"><b>This is DLC.</b> You need <b>${esc(c.dlcOf.name)}</b> to play it.<button class="btn sm ghost" data-search="${esc(c.dlcOf.name)}">Find deals on it</button></div>` : ''}
     <div class="facts">
       <div><b>${best ? money(best.price) : '—'}</b><span>Best price now</span></div>
-      <div><b>${low ? money(low.price) : '—'}</b><span>Lowest ever${low ? ' (' + fdate(low.date * 1000) + ')' : ''}</span></div>
+      <div><b>${low ? money(low.price) : '—'}</b><span>Lowest ever${low && low.date ? ' (' + fdate(low.date * 1000) + ')' : ''}</span></div>
       <div><b>${best && +best.savings >= 1 ? '-' + Math.round(+best.savings) + '%' : 'Full price'}</b><span>${best && +best.savings >= 1 ? 'Off ' + money(best.retailPrice) : 'Not on sale now'}</span></div>
     </div>
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
@@ -894,10 +933,13 @@ function renderGame() {
     </div>
     ${gal.length ? `<div class="sec"><h2>Screenshots</h2><span>Tap to view</span></div><div class="gal">${gal.map((it, i) => `<button class="gi${it.video ? ' vid' : ''}" data-gal="${i}"><img loading="lazy" src="${esc(it.thumb)}" alt=""></button>`).join('')}</div>`
       : c && c.sid && curGame.raw === null ? '<div class="sec"><h2>Screenshots</h2></div><div class="gal"><div class="gi sk"></div><div class="gi sk"></div><div class="gi sk"></div></div>' : ''}
-    <div class="sec"><h2>Prices by store</h2><span>${deals.length} ${deals.length === 1 ? 'store' : 'stores'}</span></div>
+    <div class="sec"><h2>Prices by store</h2><span>${deals.length + extra.length} ${deals.length + extra.length === 1 ? 'store' : 'stores'}</span></div>
     <div class="ptable">${deals.map(d => { const on = storeOn(d.storeID), s = STORES[d.storeID] || {name:'Store ' + d.storeID};
       return `<div class="prow${d === best ? ' best' : ''}${on ? '' : ' off'}">${s.icon ? `<img src="${s.icon}" alt="" onerror="this.remove()">` : ''}<div class="s">${esc(s.name)}<small>${+d.savings >= 1 ? '-' + Math.round(+d.savings) + '% off ' + money(d.retailPrice) : 'Full price'}${on ? '' : ' · store switched off'}</small></div>
-      <div class="pp"><b>${money(d.price)}</b></div><button class="btn sm${d === best ? '' : ' ghost'}" data-buy="${esc(d.dealID)}">Buy</button></div>`; }).join('')}</div>
+      <div class="pp"><b>${money(d.price)}</b></div><button class="btn sm${d === best ? '' : ' ghost'}" data-buy="${esc(d.dealID)}">Buy</button></div>`; }).join('')}
+      ${extra.sort((a, b) => a.price - b.price).map(x => `<div class="prow${best && best.shop === x.shop ? ' best' : ''}"><span class="itx">${esc(x.shop.slice(0, 1))}</span><div class="s">${esc(x.shop)}<small>${x.cut >= 1 ? '-' + x.cut + '% off ' + money(x.regular) : 'Full price'}${x.drm ? ' · ' + esc(x.drm) : ''}${x.voucher ? ' · code ' + esc(x.voucher) : ''} · via IsThereAnyDeal</small></div>
+      <div class="pp"><b>${money(x.price)}</b></div><button class="btn sm${best && best.shop === x.shop ? '' : ' ghost'}" data-open="${esc(x.url)}">Buy</button></div>`).join('')}</div>
+    ${S.itadKey ? (curGame.itad === null ? '<p class="note">Checking more stores on IsThereAnyDeal…</p>' : curGame.itad && curGame.itad.err ? `<p class="note">${curGame.itad.err === 'needs-update' ? 'Update DealScout to see more stores from IsThereAnyDeal.' : /40[13]/.test(curGame.itad.err) ? 'IsThereAnyDeal rejected your API key. Check it in Settings.' : 'Couldn’t reach IsThereAnyDeal for more stores.'}</p>` : curGame.itad && !curGame.itad.none ? `<p class="note">${extra.length ? extra.length + ' more ' + (extra.length === 1 ? 'store' : 'stores') + ' from IsThereAnyDeal.' : 'IsThereAnyDeal found no other stores selling it.'}</p>` : '') : '<p class="note">Add a free IsThereAnyDeal key in Settings to compare more stores, like the Microsoft Store and Battle.net.</p>'}
     <p class="note">Buy opens the store’s own page in your browser, where you sign in and pay as normal. DealScout never sees your payment details.</p>
     <button class="btn block${onList(curGame.id) ? ' ghost' : ''}" style="margin-top:12px" data-act="list">${onList(curGame.id) ? '✓ On my list · remove' : '+ Add to my list'}</button>
     <div class="row2">
@@ -950,7 +992,7 @@ function watchSheet() {
 /* ---------- free games ---------- */
 async function loadFree() {
   $('#flist').innerHTML = '<div class="spin"></div>';
-  let epicNow = [], epicNext = [], others = [], err = 0;
+  let epicNow = [], epicNext = [], others = [], gp = [], err = 0;
   try {
     const e = await cached('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US', 30 * 6e4);
     for (const x of e.data.Catalog.searchStore.elements) {
@@ -963,14 +1005,33 @@ async function loadFree() {
     }
   } catch (e) { err++; }
   try { const f = await cached(CS + 'deals?upperPrice=0&pageSize=30&storeID=' + encodeURIComponent((S.stores || []).join(',')), 30 * 6e4); others = f.filter(d => !epicNow.some(e => e.title.toLowerCase() === d.title.toLowerCase())); } catch (e) { err++; }
-  S.seenFree = epicNow.map(e => e.title).concat(others.map(o => o.title)); save(); updateDots();
-  if (err === 2) { $('#flist').innerHTML = '<div class="empty"><h3>Couldn’t load free games</h3><p>Check your internet connection.</p><button class="btn" data-act="freeretry">Try again</button></div>'; return; }
+  try {
+    const r = await cached('https://www.gamerpower.com/api/giveaways?platform=pc&type=game', 30 * 6e4);
+    const have = new Set(epicNow.concat(epicNext).map(e => norm(e.title)).concat(others.map(o => norm(o.title))));
+    gp = (Array.isArray(r) ? r : []).map(x => {
+      const m = String(x.title).match(/^(.*?)\s*(?:\(([^)]+)\))?\s*(?:Key\s*)?Giveaway$/i);
+      const name = m ? m[1].trim() : String(x.title).trim(), plat = String(x.platforms || '');
+      const store = m && m[2] ? m[2].replace(/^Epic Games$/i, 'Epic Games Store').replace(/^indiegala$/i, 'IndieGala') : /steam/i.test(plat) ? 'Steam' : /gog/i.test(plat) ? 'GOG' : /itch/i.test(plat) ? 'itch.io' : /prime|amazon/i.test(plat) ? 'Prime Gaming' : /epic/i.test(plat) ? 'Epic Games Store' : 'Giveaway';
+      return {id:x.id, title:name, store, drmFree:/drm-free/i.test(plat), worth:/^\$\d/.test(x.worth) ? parseFloat(x.worth.slice(1)) : 0, img:x.image || x.thumbnail, url:x.open_giveaway_url || x.gamerpower_url,
+        end:x.end_date && x.end_date !== 'N/A' ? x.end_date.replace(' ', 'T') : '', how:String(x.instructions || '').replace(/\r/g, '').trim(), bundle:/bundle/i.test(x.title)};
+    }).filter(x => x.url && !have.has(norm(x.title)));
+    gp.sort((a, b) => (b.worth >= 5) - (a.worth >= 5) || /steam|gog|prime/i.test(b.store) - /steam|gog|prime/i.test(a.store) || b.worth - a.worth);
+  } catch (e) {}
+  S.seenFree = epicNow.map(e => e.title).concat(others.map(o => o.title), gp.map(g => g.title)); save(); updateDots();
+  if (err === 2 && !gp.length) { $('#flist').innerHTML = '<div class="empty"><h3>Couldn’t load free games</h3><p>Check your internet connection.</p><button class="btn" data-act="freeretry">Try again</button></div>'; return; }
   const fcard = (e, soon) => `<div class="fcard"><div class="hero">${e.img ? `<img loading="lazy" src="${esc(e.img)}" alt="">` : ''}<span class="badge${soon ? ' soon' : ''}">${soon ? 'Free from ' + fdate(e.start) : 'Free until ' + fdate(e.end)}</span></div>
     <div class="body"><div class="t"><b>${esc(e.title)}</b><span>${isOwned(null, e.title) ? '✓ You own this · ' : ''}Epic Games Store${e.worth ? ' · normally ' + money(e.worth) : ''}</span></div>${soon ? '' : `<button class="btn sm" data-open="${esc(e.url)}">Claim</button>`}</div></div>`;
   let h = `<div class="sec"><h2>Free now on Epic</h2><span>Claim it and it’s yours</span></div>` + (epicNow.length ? epicNow.map(e => fcard(e)).join('') : '<p class="sub">No free game listed right now. Check again Thursday.</p>');
   if (epicNext.length) h += `<div class="sec"><h2>Coming next</h2><span>Free from Thursday</span></div>` + epicNext.map(e => fcard(e, true)).join('');
+  if (gp.length) h += `<div class="sec"><h2>Giveaways at other stores</h2><span>${gp.length} right now</span></div><div class="list">` + gp.map(x => { const k = x.bundle ? '' : requestCompat(null, x.title);
+    return `<div class="gpc"><div class="img">${x.img ? `<img loading="lazy" src="${esc(x.img)}" alt="" onerror="this.style.visibility='hidden'">` : ''}</div><div class="mid"><b>${esc(x.title)}</b>
+      <div class="meta"><span class="tag store">${esc(x.store)}</span>${x.drmFree ? '<span class="tag store">DRM-free</span>' : ''}${isOwned(null, x.title) ? '<span class="tag own">✓ You own this</span>' : ''}</div>
+      ${k ? `<div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div>` : ''}
+      <span class="gpw">${x.worth ? 'Normally ' + money(x.worth) : 'Free'}${x.end ? ' · ends ' + fdate(x.end) : ''}</span>
+      ${x.how ? `<details><summary>How to claim</summary><p>${esc(x.how).replace(/\n/g, '<br>')}</p></details>` : ''}</div>
+      <button class="btn sm" data-open="${esc(x.url)}">Claim</button></div>`; }).join('') + '</div>';
   if (others.length) h += `<div class="sec"><h2>Free at other stores</h2><span>Limited time</span></div><div class="list">` + others.map(dealCard).join('') + '</div>';
-  h += `<p class="note">You need a free Epic Games account and the Epic launcher to play Epic freebies. Claiming takes a minute and the game stays in your library for good.</p>`;
+  h += `<p class="note">You need a free Epic Games account and the Epic launcher to play Epic freebies. Claiming takes a minute and the game stays in your library for good. Other giveaways come from GamerPower; Claim opens the giveaway page, and you sign in to that store to get the game.</p>`;
   $('#flist').innerHTML = h; others.forEach(d => requestCompat(d.steamAppID, d.title));
 }
 
@@ -1110,8 +1171,9 @@ function openSettings() {
     <input class="inp" id="skey" placeholder="Steam Web API key" value="${esc(S.steamKey)}" autocomplete="off" autocapitalize="off" style="margin-top:8px">
     <div class="row2" style="margin-top:8px"><button class="btn ghost" data-open="https://steamcommunity.com/dev/apikey">Get a Steam key</button><button class="btn" data-act="import">Import library</button></div>
     <div class="li"><div class="t">Hide games I own<small>From your Steam library and games you mark as owned</small></div><button class="sw${S.hideOwned ? ' on' : ''}" data-tg="hideOwned"></button></div>
-    <label class="f">Price history</label>
-    <p class="note" style="margin-top:0">Without a key, DealScout charts the prices it sees from now on. With a free IsThereAnyDeal key you get years of history from every store.</p>
+    <label class="f">More stores & price history</label>
+    <p class="note" style="margin-top:0">A free IsThereAnyDeal key adds prices from more stores (like the Microsoft Store and Battle.net) to every game, plus years of price history. Without it, DealScout charts the prices it sees from now on.</p>
+    <p class="note" style="margin-top:4px"><b>How to get it:</b> make a free account at isthereanydeal.com, open “My apps” (isthereanydeal.com/apps/my), register an app with any name, then copy its API key here.</p>
     <input class="inp" id="sitad" placeholder="IsThereAnyDeal API key" value="${esc(S.itadKey)}" autocomplete="off" autocapitalize="off">
     <div class="row2" style="margin-top:8px"><button class="btn ghost" data-open="https://isthereanydeal.com/apps/my/">Get an ITAD key</button><button class="btn ghost" data-act="itadtest">Test key</button></div>
     <label class="f">Updates</label>

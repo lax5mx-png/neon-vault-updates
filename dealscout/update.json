@@ -1,16 +1,16 @@
 {
  "content": {
-  "v": 2,
+  "v": 3,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "17ae5a312ca0cdd8c1866bb09c1d3e6b9cab51892cd90106bd534fdc84f390d7",
+  "sha256": "ca27b60f3ae402863a3390ad3b34f89b356b94f1eeef97d7178d8319033790dc",
   "minVc": 2
  },
  "apk": {
-  "vc": 2,
-  "vn": "1.1.0",
-  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.1.0.apk",
-  "sha256": "90034a50073ed0825ce9d856933615a731acb93b48a6a34b183db419a14eb37d",
-  "size": 117315
+  "vc": 4,
+  "vn": "1.3.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.3.0.apk",
+  "sha256": "f06b267b2e276aef5354bea7b66d7b6f1cafb4465102db8be7fc394297657aef",
+  "size": 130619
  },
- "notes": "New game pages: screenshots and trailers, full system requirements checked against your laptop (CPU too), expected settings, DLC detection, and a new My list tab with totals and a budget."
+ "notes": "More places checked: giveaways from Steam, GOG, IndieGala, itch.io and more in the Free tab (with alerts), and extra stores like the Microsoft Store and Battle.net on every game when you add an IsThereAnyDeal key."
 }
