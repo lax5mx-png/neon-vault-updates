@@ -680,9 +680,12 @@ async function itadHistory(appid, title) {
   if (!Array.isArray(h)) return null;
   // build "best price across stores" over time
   const ev = h.filter(x => x && x.deal && x.deal.price).map(x => ({t:Date.parse(x.timestamp), shop:x.shop ? x.shop.name : '', p:+x.deal.price.amount, reg:x.deal.regular ? +x.deal.regular.amount : null})).filter(x => x.t).sort((a, b) => a.t - b.t);
-  const cur = {}, pts = []; let reg = 0;
-  for (const e of ev) { cur[e.shop] = e.p; if (e.reg) reg = Math.max(reg, e.reg); const b = Math.min(...Object.values(cur)); const sh = Object.keys(cur).find(k => cur[k] === b); const lp = pts[pts.length - 1];
-    if (lp && lp.t === e.t) { lp.p = b; lp.shop = sh; } else if (!lp || lp.p !== b) pts.push({t:e.t, p:b, shop:sh}); }
+  const cur = {}, regs = {}, pts = [];
+  for (const e of ev) { cur[e.shop] = e.p; if (e.reg) regs[e.shop] = e.reg; const b = Math.min(...Object.values(cur)); const sh = Object.keys(cur).find(k => cur[k] === b); const lp = pts[pts.length - 1], rg = regs[sh] || 0;
+    if (lp && lp.t === e.t) { lp.p = b; lp.shop = sh; lp.reg = rg; } else if (!lp || lp.p !== b) pts.push({t:e.t, p:b, shop:sh, reg:rg}); }
+  // "full price" = the regular price seen most often at the cheapest store
+  const cnt = {}; pts.forEach(q => { if (q.reg) cnt[q.reg] = (cnt[q.reg] || 0) + 1; });
+  const reg = +(Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x])[0] || 0);
   return pts.length ? {pts, reg, src:'itad'} : null;
 }
 const shopKey = n => norm(n).replace(/^(.+?)(store|com|us|uk|de|eu|fr)$/, '$1').replace(/^uplay$/, 'ubisoft').replace(/^gamesplanet.*/, 'gamesplanet');
@@ -736,7 +739,7 @@ function drawHistory() {
   const ticks = [0, .5, 1].map(f => maxP * f / 1.08).map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="gl"/><text x="${L - 5}" y="${y(v) + 4}" text-anchor="end">${v ? '$' + Math.round(v) : '$0'}</text>`).join('');
   const dl = t => { const z = new Date(t); return MON[z.getMonth()] + (phRange > 200 || z.getFullYear() !== new Date().getFullYear() ? ' ’' + String(z.getFullYear()).slice(2) : ' ' + z.getDate()); };
   let sales = 0, inSale = false; const reg = PH.reg || Math.max(...ps);
-  pts.forEach(p => { const s = p.p < reg * 0.9; if (s && !inSale) sales++; inSale = s; });
+  pts.forEach(p => { const s = p.p < (p.reg || reg) * 0.95; if (s && !inSale) sales++; inSale = s; });
   box.innerHTML = `${tabs}<svg class="phsvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${ticks}
     ${PH.reg ? `<line x1="${L}" x2="${W - R}" y1="${y(PH.reg)}" y2="${y(PH.reg)}" class="reg"/>` : ''}
     <path d="${area}" class="ar"/><path d="${d}" class="ln"/>
