@@ -486,7 +486,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   }
   function slice(s, x0, y0, x1, y1, dt) {
     const len = Math.hypot(x1 - x0, y1 - y0); if (len < 2) return;
-    const v = len / Math.max(dt, .004); if (v < 240) return;
+    const v = len / Math.max(dt, .004); if (v < 150) return;
     const ang = Math.atan2(y1 - y0, x1 - x0);
     for (const o of G.objs.slice()) {
       if (o.cut) continue;
@@ -514,7 +514,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     addScore(pts);
     // combo: gems cut in one quick swipe
     if (s) {
-      if (s.combo && G.rt - s.lastCut > .32) finishCombo(s);
+      if (s.combo && G.rt - s.lastCut > .38) finishCombo(s);
       s.combo++; s.lastCut = G.rt; s.cx = o.x; s.cy = o.y;
     }
   }
@@ -608,6 +608,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       if (G.cfg.boss && !G.bossSpawned && G.t > 1.2) spawnBoss();
       const allow = 1 + Math.floor(3.2 * Math.min(diff(), 1.4));
       if (G.t >= G.nextWave && activeGems() <= allow) wave();
+      const lvl = Math.floor(diff() / .3);
+      if (G.cfg.dRate && lvl > G.lvl) { G.lvl = lvl; if (G.t > 5) { pop(W / 2, H * .42, 'FASTER!', '#ffc93c', 34); SFX.power(); } }
+      if (G.cfg.best && !G.beatBest && G.score > G.cfg.best) { G.beatBest = true; pop(W / 2, H * .34, 'NEW BEST!', '#ffc93c', 36); SFX.win(); buzz(40); }
       for (let i = G.queue.length - 1; i >= 0; i--) if (G.t >= G.queue[i].at) { const q = G.queue[i]; G.queue.splice(i, 1); q.f(); }
       if (G.frenzyT > 0) { G.frenzyT -= dtReal; G.frenzyNext -= dtReal; if (G.frenzyNext <= 0) { G.frenzyNext = .09; side('gem', gemKind()); } }
     }
@@ -640,7 +643,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     }
     for (let i = G.marks.length - 1; i >= 0; i--) { G.marks[i].life += dtReal; if (G.marks[i].life > G.marks[i].max) G.marks.splice(i, 1); }
     for (let i = G.pops.length - 1; i >= 0; i--) { const p = G.pops[i]; p.life += dtReal; if (p.life > p.max) G.pops.splice(i, 1); }
-    for (const s of strokes.values()) { if (s.combo && G.rt - s.lastCut > .32) finishCombo(s); s.pts = s.pts.filter(p => performance.now() - p.t < 130); }
+    for (const s of strokes.values()) { if (s.combo && G.rt - s.lastCut > .38) finishCombo(s); s.pts = s.pts.filter(p => performance.now() - p.t < 130); }
     // goal reached?
     const gp = goalProgress();
     if (gp && !G.ending && gp.v >= gp.n) G.ending = {at:G.rt + .7, reason:'goal'};
@@ -817,7 +820,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     THEMES,
     start(cfg, h) {
       hooks = h || {}; strokes.clear(); cancelAnimationFrame(raf);
-      G = newState(cfg); lastFrame = 0; G.nextWave = .9;
+      G = newState(cfg); lastFrame = 0; G.nextWave = .9; G.lvl = 0;
+      if (cfg.hint) pop(W / 2, H * .5, 'SWIPE TO SLICE', '#f3efe6', 30);
       raf = requestAnimationFrame(frame); hud();
     },
     pause() { if (G && G.running && !G.over) { G.paused = true; strokes.clear(); } },
@@ -1186,6 +1190,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     $('#hgoal').classList.toggle('on', !!r.q);
     $('#hlives').innerHTML = ''; $('#htimer').textContent = ''; $('#hpowers').innerHTML = '';
     applyLook();
+    r.cfg.best = r.q ? 0 : best; r.cfg.hint = P.st.games === 0;
     GAME.start(r.cfg, {hud, end:result});
   }
   const XICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
