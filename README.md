@@ -12,7 +12,7 @@ Each app checks its own `update.json` here and updates itself after the first in
 
 | App | Newest | Download |
 |---|---|---|
-| Simmer (cooking) | 1.0.0 | [Simmer-1.0.0.apk](simmer/Simmer-1.0.0.apk) |
+| Simmer (cooking) | 1.1.0 | [Simmer-1.1.0.apk](simmer/Simmer-1.1.0.apk) |
 | Puzzlebox | 3.0.1 | [Puzzlebox-3.0.1.apk](puzzlebox/Puzzlebox-3.0.1.apk) |
 | DealScout | 1.3.1 | [DealScout-1.3.1.apk](dealscout/DealScout-1.3.1.apk) |
 

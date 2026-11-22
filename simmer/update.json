@@ -1,16 +1,16 @@
 {
  "content": {
-  "v": 1,
+  "v": 2,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/simmer/index.html",
-  "sha256": "c41741c1cd7e0fae5565fffefdf233f7ebb1e6a7bc126d14bc108d414cbec537",
+  "sha256": "8a206f50946a67cf0d9e4f8cf7cec8ca9d109854f29f086e652d3121679ef5f4",
   "minVc": 1
  },
  "apk": {
-  "vc": 1,
-  "vn": "1.0.0",
-  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/simmer/Simmer-1.0.0.apk",
-  "sha256": "eb9cf7522987c273fdc13e338a6d2a73f927c385dd4f71853c7d7db6580ac2b3",
-  "size": 502683
+  "vc": 2,
+  "vn": "1.1.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/simmer/Simmer-1.1.0.apk",
+  "sha256": "fedd19ba152c74b308eff5562657c27eee4df31f41bc8273db6d575bc6f4129f",
+  "size": 515367
  },
- "notes": "Welcome to Simmer: millions of recipes, a shopping list, and step-by-step cooking with timers."
+ "notes": "Exact amounts with units for every recipe, precise scaling, a US/metric switch, and a cleaner, consistent recipe layout."
 }
