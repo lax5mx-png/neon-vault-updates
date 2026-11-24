@@ -212,8 +212,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     g.lineJoin = 'round';
     for (let i = 0; i < P.length; i++) { g.beginPath(); g.moveTo(P[i][0], P[i][1]); g.lineTo(I[i][0], I[i][1]); g.strokeStyle = 'rgba(255,255,255,.4)'; g.lineWidth = R * .025; g.stroke(); }
     path(I); g.strokeStyle = 'rgba(255,255,255,.55)'; g.lineWidth = R * .03; g.stroke();
-    path(P); g.strokeStyle = shade(d.c2, -.25); g.lineWidth = R * .05; g.stroke();
-    glint(g, -R * .34, -R * .42, R * .2);
+    // inner depth: dark core fading to bright edge, then a rim light on the lit side
+    g.save(); path(P); g.clip();
+    const dp = g.createRadialGradient(R * .1, R * .15, R * .1, 0, 0, R * 1.05); dp.addColorStop(0, 'rgba(0,0,0,0)'); dp.addColorStop(.7, 'rgba(0,0,0,.08)'); dp.addColorStop(1, 'rgba(0,0,0,.35)');
+    g.fillStyle = dp; g.fillRect(-R, -R, 2 * R, 2 * R);
+    const sh = g.createLinearGradient(-R, -R, R * .4, R * .4); sh.addColorStop(0, 'rgba(255,255,255,.5)'); sh.addColorStop(.45, 'rgba(255,255,255,0)');
+    g.fillStyle = sh; g.fillRect(-R, -R, 2 * R, 2 * R);
+    g.restore();
+    path(P); g.strokeStyle = shade(d.c2, -.3); g.lineWidth = R * .06; g.stroke();
+    g.save(); path(P); g.clip(); g.strokeStyle = 'rgba(255,255,255,.55)'; g.lineWidth = R * .05; g.translate(R * .035, R * .05); path(P); g.stroke(); g.restore();
+    glint(g, -R * .34, -R * .42, R * .22);
+    g.fillStyle = 'rgba(255,255,255,.8)'; g.beginPath(); g.arc(R * .3, R * .38, R * .035, 0, 7); g.fill();
   }
   function cube(g, R, d) {
     const P = SHAPES.hex.map(([x, y]) => [x * R * .95, y * R * .95]);
@@ -411,6 +420,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     for (let i = 0; i < 70; i++) { const x = rand(-W * .2, W), y = rand(0, H), l = rand(20, 120); b.beginPath(); b.moveTo(x, y); b.lineTo(x + l, y - l * .45); b.stroke(); }
     for (let i = 0; i < 900; i++) { b.fillStyle = `rgba(255,255,255,${rand(0, .035)})`; b.fillRect(rand(0, W), rand(0, H), 1.5, 1.5); }
     if (t.stars) { for (let i = 0; i < 140; i++) { b.fillStyle = `rgba(255,255,255,${rand(.15, .8)})`; b.beginPath(); b.arc(rand(0, W), rand(0, H), rand(.4, 1.4), 0, 7); b.fill(); } }
+    // soft out-of-focus lights and a floor sheen for depth
+    for (let i = 0; i < 16; i++) { const x = rand(0, W), y = rand(0, H), r = rand(14, 52); const bk = b.createRadialGradient(x, y, 0, x, y, r); bk.addColorStop(0, `rgba(255,255,255,${rand(.02, .06)})`); bk.addColorStop(1, 'rgba(255,255,255,0)'); b.fillStyle = bk; b.beginPath(); b.arc(x, y, r, 0, 7); b.fill(); }
+    const fl = b.createLinearGradient(0, H * .7, 0, H); fl.addColorStop(0, 'rgba(255,255,255,0)'); fl.addColorStop(1, 'rgba(255,255,255,.05)'); b.fillStyle = fl; b.fillRect(0, H * .7, W, H * .3);
     const vg = b.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .3, W / 2, H / 2, Math.max(W, H) * .75); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); b.fillStyle = vg; b.fillRect(0, 0, W, H);
   }
 
@@ -482,11 +494,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     const dx = x1 - x0, dy = y1 - y0, L2 = dx * dx + dy * dy || 1;
     let u = ((o.x - x0) * dx + (o.y - y0) * dy) / L2; u = clamp(u, 0, 1);
     const px = x0 + u * dx, py = y0 + u * dy, dist = Math.hypot(o.x - px, o.y - py);
-    return dist <= o.r ? dist / o.r : -1;
+    // a fingertip is wide: add its radius to every target (bombs get half, so they stay fair)
+    const reach = o.r + (o.type === 'bomb' ? FINGER * .5 : FINGER);
+    return dist <= reach ? Math.min(1, dist / o.r) : -1;
   }
+  const FINGER = 16;
   function slice(s, x0, y0, x1, y1, dt) {
-    const len = Math.hypot(x1 - x0, y1 - y0); if (len < 2) return;
-    const v = len / Math.max(dt, .004); if (v < 150) return;
+    // no speed or length limit: a tap or a slow drag counts as a cut
     const ang = Math.atan2(y1 - y0, x1 - x0);
     for (const o of G.objs.slice()) {
       if (o.cut) continue;
@@ -676,6 +690,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       g.drawImage(s.c, -s.S / 2, -s.S / 2, s.S, s.S);
       if (o.type === 'geode') drawCracks(o);
       g.restore();
+      if (o.type === 'gem' || o.type === 'power') { const tw = Math.max(0, Math.sin(G.rt * 5 + o.born * 7)); if (tw > .6) { const k = (tw - .6) / .4, sz = R * .3 * k, cx = o.x - R * .3, cy = o.y - R * .42; g.save(); g.globalCompositeOperation = 'lighter'; g.globalAlpha = k * .9; g.fillStyle = '#fff'; g.beginPath(); g.moveTo(cx, cy - sz); g.lineTo(cx + sz * .18, cy - sz * .18); g.lineTo(cx + sz, cy); g.lineTo(cx + sz * .18, cy + sz * .18); g.lineTo(cx, cy + sz); g.lineTo(cx - sz * .18, cy + sz * .18); g.lineTo(cx - sz, cy); g.lineTo(cx - sz * .18, cy - sz * .18); g.closePath(); g.fill(); g.restore(); } }
       if (o.type === 'geode' && o.boss) drawBossBar(o);
       if (o.type === 'bomb') { const pulse = .35 + .35 * Math.sin(G.rt * 14); g.globalCompositeOperation = 'lighter'; const rg = g.createRadialGradient(o.x, o.y, 0, o.x, o.y, R * 1.3); rg.addColorStop(0, `rgba(255,40,30,${pulse * .5})`); rg.addColorStop(1, 'rgba(255,0,0,0)'); g.fillStyle = rg; g.beginPath(); g.arc(o.x, o.y, R * 1.3, 0, 7); g.fill(); g.globalCompositeOperation = 'source-over'; }
     }
@@ -769,7 +784,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (!G || !G.running) return;
     raf = requestAnimationFrame(frame);
     const dt = Math.min(.05, Math.max(0, (ts - (lastFrame || ts)) / 1000)); lastFrame = ts;
-    if (!G.paused) update(dt);
+    if (!G.paused) { update(dt); for (const s of strokes.values()) { const p = s.pts[s.pts.length - 1]; if (p && G.running) slice(s, p.x, p.y, p.x, p.y, .016); } }
     if (G && G.running) draw();
   }
   function hud() {
@@ -795,7 +810,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     SFX.unlock();
     if (!G || !G.running || G.paused) return;
     cv.setPointerCapture && cv.setPointerCapture(e.pointerId);
-    strokes.set(e.pointerId, {pts:[pos(e)], combo:0, lastCut:0, cx:0, cy:0});
+    const st0 = {pts:[pos(e)], combo:0, lastCut:0, cx:0, cy:0}; strokes.set(e.pointerId, st0); slice(st0, e.clientX, e.clientY, e.clientX, e.clientY, .016);
   });
   cv.addEventListener('pointermove', e => {
     const s = strokes.get(e.pointerId); if (!s || !G || !G.running || G.paused) return;
