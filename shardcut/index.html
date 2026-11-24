@@ -75,7 +75,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .seg,.sgrid,.vault{flex-shrink:0}
 .si .lk{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.75)}.si .lk .ico{width:22px;height:22px}
 .si .pr i{font-style:normal;color:var(--rc);margin-right:auto;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase}
-.si.r2 .pv,.si.r3 .pv{box-shadow:inset 0 0 0 1px var(--rc)}
+.si.r3 .pv,.si.r4 .pv,.si.r5 .pv{box-shadow:inset 0 0 0 1px var(--rc)}
 .vault{flex-shrink:0;position:relative;border-radius:14px;padding:18px 16px 14px;margin:6px 0 14px;text-align:center;background:linear-gradient(180deg,#232637,#181a25);border:2px solid var(--line);box-shadow:var(--sh);overflow:hidden}
 .vault:before{content:"";position:absolute;left:50%;top:-60px;width:260px;height:200px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(150,210,255,.22),transparent);pointer-events:none}
 .vgem img{width:72px;height:72px;display:block;margin:0 auto;animation:bob 3.2s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(120,200,255,.35))}
@@ -93,10 +93,22 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .rv .rr{display:block;font-size:10.5px;font-weight:800;color:var(--rc);text-transform:uppercase;letter-spacing:.05em}
 .rv .new,.rv .dup{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:900;padding:3px 6px;border-radius:6px}
 .rv .new{background:var(--rc);color:#12141c}.rv .dup{display:flex;align-items:center;gap:3px;background:rgba(0,0,0,.6);color:var(--gold)}.rv .dup img{width:11px;height:11px}
-.rv.r2{box-shadow:0 0 14px -2px var(--rc)}.rv.r3{box-shadow:0 0 22px 0 var(--rc)}
+.rv.r3{box-shadow:0 0 14px -2px var(--rc)}.rv.r4{box-shadow:0 0 22px 0 var(--rc)}
 .rv.r3:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);animation:shine 1.6s 1s ease-in-out infinite;pointer-events:none}
 @keyframes rvin{0%{opacity:0;transform:perspective(500px) rotateY(85deg) scale(.7)}100%{opacity:1;transform:none}}
 @keyframes shine{60%,100%{transform:translateX(120%)}}
+.seg.four button{padding:8px 2px;font-size:13px;line-height:1.15}.seg.four small{display:block;font-size:10.5px;opacity:.7;font-weight:700}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px;flex-shrink:0;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chips button{flex-shrink:0;padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:800;color:var(--rc,var(--mute));background:rgba(255,255,255,.06);border:1.5px solid transparent}
+.chips button.on{border-color:var(--rc,var(--ink));color:var(--rc,var(--ink));background:rgba(255,255,255,.12)}
+.more{width:100%;margin:12px 0 8px;flex-shrink:0}
+.odds .div{background:linear-gradient(90deg,#ff6a8a,#ffd36a,#6affb0,#6ac8ff,#c56aff);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.si.r6{border-top-color:transparent;background-image:linear-gradient(var(--panel),var(--panel)),linear-gradient(90deg,#ff6a8a,#ffd36a,#6affb0,#6ac8ff,#c56aff);background-origin:border-box;background-clip:padding-box,border-box}
+.si.r6 .pr i,.rv.r6 .rr{background:linear-gradient(90deg,#ff6a8a,#ffd36a,#6affb0,#6ac8ff,#c56aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rv.r5{box-shadow:0 0 22px 0 var(--rc)}.rv.r6{border-color:#fff;box-shadow:0 0 18px 2px #ff6a8a,0 0 30px 4px #6ac8ff;animation:rvin .45s cubic-bezier(.2,.9,.3,1.25) forwards,hue 3s linear infinite}
+.rv.r4:after,.rv.r5:after,.rv.r6:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);animation:shine 1.6s 1s ease-in-out infinite;pointer-events:none}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+
 
 /* list rows */
 .list{display:flex;flex-direction:column;gap:8px}
@@ -304,24 +316,6 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (d.icon) icon(g, R, d.icon);
     return {c, S};
   }
-  function bombSprite(R, dpr) {
-    const S = R * 3, c = mk(S * dpr), g = c.getContext('2d'); g.scale(dpr, dpr); g.translate(S / 2, S / 2);
-    // spikes
-    g.fillStyle = '#20202b';
-    for (let i = 0; i < 10; i++) { g.save(); g.rotate(i * Math.PI / 5 + .3); g.beginPath(); g.moveTo(-R * .16, -R * .8); g.lineTo(0, -R * 1.12); g.lineTo(R * .16, -R * .8); g.fill(); g.restore(); }
-    g.save(); g.shadowColor = '#ff2a2a'; g.shadowBlur = R * .5;
-    const b = g.createRadialGradient(-R * .3, -R * .35, R * .1, 0, 0, R * .9); b.addColorStop(0, '#5a5a6e'); b.addColorStop(.6, '#22222d'); b.addColorStop(1, '#0b0b11');
-    g.beginPath(); g.arc(0, 0, R * .86, 0, 7); g.fillStyle = b; g.fill(); g.restore();
-    // red core band
-    g.save(); g.shadowColor = '#ff2a2a'; g.shadowBlur = R * .35;
-    g.beginPath(); g.arc(0, 0, R * .34, 0, 7); const core = g.createRadialGradient(0, 0, 0, 0, 0, R * .34); core.addColorStop(0, '#ffd0c4'); core.addColorStop(.35, '#ff3b2f'); core.addColorStop(1, '#7a0000'); g.fillStyle = core; g.fill(); g.restore();
-    g.strokeStyle = '#ff5a4a'; g.lineWidth = R * .05; g.beginPath(); g.arc(0, 0, R * .5, 0, 7); g.setLineDash([R * .14, R * .1]); g.stroke(); g.setLineDash([]);
-    // cap + fuse
-    g.fillStyle = '#3b3b48'; g.fillRect(-R * .16, -R * 1.02, R * .32, R * .2);
-    g.strokeStyle = '#c9a36a'; g.lineWidth = R * .08; g.beginPath(); g.moveTo(0, -R * 1.02); g.quadraticCurveTo(R * .2, -R * 1.3, R * .38, -R * 1.22); g.stroke();
-    glint(g, -R * .36, -R * .4, R * .14);
-    return {c, S, fuse:[R * .38, -R * 1.22]};
-  }
   function geodeSprite(R, dpr) {
     const S = R * 2.8, c = mk(S * dpr), g = c.getContext('2d'); g.scale(dpr, dpr); g.translate(S / 2, S / 2);
     const pts = [...Array(14)].map((_, i) => { const a = i / 14 * Math.PI * 2, r = R * (.9 + .1 * Math.sin(i * 2.7) * Math.cos(i * 1.3)); return [Math.cos(a) * r, Math.sin(a) * r]; });
@@ -340,13 +334,82 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     return {c, S};
   }
 
+  /* ---------- gem skins: a tint (keeps each gem's own hue) + a material ---------- */
+  const hex2hsl = h => { let r = parseInt(h.slice(1, 3), 16) / 255, g = parseInt(h.slice(3, 5), 16) / 255, b = parseInt(h.slice(5, 7), 16) / 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; let hh = 0, s = 0; if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn); hh = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; hh /= 6; } return [hh, s, l]; };
+  const hsl2hex = (h, s, l) => { const f = n => { const k = (n + h * 12) % 12, a = s * Math.min(l, 1 - l), c = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); return Math.round(Math.max(0, Math.min(1, c)) * 255).toString(16).padStart(2, '0'); }; return '#' + f(0) + f(8) + f(4); };
+  const adj = (hex, fs, fl) => { const [h, s, l] = hex2hsl(hex); return hsl2hex(h, Math.max(0, Math.min(1, fs(s))), Math.max(0, Math.min(1, fl(l)))); };
+  const TINTS = {
+    classic: d => d,
+    pastel: d => ({c1:adj(d.c1, s => s * .75, l => l * .4 + .55), c2:adj(d.c2, s => s * .7, l => l * .5 + .38), glow:adj(d.glow, s => s * .8, l => l * .5 + .45)}),
+    deep: d => ({c1:adj(d.c1, s => s, l => l * .72), c2:adj(d.c2, s => s, l => l * .45), glow:d.glow}),
+    neon: d => ({c1:adj(d.c1, s => s ? 1 : 0, l => .62), c2:adj(d.c2, s => s ? 1 : 0, l => .32), glow:adj(d.glow, s => s ? 1 : 0, l => .55)}),
+    smoky: d => ({c1:adj(d.c1, s => s * .4, l => l * .85), c2:adj(d.c2, s => s * .4, l => l * .7), glow:adj(d.glow, s => s * .5, l => l)}),
+    midnight: d => ({c1:adj(d.c1, s => s, l => Math.max(l, .62)), c2:adj(d.c2, s => s * .8, l => .1), glow:adj(d.glow, s => s, l => .6)})
+  };
+  const sRand = s => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+  // each material paints inside the gem's outline P (already scaled), with colours d
+  const MATS = {
+    toon(g, P, R, d) { fillP(g, P, d.c1); g.save(); pathP(g, P); g.clip(); g.translate(R * .25, R * .3); fillP(g, P, d.c2); g.restore(); g.save(); pathP(g, P); g.clip(); g.translate(R * .1, R * .12); fillP(g, P, d.c1); g.restore(); strokeP(g, P, '#0b0d13', R * .11); g.fillStyle = 'rgba(255,255,255,.85)'; g.beginPath(); g.ellipse(-R * .32, -R * .38, R * .16, R * .09, -.6, 0, 7); g.fill(); },
+    glass(g, P, R, d, base) { g.globalAlpha = .5; g.drawImage(base.c, -base.S / 2, -base.S / 2, base.S, base.S); g.globalAlpha = 1; clipDo(g, P, () => { const gr = g.createLinearGradient(-R, -R, R, R); gr.addColorStop(0, 'rgba(255,255,255,.55)'); gr.addColorStop(.4, 'rgba(255,255,255,0)'); gr.addColorStop(.8, 'rgba(255,255,255,.12)'); g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); }); strokeP(g, P, 'rgba(255,255,255,.75)', R * .05); glint(g, -R * .3, -R * .4, R * .28); },
+    polka(g, P, R, d) { body(g, P, R, d); clipDo(g, P, () => { g.fillStyle = 'rgba(255,255,255,.45)'; for (let y = -R; y < R; y += R * .36) for (let x = -R + ((y / (R * .36)) & 1) * R * .18; x < R; x += R * .36) { g.beginPath(); g.arc(x, y, R * .07, 0, 7); g.fill(); } }); gloss(g, P, R); strokeP(g, P, shade(d.c2, -.35), R * .06); },
+    candy(g, P, R, d) { body(g, P, R, d); clipDo(g, P, () => { g.fillStyle = 'rgba(255,255,255,.4)'; g.rotate(-.7); for (let x = -R * 2; x < R * 2; x += R * .42) g.fillRect(x, -R * 2, R * .17, R * 4); }); gloss(g, P, R); strokeP(g, P, shade(d.c2, -.3), R * .06); },
+    jelly(g, P, R, d) { g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .5; const gr = g.createRadialGradient(-R * .2, -R * .25, R * .1, 0, 0, R * 1.1); gr.addColorStop(0, shade(d.c1, .45)); gr.addColorStop(.6, d.c1); gr.addColorStop(1, d.c2); g.globalAlpha = .82; fillP(g, P, gr); g.restore(); clipDo(g, P, () => { g.fillStyle = 'rgba(255,255,255,.35)'; [[.25, .2, .08], [.4, -.1, .05], [-.1, .4, .06]].forEach(([x, y, r]) => { g.beginPath(); g.arc(x * R, y * R, r * R, 0, 7); g.fill(); }); }); g.fillStyle = 'rgba(255,255,255,.75)'; g.beginPath(); g.ellipse(-R * .3, -R * .42, R * .3, R * .12, -.5, 0, 7); g.fill(); },
+    marble(g, P, R, d) { fillP(g, P, shade(d.c1, .35)); clipDo(g, P, () => { const r = sRand(11); g.lineCap = 'round'; for (let k = 0; k < 7; k++) { g.strokeStyle = k % 2 ? 'rgba(255,255,255,.6)' : d.c2; g.globalAlpha = .55; g.lineWidth = R * (.03 + r() * .06); g.beginPath(); let x = -R, y = (r() - .5) * 2 * R; g.moveTo(x, y); for (let i = 0; i < 6; i++) { x += R * .4; y += (r() - .5) * R * .6; g.quadraticCurveTo(x - R * .2, y + (r() - .5) * R * .5, x, y); } g.stroke(); } g.globalAlpha = 1; }); gloss(g, P, R); strokeP(g, P, d.c2, R * .05); },
+    chrome(g, P, R, d) { const gr = g.createLinearGradient(0, -R, 0, R); [[0, shade(d.c1, .8)], [.3, d.c1], [.48, shade(d.c2, -.4)], [.52, shade(d.c1, .55)], [.75, d.c2], [1, shade(d.c1, .4)]].forEach(([o, c]) => gr.addColorStop(o, c)); g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .4; fillP(g, P, gr); g.restore(); strokeP(g, P, 'rgba(255,255,255,.8)', R * .05); glint(g, -R * .3, -R * .45, R * .25); },
+    pixel(g, P, R, d, base) { const n = 18, sm = document.createElement('canvas'); sm.width = sm.height = n; const sx = sm.getContext('2d'); sx.drawImage(base.c, 0, 0, n, n); g.imageSmoothingEnabled = false; g.drawImage(sm, -base.S / 2, -base.S / 2, base.S, base.S); g.imageSmoothingEnabled = true; },
+    sketch(g, P, R, d) { fillP(g, P, '#f4efe4'); clipDo(g, P, () => { g.strokeStyle = d.c1; g.globalAlpha = .7; g.lineWidth = R * .035; g.rotate(.8); for (let x = -R * 1.5; x < R * 1.5; x += R * .16) { g.beginPath(); g.moveTo(x, -R * 1.5); g.lineTo(x, R * 1.5); g.stroke(); } g.globalAlpha = 1; }); g.save(); g.translate(R * .03, -R * .02); strokeP(g, P, d.c2, R * .05); g.restore(); strokeP(g, P, '#2a2230', R * .07); },
+    gilded(g, P, R, d, base) { g.drawImage(base.c, -base.S / 2, -base.S / 2, base.S, base.S); const gr = g.createLinearGradient(-R, -R, R, R); gr.addColorStop(0, '#fff3b0'); gr.addColorStop(.4, '#e0a815'); gr.addColorStop(.7, '#fff0a0'); gr.addColorStop(1, '#a86b00'); strokeP(g, P, gr, R * .13); g.save(); g.scale(.55, .55); strokeP(g, P, gr, R * .1); g.restore(); },
+    frozen(g, P, R, d, base) { g.drawImage(base.c, -base.S / 2, -base.S / 2, base.S, base.S); clipDo(g, P, () => { const gr = g.createRadialGradient(0, 0, R * .3, 0, 0, R * 1.1); gr.addColorStop(0, 'rgba(230,248,255,0)'); gr.addColorStop(1, 'rgba(230,248,255,.75)'); g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); const r = sRand(5); g.strokeStyle = 'rgba(255,255,255,.8)'; g.lineWidth = R * .02; for (let i = 0; i < 10; i++) { const a = r() * 6.3, x = Math.cos(a) * R * .8, y = Math.sin(a) * R * .8; g.beginPath(); g.moveTo(x, y); g.lineTo(x * .6 + (r() - .5) * R * .2, y * .6); g.stroke(); } }); strokeP(g, P, '#e6f8ff', R * .06); },
+    neon(g, P, R, d) { fillP(g, P, 'rgba(8,8,14,.88)'); g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .45; strokeP(g, P, d.c1, R * .09); g.restore(); g.save(); g.scale(.58, .58); g.shadowColor = d.glow; g.shadowBlur = R * .3; strokeP(g, P, d.glow, R * .08); g.restore(); strokeP(g, P, 'rgba(255,255,255,.85)', R * .025); },
+    circuit(g, P, R, d) { fillP(g, P, '#0b1116'); clipDo(g, P, () => { const r = sRand(9); g.strokeStyle = d.c1; g.fillStyle = d.c1; g.lineWidth = R * .04; g.shadowColor = d.glow; g.shadowBlur = R * .2; for (let i = 0; i < 9; i++) { let x = (r() - .5) * 1.6 * R, y = (r() - .5) * 1.6 * R; g.beginPath(); g.moveTo(x, y); x += (r() > .5 ? 1 : -1) * R * .4; g.lineTo(x, y); y += (r() > .5 ? 1 : -1) * R * .3; g.lineTo(x, y); g.stroke(); g.beginPath(); g.arc(x, y, R * .05, 0, 7); g.fill(); } }); g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .4; strokeP(g, P, d.c1, R * .06); g.restore(); },
+    stained(g, P, R, d) { fillP(g, P, '#111'); clipDo(g, P, () => { const r = sRand(3), n = 9; for (let i = 0; i < n; i++) { const a0 = i / n * 6.283, a1 = (i + 1) / n * 6.283, k = r(); g.beginPath(); g.moveTo((r() - .5) * R * .3, (r() - .5) * R * .3); g.lineTo(Math.cos(a0) * R * 1.6, Math.sin(a0) * R * 1.6); g.lineTo(Math.cos(a1) * R * 1.6, Math.sin(a1) * R * 1.6); g.closePath(); g.fillStyle = k < .33 ? d.c1 : k < .66 ? shade(d.c1, .45) : d.c2; g.fill(); g.strokeStyle = '#141018'; g.lineWidth = R * .07; g.stroke(); } }); gloss(g, P, R); strokeP(g, P, '#141018', R * .1); },
+    opal(g, P, R, d, base) { g.drawImage(base.c, -base.S / 2, -base.S / 2, base.S, base.S); clipDo(g, P, () => { const r = sRand(21); g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 40; i++) { g.fillStyle = `hsla(${r() * 360},100%,65%,.35)`; g.beginPath(); g.arc((r() - .5) * 2 * R, (r() - .5) * 2 * R, R * (.05 + r() * .12), 0, 7); g.fill(); } }); },
+    lava(g, P, R, d) { const gr = g.createRadialGradient(0, 0, 0, 0, 0, R); gr.addColorStop(0, '#2a1410'); gr.addColorStop(1, '#0d0605'); fillP(g, P, gr); clipDo(g, P, () => { const r = sRand(17); g.strokeStyle = d.c1; g.lineWidth = R * .06; g.lineJoin = 'round'; g.shadowColor = d.glow; g.shadowBlur = R * .35; for (let k = 0; k < 5; k++) { let x = (r() - .5) * R * .4, y = (r() - .5) * R * .4; g.beginPath(); g.moveTo(x, y); const a = r() * 6.3; for (let i = 0; i < 5; i++) { x += Math.cos(a + (r() - .5) * 1.4) * R * .25; y += Math.sin(a + (r() - .5) * 1.4) * R * .25; g.lineTo(x, y); } g.stroke(); } }); g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .5; strokeP(g, P, d.c2, R * .06); g.restore(); },
+    shadow(g, P, R, d) { g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .7; fillP(g, P, '#07070b'); g.restore(); clipDo(g, P, () => { const gr = g.createRadialGradient(R * .15, R * .2, 0, 0, 0, R); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(.75, 'rgba(0,0,0,0)'); gr.addColorStop(1, d.glow); g.globalAlpha = .7; g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); }); strokeP(g, P, d.c1, R * .04); },
+    ghost(g, P, R, d) { g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .8; fillP(g, P, 'rgba(255,255,255,.2)'); g.restore(); clipDo(g, P, () => { const gr = g.createRadialGradient(0, 0, 0, 0, 0, R); gr.addColorStop(0, 'rgba(255,255,255,.05)'); gr.addColorStop(1, d.c1); g.globalAlpha = .65; g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); }); strokeP(g, P, 'rgba(255,255,255,.75)', R * .04); },
+    holo(g, P, R, d, base) { g.drawImage(base.c, -base.S / 2, -base.S / 2, base.S, base.S); clipDo(g, P, () => { const gr = g.createLinearGradient(-R, -R, R, R); ['#ff4d6d', '#ffd84d', '#4dff9d', '#4dc3ff', '#b04dff', '#ff4d6d'].forEach((c, i) => gr.addColorStop(i / 5, c)); g.globalCompositeOperation = 'overlay'; g.globalAlpha = .85; g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); g.globalCompositeOperation = 'lighter'; g.globalAlpha = .18; g.fillRect(-R, -R, 2 * R, 2 * R); }); strokeP(g, P, 'rgba(255,255,255,.7)', R * .04); },
+    cosmic(g, P, R, d) { g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .6; fillP(g, P, '#05040e'); g.restore(); clipDo(g, P, () => { const r = sRand(29); g.globalCompositeOperation = 'lighter'; [[d.c1, -.3, -.2], [d.glow, .3, .35]].forEach(([c, x, y]) => { const gr = g.createRadialGradient(x * R, y * R, 0, x * R, y * R, R * .8); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.globalAlpha = .45; g.fillStyle = gr; g.fillRect(-R, -R, 2 * R, 2 * R); }); g.globalAlpha = 1; for (let i = 0; i < 40; i++) { g.fillStyle = `rgba(255,255,255,${.3 + r() * .7})`; g.beginPath(); g.arc((r() - .5) * 2 * R, (r() - .5) * 2 * R, R * (.008 + r() * .025), 0, 7); g.fill(); } }); g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .4; strokeP(g, P, shade(d.c1, .3), R * .05); g.restore(); }
+  };
+  function pathP(g, P) { g.beginPath(); P.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); }
+  function fillP(g, P, f) { pathP(g, P); g.fillStyle = f; g.fill(); }
+  function strokeP(g, P, s, w) { pathP(g, P); g.strokeStyle = s; g.lineWidth = w; g.lineJoin = 'round'; g.stroke(); }
+  function clipDo(g, P, f) { g.save(); pathP(g, P); g.clip(); f(); g.restore(); }
+  function body(g, P, R, d) { g.save(); g.shadowColor = d.glow; g.shadowBlur = R * .4; const gr = g.createLinearGradient(-R, -R, R, R); gr.addColorStop(0, d.c1); gr.addColorStop(1, d.c2); fillP(g, P, gr); g.restore(); }
+  function gloss(g, P, R) { clipDo(g, P, () => { const gr = g.createLinearGradient(0, -R, 0, R * .2); gr.addColorStop(0, 'rgba(255,255,255,.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.beginPath(); g.ellipse(-R * .1, -R * .45, R * .8, R * .45, -.3, 0, 7); g.fill(); }); }
+  function skinSprite(d0, R, dpr, sk) {
+    const t = (TINTS[sk && sk.tint] || TINTS.classic)(d0), d = Object.assign({}, d0, t), base = gemSprite(d, R, dpr);
+    if (!sk || !sk.mat || sk.mat === 'facet' || !MATS[sk.mat]) return base;
+    const S = R * 3, c = mk(S * dpr), g = c.getContext('2d'); g.scale(dpr, dpr); g.translate(S / 2, S / 2);
+    const P = outline(d).map(([x, y]) => [x * R, y * R]); MATS[sk.mat](g, P, R, d, base);
+    if (d.icon) icon(g, R, d.icon);
+    return {c, S};
+  }
+  // bomb skins recolour the shell and the glowing core
+  const BOMB_BODY = {iron:['#5a5a6e', '#22222d', '#0b0b11', '#20202b'], gold:['#fff0a0', '#c98a12', '#5a3800', '#7a5208'], ice:['#e8fbff', '#6fb8d8', '#123a52', '#3a7a98'], bone:['#ffffff', '#cfc6b4', '#6a6152', '#9a917e'], toxic:['#c8ff7a', '#3c8a1a', '#0c2a06', '#245a10'], royal:['#d8b4ff', '#5a1aa8', '#1a0638', '#3a1070'], rust:['#e8a070', '#8a3c14', '#2a0e04', '#5a260c'], obsidian:['#3a3a4a', '#0c0c12', '#000000', '#06060a'], candy:['#ffd0ea', '#ff5fae', '#7a0c44', '#c0307a'], chrome:['#ffffff', '#9aa4b4', '#2a3040', '#6a7486']};
+  const BOMB_CORE = {red:['#ffd0c4', '#ff3b2f', '#7a0000', '#ff2a2a'], blue:['#d0e8ff', '#2f7bff', '#00186a', '#2a6aff'], green:['#e0ffd0', '#38e04a', '#06500c', '#2aff5a'], violet:['#f0d0ff', '#b03bff', '#3a006a', '#c02aff'], gold:['#fff6c4', '#ffb81a', '#7a4a00', '#ffc02a']};
+  function bombSprite(R, dpr, sk) {
+    const bd = BOMB_BODY[sk && sk.body] || BOMB_BODY.iron, co = BOMB_CORE[sk && sk.core] || BOMB_CORE.red;
+    const S = R * 3, c = mk(S * dpr), g = c.getContext('2d'); g.scale(dpr, dpr); g.translate(S / 2, S / 2);
+    g.fillStyle = bd[3];
+    for (let i = 0; i < 10; i++) { g.save(); g.rotate(i * Math.PI / 5 + .3); g.beginPath(); g.moveTo(-R * .16, -R * .8); g.lineTo(0, -R * 1.12); g.lineTo(R * .16, -R * .8); g.fill(); g.restore(); }
+    g.save(); g.shadowColor = co[3]; g.shadowBlur = R * .5;
+    const b = g.createRadialGradient(-R * .3, -R * .35, R * .1, 0, 0, R * .9); b.addColorStop(0, bd[0]); b.addColorStop(.6, bd[1]); b.addColorStop(1, bd[2]);
+    g.beginPath(); g.arc(0, 0, R * .86, 0, 7); g.fillStyle = b; g.fill(); g.restore();
+    g.save(); g.shadowColor = co[3]; g.shadowBlur = R * .35;
+    g.beginPath(); g.arc(0, 0, R * .34, 0, 7); const core = g.createRadialGradient(0, 0, 0, 0, 0, R * .34); core.addColorStop(0, co[0]); core.addColorStop(.35, co[1]); core.addColorStop(1, co[2]); g.fillStyle = core; g.fill(); g.restore();
+    g.strokeStyle = co[1]; g.lineWidth = R * .05; g.beginPath(); g.arc(0, 0, R * .5, 0, 7); g.setLineDash([R * .14, R * .1]); g.stroke(); g.setLineDash([]);
+    g.fillStyle = shade(bd[3], .15); g.fillRect(-R * .16, -R * 1.02, R * .32, R * .2);
+    g.strokeStyle = '#c9a36a'; g.lineWidth = R * .08; g.beginPath(); g.moveTo(0, -R * 1.02); g.quadraticCurveTo(R * .2, -R * 1.3, R * .38, -R * 1.22); g.stroke();
+    glint(g, -R * .36, -R * .4, R * .14);
+    return {c, S, fuse:[R * .38, -R * 1.22]};
+  }
   const cache = {};
-  function sprites(R, dpr) {
-    const k = R + ':' + dpr; if (cache[k]) return cache[k];
+  function sprites(R, dpr, gs, bs) {
+    const k = R + ':' + dpr + ':' + (gs ? gs.id : '') + ':' + (bs ? bs.id : ''); if (cache[k]) return cache[k];
     const s = {gem:{}, power:{}};
-    for (const id in GEMS) s.gem[id] = gemSprite(GEMS[id], R, dpr);
+    for (const id in GEMS) s.gem[id] = skinSprite(GEMS[id], R, dpr, gs);
     for (const id in POWERS) s.power[id] = gemSprite(POWERS[id], R, dpr);
-    s.bomb = bombSprite(R, dpr); s.geode = geodeSprite(R * 1.9, dpr);
+    s.bomb = bombSprite(R, dpr, bs); s.geode = geodeSprite(R * 1.9, dpr);
     return (cache[k] = s);
   }
   // small picture of a gem for menus (a data URL)
@@ -364,7 +427,127 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     const k = d.shape; if (OUT[k]) return OUT[k];
     return (OUT[k] = k === 'heart' ? heartPts() : k === 'cube' ? SHAPES.hex.map(([x, y]) => [x * .95, y * .95]) : SHAPES[k]);
   }
-  window.ART = {outline, GEMS, KINDS, POWERS, COLOR_NAMES, sprites, gemIcon, shade};
+  window.ART = {skinSprite, bombSprite, TINTS, MATS, outline, GEMS, KINDS, POWERS, COLOR_NAMES, sprites, gemIcon, shade};
+})();
+
+</script>
+<script>
+/* Shardcut skin catalog: hand-made pieces plus large generated families.
+   r = rarity: 0 Common, 1 Uncommon, 2 Rare, 3 Epic, 4 Legendary, 5 Mythic, 6 Divine. */
+(function () {
+  const RAR = [
+    {n:'Common', c:'#aab1c4', w:45, dup:15},
+    {n:'Uncommon', c:'#5ee08a', w:27, dup:25},
+    {n:'Rare', c:'#4da3ff', w:15, dup:40},
+    {n:'Epic', c:'#b86bff', w:8, dup:80},
+    {n:'Legendary', c:'#ffc93c', w:3.5, dup:200},
+    {n:'Mythic', c:'#ff5a6e', w:1.2, dup:500},
+    {n:'Divine', c:'#ffffff', w:.3, dup:1200}
+  ];
+  const mix = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0')).join('');
+  const rgba = (h, a) => `rgba(${parseInt(h.slice(1, 3), 16)},${parseInt(h.slice(3, 5), 16)},${parseInt(h.slice(5, 7), 16)},${a})`;
+
+  /* ---------------- blades ---------------- */
+  const B = (id, name, r, o) => Object.assign({id, name, r, kind:'blade'}, o);
+  const old = [0, 2, 3, 4]; // hand-made blades keep their place on the new scale
+  const BLADES = [
+    ['steel', 'Steel', 0, {core:'#ffffff', glow:'#9ad8ff'}], ['neon', 'Neon', 0, {core:'#eafffe', glow:'#00f0ff'}], ['crimson', 'Crimson', 0, {core:'#ffe8ea', glow:'#ff3048'}],
+    ['lime', 'Lime', 0, {core:'#f4ffe0', glow:'#8cff2e'}], ['sunflower', 'Sunflower', 0, {core:'#fffbe6', glow:'#ffc21a'}], ['violet', 'Violet', 0, {core:'#f4eaff', glow:'#a463ff'}],
+    ['coral', 'Coral', 0, {core:'#fff0ea', glow:'#ff7a59'}], ['mint', 'Mint', 0, {core:'#effff8', glow:'#3dffb4'}], ['bubblegum', 'Bubblegum', 0, {core:'#fff0f8', glow:'#ff6fc2'}],
+    ['plasma', 'Plasma', 1, {core:'#fff0fb', glow:'#ff2bd6', g2:'#8a5bff'}], ['tide', 'Riptide', 1, {core:'#eefcff', glow:'#2f6bff', g2:'#00e5d4'}], ['sunset', 'Sunset', 1, {core:'#fff3e8', glow:'#ff8a3d', g2:'#ff3d8b'}],
+    ['toxic', 'Toxic', 1, {core:'#f6ffe0', glow:'#5aff3d', g2:'#d4ff00', emit:'sparks', sparks:'#c8ff5a'}], ['frost', 'Frost', 1, {core:'#ffffff', glow:'#7fe8ff', g2:'#d8f6ff', emit:'snow'}],
+    ['gilded', 'Gilded', 1, {core:'#fff8d6', glow:'#ffc400', g2:'#fff0a0', emit:'sparks', sparks:'#ffe27a'}],
+    ['inferno', 'Inferno', 2, {core:'#fff3c4', glow:'#ff5a00', g2:'#ffd000', emit:'ember', sparks:'#ff8a2a'}], ['blossom', 'Blossom', 2, {core:'#fff2f8', glow:'#ff7ab8', g2:'#ffd0e6', emit:'petal', sparks:'#ff9cc9'}],
+    ['starlight', 'Starlight', 2, {core:'#ffffff', glow:'#6f8cff', g2:'#c6b5ff', emit:'star'}], ['arcade', 'Arcade', 2, {core:'#ffffff', glow:'#00ff9c', g2:'#ff00e6', emit:'pixel'}],
+    ['abyss', 'Abyss', 2, {core:'#eafcff', glow:'#0090ff', g2:'#00ffe1', emit:'bubble'}], ['twinfang', 'Twin Fang', 2, {core:'#ffffff', glow:'#ff3d6e', g2:'#ffd23d', fx:'twin'}],
+    ['heartbeat', 'Heartbeat', 2, {core:'#ffffff', glow:'#b14dff', g2:'#ff4dd2', fx:'pulse'}], ['shadow', 'Shadow', 2, {core:'#140822', glow:'#9b4dff', g2:'#ff4dd2', dark:true}],
+    ['prism', 'Prism', 3, {core:'#ffffff', glow:'#ffffff', rainbow:true, emit:'star'}], ['storm', 'Storm', 3, {core:'#ffffff', glow:'#8f7bff', g2:'#5ad7ff', lightning:true, emit:'sparks', sparks:'#cfe0ff'}],
+    ['glitch', 'Glitch', 3, {core:'#ffffff', glow:'#7a5cff', g2:'#05d9e8', fx:'glitch', emit:'pixel'}], ['galaxy', 'Galaxy', 3, {core:'#ffffff', glow:'#5b3dff', g2:'#ff5ad2', emit:'galaxy'}],
+    ['phantom', 'Phantom', 3, {core:'#e8fff6', glow:'#3dffb0', g2:'#a0fff0', fx:'ghost', emit:'star'}], ['solar', 'Solar Flare', 3, {core:'#fffbe8', glow:'#ff6a00', g2:'#fff07a', fx:'pulse', emit:'ember', sparks:'#ffb020'}]
+  ].map(([id, n, r, o]) => B(id, n, old[r], o));
+  const PAL = [
+    ['Cobalt', '#2f5bff', '#5ad7ff'], ['Scarlet', '#ff2a3d', '#ff8a3d'], ['Jade', '#1fd18a', '#b6ff5a'], ['Amber', '#ffb000', '#ff5a1f'], ['Orchid', '#d14dff', '#ff6fc2'],
+    ['Teal', '#00c8b4', '#2f8cff'], ['Rogue', '#ff3355', '#ff2bd6'], ['Lagoon', '#00e0ff', '#00ffa0'], ['Saffron', '#ffcc00', '#fff3a0'], ['Indigo', '#5a3dff', '#00c8ff'],
+    ['Peach', '#ff9a7a', '#ffd27a'], ['Spearmint', '#4dffbc', '#c4fff0'], ['Ruby', '#e0103a', '#ff6a8a'], ['Sapphire', '#1060ff', '#9ad8ff'], ['Emerald', '#10d060', '#00ffd0'],
+    ['Lilac', '#b89aff', '#ffb8f0'], ['Tangerine', '#ff7a00', '#ffd000'], ['Glacier', '#9ae8ff', '#ffffff'], ['Magma', '#ff3c00', '#ffb000'], ['Deepsea', '#0040ff', '#7a00ff'],
+    ['Sakura', '#ff8ac8', '#fff0f6'], ['Volt', '#d4ff00', '#00ff9c'], ['Rose Gold', '#ffb0a0', '#ffd9a0'], ['Venom', '#7aff00', '#00ff6a'], ['Dusk', '#ff6a8a', '#7a5cff'],
+    ['Polar', '#c8f4ff', '#5ab8ff'], ['Plum', '#c0308a', '#ff6ab0'], ['Copper', '#d07a3a', '#ffc08a'], ['Electric', '#00a0ff', '#ffffff'], ['Bloodmoon', '#ff1a1a', '#a00020'],
+    ['Seafoam', '#6affd8', '#b0ffea'], ['Grape', '#8a2bff', '#ff4dd2'], ['Honey', '#ffc23d', '#ff8a00'], ['Cyan', '#00f0ff', '#7af8ff'], ['Hot Pink', '#ff2ba0', '#ff8ad8'],
+    ['Chartreuse', '#9cff2e', '#e8ff8a'], ['Merlot', '#c0204a', '#ff5a7a'], ['Skyline', '#6ac8ff', '#c8ecff'], ['Daybreak', '#ff5a3d', '#ffd23d'], ['Twilight', '#3d4dff', '#ff6ac8'],
+    ['Reef', '#ff6f59', '#ffb0a0'], ['Fern', '#2ea84a', '#a0ff6a'], ['Pewter', '#7a9ab8', '#d0e4ff'], ['Ivory', '#fff4d8', '#ffffff'], ['Hazard', '#ffd000', '#ff2a2a'],
+    ['Borealis', '#3dffb0', '#7a5cff'], ['Ultraviolet', '#7a00ff', '#ff00e6'], ['Sunburst', '#ffe07a', '#ff6a00'], ['Frostfire', '#5ad7ff', '#ff6a3d']
+  ];
+  const STY = [
+    ['Edge', 0, {}], ['Fade', 1, {g2:1}], ['Spark', 1, {emit:'sparks'}],
+    ['Flurry', 2, {g2:1, emit:'snow'}], ['Ember', 2, {g2:1, emit:'ember'}], ['Bloom', 2, {g2:1, emit:'petal'}], ['Byte', 2, {g2:1, emit:'pixel'}], ['Fizz', 2, {g2:1, emit:'bubble'}],
+    ['Twin', 3, {g2:1, fx:'twin'}], ['Pulse', 3, {g2:1, fx:'pulse'}], ['Star', 3, {g2:1, emit:'star'}], ['Shade', 3, {g2:1, dark:1}],
+    ['Wraith', 4, {g2:1, fx:'ghost', emit:'star'}], ['Nova', 4, {g2:1, emit:'galaxy'}], ['Glitch', 4, {g2:1, fx:'glitch', emit:'pixel'}], ['Twin Ember', 4, {g2:1, fx:'twin', emit:'ember'}],
+    ['Storm', 5, {g2:1, lightning:1, emit:'sparks'}], ['Void Nova', 5, {g2:1, dark:1, emit:'galaxy'}], ['Heartstorm', 5, {g2:1, fx:'pulse', emit:'galaxy'}]
+  ];
+  PAL.forEach(([pn, glow, g2]) => STY.forEach(([sn, r, o]) => {
+    const b = {core:o.dark ? mix(glow, '#000000', .88) : mix(glow, '#ffffff', .88), glow};
+    if (o.g2) b.g2 = g2; if (o.emit) { b.emit = o.emit; b.sparks = o.emit === 'sparks' ? mix(glow, '#ffffff', .4) : g2; }
+    if (o.fx) b.fx = o.fx; if (o.dark) b.dark = true; if (o.lightning) b.lightning = true;
+    BLADES.push(B('b:' + pn + ':' + sn, pn + ' ' + sn, r, b));
+  }));
+  // Divine: rainbow blades with every particle and trail style
+  const EM = [['sparks', 'Spark'], ['ember', 'Ember'], ['snow', 'Snow'], ['petal', 'Petal'], ['star', 'Star'], ['pixel', 'Pixel'], ['bubble', 'Bubble'], ['galaxy', 'Cosmos']];
+  const FXS = [[null, ''], ['twin', ' Twin'], ['pulse', ' Pulse'], ['ghost', ' Wraith'], ['glitch', ' Glitch']];
+  EM.forEach(([e, en]) => FXS.forEach(([f, fn]) => BLADES.push(B('b:prism:' + e + ':' + (f || '-'), 'Prismatic ' + en + fn, 6, Object.assign({core:'#ffffff', glow:'#ffffff', rainbow:true, emit:e, sparks:'#ffffff'}, f ? {fx:f} : {})))));
+  BLADES.push(B('b:prism:storm', 'Rainbow Storm', 6, {core:'#ffffff', glow:'#ffffff', g2:'#ffffff', rainbow:true, lightning:true, emit:'galaxy'}));
+
+  /* ---------------- backgrounds ---------------- */
+  const T = (id, name, r) => ({id, name, r, kind:'theme'});
+  const THEMES = [
+    T('lab', 'Night Shift', 0), T('slate', 'Slate', 0), T('dusk', 'Dusk', 0), T('moss', 'Moss', 0), T('ember', 'Ember', 0), T('ocean', 'Deep Ocean', 0),
+    T('aurora', 'Aurora', 2), T('dunes', 'Sunset Dunes', 2), T('arctic', 'Arctic', 2), T('lagoon', 'Lagoon', 2), T('void', 'Starless Void', 2),
+    T('forest', 'Firefly Forest', 3), T('sakura', 'Sakura Night', 3), T('cavern', 'Crystal Cavern', 3), T('storm', 'Thunderhead', 3),
+    T('nebula', 'Nebula', 4), T('moonrise', 'Moonrise', 4), T('solar', 'Solar', 4)
+  ];
+  const SKY = [
+    ['Midnight', '#070a18', '#1a2340', '#6a8cff', '#ff9ad0'], ['Ember', '#120404', '#3a1206', '#ff6a1a', '#ffc03a'], ['Abyss', '#010814', '#03304a', '#2ab0ff', '#00ffd0'],
+    ['Jungle', '#04110a', '#0f3020', '#4dff8a', '#e8ff6a'], ['Rosewood', '#1a0812', '#4a1a30', '#ff6aa8', '#ffb06a'], ['Violet', '#0c0618', '#2a1250', '#b06aff', '#6ac8ff'],
+    ['Slate', '#0d1116', '#222c36', '#8ab8e0', '#ffffff'], ['Desert', '#1a0e08', '#5a3018', '#ffb06a', '#ff6a4a'], ['Glacier', '#06121e', '#1e4060', '#a8e4ff', '#ffffff'],
+    ['Toxic', '#080f04', '#1e3a0a', '#a8ff3a', '#3affa0'], ['Crimson', '#140406', '#400a14', '#ff3a4a', '#ff9a3a'], ['Teal', '#021414', '#064040', '#3affe0', '#3a9aff'],
+    ['Dawn', '#140c20', '#5a2a40', '#ffa06a', '#ff6ab0'], ['Royal', '#08061a', '#1c1450', '#7a6aff', '#ffd06a'], ['Charcoal', '#0a0a0c', '#1c1c22', '#c0c0d0', '#ff6a6a'],
+    ['Peach', '#1a0e10', '#5a3036', '#ffb09a', '#ffe0a0'], ['Tidal', '#020a18', '#0a2a50', '#3a8aff', '#a0e0ff'], ['Lava', '#0e0402', '#3a0e04', '#ff4a00', '#ffd000'],
+    ['Mint', '#06120e', '#18382c', '#6affc8', '#c8fff0'], ['Sunset', '#1a0a1e', '#6a2038', '#ff7a4a', '#ffd06a'], ['Overcast', '#0a0e14', '#263040', '#9ab0d0', '#e0e8ff'],
+    ['Orchid', '#14061a', '#401a4a', '#ff7aff', '#b07aff'], ['Copper', '#120a06', '#3a2010', '#ff9a4a', '#ffd0a0'], ['Ice', '#081420', '#1a3a5a', '#6ad0ff', '#e0f6ff'],
+    ['Moss', '#0a1008', '#1e2a16', '#9ac86a', '#f0e08a'], ['Neon', '#08041a', '#1a0a3a', '#ff2ad0', '#2ae0ff'], ['Blood', '#0a0204', '#2a0408', '#ff1a2a', '#ff6a6a'],
+    ['Gold', '#120e04', '#3a2a08', '#ffd04a', '#fff0a0'], ['Polar', '#04081a', '#10204a', '#8ae0ff', '#c8a0ff'], ['Plum', '#12060e', '#3a1430', '#e05aa0', '#ffa0d0'],
+    ['Meadow', '#0a1208', '#2a3a1a', '#c8e06a', '#ffc06a'], ['Void', '#000000', '#0c0b18', '#a07aff', '#ffffff']
+  ];
+  const SCN = [
+    ['Haze', 0, []], ['Starfield', 0, ['stars']], ['Embers', 1, ['embers']], ['Snowfall', 1, ['snow']], ['Rainfall', 1, ['rain']],
+    ['Shallows', 2, ['rays', 'bubbles']], ['Highlands', 2, ['stars', 'hills']], ['Summits', 2, ['stars', 'peaks', 'snow']], ['Reef', 2, ['rays', 'bubbles', 'reef']],
+    ['Dunes', 3, ['sun', 'dunes']], ['Woods', 3, ['stars', 'hills', 'pines', 'fireflies']], ['Blossom', 3, ['moon', 'hills', 'petals']], ['Caverns', 3, ['crystals']],
+    ['Lights', 4, ['stars', 'aurora', 'peaks']], ['Tempest', 4, ['clouds', 'rain', 'bolt']],
+    ['Cosmos', 5, ['nebula', 'stars', 'bigstars']], ['Moonlake', 5, ['stars', 'moon', 'hills', 'lake']], ['Eclipse', 6, ['nebula', 'aurora', 'stars', 'bigstars', 'moon', 'peaks']]
+  ];
+  const THEME_DEFS = {};
+  SKY.forEach(([sn, a, b, c1, c2]) => SCN.forEach(([cn, r, fx]) => {
+    const id = 't:' + sn + ':' + cn;
+    THEME_DEFS[id] = {a, b, grid:'rgba(255,255,255,.04)', g1:rgba(c1, .16), g2:rgba(c2, .1), fx, hill:[mix(b, '#000000', .3), mix(b, '#000000', .55), mix(b, '#000000', .78)], sun:c2, moon:mix(c2, '#ffffff', .75)};
+    THEMES.push(T(id, sn + ' ' + cn, r));
+  }));
+
+  /* ---------------- gem skins ---------------- */
+  const MAT = [['facet', 'Facet', 0], ['toon', 'Toon', 0], ['glass', 'Glass', 1], ['polka', 'Polka', 1], ['candy', 'Candy', 1], ['jelly', 'Jelly', 1], ['marble', 'Marble', 2], ['chrome', 'Chrome', 2],
+    ['pixel', 'Pixel', 2], ['sketch', 'Sketch', 2], ['gilded', 'Gilded', 3], ['frozen', 'Frozen', 3], ['neon', 'Neon Line', 3], ['circuit', 'Circuit', 3], ['stained', 'Stained Glass', 3],
+    ['opal', 'Opal', 4], ['lava', 'Lava', 4], ['shadow', 'Shadow', 4], ['ghost', 'Ghost', 4], ['holo', 'Holo', 5], ['cosmic', 'Cosmic', 5]];
+  const TINT = [['classic', 'Classic', 0], ['pastel', 'Pastel', 0], ['deep', 'Deep', 0], ['smoky', 'Smoky', 0], ['neon', 'Neon', 1], ['midnight', 'Midnight', 1]];
+  const GEMSKINS = [];
+  MAT.forEach(([m, mn, mr]) => TINT.forEach(([t, tn, tr]) => GEMSKINS.push({id:'g:' + m + ':' + t, name:(t === 'classic' ? '' : tn + ' ') + mn, r:Math.min(6, mr + tr), kind:'gem', mat:m, tint:t})));
+
+  /* ---------------- bomb skins ---------------- */
+  const BODY = [['iron', 'Iron', 0], ['rust', 'Rust', 0], ['bone', 'Bone', 1], ['ice', 'Ice', 1], ['toxic', 'Toxic', 1], ['candy', 'Candy', 2], ['royal', 'Royal', 2], ['gold', 'Gold', 3], ['chrome', 'Chrome', 3], ['obsidian', 'Obsidian', 4]];
+  const CORE = [['red', 'Red', 0], ['blue', 'Blue', 1], ['green', 'Green', 1], ['violet', 'Violet', 1], ['gold', 'Gold', 2]];
+  const BOMBS = [];
+  BODY.forEach(([b, bn, br]) => CORE.forEach(([c, cn, cr]) => BOMBS.push({id:'k:' + b + ':' + c, name:bn + ' ' + cn + ' Core', r:Math.min(6, br + cr), kind:'bomb', body:b, core:c})));
+
+  const ALL = BLADES.concat(THEMES, GEMSKINS, BOMBS);
+  const byKey = {}; ALL.forEach(i => byKey[i.kind + '|' + i.id] = i);
+  window.SKINS = {RAR, BLADES, THEMES, THEME_DEFS, GEMSKINS, BOMBS, ALL, get:(kind, id) => byKey[kind + '|' + id]};
 })();
 
 </script>
@@ -426,7 +609,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 (function () {
   const {GEMS, KINDS, POWERS} = window.ART;
   const cv = document.getElementById('cv'), g = cv.getContext('2d');
-  let W = 0, H = 0, DPR = 1, R = 36, GRAV = 900, SPR = null, bg = null;
+  let W = 0, H = 0, DPR = 1, R = 36, GRAV = 900, SPR = null, bg = null, gemSkin = null, bombSkin = null;
   const rand = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
@@ -451,10 +634,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     moonrise:{a:'#060a1a', b:'#1d2a4c', grid:'rgba(220,230,255,.03)', g1:'rgba(160,190,255,.12)', g2:'rgba(255,230,180,.06)', fx:['stars', 'moon', 'hills', 'lake'], hill:['#18233f', '#0f172c', '#080d1a'], moon:'#fff4dc'},
     solar:   {a:'#1a0606', b:'#5a1a08', grid:'rgba(255,200,120,.04)', g1:'rgba(255,170,60,.22)', g2:'rgba(255,80,40,.16)', fx:['sun', 'rays', 'embers', 'dunes'], hill:['#4a1608', '#300e06', '#1c0804'], sun:'#ffd27a'}
   };
+  if (window.SKINS) Object.assign(THEMES, SKINS.THEME_DEFS);
   // a repeatable random sequence, so a background looks the same in the shop and in the game
   const seeded = s => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
   function paintBg(b, W, H, id) {
-    const t = THEMES[id] || THEMES.lab, rnd = seeded(7 + id.length * 131), r = (a, z) => a + rnd() * (z - a), fx = t.fx || [], M = Math.max(W, H);
+    const t = THEMES[id] || THEMES.lab, rnd = seeded([...id].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7)), r = (a, z) => a + rnd() * (z - a), fx = t.fx || [], M = Math.max(W, H);
     const lg = b.createLinearGradient(0, 0, 0, H); lg.addColorStop(0, t.a); lg.addColorStop(1, t.b); b.fillStyle = lg; b.fillRect(0, 0, W, H);
     const glow = (x, y, rad, c) => { const gr = b.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)'); b.fillStyle = gr; b.fillRect(0, 0, W, H); };
     glow(W * .15, H * .2, M * .6, t.g1); glow(W * .9, H * .85, M * .6, t.g2);
@@ -502,7 +686,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); cv.style.width = W + 'px'; cv.style.height = H + 'px';
     R = Math.round(clamp(Math.min(W, H * .62) * .095, 30, 60));
     GRAV = H * 1.3;
-    SPR = ART.sprites(R, DPR);
+    SPR = ART.sprites(R, DPR, gemSkin, bombSkin);
     drawBg();
     if (!G || !G.running) drawIdle();
   }
@@ -1011,6 +1195,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     get _state() { return G; },
     setTheme(t) { theme = THEMES[t] ? t : 'lab'; if (W) { drawBg(); if (!G || !G.running) drawIdle(); } },
     setBlade(b) { blade = b; },
+    setSkins(gs, bs) { gemSkin = gs; bombSkin = bs; if (W) SPR = ART.sprites(R, DPR, gemSkin, bombSkin); if (W && (!G || !G.running)) drawIdle(); },
     resize
   };
   resize();
@@ -1084,57 +1269,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 
   /* ---------------- saved progress ---------------- */
   const KEY = 'shardcut.v1';
-  const blank = () => ({shards:0, best:{classic:0, rush:0, zen:0}, stars:[], daily:{date:'', total:0, streak:0, last:''}, blades:['steel'], blade:'steel', themes:['lab'], theme:'lab', ach:{}, pity:0, pulls:0,
+  const blank = () => ({shards:0, best:{classic:0, rush:0, zen:0}, stars:[], daily:{date:'', total:0, streak:0, last:''}, blades:['steel'], blade:'steel', themes:['lab'], theme:'lab', gems:['g:facet:classic'], gem:'g:facet:classic', bombs:['k:iron:red'], bomb:'k:iron:red', ach:{}, pity:0, pulls:0,
     st:{games:0, sliced:0, perfect:0, bestCombo:0, combos:0, geodes:0, bombs:0, time:0, diamonds:0, classicLongest:0}, set:{sound:true, vibe:true}, seen:{}});
   let P;
-  try { const o = JSON.parse(localStorage.getItem(KEY)); P = Object.assign(blank(), o || {}); for (const k of ['best', 'daily', 'st', 'set']) P[k] = Object.assign(blank()[k], P[k] || {}); } catch (e) { P = blank(); }
+  try { const o = JSON.parse(localStorage.getItem(KEY)); P = Object.assign(blank(), o || {}); for (const k of ['gems', 'bombs']) if (!P[k].length) P[k] = blank()[k]; for (const k of ['best', 'daily', 'st', 'set']) P[k] = Object.assign(blank()[k], P[k] || {}); } catch (e) { P = blank(); }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} };
 
   /* ---------------- blades & backgrounds ---------------- */
-  // r = rarity: 0 common, 1 rare, 2 epic, 3 legendary. fx = trail style, emit = particles it leaves.
-  const RAR = [{n:'Common', c:'#aab1c4', w:62, dup:30}, {n:'Rare', c:'#4da3ff', w:27, dup:60}, {n:'Epic', c:'#b86bff', w:9, dup:150}, {n:'Legendary', c:'#ffc93c', w:2, dup:400}];
-  const B = (id, name, r, o) => Object.assign({id, name, r, kind:'blade'}, o);
-  const BLADES = [
-    B('steel', 'Steel', 0, {core:'#ffffff', glow:'#9ad8ff'}),
-    B('neon', 'Neon', 0, {core:'#eafffe', glow:'#00f0ff'}),
-    B('crimson', 'Crimson', 0, {core:'#ffe8ea', glow:'#ff3048'}),
-    B('lime', 'Lime', 0, {core:'#f4ffe0', glow:'#8cff2e'}),
-    B('sunflower', 'Sunflower', 0, {core:'#fffbe6', glow:'#ffc21a'}),
-    B('violet', 'Violet', 0, {core:'#f4eaff', glow:'#a463ff'}),
-    B('coral', 'Coral', 0, {core:'#fff0ea', glow:'#ff7a59'}),
-    B('mint', 'Mint', 0, {core:'#effff8', glow:'#3dffb4'}),
-    B('bubblegum', 'Bubblegum', 0, {core:'#fff0f8', glow:'#ff6fc2'}),
-    B('plasma', 'Plasma', 1, {core:'#fff0fb', glow:'#ff2bd6', g2:'#8a5bff'}),
-    B('tide', 'Riptide', 1, {core:'#eefcff', glow:'#2f6bff', g2:'#00e5d4'}),
-    B('sunset', 'Sunset', 1, {core:'#fff3e8', glow:'#ff8a3d', g2:'#ff3d8b'}),
-    B('toxic', 'Toxic', 1, {core:'#f6ffe0', glow:'#5aff3d', g2:'#d4ff00', emit:'sparks', sparks:'#c8ff5a'}),
-    B('frost', 'Frost', 1, {core:'#ffffff', glow:'#7fe8ff', g2:'#d8f6ff', emit:'snow'}),
-    B('gilded', 'Gilded', 1, {core:'#fff8d6', glow:'#ffc400', g2:'#fff0a0', emit:'sparks', sparks:'#ffe27a'}),
-    B('inferno', 'Inferno', 2, {core:'#fff3c4', glow:'#ff5a00', g2:'#ffd000', emit:'ember', sparks:'#ff8a2a'}),
-    B('blossom', 'Blossom', 2, {core:'#fff2f8', glow:'#ff7ab8', g2:'#ffd0e6', emit:'petal', sparks:'#ff9cc9'}),
-    B('starlight', 'Starlight', 2, {core:'#ffffff', glow:'#6f8cff', g2:'#c6b5ff', emit:'star'}),
-    B('arcade', 'Arcade', 2, {core:'#ffffff', glow:'#00ff9c', g2:'#ff00e6', emit:'pixel'}),
-    B('abyss', 'Abyss', 2, {core:'#eafcff', glow:'#0090ff', g2:'#00ffe1', emit:'bubble'}),
-    B('twinfang', 'Twin Fang', 2, {core:'#ffffff', glow:'#ff3d6e', g2:'#ffd23d', fx:'twin'}),
-    B('heartbeat', 'Heartbeat', 2, {core:'#ffffff', glow:'#b14dff', g2:'#ff4dd2', fx:'pulse'}),
-    B('shadow', 'Shadow', 2, {core:'#140822', glow:'#9b4dff', g2:'#ff4dd2', dark:true}),
-    B('prism', 'Prism', 3, {core:'#ffffff', glow:'#ffffff', rainbow:true, emit:'star'}),
-    B('storm', 'Storm', 3, {core:'#ffffff', glow:'#8f7bff', g2:'#5ad7ff', lightning:true, emit:'sparks', sparks:'#cfe0ff'}),
-    B('glitch', 'Glitch', 3, {core:'#ffffff', glow:'#7a5cff', g2:'#05d9e8', fx:'glitch', emit:'pixel'}),
-    B('galaxy', 'Galaxy', 3, {core:'#ffffff', glow:'#5b3dff', g2:'#ff5ad2', emit:'galaxy'}),
-    B('phantom', 'Phantom', 3, {core:'#e8fff6', glow:'#3dffb0', g2:'#a0fff0', fx:'ghost', emit:'star'}),
-    B('solar', 'Solar Flare', 3, {core:'#fffbe8', glow:'#ff6a00', g2:'#fff07a', fx:'pulse', emit:'ember', sparks:'#ffb020'})
-  ];
-  const T = (id, name, r) => ({id, name, r, kind:'theme'});
-  const THEMES = [
-    T('lab', 'Night Shift', 0), T('slate', 'Slate', 0), T('dusk', 'Dusk', 0), T('moss', 'Moss', 0), T('ember', 'Ember', 0), T('ocean', 'Deep Ocean', 0),
-    T('aurora', 'Aurora', 1), T('dunes', 'Sunset Dunes', 1), T('arctic', 'Arctic', 1), T('lagoon', 'Lagoon', 1), T('void', 'Starless Void', 1),
-    T('forest', 'Firefly Forest', 2), T('sakura', 'Sakura Night', 2), T('cavern', 'Crystal Cavern', 2), T('storm', 'Thunderhead', 2),
-    T('nebula', 'Nebula', 3), T('moonrise', 'Moonrise', 3), T('solar', 'Solar', 3)
-  ];
-  const ALL = BLADES.concat(THEMES);
-  const PULL1 = 200, PULL10 = 1800, PITY = 50;
-  const applyLook = () => { GAME.setBlade(BLADES.find(b => b.id === P.blade) || BLADES[0]); GAME.setTheme(P.theme); };
+  const {RAR, BLADES, THEMES, GEMSKINS, BOMBS, ALL} = SKINS;
+  const PULL1 = 100, PULL10 = 900, PITY = 50;
+  const LIST = {blade:'blades', theme:'themes', gem:'gems', bomb:'bombs'}, CUR = {blade:'blade', theme:'theme', gem:'gem', bomb:'bomb'};
+  const TABS = [['blade', 'Blades', BLADES], ['theme', 'Backgrounds', THEMES], ['gem', 'Gems', GEMSKINS], ['bomb', 'Bombs', BOMBS]];
+  const applyLook = () => { GAME.setBlade(SKINS.get('blade', P.blade) || BLADES[0]); GAME.setTheme(P.theme); GAME.setSkins(SKINS.get('gem', P.gem), SKINS.get('bomb', P.bomb)); };
 
   /* ---------------- missions ---------------- */
   // goal, target, options: t = time limit, lives, bombs ('none'|'light'|'heavy'), end = a bomb ends it, d = starting difficulty, par = score for the third star
@@ -1312,42 +1458,54 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       return `<button class="mt${i === nx && !lock ? ' next' : ''}${lock ? ' lock' : ''}${boss ? ' boss' : ''}" data-m="${i}" ${lock ? 'disabled' : ''}>${boss ? '<span class="bossi">BOSS</span>' : ''}${lock ? ico('lock') : i + 1}<span class="st">${[1, 2, 3].map(k => k <= s ? '★' : '<span class="off">★</span>').join('')}</span></button>`;
     }).join('')}</div><p class="sub" style="margin-top:14px;text-align:center">Clear a mission to unlock the next. Every 10th is a boss geode.</p>`;
   }
-  let shopTab = 'blades';
-  const owns = it => (it.kind === 'blade' ? P.blades : P.themes).includes(it.id);
+  let shopTab = 'blade', shopFilter = 'all', shopShown = 40, ownSets = null;
+  const owned = () => ownSets || (ownSets = {blade:new Set(P.blades), theme:new Set(P.themes), gem:new Set(P.gems), bomb:new Set(P.bombs)});
+  const owns = it => owned()[it.kind].has(it.id);
+  const give = it => { P[LIST[it.kind]].push(it.id); owned()[it.kind].add(it.id); };
+  const equip = it => { P[CUR[it.kind]] = it.id; save(); applyLook(); };
+  // previews draw only when scrolled into view, so huge lists stay fast
+  const pvObs = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { pvObs.unobserve(e.target); const it = SKINS.get(e.target.dataset.k, e.target.dataset.pv); if (it) preview(e.target, it); } }), {rootMargin:'300px'}) : null;
   function drawShop() {
-    const items = (shopTab === 'blades' ? BLADES : THEMES).slice().sort((a, b) => b.r - a.r || (owns(b) - owns(a))), eq = shopTab === 'blades' ? P.blade : P.theme;
-    const nB = BLADES.filter(owns).length, nT = THEMES.filter(owns).length;
+    ownSets = null; const tab = TABS.find(t => t[0] === shopTab), own = owned(), eq = P[CUR[shopTab]];
+    let items = tab[2].filter(it => shopFilter === 'all' || (shopFilter === 'own' ? own[it.kind].has(it.id) : it.r === +shopFilter));
+    items = items.slice().sort((a, b) => b.r - a.r || (own[b.kind].has(b.id) - own[a.kind].has(a.id)));
+    const total = ALL.length, have = TABS.reduce((s, t) => s + own[t[0]].size, 0);
     $('#shop').innerHTML = headHtml('Vault', '') + `
       <div class="vault"><div class="vgem"><img src="${ART.gemIcon('diamond', 120)}" alt=""></div>
-        <h3>Crystal Vault</h3><p>Spend shards to crack it open for a random blade or background.</p>
-        <div class="odds">${RAR.map(x => `<span style="color:${x.c}">${x.n} ${x.w}%</span>`).join('')}</div>
+        <h3>Crystal Vault</h3><p>${fmt(total)} things to find. You have ${fmt(have)}.</p>
+        <div class="odds">${RAR.map(x => `<span class="${x.n === 'Divine' ? 'div' : ''}" style="color:${x.c}">${x.n} ${x.w}%</span>`).join('')}</div>
         <div class="vbtns"><button class="btn" data-act="pull1">Open ×1<span class="cost">${shardImg}${fmt(PULL1)}</span></button><button class="btn" data-act="pull10">Open ×10<span class="cost">${shardImg}${fmt(PULL10)}</span></button></div>
-        <p class="fine">×10 always includes an Epic or better. A Legendary is guaranteed within ${PITY - P.pity} opens. Repeats turn back into shards.</p></div>
-      <div class="seg"><button data-tab="blades" class="${shopTab === 'blades' ? 'on' : ''}">Blades ${nB}/${BLADES.length}</button><button data-tab="themes" class="${shopTab === 'themes' ? 'on' : ''}">Backgrounds ${nT}/${THEMES.length}</button></div>
-      <div class="sgrid">${items.map(it => { const have = owns(it), R = RAR[it.r];
-        return `<button class="si r${it.r}${eq === it.id ? ' eq' : ''}${have ? '' : ' lock'}" data-buy="${it.id}" style="--rc:${R.c}"><div class="pv"><canvas data-pv="${it.id}"></canvas>${have ? '' : `<span class="lk">${ico('lock')}</span>`}</div><b>${esc(it.name)}</b>
-          <div class="pr"><i>${R.n}</i>${eq === it.id ? ico('check') + 'Equipped' : have ? 'Tap to use' : 'Locked'}</div></button>`; }).join('')}</div>`;
-    document.querySelectorAll('#shop [data-pv]').forEach(c => preview(c, ALL.find(i => i.id === c.dataset.pv && i.kind === (shopTab === 'blades' ? 'blade' : 'theme'))));
+        <p class="fine">×10 always has an Epic or better. Legendary or better guaranteed within ${PITY - P.pity} opens. Repeats turn back into shards.</p></div>
+      <div class="seg four">${TABS.map(([k, n, l]) => `<button data-tab="${k}" class="${shopTab === k ? 'on' : ''}">${n}<small>${own[k].size}/${l.length}</small></button>`).join('')}</div>
+      <div class="chips">${[['all', 'All'], ['own', 'Owned']].concat(RAR.map((x, i) => [String(i), x.n])).map(([k, n]) => `<button data-flt="${k}" class="${shopFilter === k ? 'on' : ''}"${/\d/.test(k) ? ` style="--rc:${RAR[k].c}"` : ''}>${n}</button>`).join('')}</div>
+      <div class="sgrid">${items.slice(0, shopShown).map(it => { const h = own[it.kind].has(it.id), R = RAR[it.r];
+        return `<button class="si r${it.r}${eq === it.id ? ' eq' : ''}${h ? '' : ' lock'}" data-buy="${esc(it.id)}" style="--rc:${R.c}"><div class="pv"><canvas data-k="${it.kind}" data-pv="${esc(it.id)}"></canvas>${h ? '' : `<span class="lk">${ico('lock')}</span>`}</div><b>${esc(it.name)}</b>
+          <div class="pr"><i>${R.n}</i>${eq === it.id ? ico('check') + 'On' : h ? 'Use' : 'Locked'}</div></button>`; }).join('')}</div>
+      ${items.length > shopShown ? `<button class="btn ghost more" data-act="more">Show more (${fmt(items.length - shopShown)} left)</button>` : ''}`;
+    document.querySelectorAll('#shop [data-pv]').forEach(c => pvObs ? pvObs.observe(c) : preview(c, SKINS.get(c.dataset.k, c.dataset.pv)));
   }
   // previews use the same drawing code as the game
   function preview(c, it) {
     const d = Math.min(2, window.devicePixelRatio || 1), w = c.clientWidth || 150, h = c.clientHeight || 86; c.width = w * d; c.height = h * d;
     const x = c.getContext('2d'); x.scale(d, d);
     if (it.kind === 'theme') {
-      // paint at phone proportions, then show the middle so scenery reads at this size
-      // paint a wider scene, then scale it down so the scenery shows at this size
       const k = 2.4; x.save(); x.scale(1 / k, 1 / k); GAME.paintBg(x, w * k, h * k, it.id); x.restore();
-      if (owns(it) || c.dataset.rv) { const im = new Image(); im.onload = () => x.drawImage(im, w / 2 - 18, h * .4 - 18, 36, 36); im.src = ART.gemIcon('sapphire', 72); }
+      return;
+    }
+    if (it.kind === 'gem' || it.kind === 'bomb') {
+      const g2 = x.createLinearGradient(0, 0, 0, h); g2.addColorStop(0, '#1a1d29'); g2.addColorStop(1, '#0e1018'); x.fillStyle = g2; x.fillRect(0, 0, w, h);
+      const r = Math.min(h * .27, w * .13);
+      if (it.kind === 'bomb') { const s = ART.bombSprite(r * 1.3, d, it); x.drawImage(s.c, w / 2 - s.S / 2, h / 2 - s.S / 2 + r * .1, s.S, s.S); return; }
+      ['ruby', 'sapphire', 'emerald', 'topaz'].forEach((k, i) => { const s = ART.skinSprite(ART.GEMS[k], r, d, it); x.drawImage(s.c, w * (.16 + i * .227) - s.S / 2, h / 2 - s.S / 2 + (i % 2 ? r * .35 : -r * .35), s.S, s.S); });
       return;
     }
     x.fillStyle = '#0c0e15'; x.fillRect(0, 0, w, h);
     const now = performance.now(), pts = [];
     for (let i = 0; i <= 26; i++) { const t = i / 26; pts.push({x:w * .08 + t * w * .84, y:h * .8 - Math.sin(t * Math.PI) * h * .58, t:now - (1 - t) * 110}); }
     GAME.trail(x, pts, it, 7, now);
-    // a few of its particles, frozen
     const em = it.emit, c2 = it.sparks || it.glow;
     if (em) { x.globalCompositeOperation = 'lighter'; for (let i = 0; i < 12; i++) { const p = pts[6 + i % 18], ox = (i * 37 % 19) - 9, oy = (i * 53 % 21) - 10 + (em === 'ember' || em === 'bubble' ? -8 : em === 'snow' || em === 'petal' ? 8 : 0);
-      x.fillStyle = x.strokeStyle = i % 3 ? c2 : '#ffffff'; x.globalAlpha = .8; const X = p.x + ox, Y = p.y + oy, s = 1.5 + (i % 3);
+      x.fillStyle = x.strokeStyle = it.rainbow ? `hsl(${i * 30},100%,65%)` : i % 3 ? c2 : '#ffffff'; x.globalAlpha = .8; const X = p.x + ox, Y = p.y + oy, s = 1.5 + (i % 3);
       if (em === 'pixel') x.fillRect(X, Y, 4, 4); else if (em === 'bubble') { x.lineWidth = 1; x.beginPath(); x.arc(X, Y, s + 1, 0, 7); x.stroke(); }
       else if (em === 'petal') { x.beginPath(); x.ellipse(X, Y, s + 2, s * .6 + 1, i, 0, 7); x.fill(); }
       else if (em === 'sparks') { x.lineWidth = 1.5; x.beginPath(); x.moveTo(X, Y); x.lineTo(X + ox * .5, Y + oy * .5); x.stroke(); }
@@ -1355,15 +1513,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       x.globalAlpha = 1; x.globalCompositeOperation = 'source-over'; }
   }
   /* ---------------- the vault (random unlocks) ---------------- */
+  const TIER = {}; ALL.forEach(i => (TIER[i.r] = TIER[i.r] || []).push(i));
   function rollOne(force) {
     P.pulls++; P.pity++;
-    let r; const v = Math.random() * 100;
-    r = v < RAR[3].w ? 3 : v < RAR[3].w + RAR[2].w ? 2 : v < RAR[3].w + RAR[2].w + RAR[1].w ? 1 : 0;
+    let v = Math.random() * RAR.reduce((s, x) => s + x.w, 0), r = RAR.length - 1;
+    for (let i = RAR.length - 1; i >= 0; i--) { if (v < RAR[i].w) { r = i; break; } v -= RAR[i].w; }
     if (force != null) r = Math.max(r, force);
-    if (P.pity >= PITY) r = 3;
-    if (r === 3) P.pity = 0;
-    const pool = ALL.filter(i => i.r === r), it = pool[Math.floor(Math.random() * pool.length)], have = owns(it);
-    if (have) P.shards += RAR[r].dup; else (it.kind === 'blade' ? P.blades : P.themes).push(it.id);
+    if (P.pity >= PITY) r = Math.max(r, 4);
+    if (r >= 4) P.pity = 0;
+    const pool = TIER[r], it = pool[Math.floor(Math.random() * pool.length)], have = owns(it);
+    if (have) P.shards += RAR[r].dup; else give(it);
     return {it, dup:have};
   }
   let lastPull = [];
@@ -1371,19 +1530,19 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     const cost = n === 10 ? PULL10 : PULL1;
     if (P.shards < cost) { toast(`${shardImg}<span>You need ${fmt(cost - P.shards)} more shards</span>`); SFX.thud(); return; }
     P.shards -= cost; const res = [];
-    for (let i = 0; i < n; i++) res.push(rollOne(n === 10 && i === 9 && !res.some(x => x.it.r >= 2) ? 2 : null));
+    for (let i = 0; i < n; i++) res.push(rollOne(n === 10 && i === 9 && !res.some(x => x.it.r >= 3) ? 3 : null));
     save(); lastPull = res; checkAch();
-    const top = Math.max(...res.map(x => x.it.r)), refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
+    const top = Math.max(...res.map(x => x.it.r)); ownSets = null; const  refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
     const card = (x, i, big) => `<div class="rv r${x.it.r}${big ? ' big' : ''}" style="--rc:${RAR[x.it.r].c};animation-delay:${i * .14 + .1}s"><div class="pv"><canvas data-rv="${i}"></canvas></div>
-      <b>${esc(x.it.name)}</b><span class="rr">${RAR[x.it.r].n} ${x.it.kind === 'blade' ? 'blade' : 'background'}</span>${x.dup ? `<span class="dup">${shardImg}+${RAR[x.it.r].dup}</span>` : '<span class="new">NEW</span>'}</div>`;
+      <b>${esc(x.it.name)}</b><span class="rr">${RAR[x.it.r].n} ${{blade:'blade', theme:'background', gem:'gem skin', bomb:'bomb skin'}[x.it.kind]}</span>${x.dup ? `<span class="dup">${shardImg}+${RAR[x.it.r].dup}</span>` : '<span class="new">NEW</span>'}</div>`;
     ovKind = 'pull';
     overlay(`<div class="kick" style="color:${RAR[top].c}">${RAR[top].n}${n === 10 ? ' pull' : ''}</div>
       <div class="rvs${n === 1 ? ' one' : ''}">${res.map((x, i) => card(x, i, n === 1)).join('')}</div>
       <p>${fresh ? `${fresh} new` : 'No new items'}${refund ? ` · repeats gave back ${fmt(refund)} shards` : ''}</p>
       <div class="acts two">${n === 1 && !res[0].dup ? '<button class="btn" data-act="equippull">Equip</button>' : `<button class="btn" data-act="pull${n}">Again</button>`}<button class="btn ghost" data-act="closepull">Done</button></div>`);
     document.querySelectorAll('[data-rv]').forEach(c => preview(c, res[+c.dataset.rv].it));
-    res.forEach((x, i) => setTimeout(() => { if (ovKind === 'pull') x.it.r >= 2 ? SFX.power() : SFX.clink(); }, (i * .14 + .1) * 1000 + 120));
-    if (top === 3) setTimeout(() => ovKind === 'pull' && SFX.win(), n * 140 + 400);
+    res.forEach((x, i) => setTimeout(() => { if (ovKind === 'pull') x.it.r >= 3 ? SFX.power() : SFX.clink(); }, (i * .14 + .1) * 1000 + 120));
+    if (top >= 4) setTimeout(() => ovKind === 'pull' && SFX.win(), n * 140 + 400);
   }
   function drawAch() {
     const n = Object.keys(P.ach).length;
@@ -1513,18 +1672,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (t.dataset.mode) { SFX.tap(); startRun({kind:t.dataset.mode, cfg:Object.assign({}, MODE[t.dataset.mode])}); return; }
     if (t.dataset.m) { SFX.tap(); brief('mission', +t.dataset.m); return; }
     if (t.dataset.daily) { SFX.tap(); brief('daily', 0); return; }
-    if (t.dataset.tab) { shopTab = t.dataset.tab; drawShop(); return; }
+    if (t.dataset.tab) { shopTab = t.dataset.tab; shopShown = 40; SFX.tap(); drawShop(); return; }
     if (t.dataset.buy) {
-      const it = ALL.find(x => x.id === t.dataset.buy && x.kind === (shopTab === 'blades' ? 'blade' : 'theme'));
+      const it = SKINS.get(shopTab, t.dataset.buy);
       if (!owns(it)) { toast(`<span>Open the vault to find <b>${esc(it.name)}</b></span>`); SFX.thud(); return; }
-      if (it.kind === 'blade') P.blade = it.id; else P.theme = it.id; save(); applyLook(); SFX.tap(); drawShop(); return;
+      equip(it); SFX.tap(); drawShop(); return;
     }
+    if (t.dataset.flt) { shopFilter = t.dataset.flt; shopShown = 40; SFX.tap(); drawShop(); return; }
     if (t.dataset.set) { const k = t.dataset.set; P.set[k] = !P.set[k]; save(); applySettings(); drawSettings(); if (k === 'sound' && P.set.sound) SFX.tap(); return; }
     const a = t.dataset.act; if (!a) return;
     if (a === 'close') { closeOv(); return; }
     if (a === 'pull1' || a === 'pull10') { SFX.tap(); openVault(a === 'pull1' ? 1 : 10); if (!$('#ov').classList.contains('on')) drawShop(); return; }
     if (a === 'closepull') { closeOv(); drawShop(); return; }
-    if (a === 'equippull') { const it = lastPull[0].it; if (it.kind === 'blade') P.blade = it.id; else P.theme = it.id; save(); applyLook(); SFX.tap(); closeOv(); if (it.kind !== (shopTab === 'blades' ? 'blade' : 'theme')) shopTab = it.kind === 'blade' ? 'blades' : 'themes'; drawShop(); return; }
+    if (a === 'equippull') { const it = lastPull[0].it; equip(it); SFX.tap(); closeOv(); shopTab = it.kind; shopFilter = 'all'; drawShop(); return; }
+    if (a === 'more') { shopShown += 60; SFX.tap(); const y = $('#shop').scrollTop; drawShop(); $('#shop').scrollTop = y; return; }
     if (a === 'start') { startRun(run); return; }
     if (a === 'again' || a === 'restart') { closeOv(); GAME.quit(); startRun(run); return; }
     if (a === 'next') { closeOv(); brief('mission', run.idx + 1); return; }
