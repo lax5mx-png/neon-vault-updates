@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 7,
+  "v": 8,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "e76cce386c8cf70c1ddd3a165a73655530a15d000e7d2c139198db884e90ecf3",
+  "sha256": "dba9efe8b28a5e119d80bcc603f4cbdebcd191027addd83f735c8ad5a971134c",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "1,771 vault items: 1,001 blades, 594 backgrounds, 126 gem skins and 50 bomb skins across 7 rarities, up to Divine. Opens now cost 100 / 900."
+ "notes": "Vault opens are pure luck now: no guaranteed rarities. Odds verified."
 }

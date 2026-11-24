@@ -1475,7 +1475,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
         <h3>Crystal Vault</h3><p>${fmt(total)} things to find. You have ${fmt(have)}.</p>
         <div class="odds">${RAR.map(x => `<span class="${x.n === 'Divine' ? 'div' : ''}" style="color:${x.c}">${x.n} ${x.w}%</span>`).join('')}</div>
         <div class="vbtns"><button class="btn" data-act="pull1">Open ×1<span class="cost">${shardImg}${fmt(PULL1)}</span></button><button class="btn" data-act="pull10">Open ×10<span class="cost">${shardImg}${fmt(PULL10)}</span></button></div>
-        <p class="fine">×10 always has an Epic or better. Legendary or better guaranteed within ${PITY - P.pity} opens. Repeats turn back into shards.</p></div>
+        <p class="fine">Every open is pure luck. Repeats turn back into shards.</p></div>
       <div class="seg four">${TABS.map(([k, n, l]) => `<button data-tab="${k}" class="${shopTab === k ? 'on' : ''}">${n}<small>${own[k].size}/${l.length}</small></button>`).join('')}</div>
       <div class="chips">${[['all', 'All'], ['own', 'Owned']].concat(RAR.map((x, i) => [String(i), x.n])).map(([k, n]) => `<button data-flt="${k}" class="${shopFilter === k ? 'on' : ''}"${/\d/.test(k) ? ` style="--rc:${RAR[k].c}"` : ''}>${n}</button>`).join('')}</div>
       <div class="sgrid">${items.slice(0, shopShown).map(it => { const h = own[it.kind].has(it.id), R = RAR[it.r];
@@ -1514,13 +1514,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   }
   /* ---------------- the vault (random unlocks) ---------------- */
   const TIER = {}; ALL.forEach(i => (TIER[i.r] = TIER[i.r] || []).push(i));
-  function rollOne(force) {
-    P.pulls++; P.pity++;
-    let v = Math.random() * RAR.reduce((s, x) => s + x.w, 0), r = RAR.length - 1;
+  function rollOne() {
+    P.pulls++;
+    let v = Math.random() * RAR.reduce((s, x) => s + x.w, 0), r = 0;
     for (let i = RAR.length - 1; i >= 0; i--) { if (v < RAR[i].w) { r = i; break; } v -= RAR[i].w; }
-    if (force != null) r = Math.max(r, force);
-    if (P.pity >= PITY) r = Math.max(r, 4);
-    if (r >= 4) P.pity = 0;
     const pool = TIER[r], it = pool[Math.floor(Math.random() * pool.length)], have = owns(it);
     if (have) P.shards += RAR[r].dup; else give(it);
     return {it, dup:have};
@@ -1530,7 +1527,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     const cost = n === 10 ? PULL10 : PULL1;
     if (P.shards < cost) { toast(`${shardImg}<span>You need ${fmt(cost - P.shards)} more shards</span>`); SFX.thud(); return; }
     P.shards -= cost; const res = [];
-    for (let i = 0; i < n; i++) res.push(rollOne(n === 10 && i === 9 && !res.some(x => x.it.r >= 3) ? 3 : null));
+    for (let i = 0; i < n; i++) res.push(rollOne());
     save(); lastPull = res; checkAch();
     const top = Math.max(...res.map(x => x.it.r)); ownSets = null; const  refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
     const card = (x, i, big) => `<div class="rv r${x.it.r}${big ? ' big' : ''}" style="--rc:${RAR[x.it.r].c};animation-delay:${i * .14 + .1}s"><div class="pv"><canvas data-rv="${i}"></canvas></div>
