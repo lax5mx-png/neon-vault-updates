@@ -69,6 +69,35 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .si b{display:block;margin:9px 2px 0;font-size:15px}
 .si .pr{display:flex;align-items:center;gap:5px;margin:4px 2px 2px;font-weight:800;font-size:13px;color:var(--mute)}.si .pr img{width:16px;height:16px}
 .si .pr.can{color:var(--gold)}
+.si{position:relative;border-top:3px solid var(--rc)}
+.si.eq{border-color:var(--pri);border-top-color:var(--rc)}
+.si.lock .pv canvas{filter:saturate(.6) brightness(.72)}
+.seg,.sgrid,.vault{flex-shrink:0}
+.si .lk{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.75)}.si .lk .ico{width:22px;height:22px}
+.si .pr i{font-style:normal;color:var(--rc);margin-right:auto;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase}
+.si.r2 .pv,.si.r3 .pv{box-shadow:inset 0 0 0 1px var(--rc)}
+.vault{flex-shrink:0;position:relative;border-radius:14px;padding:18px 16px 14px;margin:6px 0 14px;text-align:center;background:linear-gradient(180deg,#232637,#181a25);border:2px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.vault:before{content:"";position:absolute;left:50%;top:-60px;width:260px;height:200px;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(150,210,255,.22),transparent);pointer-events:none}
+.vgem img{width:72px;height:72px;display:block;margin:0 auto;animation:bob 3.2s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(120,200,255,.35))}
+.vault h3{margin:6px 0 2px;font-size:20px;font-weight:900}.vault p{margin:2px 0;color:var(--mute);font-size:13px;line-height:1.4}
+.vault .odds{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 12px;margin:10px 0;font-size:12px;font-weight:800}
+.vbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 8px}.vbtns .btn{flex-direction:column;gap:2px;min-height:60px;padding:6px 8px;font-size:15px}
+.vbtns .cost{display:inline-flex;align-items:center;gap:4px;font-size:13px;opacity:.8}.vbtns .cost img{width:14px;height:14px}
+.vault .fine{font-size:11.5px}
+.rvs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0 4px;max-height:58vh;overflow-y:auto;padding:4px}
+.rvs.one{grid-template-columns:1fr}
+.rv{position:relative;border-radius:12px;background:#12141c;border:2px solid var(--rc);padding:7px;text-align:left;opacity:0;animation:rvin .45s cubic-bezier(.2,.9,.3,1.25) forwards;overflow:hidden}
+.rv .pv{height:58px;border-radius:8px;overflow:hidden;background:#0c0e15}.rv .pv canvas{width:100%;height:100%;display:block}
+.rv.big .pv{height:150px}
+.rv b{display:block;margin-top:6px;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rv.big b{font-size:20px}
+.rv .rr{display:block;font-size:10.5px;font-weight:800;color:var(--rc);text-transform:uppercase;letter-spacing:.05em}
+.rv .new,.rv .dup{position:absolute;top:10px;right:10px;font-size:10.5px;font-weight:900;padding:3px 6px;border-radius:6px}
+.rv .new{background:var(--rc);color:#12141c}.rv .dup{display:flex;align-items:center;gap:3px;background:rgba(0,0,0,.6);color:var(--gold)}.rv .dup img{width:11px;height:11px}
+.rv.r2{box-shadow:0 0 14px -2px var(--rc)}.rv.r3{box-shadow:0 0 22px 0 var(--rc)}
+.rv.r3:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);animation:shine 1.6s 1s ease-in-out infinite;pointer-events:none}
+@keyframes rvin{0%{opacity:0;transform:perspective(500px) rotateY(85deg) scale(.7)}100%{opacity:1;transform:none}}
+@keyframes shine{60%,100%{transform:translateX(120%)}}
+
 /* list rows */
 .list{display:flex;flex-direction:column;gap:8px}
 .lr{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;background:var(--panel);border:2px solid var(--line)}
@@ -401,13 +430,70 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   const rand = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
+  // Backgrounds: a palette plus scenery drawn once (fx). hill colours run far -> near.
   const THEMES = {
-    lab:    {a:'#14161f', b:'#1b1724', grid:'rgba(255,255,255,.035)', g1:'rgba(255,190,80,.07)', g2:'rgba(90,140,255,.07)'},
-    aurora: {a:'#02121a', b:'#05302a', grid:'rgba(60,255,190,.07)', g1:'rgba(60,255,170,.22)', g2:'rgba(80,140,255,.18)'},
-    ember:  {a:'#140404', b:'#3a1205', grid:'rgba(255,120,40,.08)', g1:'rgba(255,90,20,.24)', g2:'rgba(255,200,60,.12)'},
-    ocean:  {a:'#010a1e', b:'#03304d', grid:'rgba(60,180,255,.08)', g1:'rgba(40,160,255,.22)', g2:'rgba(0,255,220,.12)'},
-    void:   {a:'#000000', b:'#0c0b18', grid:'rgba(255,255,255,.035)', g1:'rgba(170,120,255,.14)', g2:'rgba(255,255,255,.05)', stars:true}
+    lab:     {a:'#14161f', b:'#1b1724', grid:'rgba(255,255,255,.035)', g1:'rgba(255,190,80,.07)', g2:'rgba(90,140,255,.07)'},
+    slate:   {a:'#0f1418', b:'#1b232b', grid:'rgba(255,255,255,.04)', g1:'rgba(120,200,255,.08)', g2:'rgba(255,255,255,.04)'},
+    dusk:    {a:'#160f1e', b:'#30182a', grid:'rgba(255,200,220,.04)', g1:'rgba(255,120,150,.12)', g2:'rgba(130,90,255,.10)'},
+    moss:    {a:'#0b1411', b:'#15241d', grid:'rgba(180,255,210,.04)', g1:'rgba(120,255,170,.08)', g2:'rgba(255,230,140,.05)'},
+    ember:   {a:'#140404', b:'#3a1205', grid:'rgba(255,120,40,.08)', g1:'rgba(255,90,20,.24)', g2:'rgba(255,200,60,.12)', fx:['embers']},
+    ocean:   {a:'#010a1e', b:'#03304d', grid:'rgba(60,180,255,.08)', g1:'rgba(40,160,255,.22)', g2:'rgba(0,255,220,.12)', fx:['rays', 'bubbles']},
+    aurora:  {a:'#02121a', b:'#05302a', grid:'rgba(60,255,190,.05)', g1:'rgba(60,255,170,.12)', g2:'rgba(80,140,255,.12)', fx:['stars', 'aurora', 'peaks'], hill:['#082a2e', '#041a1d']},
+    dunes:   {a:'#1c1030', b:'#7a3247', grid:'rgba(255,200,150,.04)', g1:'rgba(255,150,90,.2)', g2:'rgba(255,90,120,.12)', fx:['sun', 'dunes'], hill:['#5a2440', '#3c1834', '#24102a'], sun:'#ffb36b'},
+    arctic:  {a:'#08162a', b:'#24426a', grid:'rgba(220,240,255,.05)', g1:'rgba(170,220,255,.16)', g2:'rgba(255,255,255,.06)', fx:['stars', 'peaks', 'snow'], hill:['#3a5a82', '#22395a', '#132640']},
+    lagoon:  {a:'#03201f', b:'#0a4f50', grid:'rgba(120,255,240,.05)', g1:'rgba(80,255,230,.16)', g2:'rgba(60,140,255,.12)', fx:['rays', 'bubbles', 'reef'], hill:['#06393a', '#042a2b']},
+    void:    {a:'#000000', b:'#0c0b18', grid:'rgba(255,255,255,.035)', g1:'rgba(170,120,255,.14)', g2:'rgba(255,255,255,.05)', fx:['stars']},
+    forest:  {a:'#050f0b', b:'#0f2a1b', grid:'rgba(200,255,200,.03)', g1:'rgba(120,255,160,.08)', g2:'rgba(230,255,120,.06)', fx:['stars', 'hills', 'pines', 'fireflies'], hill:['#0d2419', '#08180f', '#040c08']},
+    sakura:  {a:'#1e0c26', b:'#5a2448', grid:'rgba(255,200,230,.04)', g1:'rgba(255,140,200,.2)', g2:'rgba(255,220,240,.08)', fx:['moon', 'hills', 'petals'], hill:['#4a1c3c', '#33122a', '#1f0a1a'], moon:'#ffe3f0'},
+    cavern:  {a:'#0a0612', b:'#1a0f2a', grid:'rgba(200,160,255,.04)', g1:'rgba(180,110,255,.16)', g2:'rgba(80,200,255,.1)', fx:['crystals']},
+    storm:   {a:'#0a0d13', b:'#222a38', grid:'rgba(200,220,255,.04)', g1:'rgba(140,170,255,.1)', g2:'rgba(255,255,255,.04)', fx:['clouds', 'rain', 'bolt']},
+    nebula:  {a:'#04020c', b:'#110826', grid:'rgba(255,255,255,.02)', g1:'rgba(255,80,200,.14)', g2:'rgba(80,140,255,.16)', fx:['nebula', 'stars', 'bigstars']},
+    moonrise:{a:'#060a1a', b:'#1d2a4c', grid:'rgba(220,230,255,.03)', g1:'rgba(160,190,255,.12)', g2:'rgba(255,230,180,.06)', fx:['stars', 'moon', 'hills', 'lake'], hill:['#18233f', '#0f172c', '#080d1a'], moon:'#fff4dc'},
+    solar:   {a:'#1a0606', b:'#5a1a08', grid:'rgba(255,200,120,.04)', g1:'rgba(255,170,60,.22)', g2:'rgba(255,80,40,.16)', fx:['sun', 'rays', 'embers', 'dunes'], hill:['#4a1608', '#300e06', '#1c0804'], sun:'#ffd27a'}
   };
+  // a repeatable random sequence, so a background looks the same in the shop and in the game
+  const seeded = s => () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+  function paintBg(b, W, H, id) {
+    const t = THEMES[id] || THEMES.lab, rnd = seeded(7 + id.length * 131), r = (a, z) => a + rnd() * (z - a), fx = t.fx || [], M = Math.max(W, H);
+    const lg = b.createLinearGradient(0, 0, 0, H); lg.addColorStop(0, t.a); lg.addColorStop(1, t.b); b.fillStyle = lg; b.fillRect(0, 0, W, H);
+    const glow = (x, y, rad, c) => { const gr = b.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)'); b.fillStyle = gr; b.fillRect(0, 0, W, H); };
+    glow(W * .15, H * .2, M * .6, t.g1); glow(W * .9, H * .85, M * .6, t.g2);
+    if (fx.includes('nebula')) { [['rgba(255,70,190,.16)', .25, .3], ['rgba(90,120,255,.18)', .75, .45], ['rgba(140,80,255,.14)', .4, .7], ['rgba(255,150,90,.08)', .8, .15]].forEach(([c, x, y]) => { for (let i = 0; i < 5; i++) glow(W * x + r(-W * .15, W * .15), H * y + r(-H * .08, H * .08), M * r(.15, .3), c); }); }
+    if (fx.includes('stars')) for (let i = 0; i < 160; i++) { b.fillStyle = `rgba(255,255,255,${r(.12, .75)})`; b.beginPath(); b.arc(r(0, W), r(0, H * .8), r(.35, 1.3), 0, 7); b.fill(); }
+    if (fx.includes('bigstars')) for (let i = 0; i < 9; i++) { const x = r(0, W), y = r(0, H), s = r(4, 9); b.fillStyle = 'rgba(255,255,255,.85)'; b.beginPath(); b.moveTo(x, y - s); b.quadraticCurveTo(x, y, x + s, y); b.quadraticCurveTo(x, y, x, y + s); b.quadraticCurveTo(x, y, x - s, y); b.quadraticCurveTo(x, y, x, y - s); b.fill(); glow(x, y, s * 3, 'rgba(200,210,255,.12)'); }
+    if (fx.includes('aurora')) { b.save(); b.globalCompositeOperation = 'lighter'; for (let k = 0; k < 3; k++) { const y0 = H * (.18 + k * .09), amp = H * .05, col = ['rgba(60,255,170,', 'rgba(80,200,255,', 'rgba(170,110,255,'][k]; for (let x = 0; x < W; x += 3) { const y = y0 + Math.sin(x / W * 5 + k * 2) * amp + Math.sin(x / W * 13 + k) * amp * .3, h = H * r(.12, .2); const gr = b.createLinearGradient(0, y - h, 0, y); gr.addColorStop(0, col + '0)'); gr.addColorStop(1, col + '.10)'); b.fillStyle = gr; b.fillRect(x, y - h, 3, h); } } b.restore(); }
+    if (fx.includes('sun')) { const x = W * .5, y = H * .72, rad = Math.min(W, H) * .2; glow(x, y, rad * 3, 'rgba(255,170,90,.2)'); const sg = b.createLinearGradient(0, y - rad, 0, y + rad); sg.addColorStop(0, t.sun); sg.addColorStop(1, '#ff5a6a'); b.fillStyle = sg; b.beginPath(); b.arc(x, y, rad, 0, 7); b.fill(); }
+    if (fx.includes('moon')) { const x = W * .74, y = H * .2, rad = Math.min(W, H) * .1; glow(x, y, rad * 4, 'rgba(255,240,220,.12)'); b.fillStyle = t.moon; b.beginPath(); b.arc(x, y, rad, 0, 7); b.fill(); b.fillStyle = 'rgba(0,0,0,.07)'; [[-.3, -.2, .22], [.25, .15, .17], [-.05, .4, .12], [.35, -.35, .1]].forEach(([dx, dy, s]) => { b.beginPath(); b.arc(x + dx * rad, y + dy * rad, s * rad, 0, 7); b.fill(); }); }
+    if (fx.includes('rays')) { b.save(); b.globalCompositeOperation = 'lighter'; for (let i = 0; i < 7; i++) { const x = r(0, W), w = r(20, 70), sk = r(-.4, .1) * H; const gr = b.createLinearGradient(0, 0, 0, H * .85); gr.addColorStop(0, 'rgba(200,240,255,.09)'); gr.addColorStop(1, 'rgba(200,240,255,0)'); b.fillStyle = gr; b.beginPath(); b.moveTo(x, 0); b.lineTo(x + w, 0); b.lineTo(x + w + sk, H * .85); b.lineTo(x + sk - w * .5, H * .85); b.fill(); } b.restore(); }
+    if (fx.includes('clouds')) for (let i = 0; i < 26; i++) { const x = r(-W * .1, W * 1.1), y = r(0, H * .35), rad = r(40, 110); const gr = b.createRadialGradient(x, y, 0, x, y, rad); gr.addColorStop(0, 'rgba(120,135,160,.16)'); gr.addColorStop(1, 'rgba(120,135,160,0)'); b.fillStyle = gr; b.beginPath(); b.arc(x, y, rad, 0, 7); b.fill(); }
+    if (fx.includes('bolt')) { b.save(); b.globalCompositeOperation = 'lighter'; b.strokeStyle = 'rgba(200,215,255,.35)'; b.lineWidth = 1.6; let x = W * .78, y = H * .08; b.beginPath(); b.moveTo(x, y); while (y < H * .55) { x += r(-18, 18); y += r(14, 30); b.lineTo(x, y); } b.stroke(); glow(W * .78, H * .1, M * .25, 'rgba(160,180,255,.08)'); b.restore(); }
+    const ridge = (base, amp, col, f, seed, sharp) => {
+      b.fillStyle = col; b.beginPath(); b.moveTo(0, H);
+      for (let x = 0; x <= W + 8; x += 8) { const u = x / W * f + seed; let y = Math.sin(u) * .6 + Math.sin(u * 2.3 + 1.7) * .3 + Math.sin(u * 5.1) * .1; if (sharp) y = 1 - Math.abs(Math.sin(u * 1.3)) * 1.6 + Math.sin(u * 7) * .12; b.lineTo(x, H * base - y * amp); }
+      b.lineTo(W, H); b.closePath(); b.fill();
+    };
+    const hc = t.hill || ['#111', '#0a0a0a', '#050505'];
+    if (fx.includes('peaks')) hc.forEach((c, i) => { ridge(.74 + i * .07, H * (.13 - i * .025), c, 3 + i, i * 4.1 + 1, true); if (i === 0 && id === 'arctic') { b.save(); b.globalCompositeOperation = 'lighter'; b.fillStyle = 'rgba(255,255,255,.05)'; ridge(.74, H * .13, 'rgba(255,255,255,.06)', 3, 1, true); b.restore(); } });
+    if (fx.includes('hills')) hc.forEach((c, i) => ridge(.76 + i * .07, H * (.06 - i * .01), c, 2 + i * 1.4, i * 2.7 + .5));
+    if (fx.includes('dunes')) hc.forEach((c, i) => ridge(.8 + i * .06, H * (.05 - i * .008), c, 1.6 + i * .8, i * 3.3 + 2));
+    if (fx.includes('reef')) hc.forEach((c, i) => ridge(.86 + i * .06, H * .035, c, 9 + i * 4, i * 1.9));
+    if (fx.includes('pines')) { b.fillStyle = hc[hc.length - 1]; for (let i = 0; i < 22; i++) { const x = r(0, W), hgt = r(30, 80), y = H * r(.88, .97); b.beginPath(); b.moveTo(x, y - hgt); b.lineTo(x + hgt * .28, y); b.lineTo(x - hgt * .28, y); b.fill(); } }
+    if (fx.includes('lake')) { const y0 = H * .9; const gr = b.createLinearGradient(0, y0, 0, H); gr.addColorStop(0, 'rgba(120,150,220,.12)'); gr.addColorStop(1, 'rgba(0,0,0,.2)'); b.fillStyle = gr; b.fillRect(0, y0, W, H - y0); b.fillStyle = 'rgba(255,244,220,.25)'; for (let i = 0; i < 9; i++) b.fillRect(W * .74 - r(5, 30), y0 + 6 + i * 7, r(10, 60), 1.5); }
+    if (fx.includes('crystals')) { const col = ['rgba(190,120,255,', 'rgba(110,200,255,', 'rgba(255,130,220,']; for (let i = 0; i < 26; i++) { const top = i % 2 === 0, x = r(-10, W + 10), h = r(30, 110), w = h * r(.18, .3), y = top ? 0 : H, d = top ? 1 : -1, c = col[i % 3]; const gr = b.createLinearGradient(0, y, 0, y + d * h); gr.addColorStop(0, c + '.05)'); gr.addColorStop(1, c + '.32)'); b.fillStyle = gr; b.beginPath(); b.moveTo(x - w, y); b.lineTo(x + w, y); b.lineTo(x + w * .3, y + d * h); b.lineTo(x - w * .2, y + d * h * .9); b.closePath(); b.fill(); b.strokeStyle = c + '.4)'; b.lineWidth = 1; b.stroke(); } }
+    const dots = (n, f) => { for (let i = 0; i < n; i++) f(r(0, W), r(0, H)); };
+    if (fx.includes('embers')) dots(60, (x, y) => { b.fillStyle = `rgba(255,${Math.round(r(120, 210))},80,${r(.15, .55)})`; b.beginPath(); b.arc(x, y, r(.6, 1.8), 0, 7); b.fill(); });
+    if (fx.includes('snow')) dots(120, (x, y) => { b.fillStyle = `rgba(255,255,255,${r(.15, .6)})`; b.beginPath(); b.arc(x, y, r(.6, 2), 0, 7); b.fill(); });
+    if (fx.includes('bubbles')) dots(40, (x, y) => { b.strokeStyle = `rgba(200,255,255,${r(.08, .25)})`; b.lineWidth = 1; b.beginPath(); b.arc(x, y, r(2, 8), 0, 7); b.stroke(); });
+    if (fx.includes('fireflies')) dots(26, (x, y) => { y = H * r(.45, .92); const gr = b.createRadialGradient(x, y, 0, x, y, 9); gr.addColorStop(0, 'rgba(230,255,130,.6)'); gr.addColorStop(1, 'rgba(230,255,130,0)'); b.fillStyle = gr; b.beginPath(); b.arc(x, y, 9, 0, 7); b.fill(); });
+    if (fx.includes('petals')) dots(38, (x, y) => { b.save(); b.translate(x, y); b.rotate(r(0, 6)); b.fillStyle = `rgba(255,${Math.round(r(170, 215))},${Math.round(r(210, 235))},${r(.25, .6)})`; b.beginPath(); b.ellipse(0, 0, r(3, 6), r(1.6, 3), 0, 0, 7); b.fill(); b.restore(); });
+    if (fx.includes('rain')) { b.strokeStyle = 'rgba(180,200,230,.12)'; b.lineWidth = 1; dots(140, (x, y) => { b.beginPath(); b.moveTo(x, y); b.lineTo(x - 4, y + 16); b.stroke(); }); }
+    // worn surface and soft out-of-focus lights
+    b.strokeStyle = t.grid; b.lineWidth = 1;
+    for (let i = 0; i < 40; i++) { const x = r(-W * .2, W), y = r(0, H), l = r(20, 120); b.beginPath(); b.moveTo(x, y); b.lineTo(x + l, y - l * .45); b.stroke(); }
+    for (let i = 0; i < 600; i++) { b.fillStyle = `rgba(255,255,255,${r(0, .03)})`; b.fillRect(r(0, W), r(0, H), 1.5, 1.5); }
+    for (let i = 0; i < 12; i++) { const x = r(0, W), y = r(0, H), rad = r(14, 52); const bk = b.createRadialGradient(x, y, 0, x, y, rad); bk.addColorStop(0, `rgba(255,255,255,${r(.02, .05)})`); bk.addColorStop(1, 'rgba(255,255,255,0)'); b.fillStyle = bk; b.beginPath(); b.arc(x, y, rad, 0, 7); b.fill(); }
+    const vg = b.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .3, W / 2, H / 2, M * .75); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.5)'); b.fillStyle = vg; b.fillRect(0, 0, W, H);
+  }
   let theme = 'lab', blade = {core:'#ffffff', glow:'#9ad8ff'};
 
   function resize() {
@@ -421,21 +507,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (!G || !G.running) drawIdle();
   }
   function drawBg() {
-    const t = THEMES[theme] || THEMES.lab;
     bg = document.createElement('canvas'); bg.width = cv.width; bg.height = cv.height;
-    const b = bg.getContext('2d'); b.scale(DPR, DPR);
-    const lg = b.createLinearGradient(0, 0, 0, H); lg.addColorStop(0, t.a); lg.addColorStop(1, t.b); b.fillStyle = lg; b.fillRect(0, 0, W, H);
-    const glow = (x, y, r, c) => { const gr = b.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, c); gr.addColorStop(1, 'rgba(0,0,0,0)'); b.fillStyle = gr; b.fillRect(0, 0, W, H); };
-    glow(W * .15, H * .2, Math.max(W, H) * .6, t.g1); glow(W * .9, H * .85, Math.max(W, H) * .6, t.g2);
-    // worn surface: faint diagonal scratches and speckle
-    b.strokeStyle = t.grid; b.lineWidth = 1;
-    for (let i = 0; i < 70; i++) { const x = rand(-W * .2, W), y = rand(0, H), l = rand(20, 120); b.beginPath(); b.moveTo(x, y); b.lineTo(x + l, y - l * .45); b.stroke(); }
-    for (let i = 0; i < 900; i++) { b.fillStyle = `rgba(255,255,255,${rand(0, .035)})`; b.fillRect(rand(0, W), rand(0, H), 1.5, 1.5); }
-    if (t.stars) { for (let i = 0; i < 140; i++) { b.fillStyle = `rgba(255,255,255,${rand(.15, .8)})`; b.beginPath(); b.arc(rand(0, W), rand(0, H), rand(.4, 1.4), 0, 7); b.fill(); } }
-    // soft out-of-focus lights and a floor sheen for depth
-    for (let i = 0; i < 16; i++) { const x = rand(0, W), y = rand(0, H), r = rand(14, 52); const bk = b.createRadialGradient(x, y, 0, x, y, r); bk.addColorStop(0, `rgba(255,255,255,${rand(.02, .06)})`); bk.addColorStop(1, 'rgba(255,255,255,0)'); b.fillStyle = bk; b.beginPath(); b.arc(x, y, r, 0, 7); b.fill(); }
-    const fl = b.createLinearGradient(0, H * .7, 0, H); fl.addColorStop(0, 'rgba(255,255,255,0)'); fl.addColorStop(1, 'rgba(255,255,255,.05)'); b.fillStyle = fl; b.fillRect(0, H * .7, W, H * .3);
-    const vg = b.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .3, W / 2, H / 2, Math.max(W, H) * .75); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); b.fillStyle = vg; b.fillRect(0, 0, W, H);
+    const b = bg.getContext('2d'); b.scale(DPR, DPR); paintBg(b, W, H, theme);
   }
 
   /* ---------------- state ---------------- */
@@ -525,23 +598,33 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     }
     return best <= bw ? h : -1;
   }
+  // direction of the swipe near the finger: look back along the stroke about one gem-width
+  function strokeAng(s, x1, y1, x0, y0) {
+    for (let i = s.pts.length - 1; i >= 0; i--) { const p = s.pts[i]; if (Math.hypot(x1 - p.x, y1 - p.y) >= R * .7) return Math.atan2(y1 - p.y, x1 - p.x); }
+    const p = s.pts[0]; if (p && Math.hypot(x1 - p.x, y1 - p.y) > 3) return Math.atan2(y1 - p.y, x1 - p.x);
+    return Math.hypot(x1 - x0, y1 - y0) > .5 ? Math.atan2(y1 - y0, x1 - x0) : (s.tapAng != null ? s.tapAng : (s.tapAng = rand(-.6, .6)));
+  }
   function slice(s, x0, y0, x1, y1, dt) {
     // no speed or length limit: a tap or a slow drag counts as a cut
-    const ang = Math.atan2(y1 - y0, x1 - x0);
+    const ang = strokeAng(s, x1, y1, x0, y0);
     for (const o of G.objs.slice()) {
       if (o.cut) continue;
       const h = segHit(o, x0, y0, x1, y1); if (h < 0) continue;
       if (o.type === 'geode') { if (G.rt - o.lastHit > .07) hitGeode(o, ang); continue; }
-      cut(o, ang, h, s);
+      // where the blade line crosses the gem: offset of that line from the gem's centre
+      const dx = x1 - x0, dy = y1 - y0, L2 = dx * dx + dy * dy || 1, u = clamp(((o.x - x0) * dx + (o.y - y0) * dy) / L2, 0, 1);
+      const qx = x0 + u * dx, qy = y0 + u * dy, off = clamp((qx - o.x) * -Math.sin(ang) + (qy - o.y) * Math.cos(ang), -o.r * .8, o.r * .8);
+      cut(o, ang, h, s, off);
     }
   }
-  function cut(o, ang, h, s) {
+  function cut(o, ang, h, s, off) {
+    off = off || 0; const cx = o.x - Math.sin(ang) * off, cy = o.y + Math.cos(ang) * off;
     o.cut = true; G.objs.splice(G.objs.indexOf(o), 1);
     if (o.type === 'bomb') { explode(o); return; }
     const d = o.type === 'power' ? POWERS[o.kind] : GEMS[o.kind];
-    halves(o, ang, o.type === 'power' ? SPR.power[o.kind] : SPR.gem[o.kind], R);
-    burst(o.x, o.y, d.c1, d.glow, ang, 1);
-    mark(o.x, o.y, d.glow, ang);
+    halves(o, ang, o.type === 'power' ? SPR.power[o.kind] : SPR.gem[o.kind], R, off);
+    burst(cx, cy, d.c1, d.glow, ang, 1);
+    mark(cx, cy, d.glow, ang);
     SFX.shatter(o.kind === 'diamond' ? 1.6 : rand(.9, 1.15)); buzz(8);
     // wrong colour in a colour mission costs a life
     const rule = G.cfg.goal && G.cfg.goal.type === 'color' ? G.cfg.goal.color : null;
@@ -567,12 +650,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     SFX.combo(n); buzz(25);
   }
   function addScore(p) { G.score += p * (G.dblT > 0 ? 2 : 1); }
-  function halves(o, ang, spr, rr) {
-    const nx = -Math.sin(ang), ny = Math.cos(ang);
+  function halves(o, ang, spr, rr, off) {
+    const nx = -Math.sin(ang), ny = Math.cos(ang); off = off || 0;
     for (const sgn of [-1, 1]) {
-      const push = rand(80, 150);
+      // the smaller piece flies off faster
+      const share = .5 + sgn * off / (2 * rr), push = rand(80, 150) * clamp(1.25 - share * .5, .8, 1.25);
       G.pieces.push({spr, x:o.x + nx * sgn * 2, y:o.y + ny * sgn * 2, vx:o.vx * .6 + nx * sgn * push + Math.cos(ang) * 40, vy:Math.min(o.vy * .5, 0) + ny * sgn * push - 60,
-        rot:o.rot, vr:o.vr + sgn * rand(1.5, 3.5), cl:ang - o.rot, side:sgn, life:0, glow:(GEMS[o.kind] || POWERS[o.kind] || {glow:'#fff'}).glow, rr});
+        rot:o.rot, vr:o.vr + sgn * rand(1.5, 3.5), cl:ang - o.rot, side:sgn, off, life:0, glow:(GEMS[o.kind] || POWERS[o.kind] || {glow:'#fff'}).glow, rr});
     }
   }
   function burst(x, y, c, glow, ang, k) {
@@ -679,11 +763,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       const p = G.parts[i]; p.life += dtReal; if (p.life >= p.max) { G.parts.splice(i, 1); continue; }
       if (p.t === 'shard') { p.vy += GRAV * .7 * dt; p.vx *= .99; p.rot += p.vr * dt; }
       if (p.t === 'spark') { p.vx *= .94; p.vy *= .94; }
+      if (p.t === 'dot') { p.vy += p.gv * dt; p.vx *= .98; if (p.vr) p.rot += p.vr * dt; }
       if (p.x != null && p.vx != null) { p.x += p.vx * dt; p.y += p.vy * dt; }
     }
     for (let i = G.marks.length - 1; i >= 0; i--) { G.marks[i].life += dtReal; if (G.marks[i].life > G.marks[i].max) G.marks.splice(i, 1); }
     for (let i = G.pops.length - 1; i >= 0; i--) { const p = G.pops[i]; p.life += dtReal; if (p.life > p.max) G.pops.splice(i, 1); }
-    for (const s of strokes.values()) { if (s.combo && G.rt - s.lastCut > .38) finishCombo(s); s.pts = s.pts.filter(p => performance.now() - p.t < 130); }
+    for (const s of strokes.values()) { if (s.combo && G.rt - s.lastCut > .38) finishCombo(s); const TL = trailLife(blade); s.pts = s.pts.filter(p => performance.now() - p.t < TL); }
     // goal reached?
     const gp = goalProgress();
     if (gp && !G.ending && gp.v >= gp.n) G.ending = {at:G.rt + .7, reason:'goal'};
@@ -724,12 +809,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     for (const p of G.pieces) {
       const a = Math.min(1, 2.2 - p.life * 1.2); if (a <= 0) continue;
       g.save(); g.globalAlpha = Math.max(0, a); g.translate(p.x, p.y); g.rotate(p.rot); g.rotate(p.cl);
-      g.beginPath(); g.rect(-p.spr.S, p.side > 0 ? 0 : -p.spr.S, p.spr.S * 2, p.spr.S); g.clip();
+      const of = p.off || 0; g.beginPath(); g.rect(-p.spr.S, p.side > 0 ? of : of - p.spr.S * 2, p.spr.S * 2, p.spr.S * 2); g.clip();
       g.rotate(-p.cl); g.drawImage(p.spr.c, -p.spr.S / 2, -p.spr.S / 2, p.spr.S, p.spr.S);
       g.rotate(p.cl);
       // the bright cut face
       g.globalCompositeOperation = 'lighter'; g.strokeStyle = p.glow; g.lineWidth = 3; g.globalAlpha = Math.max(0, a) * Math.max(0, 1 - p.life * 1.4);
-      g.beginPath(); g.moveTo(-p.rr * .95, 0); g.lineTo(p.rr * .95, 0); g.stroke();
+      const hw = Math.sqrt(Math.max(0, p.rr * p.rr - of * of)) * .92; g.beginPath(); g.moveTo(-hw, of); g.lineTo(hw, of); g.stroke();
       g.restore();
     }
     // particles
@@ -737,6 +822,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     for (const p of G.parts) {
       const k = 1 - p.life / p.max;
       if (p.t === 'spark') { g.strokeStyle = p.c; g.globalAlpha = k; g.lineWidth = p.w; g.beginPath(); g.moveTo(p.x, p.y); g.lineTo(p.x - p.vx * .03, p.y - p.vy * .03); g.stroke(); }
+      else if (p.t === 'dot') drawDot(g, p, k);
       else if (p.t === 'ring') { const r = p.r0 + (p.r1 - p.r0) * (1 - k * k); g.strokeStyle = p.c; g.globalAlpha = k * .8; g.lineWidth = 3 * k + 1; g.beginPath(); g.arc(p.x, p.y, r, 0, 7); g.stroke(); }
     }
     g.globalCompositeOperation = 'source-over';
@@ -776,33 +862,85 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
   function drawTrails() {
     const now = performance.now();
-    for (const s of strokes.values()) {
-      const pts = s.pts; if (pts.length < 2) continue;
-      const n = pts.length, Wd = R * .2;
-      const ribbon = (wmul) => {
-        const L = [], Rr = [];
-        for (let i = 0; i < n; i++) {
-          const p = pts[i], q = pts[Math.min(n - 1, i + 1)], o = pts[Math.max(0, i - 1)];
-          let dx = q.x - o.x, dy = q.y - o.y; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
-          const age = (now - p.t) / 130, w = Wd * wmul * Math.max(0, 1 - age) * (.25 + .75 * i / (n - 1));
-          L.push([p.x - dy * w, p.y + dx * w]); Rr.push([p.x + dy * w, p.y - dx * w]);
-        }
-        g.beginPath(); L.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); for (let i = n - 1; i >= 0; i--) g.lineTo(Rr[i][0], Rr[i][1]); g.closePath();
-      };
-      let glow = blade.glow;
-      if (blade.rainbow) { const gr = g.createLinearGradient(pts[0].x, pts[0].y, pts[n - 1].x, pts[n - 1].y); const h0 = (now / 6) % 360; for (let i = 0; i <= 4; i++) gr.addColorStop(i / 4, `hsl(${(h0 + i * 70) % 360},100%,60%)`); glow = gr; }
-      if (blade.lightning) {
-        g.globalCompositeOperation = 'lighter'; g.lineJoin = 'round';
-        for (const [w, c, a] of [[9, blade.glow, .35], [3, blade.core, 1]]) {
-          g.strokeStyle = c; g.globalAlpha = a; g.lineWidth = w; g.beginPath();
-          pts.forEach((p, i) => { const j = i && i < n - 1 ? rand(-6, 6) : 0; i ? g.lineTo(p.x + j, p.y + j) : g.moveTo(p.x, p.y); }); g.stroke();
-        }
-        g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; continue;
+    for (const s of strokes.values()) trail(g, s.pts, blade, R * .2, now);
+  }
+  // Blade trail renderer, shared with the shop previews.
+  const hexA = (h, a) => h.length === 7 ? h + Math.round(clamp(a, 0, 1) * 255).toString(16).padStart(2, '0') : h;
+  const trailLife = b => b.fx === 'ghost' ? 320 : 140;
+  function trail(g, pts, b, Wd, now) {
+    const n = pts.length; if (n < 2) return;
+    const life = trailLife(b), head = pts[n - 1], tail = pts[0];
+    const ribbon = (wmul, sh, wave) => {
+      const L = [], Rr = [];
+      for (let i = 0; i < n; i++) {
+        const p = pts[i], q = pts[Math.min(n - 1, i + 1)], o = pts[Math.max(0, i - 1)];
+        let dx = q.x - o.x, dy = q.y - o.y; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+        let w = Wd * wmul * Math.max(0, 1 - (now - p.t) / life) * (.2 + .8 * i / (n - 1));
+        if (wave) w *= .55 + .45 * Math.sin(i * .9 - now / 55);
+        const cx = p.x - dy * (sh || 0) * Wd, cy = p.y + dx * (sh || 0) * Wd;
+        L.push([cx - dy * w, cy + dx * w]); Rr.push([cx + dy * w, cy - dx * w]);
       }
-      g.globalCompositeOperation = 'lighter'; g.globalAlpha = .45; g.fillStyle = glow; ribbon(2.6); g.fill();
-      g.globalAlpha = 1; g.globalCompositeOperation = blade.dark ? 'source-over' : 'lighter'; g.fillStyle = blade.core; ribbon(1); g.fill();
-      g.globalCompositeOperation = 'source-over';
+      g.beginPath(); L.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); for (let i = n - 1; i >= 0; i--) g.lineTo(Rr[i][0], Rr[i][1]); g.closePath();
+    };
+    // colour that fades in from the tail to the head
+    const lin = (c1, c2, a) => {
+      const gr = g.createLinearGradient(tail.x, tail.y, head.x, head.y);
+      if (b.rainbow) { const h0 = (now / 5) % 360; for (let i = 0; i <= 5; i++) gr.addColorStop(i / 5, `hsla(${(h0 + i * 60) % 360},100%,62%,${a * Math.min(1, .15 + i / 5)})`); return gr; }
+      gr.addColorStop(0, hexA(c1, 0)); gr.addColorStop(.45, hexA(c1, a * .7)); gr.addColorStop(1, hexA(c2 || c1, a)); return gr;
+    };
+    g.save(); g.lineJoin = 'round'; g.lineCap = 'round';
+    const fresh = Math.max(0, 1 - (now - head.t) / life);
+    if (b.lightning) {
+      g.globalCompositeOperation = 'lighter';
+      g.fillStyle = lin(b.glow, b.g2, .35); ribbon(2.6); g.fill();
+      for (const [w, c, a] of [[10, b.glow, .3], [4, b.glow, .7], [2, b.core, 1]]) {
+        g.strokeStyle = c; g.globalAlpha = a * fresh; g.lineWidth = w; g.beginPath();
+        pts.forEach((p, i) => { const j = i && i < n - 1 ? rand(-7, 7) : 0; i ? g.lineTo(p.x + j, p.y - j) : g.moveTo(p.x, p.y); }); g.stroke();
+      }
+    } else {
+      // outer glow
+      g.globalCompositeOperation = 'lighter'; g.fillStyle = lin(b.glow, b.g2, .5); ribbon(b.fx === 'ghost' ? 3.6 : 2.8); g.fill();
+      if (b.fx === 'glitch') {
+        const j = () => rand(-3.5, 3.5);
+        g.fillStyle = lin('#ff2a6d', '#ff2a6d', .9); g.save(); g.translate(-3 + j(), j() * .4); ribbon(1); g.fill(); g.restore();
+        g.fillStyle = lin('#05d9e8', '#05d9e8', .9); g.save(); g.translate(3 + j(), j() * .4); ribbon(1); g.fill(); g.restore();
+      }
+      const twin = b.fx === 'twin', wave = b.fx === 'pulse';
+      g.globalCompositeOperation = b.dark ? 'source-over' : 'lighter';
+      g.fillStyle = b.dark ? b.core : lin(b.core, b.core, 1);
+      if (twin) { ribbon(.62, -1.05, wave); g.fill(); ribbon(.62, 1.05, wave); g.fill(); } else { ribbon(1, 0, wave); g.fill(); }
+      if (b.dark) { g.globalCompositeOperation = 'lighter'; g.fillStyle = lin(b.glow, b.g2, .9); ribbon(.28); g.fill(); }
+      else if (!twin) { g.fillStyle = 'rgba(255,255,255,.85)'; ribbon(.35, 0, wave); g.fill(); }
     }
+    // bright point at the fingertip
+    if (fresh > 0) {
+      g.globalCompositeOperation = 'lighter'; g.globalAlpha = fresh;
+      const r = Wd * 3.2, rg = g.createRadialGradient(head.x, head.y, 0, head.x, head.y, r), hc = b.rainbow ? `hsl(${(now / 5) % 360},100%,65%)` : (b.g2 || b.glow);
+      rg.addColorStop(0, b.dark ? hexA(b.glow, .8) : 'rgba(255,255,255,.95)'); rg.addColorStop(.3, hc.length === 7 ? hexA(hc, .55) : hc); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = rg; g.beginPath(); g.arc(head.x, head.y, r, 0, 7); g.fill();
+    }
+    g.restore();
+  }
+  // particles a blade leaves behind as it moves
+  function emitFx(x, y) {
+    const b = blade, fx = b.emit || (b.sparks ? 'sparks' : null); if (!fx || !G) return;
+    const c = b.sparks || b.glow, P = G.parts; if (P.length > 600) return;
+    if (fx === 'sparks' && Math.random() < .55) P.push({t:'spark', x, y, vx:rand(-90, 90), vy:rand(-90, 90), life:0, max:rand(.2, .4), c, w:2});
+    else if (fx === 'ember' && Math.random() < .5) P.push({t:'dot', sh:'c', x:x + rand(-6, 6), y, vx:rand(-30, 30), vy:rand(-140, -50), gv:-60, life:0, max:rand(.45, .8), c:Math.random() < .5 ? c : '#ffe08a', s:rand(1.6, 3.2)});
+    else if (fx === 'snow' && Math.random() < .45) P.push({t:'dot', sh:'c', x:x + rand(-8, 8), y, vx:rand(-25, 25), vy:rand(20, 70), gv:0, life:0, max:rand(.6, 1), c:'#ffffff', s:rand(1.4, 2.6)});
+    else if (fx === 'petal' && Math.random() < .3) P.push({t:'dot', sh:'petal', x, y, vx:rand(-60, 60), vy:rand(-40, 40), gv:120, life:0, max:rand(.8, 1.3), c:Math.random() < .5 ? c : '#ffd6ea', s:rand(4, 6.5), rot:rand(0, 6), vr:rand(-6, 6)});
+    else if (fx === 'star' && Math.random() < .3) P.push({t:'dot', sh:'star', x:x + rand(-10, 10), y:y + rand(-10, 10), vx:rand(-15, 15), vy:rand(-15, 15), gv:0, life:0, max:rand(.4, .8), c:Math.random() < .4 ? '#ffffff' : c, s:rand(3, 6)});
+    else if (fx === 'pixel' && Math.random() < .5) P.push({t:'dot', sh:'sq', x:Math.round(x / 6) * 6, y:Math.round(y / 6) * 6, vx:0, vy:rand(10, 40), gv:0, life:0, max:rand(.3, .55), c:Math.random() < .5 ? c : b.g2 || '#ffffff', s:rand(2.5, 4)});
+    else if (fx === 'bubble' && Math.random() < .3) P.push({t:'dot', sh:'ring', x:x + rand(-8, 8), y, vx:rand(-20, 20), vy:rand(-90, -30), gv:-30, life:0, max:rand(.6, 1), c, s:rand(3, 7)});
+    else if (fx === 'galaxy' && Math.random() < .5) P.push({t:'dot', sh:Math.random() < .3 ? 'star' : 'c', x:x + rand(-12, 12), y:y + rand(-12, 12), vx:rand(-20, 20), vy:rand(-20, 20), gv:0, life:0, max:rand(.5, 1), c:['#ffffff', '#9fb6ff', '#ff9bf0', c][Math.floor(rand(0, 4))], s:rand(1.2, 4)});
+  }
+  function drawDot(g, p, k) {
+    g.globalAlpha = Math.min(1, k * 1.6); g.fillStyle = p.c; g.strokeStyle = p.c;
+    if (p.sh === 'c') { g.beginPath(); g.arc(p.x, p.y, p.s, 0, 7); g.fill(); }
+    else if (p.sh === 'sq') g.fillRect(p.x - p.s, p.y - p.s, p.s * 2, p.s * 2);
+    else if (p.sh === 'ring') { g.lineWidth = 1.3; g.beginPath(); g.arc(p.x, p.y, p.s, 0, 7); g.stroke(); }
+    else if (p.sh === 'star') { const s = p.s * (.6 + .4 * Math.sin(p.life * 20)); g.beginPath(); g.moveTo(p.x, p.y - s); g.lineTo(p.x + s * .2, p.y - s * .2); g.lineTo(p.x + s, p.y); g.lineTo(p.x + s * .2, p.y + s * .2); g.lineTo(p.x, p.y + s); g.lineTo(p.x - s * .2, p.y + s * .2); g.lineTo(p.x - s, p.y); g.lineTo(p.x - s * .2, p.y - s * .2); g.closePath(); g.fill(); }
+    else if (p.sh === 'petal') { g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.beginPath(); g.ellipse(0, 0, p.s, p.s * .5, 0, 0, 7); g.fill(); g.restore(); }
   }
 
   /* ---------------- loop & HUD ---------------- */
@@ -847,18 +985,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
         const dt = (p.t - last.t) / 1000, len = Math.hypot(p.x - last.x, p.y - last.y);
         if (len / Math.max(dt, .004) > 900) SFX.swish();
         slice(s, last.x, last.y, p.x, p.y, dt);
-        if (blade.sparks && Math.random() < .5) G.parts.push({t:'spark', x:p.x, y:p.y, vx:rand(-80, 80), vy:rand(-80, 80), life:0, max:rand(.2, .4), c:blade.sparks, w:2});
+        emitFx(p.x, p.y);
       }
       s.pts.push(p);
     }
-    if (s.pts.length > 40) s.pts.splice(0, s.pts.length - 40);
+    if (s.pts.length > 60) s.pts.splice(0, s.pts.length - 60);
   });
   const up = e => { const s = strokes.get(e.pointerId); if (!s) return; if (s.combo && G) finishCombo(s); strokes.delete(e.pointerId); };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up); cv.addEventListener('pointerleave', up);
   window.addEventListener('resize', resize);
 
   window.GAME = {
-    THEMES,
+    THEMES, paintBg, trail,
     start(cfg, h) {
       hooks = h || {}; strokes.clear(); cancelAnimationFrame(raf);
       G = newState(cfg); lastFrame = 0; G.nextWave = .9; G.lvl = 0;
@@ -946,28 +1084,56 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 
   /* ---------------- saved progress ---------------- */
   const KEY = 'shardcut.v1';
-  const blank = () => ({shards:0, best:{classic:0, rush:0, zen:0}, stars:[], daily:{date:'', total:0, streak:0, last:''}, blades:['steel'], blade:'steel', themes:['lab'], theme:'lab', ach:{},
+  const blank = () => ({shards:0, best:{classic:0, rush:0, zen:0}, stars:[], daily:{date:'', total:0, streak:0, last:''}, blades:['steel'], blade:'steel', themes:['lab'], theme:'lab', ach:{}, pity:0, pulls:0,
     st:{games:0, sliced:0, perfect:0, bestCombo:0, combos:0, geodes:0, bombs:0, time:0, diamonds:0, classicLongest:0}, set:{sound:true, vibe:true}, seen:{}});
   let P;
   try { const o = JSON.parse(localStorage.getItem(KEY)); P = Object.assign(blank(), o || {}); for (const k of ['best', 'daily', 'st', 'set']) P[k] = Object.assign(blank()[k], P[k] || {}); } catch (e) { P = blank(); }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} };
 
   /* ---------------- blades & backgrounds ---------------- */
+  // r = rarity: 0 common, 1 rare, 2 epic, 3 legendary. fx = trail style, emit = particles it leaves.
+  const RAR = [{n:'Common', c:'#aab1c4', w:62, dup:30}, {n:'Rare', c:'#4da3ff', w:27, dup:60}, {n:'Epic', c:'#b86bff', w:9, dup:150}, {n:'Legendary', c:'#ffc93c', w:2, dup:400}];
+  const B = (id, name, r, o) => Object.assign({id, name, r, kind:'blade'}, o);
   const BLADES = [
-    {id:'steel', name:'Steel', price:0, core:'#ffffff', glow:'#9ad8ff'},
-    {id:'neon', name:'Neon', price:150, core:'#eafffe', glow:'#00f0ff'},
-    {id:'plasma', name:'Plasma', price:300, core:'#fff0fb', glow:'#ff2bd6'},
-    {id:'inferno', name:'Inferno', price:500, core:'#fff3c4', glow:'#ff6a00', sparks:'#ffb347'},
-    {id:'frost', name:'Frost', price:800, core:'#ffffff', glow:'#7fe8ff', sparks:'#dff9ff'},
-    {id:'gilded', name:'Gilded', price:1200, core:'#fff8d6', glow:'#ffc400', sparks:'#ffe27a'},
-    {id:'shadow', name:'Shadow', price:1800, core:'#140822', glow:'#9b4dff', dark:true},
-    {id:'prism', name:'Prism', price:2600, core:'#ffffff', rainbow:true},
-    {id:'storm', name:'Storm', price:3600, core:'#ffffff', glow:'#8f7bff', lightning:true}
+    B('steel', 'Steel', 0, {core:'#ffffff', glow:'#9ad8ff'}),
+    B('neon', 'Neon', 0, {core:'#eafffe', glow:'#00f0ff'}),
+    B('crimson', 'Crimson', 0, {core:'#ffe8ea', glow:'#ff3048'}),
+    B('lime', 'Lime', 0, {core:'#f4ffe0', glow:'#8cff2e'}),
+    B('sunflower', 'Sunflower', 0, {core:'#fffbe6', glow:'#ffc21a'}),
+    B('violet', 'Violet', 0, {core:'#f4eaff', glow:'#a463ff'}),
+    B('coral', 'Coral', 0, {core:'#fff0ea', glow:'#ff7a59'}),
+    B('mint', 'Mint', 0, {core:'#effff8', glow:'#3dffb4'}),
+    B('bubblegum', 'Bubblegum', 0, {core:'#fff0f8', glow:'#ff6fc2'}),
+    B('plasma', 'Plasma', 1, {core:'#fff0fb', glow:'#ff2bd6', g2:'#8a5bff'}),
+    B('tide', 'Riptide', 1, {core:'#eefcff', glow:'#2f6bff', g2:'#00e5d4'}),
+    B('sunset', 'Sunset', 1, {core:'#fff3e8', glow:'#ff8a3d', g2:'#ff3d8b'}),
+    B('toxic', 'Toxic', 1, {core:'#f6ffe0', glow:'#5aff3d', g2:'#d4ff00', emit:'sparks', sparks:'#c8ff5a'}),
+    B('frost', 'Frost', 1, {core:'#ffffff', glow:'#7fe8ff', g2:'#d8f6ff', emit:'snow'}),
+    B('gilded', 'Gilded', 1, {core:'#fff8d6', glow:'#ffc400', g2:'#fff0a0', emit:'sparks', sparks:'#ffe27a'}),
+    B('inferno', 'Inferno', 2, {core:'#fff3c4', glow:'#ff5a00', g2:'#ffd000', emit:'ember', sparks:'#ff8a2a'}),
+    B('blossom', 'Blossom', 2, {core:'#fff2f8', glow:'#ff7ab8', g2:'#ffd0e6', emit:'petal', sparks:'#ff9cc9'}),
+    B('starlight', 'Starlight', 2, {core:'#ffffff', glow:'#6f8cff', g2:'#c6b5ff', emit:'star'}),
+    B('arcade', 'Arcade', 2, {core:'#ffffff', glow:'#00ff9c', g2:'#ff00e6', emit:'pixel'}),
+    B('abyss', 'Abyss', 2, {core:'#eafcff', glow:'#0090ff', g2:'#00ffe1', emit:'bubble'}),
+    B('twinfang', 'Twin Fang', 2, {core:'#ffffff', glow:'#ff3d6e', g2:'#ffd23d', fx:'twin'}),
+    B('heartbeat', 'Heartbeat', 2, {core:'#ffffff', glow:'#b14dff', g2:'#ff4dd2', fx:'pulse'}),
+    B('shadow', 'Shadow', 2, {core:'#140822', glow:'#9b4dff', g2:'#ff4dd2', dark:true}),
+    B('prism', 'Prism', 3, {core:'#ffffff', glow:'#ffffff', rainbow:true, emit:'star'}),
+    B('storm', 'Storm', 3, {core:'#ffffff', glow:'#8f7bff', g2:'#5ad7ff', lightning:true, emit:'sparks', sparks:'#cfe0ff'}),
+    B('glitch', 'Glitch', 3, {core:'#ffffff', glow:'#7a5cff', g2:'#05d9e8', fx:'glitch', emit:'pixel'}),
+    B('galaxy', 'Galaxy', 3, {core:'#ffffff', glow:'#5b3dff', g2:'#ff5ad2', emit:'galaxy'}),
+    B('phantom', 'Phantom', 3, {core:'#e8fff6', glow:'#3dffb0', g2:'#a0fff0', fx:'ghost', emit:'star'}),
+    B('solar', 'Solar Flare', 3, {core:'#fffbe8', glow:'#ff6a00', g2:'#fff07a', fx:'pulse', emit:'ember', sparks:'#ffb020'})
   ];
+  const T = (id, name, r) => ({id, name, r, kind:'theme'});
   const THEMES = [
-    {id:'lab', name:'Neon Night', price:0}, {id:'aurora', name:'Aurora', price:400}, {id:'ember', name:'Ember', price:700},
-    {id:'ocean', name:'Deep Ocean', price:1000}, {id:'void', name:'Starless Void', price:1500}
+    T('lab', 'Night Shift', 0), T('slate', 'Slate', 0), T('dusk', 'Dusk', 0), T('moss', 'Moss', 0), T('ember', 'Ember', 0), T('ocean', 'Deep Ocean', 0),
+    T('aurora', 'Aurora', 1), T('dunes', 'Sunset Dunes', 1), T('arctic', 'Arctic', 1), T('lagoon', 'Lagoon', 1), T('void', 'Starless Void', 1),
+    T('forest', 'Firefly Forest', 2), T('sakura', 'Sakura Night', 2), T('cavern', 'Crystal Cavern', 2), T('storm', 'Thunderhead', 2),
+    T('nebula', 'Nebula', 3), T('moonrise', 'Moonrise', 3), T('solar', 'Solar', 3)
   ];
+  const ALL = BLADES.concat(THEMES);
+  const PULL1 = 200, PULL10 = 1800, PITY = 50;
   const applyLook = () => { GAME.setBlade(BLADES.find(b => b.id === P.blade) || BLADES[0]); GAME.setTheme(P.theme); };
 
   /* ---------------- missions ---------------- */
@@ -1133,7 +1299,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
         <button class="card" data-daily="1"><span class="tag gold">${dailyDone() ? 'Done today' : 'Daily · +150'}</span><h3>Daily challenge</h3><p>${esc(goalText(dq))}${dq.t ? ` in ${dq.t} seconds` : ''}. A new one every day.</p>${P.daily.streak > 1 ? `<div class="best">Streak <b>${P.daily.streak} days</b></div>` : ''}</button>
       </div>
       <div class="nav">
-        <button data-go="shop">${ico('bag')}Shop</button>
+        <button data-go="shop">${ico('bag')}Vault</button>
         <button data-go="ach">${ico('trophy')}Awards<span class="sub" style="font-size:11px">${achN}/${ACH.length}</span></button>
         <button data-go="stats">${ico('chart')}Stats</button>
         <button data-go="settings">${ico('gear')}Settings</button>
@@ -1147,35 +1313,77 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     }).join('')}</div><p class="sub" style="margin-top:14px;text-align:center">Clear a mission to unlock the next. Every 10th is a boss geode.</p>`;
   }
   let shopTab = 'blades';
+  const owns = it => (it.kind === 'blade' ? P.blades : P.themes).includes(it.id);
   function drawShop() {
-    const items = shopTab === 'blades' ? BLADES : THEMES, own = shopTab === 'blades' ? P.blades : P.themes, eq = shopTab === 'blades' ? P.blade : P.theme;
-    $('#shop').innerHTML = headHtml('Shop', '') + `<div class="seg"><button data-tab="blades" class="${shopTab === 'blades' ? 'on' : ''}">Blades</button><button data-tab="themes" class="${shopTab === 'themes' ? 'on' : ''}">Backgrounds</button></div>
-      <div class="sgrid">${items.map(it => { const have = own.includes(it.id);
-        return `<button class="si${eq === it.id ? ' eq' : ''}" data-buy="${it.id}"><div class="pv"><canvas data-pv="${it.id}"></canvas></div><b>${esc(it.name)}</b>
-          <div class="pr${!have && P.shards >= it.price ? ' can' : ''}">${eq === it.id ? ico('check') + 'Equipped' : have ? 'Tap to use' : shardImg + fmt(it.price)}</div></button>`; }).join('')}</div>`;
-    document.querySelectorAll('[data-pv]').forEach(c => preview(c, items.find(i => i.id === c.dataset.pv)));
+    const items = (shopTab === 'blades' ? BLADES : THEMES).slice().sort((a, b) => b.r - a.r || (owns(b) - owns(a))), eq = shopTab === 'blades' ? P.blade : P.theme;
+    const nB = BLADES.filter(owns).length, nT = THEMES.filter(owns).length;
+    $('#shop').innerHTML = headHtml('Vault', '') + `
+      <div class="vault"><div class="vgem"><img src="${ART.gemIcon('diamond', 120)}" alt=""></div>
+        <h3>Crystal Vault</h3><p>Spend shards to crack it open for a random blade or background.</p>
+        <div class="odds">${RAR.map(x => `<span style="color:${x.c}">${x.n} ${x.w}%</span>`).join('')}</div>
+        <div class="vbtns"><button class="btn" data-act="pull1">Open ×1<span class="cost">${shardImg}${fmt(PULL1)}</span></button><button class="btn" data-act="pull10">Open ×10<span class="cost">${shardImg}${fmt(PULL10)}</span></button></div>
+        <p class="fine">×10 always includes an Epic or better. A Legendary is guaranteed within ${PITY - P.pity} opens. Repeats turn back into shards.</p></div>
+      <div class="seg"><button data-tab="blades" class="${shopTab === 'blades' ? 'on' : ''}">Blades ${nB}/${BLADES.length}</button><button data-tab="themes" class="${shopTab === 'themes' ? 'on' : ''}">Backgrounds ${nT}/${THEMES.length}</button></div>
+      <div class="sgrid">${items.map(it => { const have = owns(it), R = RAR[it.r];
+        return `<button class="si r${it.r}${eq === it.id ? ' eq' : ''}${have ? '' : ' lock'}" data-buy="${it.id}" style="--rc:${R.c}"><div class="pv"><canvas data-pv="${it.id}"></canvas>${have ? '' : `<span class="lk">${ico('lock')}</span>`}</div><b>${esc(it.name)}</b>
+          <div class="pr"><i>${R.n}</i>${eq === it.id ? ico('check') + 'Equipped' : have ? 'Tap to use' : 'Locked'}</div></button>`; }).join('')}</div>`;
+    document.querySelectorAll('#shop [data-pv]').forEach(c => preview(c, ALL.find(i => i.id === c.dataset.pv && i.kind === (shopTab === 'blades' ? 'blade' : 'theme'))));
   }
+  // previews use the same drawing code as the game
   function preview(c, it) {
     const d = Math.min(2, window.devicePixelRatio || 1), w = c.clientWidth || 150, h = c.clientHeight || 86; c.width = w * d; c.height = h * d;
     const x = c.getContext('2d'); x.scale(d, d);
-    if (shopTab === 'themes') {
-      const t = GAME.THEMES[it.id]; const lg = x.createLinearGradient(0, 0, 0, h); lg.addColorStop(0, t.a); lg.addColorStop(1, t.b); x.fillStyle = lg; x.fillRect(0, 0, w, h);
-      [[w * .2, h * .2, t.g1], [w * .85, h * .9, t.g2]].forEach(([cx, cy, col]) => { const gr = x.createRadialGradient(cx, cy, 0, cx, cy, w * .7); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = gr; x.fillRect(0, 0, w, h); });
-      if (t.stars) for (let i = 0; i < 40; i++) { x.fillStyle = `rgba(255,255,255,${Math.random() * .7})`; x.fillRect(Math.random() * w, Math.random() * h, 1, 1); }
-      const im = new Image(); im.onload = () => x.drawImage(im, w / 2 - 22, h / 2 - 22, 44, 44); im.src = ART.gemIcon('sapphire', 88);
+    if (it.kind === 'theme') {
+      // paint at phone proportions, then show the middle so scenery reads at this size
+      // paint a wider scene, then scale it down so the scenery shows at this size
+      const k = 2.4; x.save(); x.scale(1 / k, 1 / k); GAME.paintBg(x, w * k, h * k, it.id); x.restore();
+      if (owns(it) || c.dataset.rv) { const im = new Image(); im.onload = () => x.drawImage(im, w / 2 - 18, h * .4 - 18, 36, 36); im.src = ART.gemIcon('sapphire', 72); }
       return;
     }
-    x.fillStyle = '#0b0820'; x.fillRect(0, 0, w, h);
-    const pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24; pts.push([w * .1 + t * w * .8, h * .78 - Math.sin(t * Math.PI) * h * .55]); }
-    x.lineCap = 'round'; x.lineJoin = 'round';
-    if (it.lightning) { x.globalCompositeOperation = 'lighter'; [[10, it.glow, .4], [3, it.core, 1]].forEach(([lw, col, a]) => { x.strokeStyle = col; x.globalAlpha = a; x.lineWidth = lw; x.beginPath(); pts.forEach(([px, py], i) => { const j = i && i < 24 ? (i * 7919 % 11) - 5 : 0; i ? x.lineTo(px + j, py + j) : x.moveTo(px, py); }); x.stroke(); }); return; }
-    for (let i = 1; i <= 24; i++) {
-      const t = i / 24, wd = 1 + 6 * t;
-      x.globalCompositeOperation = 'lighter';
-      x.strokeStyle = it.rainbow ? `hsl(${t * 300},100%,60%)` : it.glow; x.globalAlpha = .35; x.lineWidth = wd * 2.6; x.beginPath(); x.moveTo(...pts[i - 1]); x.lineTo(...pts[i]); x.stroke();
-      x.globalCompositeOperation = it.dark ? 'source-over' : 'lighter'; x.globalAlpha = 1; x.strokeStyle = it.core; x.lineWidth = wd; x.beginPath(); x.moveTo(...pts[i - 1]); x.lineTo(...pts[i]); x.stroke();
-    }
-    if (it.sparks) { x.fillStyle = it.sparks; for (let i = 0; i < 14; i++) { const p = pts[4 + i]; x.fillRect(p[0] + (i * 37 % 13) - 6, p[1] + (i * 53 % 15) - 7, 2, 2); } }
+    x.fillStyle = '#0c0e15'; x.fillRect(0, 0, w, h);
+    const now = performance.now(), pts = [];
+    for (let i = 0; i <= 26; i++) { const t = i / 26; pts.push({x:w * .08 + t * w * .84, y:h * .8 - Math.sin(t * Math.PI) * h * .58, t:now - (1 - t) * 110}); }
+    GAME.trail(x, pts, it, 7, now);
+    // a few of its particles, frozen
+    const em = it.emit, c2 = it.sparks || it.glow;
+    if (em) { x.globalCompositeOperation = 'lighter'; for (let i = 0; i < 12; i++) { const p = pts[6 + i % 18], ox = (i * 37 % 19) - 9, oy = (i * 53 % 21) - 10 + (em === 'ember' || em === 'bubble' ? -8 : em === 'snow' || em === 'petal' ? 8 : 0);
+      x.fillStyle = x.strokeStyle = i % 3 ? c2 : '#ffffff'; x.globalAlpha = .8; const X = p.x + ox, Y = p.y + oy, s = 1.5 + (i % 3);
+      if (em === 'pixel') x.fillRect(X, Y, 4, 4); else if (em === 'bubble') { x.lineWidth = 1; x.beginPath(); x.arc(X, Y, s + 1, 0, 7); x.stroke(); }
+      else if (em === 'petal') { x.beginPath(); x.ellipse(X, Y, s + 2, s * .6 + 1, i, 0, 7); x.fill(); }
+      else if (em === 'sparks') { x.lineWidth = 1.5; x.beginPath(); x.moveTo(X, Y); x.lineTo(X + ox * .5, Y + oy * .5); x.stroke(); }
+      else { x.beginPath(); x.arc(X, Y, s * (em === 'star' || em === 'galaxy' ? .9 : .7), 0, 7); x.fill(); } }
+      x.globalAlpha = 1; x.globalCompositeOperation = 'source-over'; }
+  }
+  /* ---------------- the vault (random unlocks) ---------------- */
+  function rollOne(force) {
+    P.pulls++; P.pity++;
+    let r; const v = Math.random() * 100;
+    r = v < RAR[3].w ? 3 : v < RAR[3].w + RAR[2].w ? 2 : v < RAR[3].w + RAR[2].w + RAR[1].w ? 1 : 0;
+    if (force != null) r = Math.max(r, force);
+    if (P.pity >= PITY) r = 3;
+    if (r === 3) P.pity = 0;
+    const pool = ALL.filter(i => i.r === r), it = pool[Math.floor(Math.random() * pool.length)], have = owns(it);
+    if (have) P.shards += RAR[r].dup; else (it.kind === 'blade' ? P.blades : P.themes).push(it.id);
+    return {it, dup:have};
+  }
+  let lastPull = [];
+  function openVault(n) {
+    const cost = n === 10 ? PULL10 : PULL1;
+    if (P.shards < cost) { toast(`${shardImg}<span>You need ${fmt(cost - P.shards)} more shards</span>`); SFX.thud(); return; }
+    P.shards -= cost; const res = [];
+    for (let i = 0; i < n; i++) res.push(rollOne(n === 10 && i === 9 && !res.some(x => x.it.r >= 2) ? 2 : null));
+    save(); lastPull = res; checkAch();
+    const top = Math.max(...res.map(x => x.it.r)), refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
+    const card = (x, i, big) => `<div class="rv r${x.it.r}${big ? ' big' : ''}" style="--rc:${RAR[x.it.r].c};animation-delay:${i * .14 + .1}s"><div class="pv"><canvas data-rv="${i}"></canvas></div>
+      <b>${esc(x.it.name)}</b><span class="rr">${RAR[x.it.r].n} ${x.it.kind === 'blade' ? 'blade' : 'background'}</span>${x.dup ? `<span class="dup">${shardImg}+${RAR[x.it.r].dup}</span>` : '<span class="new">NEW</span>'}</div>`;
+    ovKind = 'pull';
+    overlay(`<div class="kick" style="color:${RAR[top].c}">${RAR[top].n}${n === 10 ? ' pull' : ''}</div>
+      <div class="rvs${n === 1 ? ' one' : ''}">${res.map((x, i) => card(x, i, n === 1)).join('')}</div>
+      <p>${fresh ? `${fresh} new` : 'No new items'}${refund ? ` · repeats gave back ${fmt(refund)} shards` : ''}</p>
+      <div class="acts two">${n === 1 && !res[0].dup ? '<button class="btn" data-act="equippull">Equip</button>' : `<button class="btn" data-act="pull${n}">Again</button>`}<button class="btn ghost" data-act="closepull">Done</button></div>`);
+    document.querySelectorAll('[data-rv]').forEach(c => preview(c, res[+c.dataset.rv].it));
+    res.forEach((x, i) => setTimeout(() => { if (ovKind === 'pull') x.it.r >= 2 ? SFX.power() : SFX.clink(); }, (i * .14 + .1) * 1000 + 120));
+    if (top === 3) setTimeout(() => ovKind === 'pull' && SFX.win(), n * 140 + 400);
   }
   function drawAch() {
     const n = Object.keys(P.ach).length;
@@ -1307,15 +1515,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (t.dataset.daily) { SFX.tap(); brief('daily', 0); return; }
     if (t.dataset.tab) { shopTab = t.dataset.tab; drawShop(); return; }
     if (t.dataset.buy) {
-      const id = t.dataset.buy, list = shopTab === 'blades' ? BLADES : THEMES, it = list.find(x => x.id === id), own = shopTab === 'blades' ? P.blades : P.themes;
-      if (own.includes(id)) { if (shopTab === 'blades') P.blade = id; else P.theme = id; save(); applyLook(); SFX.tap(); drawShop(); return; }
-      if (P.shards < it.price) { toast(`${shardImg}<span>You need ${fmt(it.price - P.shards)} more shards</span>`); SFX.thud(); return; }
-      P.shards -= it.price; own.push(id); if (shopTab === 'blades') P.blade = id; else P.theme = id; save(); applyLook(); SFX.power();
-      toast(`${shardImg}<span>Unlocked <b>${esc(it.name)}</b></span>`); drawShop(); checkAch(); return;
+      const it = ALL.find(x => x.id === t.dataset.buy && x.kind === (shopTab === 'blades' ? 'blade' : 'theme'));
+      if (!owns(it)) { toast(`<span>Open the vault to find <b>${esc(it.name)}</b></span>`); SFX.thud(); return; }
+      if (it.kind === 'blade') P.blade = it.id; else P.theme = it.id; save(); applyLook(); SFX.tap(); drawShop(); return;
     }
     if (t.dataset.set) { const k = t.dataset.set; P.set[k] = !P.set[k]; save(); applySettings(); drawSettings(); if (k === 'sound' && P.set.sound) SFX.tap(); return; }
     const a = t.dataset.act; if (!a) return;
     if (a === 'close') { closeOv(); return; }
+    if (a === 'pull1' || a === 'pull10') { SFX.tap(); openVault(a === 'pull1' ? 1 : 10); if (!$('#ov').classList.contains('on')) drawShop(); return; }
+    if (a === 'closepull') { closeOv(); drawShop(); return; }
+    if (a === 'equippull') { const it = lastPull[0].it; if (it.kind === 'blade') P.blade = it.id; else P.theme = it.id; save(); applyLook(); SFX.tap(); closeOv(); if (it.kind !== (shopTab === 'blades' ? 'blade' : 'theme')) shopTab = it.kind === 'blade' ? 'blades' : 'themes'; drawShop(); return; }
     if (a === 'start') { startRun(run); return; }
     if (a === 'again' || a === 'restart') { closeOv(); GAME.quit(); startRun(run); return; }
     if (a === 'next') { closeOv(); brief('mission', run.idx + 1); return; }
@@ -1336,6 +1545,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   window.onAndroidBack = () => {
     if (ovKind === 'pause') { closeOv(); GAME.resume(); return true; }
     if (ovKind === 'brief' || ovKind === 'confirm') { closeOv(); return true; }
+    if (ovKind === 'pull') { closeOv(); drawShop(); return true; }
     if (ovKind === 'result') { goHome(); return true; }
     if (GAME.active) { pauseGame(); return true; }
     if (screen !== 'home') { show('home'); return true; }

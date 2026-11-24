@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 5,
+  "v": 6,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "b740e7e765ebcdb65ba71bbeb67092b19a12db256596f2f31fe61b5248b9888d",
+  "sha256": "63c8eb504d68dcb622d23507305eaca6ca465b9b0161dc43053bf24fc6e983dd",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "Cuts now match the drawn blade and each gem's real outline: a graze counts, a near miss doesn't."
+ "notes": "Crystal Vault: open it with shards for 29 blades and 18 backgrounds across four rarities. Gems now split exactly where your swipe crosses them."
 }
