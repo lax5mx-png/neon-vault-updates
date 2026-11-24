@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 4,
+  "v": 5,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "edc2441b5a7d1bdfb9c66cca053e7d6a4482280661e70357b30d9812636646ca",
+  "sha256": "b740e7e765ebcdb65ba71bbeb67092b19a12db256596f2f31fe61b5248b9888d",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "Bigger touch areas: taps and slow drags cut, and gems hit a resting finger. Shinier gems and a richer background."
+ "notes": "Cuts now match the drawn blade and each gem's real outline: a graze counts, a near miss doesn't."
 }

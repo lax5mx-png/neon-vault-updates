@@ -323,7 +323,19 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   // small picture of a gem for menus (a data URL)
   function gemIcon(id, px) { const d = GEMS[id] || POWERS[id]; const s = gemSprite(d, px / 3, 2); return s.c.toDataURL(); }
 
-  window.ART = {GEMS, KINDS, POWERS, COLOR_NAMES, sprites, gemIcon, shade};
+  // true outline of each gem (in units of R), so cuts can follow the drawn shape
+  function heartPts() {
+    const pts = [], bz = (p0, p1, p2, p3, t) => { const u = 1 - t; return [u*u*u*p0[0] + 3*u*u*t*p1[0] + 3*u*t*t*p2[0] + t*t*t*p3[0], u*u*u*p0[1] + 3*u*u*t*p1[1] + 3*u*t*t*p2[1] + t*t*t*p3[1]]; };
+    for (let i = 0; i < 12; i++) pts.push(bz([0, .95], [-1.25, .1], [-.8, -1.05], [0, -.45], i / 12));
+    for (let i = 0; i < 12; i++) pts.push(bz([0, -.45], [.8, -1.05], [1.25, .1], [0, .95], i / 12));
+    return pts;
+  }
+  const OUT = {};
+  function outline(d) {
+    const k = d.shape; if (OUT[k]) return OUT[k];
+    return (OUT[k] = k === 'heart' ? heartPts() : k === 'cube' ? SHAPES.hex.map(([x, y]) => [x * .95, y * .95]) : SHAPES[k]);
+  }
+  window.ART = {outline, GEMS, KINDS, POWERS, COLOR_NAMES, sprites, gemIcon, shade};
 })();
 
 </script>
@@ -490,15 +502,29 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
   }
 
   /* ---------------- slicing ---------------- */
+  // The cut follows the drawn blade: its bright core is about 0.2R wide each side.
+  const BLADE = () => R * .2;
+  const ptSeg = (px, py, ax, ay, bx, by) => { const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy || 1, u = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / L)); return Math.hypot(px - ax - u * dx, py - ay - u * dy); };
+  const cross = (ax, ay, bx, by, cx, cy) => (bx - ax) * (cy - ay) - (by - ay) * (cx - ax);
+  const segsCross = (a, b, c, d) => { const d1 = cross(c[0], c[1], d[0], d[1], a[0], a[1]), d2 = cross(c[0], c[1], d[0], d[1], b[0], b[1]), d3 = cross(a[0], a[1], b[0], b[1], c[0], c[1]), d4 = cross(a[0], a[1], b[0], b[1], d[0], d[1]); return d1 * d2 < 0 && d3 * d4 < 0; };
+  function inPoly(P, x, y) { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > y) !== (P[j][1] > y) && x < (P[j][0] - P[i][0]) * (y - P[i][1]) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; }
   function segHit(o, x0, y0, x1, y1) {
     const dx = x1 - x0, dy = y1 - y0, L2 = dx * dx + dy * dy || 1;
-    let u = ((o.x - x0) * dx + (o.y - y0) * dy) / L2; u = clamp(u, 0, 1);
-    const px = x0 + u * dx, py = y0 + u * dy, dist = Math.hypot(o.x - px, o.y - py);
-    // a fingertip is wide: add its radius to every target (bombs get half, so they stay fair)
-    const reach = o.r + (o.type === 'bomb' ? FINGER * .5 : FINGER);
-    return dist <= reach ? Math.min(1, dist / o.r) : -1;
+    const u = clamp(((o.x - x0) * dx + (o.y - y0) * dy) / L2, 0, 1), cd = Math.hypot(o.x - (x0 + u * dx), o.y - (y0 + u * dy)), h = Math.min(1, cd / o.r), bw = BLADE();
+    if (o.type === 'bomb' || o.type === 'geode') return cd <= o.r + bw ? h : -1;
+    // move the blade into the gem's own (unrotated) frame and test against its real outline
+    const c = Math.cos(-o.rot), s = Math.sin(-o.rot), k = 1 / (o.type === 'power' ? 1 : 1);
+    const tf = (x, y) => [((x - o.x) * c - (y - o.y) * s) * k, ((x - o.x) * s + (y - o.y) * c) * k];
+    const A = tf(x0, y0), B = tf(x1, y1), P = ART.outline(o.type === 'power' ? ART.POWERS[o.kind] : ART.GEMS[o.kind]).map(([x, y]) => [x * R, y * R]);
+    if (inPoly(P, A[0], A[1]) || inPoly(P, B[0], B[1])) return h;
+    let best = 1e9;
+    for (let i = 0; i < P.length; i++) {
+      const p = P[i], q = P[(i + 1) % P.length];
+      if (segsCross(A, B, p, q)) return h;
+      best = Math.min(best, ptSeg(p[0], p[1], A[0], A[1], B[0], B[1]), ptSeg(q[0], q[1], A[0], A[1], B[0], B[1]), ptSeg(A[0], A[1], p[0], p[1], q[0], q[1]), ptSeg(B[0], B[1], p[0], p[1], q[0], q[1]));
+    }
+    return best <= bw ? h : -1;
   }
-  const FINGER = 16;
   function slice(s, x0, y0, x1, y1, dt) {
     // no speed or length limit: a tap or a slow drag counts as a cut
     const ang = Math.atan2(y1 - y0, x1 - x0);
