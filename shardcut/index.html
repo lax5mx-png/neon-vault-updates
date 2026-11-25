@@ -855,7 +855,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
       if (o.type === 'geode') { if (G.rt - o.lastHit > .07) hitGeode(o, ang); continue; }
       // where the blade line crosses the gem: offset of that line from the gem's centre
       const dx = x1 - x0, dy = y1 - y0, L2 = dx * dx + dy * dy || 1, u = clamp(((o.x - x0) * dx + (o.y - y0) * dy) / L2, 0, 1);
-      const qx = x0 + u * dx, qy = y0 + u * dy, off = clamp((qx - o.x) * -Math.sin(ang) + (qy - o.y) * Math.cos(ang), -o.r * .8, o.r * .8);
+      const qx = x0 + u * dx, qy = y0 + u * dy, off = clamp(((qx - o.x) * -Math.sin(ang) + (qy - o.y) * Math.cos(ang)) * .3, -o.r * .25, o.r * .25); // keeps the angle, pulled toward the middle
       cut(o, ang, h, s, off);
     }
   }
