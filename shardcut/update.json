@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 10,
+  "v": 11,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "bd409ddeb441c3dedb58d152f02f9cfccf18da79f68477a90efdb817d116c6bf",
+  "sha256": "502c547a4d2283450c913aced3d62a40b1a9e0e73ee4725e5c274f368da76907",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "Vault opens now spin like a case opening: a strip of items slides past the marker and slows down onto your prize. \u00d710 spins ten reels."
+ "notes": "Only a moving finger cuts now: taps and a finger held still no longer slice."
 }
