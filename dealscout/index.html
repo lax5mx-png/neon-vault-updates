@@ -243,6 +243,25 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 .lrow .right{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding-right:4px}
 .lrow .x{flex:none;width:40px;color:var(--mute);font-size:16px;border-left:1px solid var(--line)}
 .tag.low{background:var(--goodbg);color:var(--good)}
+.grade{display:inline-grid;place-items:center;min-width:26px;height:20px;padding:0 4px;border-radius:6px;font-size:11.5px;font-weight:900;margin-bottom:3px;letter-spacing:-.02em}
+.grade.ga,.gradebar.ga b{background:var(--goodbg);color:var(--good)}.grade.gb,.gradebar.gb b{background:rgba(70,140,255,.14);color:var(--blue)}
+.grade.gc,.gradebar.gc b{background:var(--warnbg);color:var(--warn)}.grade.gd,.gradebar.gd b{background:var(--badbg);color:var(--bad)}
+.gradebar{display:flex;gap:12px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--soft)}
+.gradebar b{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;font-size:20px;font-weight:900;flex-shrink:0}
+.gradebar strong{display:block;font-size:14px}.gradebar span{display:block;font-size:12.5px;color:var(--mute);margin-top:1px}
+.tog{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:13px;color:var(--mute)}.tog input{width:20px;height:20px;margin-top:1px;accent-color:var(--acc);flex-shrink:0}.tog b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}
+.lowa{display:block;font-size:11.5px;color:var(--good);font-weight:700;margin-top:2px}
+.tag.ending{background:var(--badbg);color:var(--bad)}
+.bcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;box-shadow:var(--shadow)}
+.bcard .bh{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.bcard .bh b{display:block;font-size:15px}.bcard .bh span{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}.bcard em{color:var(--bad);font-style:normal;font-weight:700}
+.bmine{font-size:12.5px;color:var(--mute);margin:8px 0 6px}.bmine b{color:var(--ink)}
+.btier{display:flex;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.btier .bp{font-weight:850;font-size:15px;min-width:62px}.btier b{display:block;font-size:13.5px}.btier span{display:block;font-size:12px;color:var(--mute)}
+.bcard details{margin-top:6px;font-size:12.5px;color:var(--mute)}.bcard summary{font-weight:700;color:var(--ink);cursor:pointer}
+.ends{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}.ends::-webkit-scrollbar{display:none}
+.endc{flex:0 0 148px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:3px;box-shadow:var(--shadow)}
+.endc b{font-size:13px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}.endc .ep{font-weight:850;font-size:15px}.endc .ep i{font-style:normal;color:var(--good);font-size:12px;margin-left:4px}
+.endc .es{font-size:11.5px;color:var(--mute)}.endc .et{font-size:11.5px;font-weight:800;color:var(--bad)}
+
 .gpc{display:flex;gap:11px;align-items:flex-start;background:var(--card);border-radius:16px;padding:10px;box-shadow:var(--shadow)}
 .gpc .img{flex:none;width:104px;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:var(--soft)}.gpc .img img{width:100%;height:100%;object-fit:cover}
 .gpc .mid{flex:1;min-width:0}.gpc .mid>b{display:block;font-size:14.5px;line-height:1.25}
@@ -269,6 +288,7 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
     <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search any PC game" enterkeyhint="search" autocomplete="off"><button id="qx" style="display:none" aria-label="Clear">✕</button></div>
     <div class="chips" id="presets"></div>
     <div class="chips" id="fchips" style="padding-top:0"></div>
+    <div id="endsoon"></div>
     <div class="statline"><span id="dstat"></span><span id="dupd"></span></div>
     <div class="list" id="dlist"></div>
     <div class="more" id="dmore"></div>
@@ -402,7 +422,7 @@ const CPUS = [
 function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
 let S = Object.assign(blank(), lsGet(KEY) || {});
 function save() { lsSet(KEY, S); syncNative(); }
-function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target})), free:S.freeNote})); } catch (e) {} }
+function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target, low:!!w.lowAlert})), free:S.freeNote})); } catch (e) {} }
 function pushReminder() { if (!A) return; const [h, m] = S.dailyT.split(':').map(Number); try { A.setReminder(!!S.daily, h, m); } catch (e) {} }
 const rig = () => ({gpu:GPUS[S.gpu][1], vram:GPUS[S.gpu][2], name:GPUS[S.gpu][0], ram:S.ram, disk:S.disk, cpu:CPUS[S.cpu || 0][1], cpuName:CPUS[S.cpu || 0][0]});
 
@@ -965,6 +985,20 @@ async function loadDeals(reset) {
   }
   dloading = false;
 }
+/* ---------- deal grade: how good is this price? ---------- */
+// vs lowest ever when we know it, otherwise vs the usual price
+function grade(now, low, off) {
+  now = +now;
+  if (low != null && low >= 0 && now >= 0) {
+    if (now <= +low + 0.01) return {g:'A+', c:'ga', why:'Lowest price ever'};
+    if (+low === 0) return off != null ? grade(now, null, off) : {g:'B', c:'gb', why:'It was free once (a giveaway)'};
+    const r = now / +low;
+    return r <= 1.15 ? {g:'A', c:'ga', why:'Within 15% of its lowest ever'} : r <= 1.35 ? {g:'B', c:'gb', why:'Good, but it has been cheaper'} : r <= 1.7 ? {g:'C', c:'gc', why:'It usually drops lower in big sales'} : {g:'D', c:'gd', why:'Wait: it has been much cheaper'};
+  }
+  if (off == null) return null;
+  return off >= 70 ? {g:'A+', c:'ga', why:off + '% under its usual price'} : off >= 50 ? {g:'A', c:'ga', why:off + '% under its usual price'} : off >= 33 ? {g:'B', c:'gb', why:off + '% off'} : off >= 15 ? {g:'C', c:'gc', why:'Small discount'} : {g:'D', c:'gd', why:'Barely discounted'};
+}
+const gradeTag = gr => gr ? `<span class="grade ${gr.c}" title="${esc(gr.why)}">${gr.g}</span>` : '';
 function dealCard(d) {
   const k = ckey(d.steamAppID, d.title);
   const hidden = cardHidden({dataset:{ck:k, app:d.steamAppID || '', title:d.title, game:d.gameID}}), own = isOwned(d.steamAppID, d.title, d.gameID);
@@ -973,10 +1007,10 @@ function dealCard(d) {
   return `<button class="deal" data-game="${d.gameID}" data-deal="${esc(d.dealID)}" data-app="${d.steamAppID || ''}" data-ck="${esc(k)}" data-title="${esc(d.title)}"${hidden ? ' style="display:none"' : ''}>
     <div class="img"><img loading="lazy" src="${esc(img(d.steamAppID, d.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(d.thumb)}'}" alt=""></div>
     <div class="mid"><div class="t">${esc(d.title)}</div><div class="meta">${own ? '<span class="tag own">✓ You own this</span>' : ''}${storeTag(d.storeID)}${avgTag}${avgMode ? '' : rateTag(d)}</div><div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div></div>
-    <div class="right"><span class="price${sale === 0 ? ' free' : ''}">${money(sale)}</span>${avgMode && ro !== null ? `<span class="was avg">avg ${money(av.avg)}</span>${ro > 0 ? `<span class="off">-${ro}%</span>` : '<span class="off none">avg price</span>'}` : `${+d.normalPrice > sale ? `<span class="was">${money(d.normalPrice)}</span>` : ''}${off > 0 ? `<span class="off${avgMode ? ' none' : ''}">-${off}%</span>` : ''}`}</div></button>`;
+    <div class="right">${gradeTag(grade(sale, null, avgMode && ro !== null ? ro : off))}<span class="price${sale === 0 ? ' free' : ''}">${money(sale)}</span>${avgMode && ro !== null ? `<span class="was avg">avg ${money(av.avg)}</span>${ro > 0 ? `<span class="off">-${ro}%</span>` : '<span class="off none">avg price</span>'}` : `${+d.normalPrice > sale ? `<span class="was">${money(d.normalPrice)}</span>` : ''}${off > 0 ? `<span class="off${avgMode ? ' none' : ''}">-${off}%</span>` : ''}`}</div></button>`;
 }
 async function doSearch(q) {
-  searchMode = true; $('#dlist').innerHTML = '<div class="spin"></div>'; $('#dmore').innerHTML = ''; $('#dstat').textContent = 'Search results for “' + q + '”'; $('#dupd').textContent = '';
+  searchMode = true; $('#endsoon').innerHTML = ''; $('#dlist').innerHTML = '<div class="spin"></div>'; $('#dmore').innerHTML = ''; $('#dstat').textContent = 'Search results for “' + q + '”'; $('#dupd').textContent = '';
   try {
     const r = await cached(CS + 'games?title=' + encodeURIComponent(q) + '&limit=30', 6e5);
     if (!r.length) { $('#dlist').innerHTML = '<div class="empty"><h3>No games found</h3><p>Check the spelling, or try fewer words.</p></div>'; return; }
@@ -986,7 +1020,7 @@ async function doSearch(q) {
     r.forEach(g => requestCompat(g.steamAppID, g.external));
   } catch (e) { $('#dlist').innerHTML = '<div class="empty"><h3>Search failed</h3><p>Check your internet connection.</p></div>'; }
 }
-function exitSearch() { searchMode = false; $('#q').value = ''; $('#qx').style.display = 'none'; loadDeals(true); }
+function exitSearch() { searchMode = false; $('#q').value = ''; $('#qx').style.display = 'none'; loadDeals(true); loadEnding(); }
 
 /* ---------- detail ---------- */
 let sheetOpen = false, curGame = null, sheetMode = '';
@@ -1092,6 +1126,7 @@ function renderGame() {
       return `<div class="avgline">${ro > 0 ? `<b>${ro}% below</b> its average price over the past year (${money(t.a)}, across ${t.n} ${t.n === 1 ? 'store' : 'stores'})` : ro < 0 ? `<b style="color:var(--warn)">${-ro}% above</b> its average price over the past year (${money(t.a)}). It’s usually cheaper.` : `About its average price over the past year (${money(t.a)})`}</div>`; })()}
     ${(() => { const ps = deals.map(d => +d.price).concat(extra.map(x => x.price)).filter(x => x >= 0); if (ps.length < 2 || !best) return ''; const avg = ps.reduce((a, b) => a + b, 0) / ps.length, ro = Math.round((1 - (+best.price) / avg) * 100);
       return `<div class="avgline">${+best.price === 0 ? `<b>Free right now.</b> It averages ${money(avg)} across ${ps.length} stores.` : ro > 0 ? `<b>${ro}% below</b> the average price across ${ps.length} stores (${money(avg)})` : `About the same as the average price across ${ps.length} stores (${money(avg)})`}</div>`; })()}
+    ${best ? (gr => gr ? `<div class="gradebar ${gr.c}"><b>${gr.g}</b><div><strong>Deal grade</strong><span>${esc(gr.why)}${low && !atLow ? ' · lowest ever ' + money(low.price) : ''}</span></div></div>` : '')(grade(best.price, low ? +low.price : null, Math.round(+best.savings || 0))) : ''}
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
     <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'g' ? '✓ ' : v.k === 'w' ? '~ ' : v.k === 'b' ? '✗ ' : '? ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
       ${loadingC ? '' : `<p>${esc(c0 && c0.none ? 'This game isn’t on Steam, so there are no listed requirements to check.' : v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
@@ -1151,6 +1186,7 @@ function watchSheet() {
   openSheet(`<div class="pad"><h2>Watch ${esc(curGame.title)}</h2><p class="sub">Get a notification when any store sells it for your target price or less.</p>
     <label class="f" for="tgt">Notify me at or under</label><input class="inp" id="tgt" type="number" inputmode="decimal" step="0.01" min="0" value="${(w ? w.target : sugg).toFixed(2)}">
     <div class="chips">${[best, low ? +low.price : null, 20, 15, 10, 5, 2].filter(v => v !== null && v > 0 && (v === best || v < best)).filter((v, i, a) => a.indexOf(v) === i).slice(0, 5).map(v => `<button class="chip" data-tgt="${v}">${v === best ? 'Now ' : v === (low && +low.price) ? 'Lowest ever ' : ''}${money(v)}</button>`).join('')}</div>
+    <label class="tog"><input type="checkbox" id="lowa"${!w || w.lowAlert !== false ? ' checked' : ''}><span><b>Also alert me at a new lowest price</b>Even if it’s above your target, you’ll hear about it the day it hits its lowest price ever.</span></label>
     <p class="note">Now ${money(best)}${low ? ' · lowest ever ' + money(low.price) : ''}. DealScout checks your watchlist once a day.</p>
     <div class="row2">${w ? '<button class="btn ghost" data-act="unwatch">Stop watching</button>' : '<button class="btn ghost" data-act="back">Cancel</button>'}<button class="btn" data-act="savewatch">Save</button></div></div>`);
 }
@@ -1181,7 +1217,9 @@ async function loadFree() {
       return {id:x.id, title:name, store, drmFree:/drm-free/i.test(plat), worth:/^\$\d/.test(x.worth) ? parseFloat(x.worth.slice(1)) : 0, img:x.image || x.thumbnail, url:x.open_giveaway_url || x.gamerpower_url,
         end:x.end_date && x.end_date !== 'N/A' ? x.end_date.replace(' ', 'T') : '', how:String(x.instructions || '').replace(/\r/g, '').trim(), bundle:/bundle/i.test(x.title)};
     }).filter(x => x.url && !have.has(norm(x.title)));
-    gp.sort((a, b) => (b.worth >= 5) - (a.worth >= 5) || /steam|gog|prime/i.test(b.store) - /steam|gog|prime/i.test(a.store) || b.worth - a.worth);
+    const soonEnd = x => x.end && Date.parse(x.end) - Date.now() < 48 * 36e5 && Date.parse(x.end) > Date.now();
+    gp.forEach(x => x.soon = soonEnd(x));
+    gp.sort((a, b) => b.soon - a.soon || (b.worth >= 5) - (a.worth >= 5) || /steam|gog|prime/i.test(b.store) - /steam|gog|prime/i.test(a.store) || b.worth - a.worth);
   } catch (e) {}
   S.seenFree = epicNow.map(e => e.title).concat(others.map(o => o.title), gp.map(g => g.title)); save(); updateDots();
   if (err === 2 && !gp.length) { $('#flist').innerHTML = '<div class="empty"><h3>Couldn’t load free games</h3><p>Check your internet connection.</p><button class="btn" data-act="freeretry">Try again</button></div>'; return; }
@@ -1191,7 +1229,7 @@ async function loadFree() {
   if (epicNext.length) h += `<div class="sec"><h2>Coming next</h2><span>Free from Thursday</span></div>` + epicNext.map(e => fcard(e, true)).join('');
   if (gp.length) h += `<div class="sec"><h2>Giveaways at other stores</h2><span>${gp.length} right now</span></div><div class="list">` + gp.map(x => { const k = x.bundle ? '' : requestCompat(null, x.title);
     return `<div class="gpc"><div class="img">${x.img ? `<img loading="lazy" src="${esc(x.img)}" alt="" onerror="this.style.visibility='hidden'">` : ''}</div><div class="mid"><b>${esc(x.title)}</b>
-      <div class="meta"><span class="tag store">${esc(x.store)}</span>${x.drmFree ? '<span class="tag store">DRM-free</span>' : ''}${isOwned(null, x.title) ? '<span class="tag own">✓ You own this</span>' : ''}</div>
+      <div class="meta">${x.soon ? '<span class="tag ending">Ends soon</span>' : ''}<span class="tag store">${esc(x.store)}</span>${x.drmFree ? '<span class="tag store">DRM-free</span>' : ''}${isOwned(null, x.title) ? '<span class="tag own">✓ You own this</span>' : ''}</div>
       ${k ? `<div class="meta" data-vapp="${esc(k)}">${vtag(k)}</div>` : ''}
       <span class="gpw">${x.worth ? 'Normally ' + money(x.worth) : 'Free'}${x.end ? ' · ends ' + fdate(x.end) : ''}</span>
       ${x.how ? `<details><summary>How to claim</summary><p>${esc(x.how).replace(/\n/g, '<br>')}</p></details>` : ''}</div>
@@ -1225,13 +1263,13 @@ async function renderList(refresh) {
       <div class="list">${sorted.map(x => { const ck = x.ck || ckey(x.appid, x.title), hitLow = x.low != null && x.now <= x.low + 0.01, off = x.retail > x.now ? Math.round((1 - x.now / x.retail) * 100) : 0;
         return `<div class="lrow" data-ck="${esc(ck)}" data-app="${esc(x.appid)}"><button class="lo" data-game="${x.id}" data-app="${esc(x.appid)}"><div class="img"><img loading="lazy" src="${esc((COMPAT[ck] && COMPAT[ck].header) || img(x.appid, x.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(x.thumb)}'}" alt=""></div>
           <div class="mid"><div class="t">${esc(x.title)}</div><div class="meta">${storeTag(x.store)}${hitLow ? '<span class="tag low">Lowest ever</span>' : ''}${x.was != null && x.now < x.was - 0.009 ? `<span class="tag low">↓ ${money(x.was - x.now)}</span>` : ''}</div><div class="meta" data-vapp="${esc(ck)}">${vtag(ck)}</div></div>
-          <div class="right"><span class="price${x.now === 0 ? ' free' : ''}">${money(x.now)}</span>${off ? `<span class="off">-${off}%</span>` : ''}</div></button>
+          <div class="right">${gradeTag(grade(x.now, x.low, off))}<span class="price${x.now === 0 ? ' free' : ''}">${money(x.now)}</span>${off ? `<span class="off">-${off}%</span>` : ''}</div></button>
           <button class="x" data-lrm="${x.id}" aria-label="Remove">✕</button></div>`; }).join('')}</div>
       <div class="row2" style="margin-top:14px"><button class="btn ghost" data-act="lshare">Share list</button><button class="btn ghost" data-act="lclear">Clear list</button></div>
-      <p class="note">Tap a game to compare stores and buy. When you’ve bought one, open it and tap “I bought it” to take it off your list.</p>`;
+      <p class="note">Tap a game to compare stores and buy. When you’ve bought one, open it and tap “I bought it” to take it off your list.</p><div id="lbund">${bundleHtml()}</div>`;
     L.forEach(x => requestCompat(x.appid, x.title)); updateDots();
   };
-  draw();
+  draw(); if (refresh) findBundles();
   if (!refresh) return;
   try {
     for (let i = 0; i < L.length; i += 25) {
@@ -1240,6 +1278,73 @@ async function renderList(refresh) {
     }
     save(); if (view === 'list') draw();
   } catch (e) { toast('Couldn’t refresh prices'); }
+}
+/* ---------- bundles that include games on your list or watchlist (IsThereAnyDeal) ---------- */
+let BUND = null; // {busy, list:[{b, mine:[titles]}], err}
+async function findBundles() {
+  if (!S.itadKey) { BUND = null; paintBundles(); return; }
+  const games = S.list.concat(S.watch.filter(w => !S.list.some(x => x.id === w.id))).slice(0, 30);
+  if (!games.length || (BUND && BUND.busy)) return;
+  BUND = Object.assign(BUND || {list:[]}, {busy:true, err:''}); paintBundles();
+  const key = encodeURIComponent(S.itadKey.trim()), found = {}; let ok = 0;
+  for (const x of games) {
+    try {
+      const c = COMPAT[x.ck || ckey(x.appid, x.title)], appid = (c && c.sid) || x.appid;
+      const lk = await cached(ITAD + 'games/lookup/v1?key=' + key + (appid ? '&appid=' + appid : '&title=' + encodeURIComponent(x.title)), 7 * 864e5, true);
+      ok++; if (!lk || !lk.found || !lk.game) continue;
+      const bs = await cached(ITAD + 'games/bundles/v2?key=' + key + '&id=' + lk.game.id + '&country=US&expired=false', 6 * 36e5, true);
+      (Array.isArray(bs) ? bs : []).forEach(b => {
+        if (!b || b.id == null || (b.expiry && Date.parse(b.expiry) < Date.now())) return;
+        const f = found[b.id] || (found[b.id] = {b, mine:[]}); if (!f.mine.includes(x.title)) f.mine.push(x.title);
+      });
+    } catch (e) { if (/40[13]/.test(String(e))) { BUND = {busy:false, list:[], err:'IsThereAnyDeal rejected your API key.'}; paintBundles(); return; } }
+  }
+  BUND = {busy:false, list:Object.values(found).sort((a, b) => b.mine.length - a.mine.length || (Date.parse(a.b.expiry) || 9e15) - (Date.parse(b.b.expiry) || 9e15)), err:ok ? '' : 'Couldn’t reach IsThereAnyDeal.'};
+  BUND.list.forEach(f => tiersOf(f.b).forEach(t => t.games.slice(0, 15).forEach(gm => requestCompat(null, gm))));
+  paintBundles(); setTimeout(paintBundles, 6000); setTimeout(paintBundles, 15000);
+}
+// tiers with running totals: buying a higher tier gets you the lower tiers' games too
+function tiersOf(b) {
+  const cum = [], out = [];
+  (b.tiers || []).forEach(t => { (t.games || []).forEach(gm => { const tt = gm && (gm.title || gm.name); if (tt && !cum.includes(tt)) cum.push(tt); }); const p = t.price && t.price.amount != null ? +t.price.amount : null; out.push({price:p, games:cum.slice()}); });
+  return out;
+}
+function runCount(titles) { let g = 0, w = 0, k = 0; titles.forEach(t => { const c = COMPAT[ckey(null, t)]; if (!c) return; k++; const v = verdict(c.none ? null : c).k; if (v === 'g') g++; else if (v === 'w') w++; }); return {g, w, k}; }
+function bundleHtml() {
+  if (!S.list.length && !S.watch.length) return '';
+  let h = '<div class="sec"><h2>Bundles with your games</h2><span>From Humble, Fanatical and more</span></div>';
+  if (!S.itadKey) return h + '<p class="note">Add your free IsThereAnyDeal API key in Settings and DealScout will find live bundles that include games on your list or watchlist, with the price per game and how many run on your laptop.</p>';
+  if (!BUND || (BUND.busy && !BUND.list.length)) return h + '<div class="spin"></div>';
+  if (BUND.err) return h + `<p class="note">${esc(BUND.err)}</p>`;
+  if (!BUND.list.length) return h + '<p class="note">None of your games are in a live bundle right now. DealScout checks again every time you open My list.</p>';
+  return h + BUND.list.slice(0, 12).map(({b, mine}) => {
+    const ts = tiersOf(b).filter(t => t.price != null && t.games.length), store = (b.page && b.page.name) || 'Bundle', end = b.expiry ? Date.parse(b.expiry) : 0;
+    const left = end ? Math.ceil((end - Date.now()) / 864e5) : 0;
+    return `<div class="bcard"><div class="bh"><div><b>${esc(b.title || 'Bundle')}</b><span>${esc(store)}${end ? ' · ' + (left <= 1 ? '<em>ends within a day</em>' : 'ends ' + fdate(end) + ' (' + left + ' days)') : ''}</span></div>${b.url ? `<button class="btn sm" data-open="${esc(b.url)}">Open</button>` : ''}</div>
+      <div class="bmine">Has from your lists: <b>${mine.map(esc).join(', ')}</b></div>
+      ${ts.map(t => { const rc = runCount(t.games), per = t.price / t.games.length, hasMine = mine.filter(m => t.games.some(x => norm(x) === norm(m))).length;
+        return `<div class="btier"><div class="bp">${money(t.price)}</div><div class="bm"><b>${t.games.length} game${t.games.length === 1 ? '' : 's'} · ${money(per)} each</b><span>${rc.k ? `${rc.g} run well${rc.w ? ' · ' + rc.w + ' might struggle' : ''}${rc.k < t.games.length ? ' · ' + (t.games.length - rc.k) + ' not checked' : ''}` : 'Checking your laptop…'}${hasMine ? ' · includes ' + hasMine + ' of yours' : ''}</span></div></div>`; }).join('')}
+      ${ts.length ? `<details><summary>Games in this bundle</summary><p>${esc(ts[ts.length - 1].games.join(' · '))}</p></details>` : ''}</div>`;
+  }).join('');
+}
+function paintBundles() { const el = $('#lbund'); if (el) el.innerHTML = bundleHtml(); }
+
+/* ---------- deals ending soon (IsThereAnyDeal knows sale end dates) ---------- */
+async function loadEnding() {
+  const box = $('#endsoon'); if (!box) return;
+  if (!S.itadKey || searchMode) { box.innerHTML = ''; return; }
+  try {
+    const key = encodeURIComponent(S.itadKey.trim()), now = Date.now(), out = [];
+    for (let off = 0; off < 600 && out.length < 14; off += 200) {
+      const r = await cached(ITAD + 'deals/v2?key=' + key + '&country=US&limit=200&offset=' + off + '&sort=-cut&mature=false', 30 * 6e4, true);
+      ((r && r.list) || []).forEach(x => { const d = x.deal || {}, e = d.expiry ? Date.parse(d.expiry) : 0; if (x.type && x.type !== 'game') return; if (e > now && e - now < 36 * 36e5 && d.price) out.push({title:x.title, price:+d.price.amount, cut:+d.cut || 0, shop:(d.shop && d.shop.name) || '', end:e, low:d.historyLow && d.historyLow.amount != null ? +d.historyLow.amount : null}); });
+      if (!r || !r.hasMore) break;
+    }
+    out.sort((a, b) => b.cut - a.cut || a.end - b.end);
+    if (!out.length) { box.innerHTML = ''; return; }
+    const hrs = e => { const h = Math.max(1, Math.round((e - Date.now()) / 36e5)); return h < 24 ? h + 'h left' : '1 day left'; };
+    box.innerHTML = `<div class="sec" style="margin-top:4px"><h2>Ending soon</h2><span>Sales over in the next day and a half</span></div><div class="ends">${out.slice(0, 14).map(x => `<button class="endc" data-search="${esc(x.title)}"><b>${esc(x.title)}</b><span class="ep">${money(x.price)} <i>-${x.cut}%</i></span><span class="es">${esc(x.shop)}</span><span class="et">${hrs(x.end)}</span>${x.low != null && x.price <= x.low + .01 ? '<span class="tag low">Lowest ever</span>' : ''}</button>`).join('')}</div>`;
+  } catch (e) { box.innerHTML = ''; }
 }
 function shareList() {
   const tot = S.list.reduce((a, x) => a + x.now, 0);
@@ -1254,7 +1359,7 @@ async function renderWatch(refresh) {
   if (!n) { $('#wlist').innerHTML = '<div class="empty"><h3>Nothing on your watchlist</h3><p>Open any game and tap “Watch price”. DealScout checks once a day and tells you when it hits your price.</p></div>'; updateDots(); return; }
   const draw = () => { $('#wlist').innerHTML = S.watch.map(w => { const hit = w.now != null && w.now <= w.target;
     return `<button class="wrow${hit ? ' hit' : ''}" data-game="${w.id}" data-app="${w.appid || ''}"><div class="img"><img loading="lazy" src="${esc(img(w.appid, w.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(w.thumb)}'}" alt=""></div>
-      <div class="mid"><b>${esc(w.title)}</b><span>Target ${money(w.target)}${w.low != null ? ' · lowest ever ' + money(w.low) : ''}</span></div>
+      <div class="mid"><b>${esc(w.title)}</b><span>Target ${money(w.target)}${w.low != null ? ' · lowest ever ' + money(w.low) : ''}</span>${w.lowAlert ? '<span class="lowa">🔔 New-low alert on</span>' : ''}</div>
       <div class="right" style="display:flex;flex-direction:column;align-items:flex-end"><span class="price${hit ? ' free' : ''}">${w.now != null ? money(w.now) : '…'}</span>${hit ? '<span class="tag g">At your price</span>' : w.now != null ? `<span class="was" style="text-decoration:none">${money(w.now - w.target)} to go</span>` : ''}</div></button>`; }).join(''); updateDots(); };
   draw();
   if (!refresh) return;
@@ -1386,7 +1491,7 @@ $('#sheet').addEventListener('click', e => {
     const t = parseFloat($('#tgt').value); if (!(t >= 0)) { toast('Enter a price'); return; }
     let w = S.watch.find(x => x.id === curGame.id);
     if (!w) { w = {id:curGame.id, title:curGame.title, appid:curGame.appid, thumb:curGame.thumb}; S.watch.unshift(w); }
-    w.target = t; w.now = Math.min(...curGame.g.deals.map(d => +d.price)); w.low = curGame.g.cheapestPriceEver ? +curGame.g.cheapestPriceEver.price : null;
+    w.target = t; w.lowAlert = !!($('#lowa') && $('#lowa').checked); w.now = Math.min(...curGame.g.deals.map(d => +d.price)); w.low = curGame.g.cheapestPriceEver ? +curGame.g.cheapestPriceEver.price : null;
     if (!S.daily) { S.daily = true; } save(); pushReminder(); buzz(15); toast('Watching. You’ll get a notification at ' + money(t) + ' or less'); renderGame(); if (view === 'watch') renderWatch();
   }
   else if (a === 'unwatch') { S.watch = S.watch.filter(x => x.id !== curGame.id); save(); toast('Removed from watchlist'); renderGame(); if (view === 'watch') renderWatch(); }
@@ -1451,7 +1556,7 @@ window.__toast = toast;
 window.__canReload = () => !sheetOpen;
 (async () => {
   for (const k in blank()) if (S[k] === undefined) S[k] = blank()[k];
-  rebuildOwned(); renderRig(); await loadStores(); renderPresets(); loadDeals(true); syncNative(); pushReminder();
+  rebuildOwned(); renderRig(); await loadStores(); renderPresets(); loadDeals(true); loadEnding(); syncNative(); pushReminder();
   // keep the Steam library fresh (weekly)
   if (S.steamKey && S.steamUser && (!S.owned.at || Date.now() - Date.parse(S.owned.at) > 7 * 864e5)) steamImport(true).then(ok => { if (ok) applyVis(); });
 })();

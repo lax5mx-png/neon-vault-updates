@@ -1,16 +1,16 @@
 {
  "content": {
-  "v": 8,
+  "v": 9,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "6ad8b6182d2de58edff554c1cb392939431f264a015f460ab19f23141152c3bf",
+  "sha256": "969eb9822e1505c2badc1ede1cac5ec0c8a01a98b74f828e1a71cc3f00d71236",
   "minVc": 2
  },
  "apk": {
-  "vc": 5,
-  "vn": "1.3.1",
-  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.3.1.apk",
-  "sha256": "2f6300eeaf3f6bedfb017d7e8a873aefa59d66dc2ec20627f1570b11676aa7f2",
-  "size": 131207
+  "vc": 6,
+  "vn": "1.4.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/DealScout-1.4.0.apk",
+  "sha256": "e5a28fb660eaffdbab9f7f3236e01a599d4a3a20e7322aabd35a5938e7a69d1d",
+  "size": 139255
  },
- "notes": "Biggest discounts now gets the past-year average price for every game in the list, checking the rest in the background."
+ "notes": "Deal grades, bundles that include your games, sales ending soon, giveaways ending soon, and an optional alert when a watched game hits its lowest price ever (needs the 1.4.0 update)."
 }

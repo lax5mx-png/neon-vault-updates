@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 8,
+  "v": 9,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "dba9efe8b28a5e119d80bcc603f4cbdebcd191027addd83f735c8ad5a971134c",
+  "sha256": "0c3a29bb734e417162c15b67b75811340513b11c90a2d6fa6d7de4a5795d25dc",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "Vault opens are pure luck now: no guaranteed rarities. Odds verified."
+ "notes": "Boss rush mode, a free vault open every day, collection rewards, music that speeds up as you play, and your look on the home screen."
 }

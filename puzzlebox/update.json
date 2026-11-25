@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 2,
+  "v": 3,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/puzzlebox/index.html",
-  "sha256": "0e9f2968ac2efa8e4cbbbec9d21555e90fa6644c7444baa4f0714a0b84f987f5",
+  "sha256": "8fd423e11e812e7bd5e96ccd49a1a4d4205115a3fb1da1855c3be05f0fc63516",
   "minVc": 4
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "30244cb67cbdc533c0b3f44fab72a5ed73837e168f4fa45aeafbf04fa0c29c7f",
   "size": 931831
  },
- "notes": "Fix: days you finished before the new puzzles arrived keep their original three puzzles, so your streak and days done are safe. The new puzzles join the dailies from Nov 22."
+ "notes": "New: Skyscrapers, Futoshiki and Tents, a 3-minute speed round, a streak calendar, coins for hints and more detailed stats."
 }
