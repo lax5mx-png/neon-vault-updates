@@ -108,6 +108,20 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .rv.r5{box-shadow:0 0 22px 0 var(--rc)}.rv.r6{border-color:#fff;box-shadow:0 0 18px 2px #ff6a8a,0 0 30px 4px #6ac8ff;animation:rvin .45s cubic-bezier(.2,.9,.3,1.25) forwards,hue 3s linear infinite}
 .rv.r4:after,.rv.r5:after,.rv.r6:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);transform:translateX(-120%);animation:shine 1.6s 1s ease-in-out infinite;pointer-events:none}
 @keyframes hue{to{filter:hue-rotate(360deg)}}
+.reels{position:relative;display:flex;flex-direction:column;gap:6px;margin:14px -6px 12px;padding:8px 0;border-radius:12px;background:#0b0d13;border:2px solid var(--line);overflow:hidden}
+.reel{overflow:hidden;height:var(--ch);position:relative}
+.reel:before,.reel:after{content:"";position:absolute;top:0;bottom:0;width:38px;z-index:2;pointer-events:none}.reel:before{left:0;background:linear-gradient(90deg,#0b0d13,transparent)}.reel:after{right:0;background:linear-gradient(-90deg,#0b0d13,transparent)}
+.strip{display:flex;height:100%;will-change:transform}
+.rc{flex:0 0 var(--cw);height:100%;padding:3px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:linear-gradient(180deg,#1c1f2b,#14161f);border-right:1px solid #0b0d13;border-bottom:4px solid var(--rc)}
+.rc img{width:100%;flex:1;min-height:0;object-fit:cover;border-radius:6px}
+.reels.one .rc img{flex:0 0 78px}
+.rc b{font-size:11px;line-height:1.15;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#e8e4da}
+.rc.r6{border-bottom-color:#ff6a8a;border-image:linear-gradient(90deg,#ff6a8a,#ffd36a,#6affb0,#6ac8ff,#c56aff) 0 0 1 0}
+.rc.hit{z-index:1;box-shadow:0 0 0 2px var(--rc),0 0 22px 2px var(--rc);animation:hitpop .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes hitpop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.reels .mark{position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:#ffc93c;box-shadow:0 0 10px #ffc93c;z-index:3}
+.reels .mark:before,.reels .mark:after{content:"";position:absolute;left:-6px;border:7px solid transparent}.reels .mark:before{top:0;border-top-color:#ffc93c}.reels .mark:after{bottom:0;border-bottom-color:#ffc93c}
+
 .showcase{flex-shrink:0;display:block;position:relative;width:100%;height:128px;border-radius:14px;overflow:hidden;border:2px solid var(--line);margin:4px 0 14px;padding:0;background:#0c0e15;box-shadow:var(--sh)}
 .showcase canvas{width:100%;height:100%;display:block}.showcase .sc-l{position:absolute;left:10px;bottom:8px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.45);padding:3px 7px;border-radius:6px}
 .card.boss{background:linear-gradient(135deg,#2a1a3d,#1b1e29 70%);border-color:#5a3a80}.card.boss h3{color:#e2c6ff}
@@ -1564,8 +1578,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     document.querySelectorAll('#shop [data-pv]').forEach(c => pvObs ? pvObs.observe(c) : preview(c, SKINS.get(c.dataset.k, c.dataset.pv)));
   }
   // previews use the same drawing code as the game
-  function preview(c, it) {
-    const d = Math.min(2, window.devicePixelRatio || 1), w = c.clientWidth || 150, h = c.clientHeight || 86; c.width = w * d; c.height = h * d;
+  function preview(c, it, W0, H0) {
+    const d = Math.min(2, window.devicePixelRatio || 1), w = W0 || c.clientWidth || 150, h = H0 || c.clientHeight || 86; c.width = w * d; c.height = h * d;
     const x = c.getContext('2d'); x.scale(d, d);
     if (it.kind === 'theme') {
       const k = 2.4; x.save(); x.scale(1 / k, 1 / k); GAME.paintBg(x, w * k, h * k, it.id); x.restore();
@@ -1609,8 +1623,53 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (P.shards < cost) { toast(`${shardImg}<span>You need ${fmt(cost - P.shards)} more shards</span>`); SFX.thud(); return; }
     P.shards -= cost; const res = [];
     for (let i = 0; i < n; i++) res.push(rollOne());
-    save(); lastPull = res; checkAch();
-    const top = Math.max(...res.map(x => x.it.r)); ownSets = null; const  refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
+    save(); lastPull = res; checkAch(); ownSets = null;
+    spin(res, () => showPull(res, n));
+  }
+  /* ---------- crate-style spin: a strip of items slides past the marker and slows to a stop ---------- */
+  const THUMB = {};
+  function thumb(it, w, h) {
+    const k = it.kind + '|' + it.id + '|' + w; if (THUMB[k]) return THUMB[k];
+    const c = document.createElement('canvas'); preview(c, it, w, h); return (THUMB[k] = c.toDataURL());
+  }
+  let SPIN = null;
+  function spin(res, done) {
+    const n = res.length, one = n === 1, cw = one ? 112 : 58, ch = one ? 122 : 46, len = one ? 48 : 36, W = len - 6;
+    // filler items follow the real odds, from a small pool so thumbnails stay quick to draw
+    const roll = () => { let v = Math.random() * 100, r = 0; for (let i = RAR.length - 1; i >= 0; i--) { if (v < RAR[i].w) { r = i; break; } v -= RAR[i].w; } return r; };
+    const pool = {}; for (let r = 0; r < RAR.length; r++) pool[r] = [...Array(4)].map(() => TIER[r][Math.floor(Math.random() * TIER[r].length)]);
+    const filler = () => { const r = roll(); return pool[r][Math.floor(Math.random() * 4)]; };
+    const strips = res.map(x => { const a = [...Array(len)].map(filler); a[W] = x.it;
+      // the classic near miss: something rare right next to where it stops
+      if (Math.random() < .45) a[W + (Math.random() < .5 ? 1 : -1)] = pool[4 + Math.floor(Math.random() * 3)][0];
+      return a; });
+    const tw = one ? 104 : 54, th = one ? 78 : 40;
+    const cardH = (it, i) => `<div class="rc r${it.r}${i === W ? ' w' : ''}" style="--rc:${RAR[it.r].c}"><img src="${thumb(it, tw, th)}" alt="">${one ? `<b>${esc(it.name)}</b>` : ''}</div>`;
+    ovKind = 'spin';
+    overlay(`<div class="kick">${one ? 'Opening the vault' : 'Opening ×10'}</div>
+      <div class="reels${one ? ' one' : ''}" style="--cw:${cw}px;--ch:${ch}px">${strips.map(a => `<div class="reel"><div class="strip">${a.map(cardH).join('')}</div></div>`).join('')}<i class="mark"></i></div>
+      <div class="acts"><button class="btn ghost" data-act="spinskip">Skip</button></div>`);
+    const reels = [...document.querySelectorAll('#ovbox .reel')], els = reels.map(r => r.firstElementChild), rw = reels[0].clientWidth;
+    const ends = els.map(() => -(W * cw + cw / 2 - rw / 2 + (Math.random() - .5) * cw * .76)), durs = els.map((_, i) => one ? 5.8 : 3.4 + i * .28);
+    els.forEach(e => e.style.transform = 'translateX(0)');
+    requestAnimationFrame(() => requestAnimationFrame(() => els.forEach((e, i) => { e.style.transition = `transform ${durs[i]}s cubic-bezier(.1,.72,.14,1)`; e.style.transform = `translateX(${ends[i]}px)`; })));
+    // a click each time a card passes the marker on the slowest reel
+    const watch = els[els.length - 1]; let last = -1, lastT = 0, raf;
+    const tickLoop = t => { const m = new DOMMatrix(getComputedStyle(watch).transform), idx = Math.floor((-m.m41 + rw / 2) / cw);
+      if (idx !== last) { last = idx; if (t - lastT > 32) { SFX.tick(); lastT = t; } } raf = requestAnimationFrame(tickLoop); };
+    raf = requestAnimationFrame(tickLoop);
+    const finish = () => {
+      if (!SPIN) return; SPIN = null; cancelAnimationFrame(raf); clearTimeout(tm);
+      els.forEach((e, i) => { e.style.transition = 'none'; e.style.transform = `translateX(${ends[i]}px)`; });
+      document.querySelectorAll('#ovbox .rc.w').forEach(e => e.classList.add('hit'));
+      const top = Math.max(...res.map(x => x.it.r)); top >= 4 ? SFX.win() : top >= 3 ? SFX.power() : SFX.clink();
+      setTimeout(() => ovKind === 'spin' && done(), top >= 4 ? 1300 : 800);
+    };
+    const tm = setTimeout(finish, Math.max(...durs) * 1000 + 150);
+    SPIN = {finish};
+  }
+  function showPull(res, n) {
+    const top = Math.max(...res.map(x => x.it.r)), refund = res.filter(x => x.dup).reduce((s, x) => s + RAR[x.it.r].dup, 0), fresh = res.filter(x => !x.dup).length;
     const card = (x, i, big) => `<div class="rv r${x.it.r}${big ? ' big' : ''}" style="--rc:${RAR[x.it.r].c};animation-delay:${i * .14 + .1}s"><div class="pv"><canvas data-rv="${i}"></canvas></div>
       <b>${esc(x.it.name)}</b><span class="rr">${RAR[x.it.r].n} ${{blade:'blade', theme:'background', gem:'gem skin', bomb:'bomb skin'}[x.it.kind]}</span>${x.dup ? `<span class="dup">${shardImg}+${RAR[x.it.r].dup}</span>` : '<span class="new">NEW</span>'}</div>`;
     ovKind = 'pull';
@@ -1767,6 +1826,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (a === 'pullfree') { SFX.tap(); openVault(1, true); return; }
     if (a === 'pull1' || a === 'pull10') { SFX.tap(); openVault(a === 'pull1' ? 1 : 10); if (!$('#ov').classList.contains('on')) drawShop(); return; }
     if (a === 'closepull') { closeOv(); drawShop(); return; }
+    if (a === 'spinskip') { if (SPIN) SPIN.finish(); return; }
     if (a === 'equippull') { const it = lastPull[0].it; equip(it); SFX.tap(); closeOv(); shopTab = it.kind; shopFilter = 'all'; drawShop(); return; }
     if (a === 'more') { shopShown += 60; SFX.tap(); const y = $('#shop').scrollTop; drawShop(); $('#shop').scrollTop = y; return; }
     if (a === 'start') { startRun(run); return; }
@@ -1790,6 +1850,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
     if (ovKind === 'pause') { closeOv(); GAME.resume(); if (P.set.music) SFX.music(true); return true; }
     if (ovKind === 'brief' || ovKind === 'confirm') { closeOv(); return true; }
     if (ovKind === 'pull') { closeOv(); drawShop(); return true; }
+    if (ovKind === 'spin') { if (SPIN) SPIN.finish(); return true; }
     if (ovKind === 'result') { goHome(); return true; }
     if (GAME.active) { pauseGame(); return true; }
     if (screen !== 'home') { show('home'); return true; }
