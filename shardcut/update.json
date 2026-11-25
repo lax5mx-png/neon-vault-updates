@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 12,
+  "v": 13,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/shardcut/index.html",
-  "sha256": "15aff595ede0c5ac72a2ab754b3530acf018d4dcf960cd8b83b4c5ebd8409e34",
+  "sha256": "6531331172b5727a84d2414d50b235a12290c872f545e357a97af69587b5edaf",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "c18bda01a42671e68e3a7d2eb7437c45f290d6891f8cc5939e8f0d41bdf690c2",
   "size": 191823
  },
- "notes": "Cuts land closer to the middle of each gem while still following the angle of your swipe."
+ "notes": "Every cut now goes through the exact centre of the gem, at the angle of your swipe."
 }
