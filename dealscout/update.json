@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 15,
+  "v": 16,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "fae24ba19cdd8833524f7ec5c3cbc89a0133d0518003ff33b29ebe8b65647cd3",
+  "sha256": "3a5601f9649691ba3247ca2cb316670ba9784ac53e9544fb70b9c8d85dd7a08e",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "e5a28fb660eaffdbab9f7f3236e01a599d4a3a20e7322aabd35a5938e7a69d1d",
   "size": 139255
  },
- "notes": "All games now loads as one continuous list from the best grade down as you scroll. Nothing reshuffles."
+ "notes": "DealScout learns your taste from your list, watchlist, purchases and new \u2661 More like this / Not for me buttons. Grades include it, For you tags and a For you sort show your kind of games, and game pages suggest similar games."
 }

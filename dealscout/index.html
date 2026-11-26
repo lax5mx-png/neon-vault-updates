@@ -252,6 +252,12 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 .deal .mid{min-width:0}.deal .meta .tag{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.deal .meta .tag.rate{display:inline-block}.deal .meta .tag b{flex-shrink:0}
 .gsrc{margin:2px 0 0;font-size:11.5px;color:var(--mute)}
 .gbar{height:7px;border-radius:4px;background:var(--line);overflow:hidden}.gbar em{display:block;height:100%;border-radius:4px;background:var(--acc)}
+.tag.fy{background:#FFE3EC;color:#C2185B}
+.row2.taste{margin-top:10px}
+.sims{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}.sims::-webkit-scrollbar{display:none}
+.sim{flex:0 0 150px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.sim img{width:100%;height:70px;object-fit:cover;background:var(--soft)}.sim b{font-size:12.5px;line-height:1.25;padding:6px 8px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.sim span{display:flex;align-items:center;gap:6px;padding:0 8px 8px;font-weight:800;font-size:13px}.sim .grade{font-style:normal;margin:0}
 .gradebar{display:flex;gap:12px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--soft)}
 .gradebar b{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;font-size:20px;font-weight:900;flex-shrink:0}
 .gradebar strong{display:block;font-size:14px}.gradebar span{display:block;font-size:12.5px;color:var(--mute);margin-top:1px}
@@ -435,9 +441,11 @@ const GPUS = [
 const CPUS = [
   ['Ryzen 7 7445HS', 7.0], ['Ryzen 5 7535HS', 6.0], ['Ryzen 7 7840HS', 9.5], ['Ryzen 7 8845HS', 9.8], ['Core i5-12450H', 6.3], ['Core i5-13420H', 7.0], ['Core i7-12650H', 8.0], ['Core i7-13620H', 8.8], ['Core i7-13700H', 9.5], ['Core i5-12400 (desktop)', 6.6], ['Ryzen 5 5600 (desktop)', 7.0], ['Older quad-core', 2.5]
 ];
-function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, sortGrade:false, allSort:'grade', allSale:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
+function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, sortGrade:false, likes:[], nope:[], allSort:'grade', allSale:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
 let S = Object.assign(blank(), lsGet(KEY) || {});
-function save() { lsSet(KEY, S); syncNative(); }
+function save() { TASTE = null;
+  save0(); }
+function save0() { lsSet(KEY, S); syncNative(); }
 function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target, low:!!w.lowAlert})), free:S.freeNote})); } catch (e) {} }
 function pushReminder() { if (!A) return; const [h, m] = S.dailyT.split(':').map(Number); try { A.setReminder(!!S.daily, h, m); } catch (e) {} }
 const rig = () => ({gpu:GPUS[S.gpu][1], vram:GPUS[S.gpu][2], name:GPUS[S.gpu][0], ram:S.ram, disk:S.disk, cpu:CPUS[S.cpu || 0][1], cpuName:CPUS[S.cpu || 0][0]});
@@ -638,7 +646,7 @@ async function resolveSteam(appid, title) {
 function pump() {
   while (active < 5 && queue.length) {
     const [k, appid, title] = queue.shift(); active++;
-    resolveSteam(appid, title).catch(() => null).then(c => { COMPAT[k] = c || {none:true, t:Date.now()}; })
+    resolveSteam(appid, title).catch(() => null).then(c => { COMPAT[k] = c || {none:true, t:Date.now()}; TASTE = null; })
       .finally(() => { active--; delete waiting[k]; saveCompat(); updateBadges(k); setTimeout(pump, 150); });
   }
 }
@@ -646,7 +654,8 @@ function vtag(k) {
   if (!k || k === 't:') return '<span class="tag g">✓ Runs</span>';
   const c = COMPAT[k]; if (!c) return '<span class="tag u">Checking…</span>';
   const v = verdict(c.none ? null : c); const ic = v.k === 'b' ? '✗' : '✓';
-  return `<span class="tag ${v.k}">${ic} ${v.label}</span>`;
+  const m = matchOf(k);
+  return `<span class="tag ${v.k}">${ic} ${v.label}</span>${m != null && m >= 70 ? `<span class="tag fy">♥ For you</span>` : ''}`;
 }
 function refreshGrades(k) {
   document.querySelectorAll(k ? `.deal[data-ck="${CSS.escape(k)}"]` : '#dlist .deal[data-deal], #alist .deal[data-deal]').forEach(e => { const d = DEAL[e.dataset.deal], g = e.querySelector('.grade'); if (d && g) g.outerHTML = gradeTag(dealScore(d)); });
@@ -705,6 +714,7 @@ function genreOk(k) { if (!S.genres.length) return true; const c = COMPAT[k]; if
 function cardHidden(el) {
   const k = el.dataset.ck, c = COMPAT[k];
   if (S.hideOwned && isOwned(el.dataset.app, el.dataset.title, el.dataset.game)) return true;
+  if ((S.nope || []).some(x => x.id === el.dataset.game)) return true;
   if (S.hideNo && c && !c.none && verdict(c).k === 'b') return true;
   if (S.genres.length && genreOk(k) !== true) return true;
   return false;
@@ -1029,6 +1039,38 @@ function grade(now, low, off) {
   if (off == null) return null;
   return off >= 70 ? {g:'A+', c:'ga', why:off + '% under its usual price'} : off >= 50 ? {g:'A', c:'ga', why:off + '% under its usual price'} : off >= 33 ? {g:'B', c:'gb', why:off + '% off'} : off >= 15 ? {g:'C', c:'gc', why:'Small discount'} : {g:'D', c:'gd', why:'Barely discounted'};
 }
+/* ---------- your taste: learned from the games you keep, watch, buy, like or pass on ---------- */
+const TASTE_CATS = ['Co-op', 'Online Co-op', 'Shared/Split Screen Co-op', 'Multi-player', 'PvP', 'Online PvP', 'Single-player', 'Full controller support', 'VR Supported'];
+function feats(c) { if (!c || c.none) return []; return (c.genres || []).map(g => 'g:' + g).concat((c.cats || []).filter(x => TASTE_CATS.includes(x)).map(x => 'k:' + x), (c.dev || []).map(d => 'd:' + d)); }
+let TASTE = null, tasteN = 0;
+function taste() {
+  if (TASTE) return TASTE;
+  const w = {}, seen = new Set(); let n = 0;
+  const add = (appid, title, wt) => { const k = ckey(appid, title); if (seen.has(k)) return; seen.add(k); const c = COMPAT[k]; if (!c || c.none) { requestCompat(appid, title); return; } n += wt > 0 ? 1 : 0; feats(c).forEach(f => w[f] = (w[f] || 0) + wt * (f[0] === 'd' ? 1.5 : f[0] === 'k' ? .7 : 1)); };
+  (S.likes || []).forEach(x => add(x.appid, x.title, 3));
+  S.mine.forEach(x => add(x.appid, x.title, 2.5));
+  S.list.forEach(x => add(x.appid, x.title, 2));
+  S.watch.forEach(x => add(x.appid, x.title, 2));
+  (S.owned.apps || []).slice(0, 400).forEach(id => { const c = COMPAT[String(id)]; if (c && !c.none) add(id, '', 1); });
+  (S.nope || []).forEach(x => add(x.appid, x.title, -3));
+  // traits most games share (Indie, Action, Single-player) say little about you; rare ones say a lot
+  const df = {}; let N = 0; for (const k in COMPAT) { const fs = feats(COMPAT[k]); if (!fs.length) continue; N++; new Set(fs).forEach(f => df[f] = (df[f] || 0) + 1); }
+  const idf = f => Math.max(.15, Math.log((N + 2) / ((df[f] || 0) + 1)) / Math.log(N + 2));
+  for (const f in w) w[f] *= idf(f);
+  const pos = Object.values(w).filter(v => v > 0).sort((a, b) => b - a);
+  TASTE = {w, n, idf, norm:pos.slice(0, 5).reduce((a, b) => a + b, 0) || 1};
+  return TASTE;
+}
+const tasteDirty = () => { TASTE = null; tasteN++; };
+// 0-100: how well a game fits what you like; null until DealScout knows at least 3 games you like
+function matchOf(ck) {
+  const T = taste(), c = COMPAT[ck]; if (T.n < 3 || !c || c.none) return null;
+  const fs = feats(c); if (!fs.length) return null;
+  let sum = 0; fs.forEach(f => sum += T.w[f] || 0);
+  return Math.round(Math.max(0, Math.min(100, 50 + 50 * sum / T.norm)));
+}
+function whyMatch(ck) { const T = taste(), c = COMPAT[ck]; return feats(c).filter(f => (T.w[f] || 0) > 0).sort((a, b) => T.w[b] - T.w[a]).slice(0, 2).map(f => f.slice(2)).join(', '); }
+
 /* ---------- overall grade: price + how good the game is + whether your laptop runs it ---------- */
 const lerp = (x, pts) => { if (x <= pts[0][0]) return pts[0][1]; for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) { const [a, b] = pts[i - 1], [c, d] = pts[i]; return b + (d - b) * (x - a) / (c - a); } return pts[pts.length - 1][1]; };
 const LETTERS = [[92, 'A+', 'ga'], [84, 'A', 'ga'], [72, 'B', 'gb'], [58, 'C', 'gc'], [0, 'D', 'gd']];
@@ -1054,14 +1096,15 @@ function score(x) {
   const quality = blend([[revS, .6], [meta || null, .4]]) ?? 50;
   // laptop
   const v = c ? verdict(st) : null, vk = v ? (v.k === 'g' && v.tier === 'low' ? 'l' : v.k) : 'p', fit = {g:100, l:80, b:0, p:100}[vk];
-  let total = .45 * price + .35 * quality + .2 * fit;
+  const match = x.ck ? matchOf(x.ck) : null;
+  let total = match == null ? .45 * price + .35 * quality + .2 * fit : .4 * price + .3 * quality + .15 * fit + .15 * match;
   if (vk === 'b') total = Math.min(total, 45);
   const L = LETTERS.find(l => total >= l[0]);
   const pw = lowS != null && lowS >= 99 ? 'lowest price ever' : lowS != null ? Math.round((now / low - 1) * 100) + '% above its lowest ever' : off ? off + '% off' : 'full price';
   const qw = [pct ? pct + '% liked on Steam' + (cnt ? ' (' + (cnt >= 1000 ? Math.round(cnt / 1000) + 'k' : cnt) + ' reviews)' : '') : '', meta ? 'Metacritic ' + meta : ''].filter(Boolean).join(', ') || 'no reviews yet';
-  const why = [pw + (x.cheaper ? ', cheaper at another store' : ''), qw, {g:'runs great on your laptop', l:'runs on medium settings on your laptop', b:'won’t run on your laptop', p:'checking your laptop'}[vk]].join(' · ');
-  const used = [lowS != null && 'lowest-ever price', 'discount', avgS != null && (x.year ? '1-year average price' : 'average across stores'), drS != null && 'CheapShark deal rating', pct && 'Steam reviews', meta && 'Metacritic', vk !== 'p' && 'laptop check'].filter(Boolean);
-  return {s:Math.round(total), g:L[1], c:L[2], why, used, price:Math.round(price), quality:Math.round(quality), fit, vk, pending:vk === 'p'};
+  const why = [pw + (x.cheaper ? ', cheaper at another store' : ''), qw, {g:'runs great on your laptop', l:'runs on medium settings on your laptop', b:'won’t run on your laptop', p:'checking your laptop'}[vk]].concat(match == null ? [] : match >= 70 ? ['your kind of game (' + whyMatch(x.ck) + ')'] : match <= 35 ? ['not your usual kind of game'] : []).join(' · ');
+  const used = [lowS != null && 'lowest-ever price', 'discount', avgS != null && (x.year ? '1-year average price' : 'average across stores'), drS != null && 'CheapShark deal rating', pct && 'Steam reviews', meta && 'Metacritic', vk !== 'p' && 'laptop check', match != null && 'your taste'].filter(Boolean);
+  return {s:Math.round(total), g:L[1], c:L[2], why, used, price:Math.round(price), quality:Math.round(quality), fit, match, vk, pending:vk === 'p'};
 }
 const dealScore = d => {
   const b = baseline(d), a = AVG[d.gameID], cheapest = a && a.prices.length ? Math.min(...a.prices.map(p => p.p).filter(p => p >= 0)) : null;
@@ -1153,6 +1196,18 @@ function specBlock(c) {
   return h;
 }
 const nfmt = n => Number(n).toLocaleString('en-US');
+// games like this one, from everything DealScout has loaded: shared genres, developer or style, best grade first
+function similarHtml() {
+  const me = COMPAT[curGame.ck]; if (!me || me.none) return '';
+  const mf = new Set(feats(me)); if (!mf.size) return '';
+  const cand = Object.values(DEAL).filter(d => d.gameID !== curGame.id && !(S.nope || []).some(x => x.id === d.gameID)).map(d => {
+    const c = COMPAT[ckey(d.steamAppID, d.title)]; if (!c || c.none) return null;
+    const shared = feats(c).filter(f => mf.has(f)), idf = taste().idf; const sim = shared.reduce((a, f) => a + idf(f) * (f[0] === 'd' ? 4 : f[0] === 'g' ? 2 : 1), 0);
+    return sim >= 1.1 && shared.length >= 2 ? {d, sim, sc:dealScore(d)} : null; }).filter(Boolean);
+  const seen = new Set(), top = cand.sort((a, b) => b.sim * 10 + b.sc.s - (a.sim * 10 + a.sc.s)).filter(x => !seen.has(x.d.gameID) && seen.add(x.d.gameID)).slice(0, 8);
+  if (!top.length) return '';
+  return `<div class="sec"><h2>Similar games</h2><span>Same genres · on sale now</span></div><div class="sims">${top.map(({d, sc}) => `<button class="sim" data-game="${d.gameID}" data-app="${d.steamAppID || ''}"><img loading="lazy" src="${esc(img(d.steamAppID, d.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(d.thumb)}'}" alt=""><b>${esc(d.title)}</b><span><i class="grade ${sc.c}">${sc.g}</i>${money(+d.salePrice)}</span></button>`).join('')}</div>`;
+}
 function renderGame() {
   if (!curGame || !sheetOpen) return;
   const {g, appid, title, ck} = curGame, c0 = COMPAT[ck] || null, c = c0 && !c0.none ? c0 : null, v = verdict(c);
@@ -1199,7 +1254,7 @@ function renderGame() {
     ${(() => { const ps = deals.map(d => +d.price).concat(extra.map(x => x.price)).filter(x => x >= 0); if (ps.length < 2 || !best) return ''; const avg = ps.reduce((a, b) => a + b, 0) / ps.length, ro = Math.round((1 - (+best.price) / avg) * 100);
       return `<div class="avgline">${+best.price === 0 ? `<b>Free right now.</b> It averages ${money(avg)} across ${ps.length} stores.` : ro > 0 ? `<b>${ro}% below</b> the average price across ${ps.length} stores (${money(avg)})` : `About the same as the average price across ${ps.length} stores (${money(avg)})`}</div>`; })()}
     ${best ? (gr => `<div class="gradebar ${gr.c}"><b>${gr.g}</b><div><strong>Grade ${gr.s}/100</strong><span>${esc(gr.why)}</span></div></div>
-      <div class="gparts">${[['Price', gr.price, '45%'], ['Game quality', gr.quality, '35%'], ['Your laptop', gr.fit, '20%']].map(([n, v, w]) => `<div><span>${n} <i>${w}</i></span><div class="gbar"><em style="width:${v}%"></em></div><b>${v}</b></div>`).join('')}<p class="gsrc">Based on: ${gr.used.join(', ')}</p></div>`)(score({now:best.price, low:low ? +low.price : null, off:Math.round(+best.savings || 0), dr:gq().dr, ro:gq().ro, year:gq().year, pct:gq().pct, cnt:gq().cnt, meta:gq().meta, ck:curGame.ck, cheaper:false})) : ''}
+      <div class="gparts">${(gr.match == null ? [['Price', gr.price, '45%'], ['Game quality', gr.quality, '35%'], ['Your laptop', gr.fit, '20%']] : [['Price', gr.price, '40%'], ['Game quality', gr.quality, '30%'], ['Your laptop', gr.fit, '15%'], ['Your taste', gr.match, '15%']]).map(([n, v, w]) => `<div><span>${n} <i>${w}</i></span><div class="gbar"><em style="width:${v}%"></em></div><b>${v}</b></div>`).join('')}<p class="gsrc">Based on: ${gr.used.join(', ')}</p></div>`)(score({now:best.price, low:low ? +low.price : null, off:Math.round(+best.savings || 0), dr:gq().dr, ro:gq().ro, year:gq().year, pct:gq().pct, cnt:gq().cnt, meta:gq().meta, ck:curGame.ck, cheaper:false})) : ''}
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
     <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'b' ? '✗ ' : '✓ ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
       ${loadingC ? '' : `<p>${esc(c0 && c0.none ? 'This game isn’t on Steam, so there are no listed requirements to check.' : v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
@@ -1220,6 +1275,11 @@ function renderGame() {
       <button class="btn ${w ? 'ghost' : ''}" data-act="watch">${w ? '★ Watching under ' + money(w.target) : '☆ Watch price'}</button>
       ${sid ? `<button class="btn ghost" data-act="steam">Steam page</button>` : ''}
     </div>
+    <div class="row2 taste">
+      <button class="btn ${(S.likes || []).some(x => x.id === curGame.id) ? '' : 'ghost'}" data-act="like">${(S.likes || []).some(x => x.id === curGame.id) ? '♥ You like this' : '♡ More like this'}</button>
+      <button class="btn ghost" data-act="nope">${(S.nope || []).some(x => x.id === curGame.id) ? 'Show it again' : 'Not for me'}</button>
+    </div>
+    ${similarHtml()}
     ${c && (c.min || c.rec) ? `<div class="sec"><h2>System requirements</h2><span>vs your laptop</span></div>
       ${c.approx || c.reqFrom ? `<p class="note" style="margin-top:0">From the Steam listing for <b>${esc(c.reqFrom || c.approx)}</b>.</p>` : ''}
       <div class="rqs">${specBlock(c)}</div><p class="note">✓ meets it · ~ close · ✗ below it. Checked against the laptop in Settings.</p>` : ''}
@@ -1336,7 +1396,7 @@ async function renderList(refresh) {
       <div class="list">${sorted.map(x => { const ck = x.ck || ckey(x.appid, x.title), hitLow = x.low != null && x.now <= x.low + 0.01, off = x.retail > x.now ? Math.round((1 - x.now / x.retail) * 100) : 0;
         return `<div class="lrow" data-ck="${esc(ck)}" data-app="${esc(x.appid)}"><button class="lo" data-game="${x.id}" data-app="${esc(x.appid)}"><div class="img"><img loading="lazy" src="${esc((COMPAT[ck] && COMPAT[ck].header) || img(x.appid, x.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(x.thumb)}'}" alt=""></div>
           <div class="mid"><div class="t">${esc(x.title)}</div><div class="meta">${storeTag(x.store)}${hitLow ? '<span class="tag low">Lowest ever</span>' : ''}${x.was != null && x.now < x.was - 0.009 ? `<span class="tag low">↓ ${money(x.was - x.now)}</span>` : ''}</div><div class="meta" data-vapp="${esc(ck)}">${vtag(ck)}</div></div>
-          <div class="right">${gradeTag(grade(x.now, x.low, off))}<span class="price${x.now === 0 ? ' free' : ''}">${money(x.now)}</span>${off ? `<span class="off">-${off}%</span>` : ''}</div></button>
+          <div class="right">${gradeTag(score({now:x.now, low:x.low, off, ck}))}<span class="price${x.now === 0 ? ' free' : ''}">${money(x.now)}</span>${off ? `<span class="off">-${off}%</span>` : ''}</div></button>
           <button class="x" data-lrm="${x.id}" aria-label="Remove">✕</button></div>`; }).join('')}</div>
       <div class="row2" style="margin-top:14px"><button class="btn ghost" data-act="lshare">Share list</button><button class="btn ghost" data-act="lclear">Clear list</button></div>
       <p class="note">Tap a game to compare stores and buy. When you’ve bought one, open it and tap “I bought it” to take it off your list.</p><div id="lbund">${bundleHtml()}</div>`;
@@ -1420,7 +1480,7 @@ async function loadEnding() {
   } catch (e) { box.innerHTML = ''; }
 }
 /* ---------- All games: the whole catalogue, not just sales ---------- */
-const ASORTS = {grade:['Best grade', 'sortBy=Reviews'], top:['Top rated', 'sortBy=Reviews'], meta:['Critics’ picks', 'sortBy=Metacritic'], new:['Newest', 'sortBy=Release'], cheap:['Cheapest', 'sortBy=Price'], az:['A–Z', 'sortBy=Title']};
+const ASORTS = {grade:['Best grade', 'sortBy=Reviews'], foryou:['For you', 'sortBy=Reviews'], top:['Top rated', 'sortBy=Reviews'], meta:['Critics’ picks', 'sortBy=Metacritic'], new:['Newest', 'sortBy=Release'], cheap:['Cheapest', 'sortBy=Price'], az:['A–Z', 'sortBy=Title']};
 let apage = 0, aseen = new Set(), aloading = false, aend = false, acount = 0, inAll = false;
 function refilterAll() { document.querySelectorAll('#alist .deal').forEach(e => e.style.display = cardHidden(e) ? 'none' : ''); }
 function renderAllChips() {
@@ -1435,7 +1495,9 @@ function renderAllChips() {
    shown, so nothing on screen changes order. More of the catalogue is pulled in the background as you scroll. */
 let APOOL = null; // {items, at, src:{sort:{page, done}}, done}
 const BATCH = 25;
-const rank = (a, b) => dealScore(b).s - dealScore(a).s;
+// For you: how well it fits your taste first, then its grade
+const rkey = d => { const sc = dealScore(d); if (S.allSort !== 'foryou') return sc.s; const m = matchOf(ckey(d.steamAppID, d.title)); return Math.round((m == null ? 40 : m) * .6 + sc.s * .4); };
+const rank = (a, b) => rkey(b) - rkey(a);
 // lowest-ever prices for many games at once (25 per request, 4 requests at a time)
 async function lowsFor(list) {
   const need = [...new Set(list.map(d => d.gameID))].filter(id => !(id in LOW)), chunks = [];
@@ -1488,7 +1550,7 @@ async function showBatch() {
     const box = $('#alist'), cards = () => [...box.querySelectorAll('.deal[data-sc]')];
     inAll = true;
     for (const d of out) {
-      const sc = dealScore(d).s, html = dealCard(d).replace('<button class="deal"', `<button class="deal" data-sc="${sc}"`);
+      const sc = rkey(d), html = dealCard(d).replace('<button class="deal"', `<button class="deal" data-sc="${sc}"`);
       const all = cards(), lastSc = all.length ? +all[all.length - 1].dataset.sc : Infinity;
       if (sc <= lastSc) { box.insertAdjacentHTML('beforeend', html); continue; }
       // a late arrival that outranks games already on screen: slot it into its place above, keeping your scroll position
@@ -1500,7 +1562,7 @@ async function showBatch() {
     acount += out.length;
     compatFor(P.items.slice(P.at, P.at + BATCH + 15), 0); // start checking the following batch now
     const last = out.length ? dealScore(out[out.length - 1]) : null;
-    $('#astat').textContent = acount + ' games · best grades first' + (last ? ' · now at ' + last.g + ' ' + last.s : '') + (S.allSale ? ' · on sale only' : '');
+    $('#astat').textContent = acount + ' games · ' + (S.allSort === 'foryou' ? 'best matches for your taste first' : 'best grades first' + (last ? ' · now at ' + last.g + ' ' + last.s : '')) + (S.allSale ? ' · on sale only' : '');
     const end = P.at >= P.items.length && P.done;
     $('#amore').innerHTML = end ? '<span class="sub">That’s every game.</span>' : '<div class="spin"></div><p class="sub" style="text-align:center">Keep scrolling for the next grades down</p>';
     if (!acount) $('#alist').innerHTML = '<div class="empty"><h3>No games match</h3><p>Loosen the filters above.</p></div>';
@@ -1509,9 +1571,11 @@ async function showBatch() {
   const m = $('#amore'); if (m && APOOL === P && m.getBoundingClientRect().top < innerHeight + 400 && !(P.at >= P.items.length && P.done)) showBatch();
 }
 // load the next batch automatically as the bottom comes into view
-const allObs = 'IntersectionObserver' in window ? new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && APOOL && S.allSort === 'grade' && view === 'all') showBatch(); }, {rootMargin:'600px'}) : null;
+const allObs = 'IntersectionObserver' in window ? new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && APOOL && (S.allSort === 'grade' || S.allSort === 'foryou') && view === 'all') showBatch(); }, {rootMargin:'600px'}) : null;
 async function loadAll(reset) {
-  if (S.allSort === 'grade') {
+  if (S.allSort === 'foryou' && taste().n < 3) { APOOL = null; renderAllChips(); $('#amore').innerHTML = ''; $('#astat').textContent = '';
+    $('#alist').innerHTML = '<div class="empty"><h3>Teach DealScout your taste</h3><p>Add at least 3 games you like to My list or the Watchlist, or open a game and tap ♡ More like this. Then For you ranks games around what you enjoy.</p></div>'; return; }
+  if (S.allSort === 'grade' || S.allSort === 'foryou') {
     if (aloading) return; aloading = true;
     try {
       if (reset || !APOOL) {
@@ -1695,6 +1759,14 @@ $('#sheet').addEventListener('click', e => {
   if (b.dataset.tg) { S[b.dataset.tg] = !S[b.dataset.tg]; b.classList.toggle('on'); save(); if (b.dataset.tg === 'daily') { pushReminder(); toast(S.daily ? 'Daily check on at ' + fmtTime(S.dailyT) : 'Daily check off'); } if (b.dataset.tg === 'hideNo' || b.dataset.tg === 'hideOwned') filtersDirty = true; return; }
   const a = b.dataset.act;
   if (a === 'close') { closeSheet(); return; }
+  if (a === 'like' || a === 'nope') {
+    const k = a === 'like' ? 'likes' : 'nope', other = a === 'like' ? 'nope' : 'likes'; S[k] = S[k] || []; S[other] = (S[other] || []).filter(x => x.id !== curGame.id);
+    const had = S[k].some(x => x.id === curGame.id);
+    S[k] = had ? S[k].filter(x => x.id !== curGame.id) : [{id:curGame.id, appid:curGame.appid || '', title:curGame.title}].concat(S[k]).slice(0, 300);
+    save(); tasteDirty(); buzz(10);
+    toast(had ? (a === 'like' ? 'Removed from things you like' : 'It will show up again') : a === 'like' ? 'Got it. DealScout will rank games like this higher' : 'Hidden. DealScout will rank games like this lower');
+    renderGame(); document.querySelectorAll('.deal[data-game="' + curGame.id + '"]').forEach(e => e.style.display = cardHidden(e) ? 'none' : ''); refreshGrades(); return;
+  }
   if (a === 'list') { if (onList(curGame.id)) { S.list = S.list.filter(x => x.id !== curGame.id); save(); toast('Removed from your list'); } else { listAdd(); toast('Added to your list'); buzz(15); } updateDots(); renderGame(); if (view === 'list') renderList(); return; }
   if (a === 'budget2') { const v = parseFloat($('#bud').value); S.budget = v > 0 ? v : 0; save(); closeSheet(); renderList(); return; }
   if (a === 'about') { curGame.aboutOpen = !curGame.aboutOpen; renderGame(); return; }
