@@ -1,0 +1,16 @@
+{
+ "content": {
+  "v": 1,
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
+  "sha256": "fd17ce491f14df79a6d0eb1b05d1e142b6bc2ec15c6ef658ee7cd07a3722faaa",
+  "minVc": 1
+ },
+ "apk": {
+  "vc": 1,
+  "vn": "1.0.0",
+  "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/RedlineGarage-1.0.0.apk",
+  "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
+  "size": 765083
+ },
+ "notes": "Redline Garage: buy real cars from 1901 to today, tune them and race."
+}
