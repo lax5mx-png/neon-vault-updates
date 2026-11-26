@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 1,
+  "v": 2,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "fd17ce491f14df79a6d0eb1b05d1e142b6bc2ec15c6ef658ee7cd07a3722faaa",
+  "sha256": "497659c7b9da244a89f810e5f50d3317799994b776504a59617169d47bec899e",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Redline Garage: buy real cars from 1901 to today, tune them and race."
+ "notes": "Catalogue grew to 15,851 models and 50,110 versions from 307 brands, with specs cross-checked across three sources."
 }
