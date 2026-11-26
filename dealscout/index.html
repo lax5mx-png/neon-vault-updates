@@ -636,7 +636,7 @@ async function resolveSteam(appid, title) {
   return summarize(d, {approx});
 }
 function pump() {
-  while (active < 3 && queue.length) {
+  while (active < 5 && queue.length) {
     const [k, appid, title] = queue.shift(); active++;
     resolveSteam(appid, title).catch(() => null).then(c => { COMPAT[k] = c || {none:true, t:Date.now()}; })
       .finally(() => { active--; delete waiting[k]; saveCompat(); updateBadges(k); setTimeout(pump, 150); });
@@ -650,7 +650,7 @@ function vtag(k) {
 }
 function refreshGrades(k) {
   document.querySelectorAll(k ? `.deal[data-ck="${CSS.escape(k)}"]` : '#dlist .deal[data-deal], #alist .deal[data-deal]').forEach(e => { const d = DEAL[e.dataset.deal], g = e.querySelector('.grade'); if (d && g) g.outerHTML = gradeTag(dealScore(d)); });
-  if ((S.sortGrade && !searchMode) || S.allSort === 'grade') { if (!sortT) sortT = setTimeout(() => { sortT = 0; if (S.sortGrade && !searchMode) sortByGrade('#dlist'); if (S.allSort === 'grade') sortByGrade('#alist'); }, 900); }
+  if ((S.sortGrade && !searchMode) || S.allSort === 'grade') { if (!sortT) sortT = setTimeout(() => { sortT = 0; if (S.sortGrade && !searchMode) sortByGrade('#dlist');  }, 900); }
 }
 let sortT;
 function sortByGrade(sel) {
@@ -1053,7 +1053,7 @@ function score(x) {
   const revS = pct ? 55 + (pct - 55) * Math.min(1, Math.log10(cnt + 1) / 3.5) : null;
   const quality = blend([[revS, .6], [meta || null, .4]]) ?? 50;
   // laptop
-  const v = c ? verdict(st) : null, vk = v ? (v.k === 'g' && v.tier === 'low' ? 'l' : v.k) : 'p', fit = {g:100, l:80, b:0, p:60}[vk];
+  const v = c ? verdict(st) : null, vk = v ? (v.k === 'g' && v.tier === 'low' ? 'l' : v.k) : 'p', fit = {g:100, l:80, b:0, p:100}[vk];
   let total = .45 * price + .35 * quality + .2 * fit;
   if (vk === 'b') total = Math.min(total, 45);
   const L = LETTERS.find(l => total >= l[0]);
@@ -1430,7 +1430,108 @@ function renderAllChips() {
     <button class="chip${S.genres.length ? ' on' : ''}" data-act="genres">${S.genres.length ? S.genres.map(gLabel).join(', ') : 'All genres'} ▾</button>
     ${(S.owned.apps || []).length || S.mine.length ? `<button class="chip${S.hideOwned ? ' on' : ''}" data-act="hideown">Hide games I own</button>` : ''}`;
 }
+/* Best grade: one continuous list from best to worst.
+   Games are ranked in a big pool; each batch is fully graded (lowest price + laptop check) before it is
+   shown, so nothing on screen changes order. More of the catalogue is pulled in the background as you scroll. */
+let APOOL = null; // {items, at, src:{sort:{page, done}}, done}
+const BATCH = 25;
+const rank = (a, b) => dealScore(b).s - dealScore(a).s;
+// lowest-ever prices for many games at once (25 per request, 4 requests at a time)
+async function lowsFor(list) {
+  const need = [...new Set(list.map(d => d.gameID))].filter(id => !(id in LOW)), chunks = [];
+  for (let i = 0; i < need.length; i += 25) chunks.push(need.slice(i, i + 25));
+  for (let i = 0; i < chunks.length; i += 4) await Promise.all(chunks.slice(i, i + 4).map(async ch => {
+    try { const r = await cached(CS + 'games?ids=' + ch.join(','), 6 * 36e5, true); ch.forEach(id => { const g = r && r[id]; LOW[id] = g && g.cheapestPriceEver ? +g.cheapestPriceEver.price : null; if (g && g.deals && !AVG[id]) AVG[id] = finishAvg({prices:g.deals.map(x => ({shop:shopKey((STORES[x.storeID] || {}).name || ('cs' + x.storeID)), p:+x.price}))}); }); } catch (e) {}
+  }));
+}
+// pull pages from two angles: best reviewed, and CheapShark's best value (price-heavy), 4 requests at a time
+async function fillPool(plan, progress) {
+  const P = APOOL, jobs = [];
+  for (const [sort, n] of plan) { const src = P.src[sort] = P.src[sort] || {page:0, done:false}; for (let k = 0; k < n && !src.done; k++) jobs.push([sort, src.page++]); }
+  const rows = []; let doneN = 0;
+  for (let i = 0; i < jobs.length; i += 4) await Promise.all(jobs.slice(i, i + 4).map(async ([sort, page]) => {
+    const u = CS + 'deals?onSale=' + (S.allSale ? 1 : 0) + '&pageSize=60&pageNumber=' + page + '&sortBy=' + sort + '&storeID=' + encodeURIComponent((S.stores || []).join(','));
+    try { const got = await cached(u, 30 * 6e4, page < 2); rows.push(...got); if (got.length < 60) P.src[sort].done = true; } catch (e) {}
+    if (progress) progress(++doneN, jobs.length);
+  }));
+  if (!rows.length && !P.items.length && jobs.length) throw new Error('net');
+  P.done = Object.values(P.src).every(x => x.done || x.page > 60);
+  const by = {}; rows.forEach(d => { if (aseen.has(d.gameID)) return; const o = by[d.gameID]; if (!o || +d.salePrice < +o.salePrice) by[d.gameID] = d; });
+  const fresh = Object.values(by); fresh.forEach(d => { aseen.add(d.gameID); DEAL[d.dealID] = d; });
+  await lowsFor(fresh);
+  P.items = P.items.slice(P.at).concat(fresh); P.at = 0;
+}
+// wait (up to a few seconds) for the laptop checks of these games
+function compatFor(list, ms) {
+  const ks = list.map(d => requestCompat(d.steamAppID, d.title));
+  return new Promise(res => { const t0 = Date.now(); (function poll() { if (ks.every(k => COMPAT[k]) || Date.now() - t0 > ms) return res(); setTimeout(poll, 150); })(); });
+}
+async function showBatch() {
+  const P = APOOL; if (!P || P.busy) return; P.busy = true;
+  try {
+    const rest = () => { P.items = P.items.slice(P.at).sort(rank); P.at = 0; return P.items; };
+    // make sure nothing still to be fetched is likely to beat what we show next
+    // running low: pull the next stretch of the catalogue before handing out more
+    if (!P.done && rest().length < BATCH * 6) await fillPool([['Reviews', 6], ['Deal%20Rating', 4]]);
+    // grade the next batch completely before it appears: check the laptop for the top candidates,
+    // re-rank (a failed check drops a game down), and repeat until the top of the pool is all checked
+    const ck = d => COMPAT[ckey(d.steamAppID, d.title)];
+    for (let round = 0; round < 4; round++) { const top = rest().slice(0, BATCH); if (top.every(ck)) break; await compatFor(top, 5000); }
+    rest();
+    const out = []; let vis = 0;
+    while (P.at < P.items.length && vis < BATCH) {
+      const d = P.items[P.at]; if (!ck(d)) break; // never show a grade that could still change
+      P.at++; out.push(d);
+      if (!cardHidden({dataset:{ck:ckey(d.steamAppID, d.title), app:d.steamAppID || '', title:d.title, game:d.gameID}})) vis++;
+    }
+    out.sort(rank);
+    const box = $('#alist'), cards = () => [...box.querySelectorAll('.deal[data-sc]')];
+    inAll = true;
+    for (const d of out) {
+      const sc = dealScore(d).s, html = dealCard(d).replace('<button class="deal"', `<button class="deal" data-sc="${sc}"`);
+      const all = cards(), lastSc = all.length ? +all[all.length - 1].dataset.sc : Infinity;
+      if (sc <= lastSc) { box.insertAdjacentHTML('beforeend', html); continue; }
+      // a late arrival that outranks games already on screen: slot it into its place above, keeping your scroll position
+      const before = all.find(e => +e.dataset.sc < sc), main = $('#main'), y = main.scrollTop;
+      before.insertAdjacentHTML('beforebegin', html);
+      const el = before.previousElementSibling; if (el.getBoundingClientRect().bottom <= main.getBoundingClientRect().top + 1) main.scrollTop = y + (before.offsetTop - el.offsetTop);
+    }
+    inAll = false;
+    acount += out.length;
+    compatFor(P.items.slice(P.at, P.at + BATCH + 15), 0); // start checking the following batch now
+    const last = out.length ? dealScore(out[out.length - 1]) : null;
+    $('#astat').textContent = acount + ' games · best grades first' + (last ? ' · now at ' + last.g + ' ' + last.s : '') + (S.allSale ? ' · on sale only' : '');
+    const end = P.at >= P.items.length && P.done;
+    $('#amore').innerHTML = end ? '<span class="sub">That’s every game.</span>' : '<div class="spin"></div><p class="sub" style="text-align:center">Keep scrolling for the next grades down</p>';
+    if (!acount) $('#alist').innerHTML = '<div class="empty"><h3>No games match</h3><p>Loosen the filters above.</p></div>';
+  } finally { P.busy = false; }
+  // if the bottom is already in view (short screen or many hidden), keep going
+  const m = $('#amore'); if (m && APOOL === P && m.getBoundingClientRect().top < innerHeight + 400 && !(P.at >= P.items.length && P.done)) showBatch();
+}
+// load the next batch automatically as the bottom comes into view
+const allObs = 'IntersectionObserver' in window ? new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && APOOL && S.allSort === 'grade' && view === 'all') showBatch(); }, {rootMargin:'600px'}) : null;
 async function loadAll(reset) {
+  if (S.allSort === 'grade') {
+    if (aloading) return; aloading = true;
+    try {
+      if (reset || !APOOL) {
+        if (!(S.stores || []).length) throw new Error('nostores');
+        aseen = new Set(); acount = 0; APOOL = {items:[], at:0, src:{}, done:false}; renderAllChips(); $('#amore').innerHTML = '';
+        $('#alist').innerHTML = '<div class="empty"><div class="spin"></div><p>Ranking the best-reviewed games at your stores…</p></div>';
+        await fillPool([['Reviews', 12], ['Deal%20Rating', 8]], (a, n) => { const p = document.querySelector('#alist .empty p'); if (p) p.textContent = 'Ranking games by grade… ' + Math.round(a / n * 80) + '%'; });
+        { const p = document.querySelector('#alist .empty p'); if (p) p.textContent = 'Ranking ' + APOOL.items.length + ' games by grade…'; }
+        const p = document.querySelector('#alist .empty p'); if (p) p.textContent = 'Checking the top games against your laptop…';
+        await compatFor(APOOL.items.slice().sort(rank).slice(0, BATCH), 4000);
+        $('#alist').innerHTML = '';
+        if (allObs) { allObs.disconnect(); allObs.observe($('#amore')); }
+      }
+      await showBatch();
+    } catch (e) {
+      $('#alist').innerHTML = `<div class="empty"><h3>${e.message === 'nostores' ? 'No stores selected' : 'Couldn’t load games'}</h3><p>${e.message === 'nostores' ? 'Turn on at least one store in Filters on the Deals tab.' : 'Check your internet connection and try again.'}</p></div>`;
+    }
+    aloading = false; return;
+  }
+  APOOL = null;
   if (aloading) return;
   if (reset) { apage = 0; aseen = new Set(); aend = false; acount = 0; $('#alist').innerHTML = '<div class="skel"></div>'.repeat(6); $('#amore').innerHTML = ''; renderAllChips(); }
   if (aend) return; aloading = true;

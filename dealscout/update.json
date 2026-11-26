@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 13,
+  "v": 15,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "f04ad1cfa67944fb67114dbba8798781d5551c4600baf1507b1501a4973d6d7b",
+  "sha256": "fae24ba19cdd8833524f7ec5c3cbc89a0133d0518003ff33b29ebe8b65647cd3",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "e5a28fb660eaffdbab9f7f3236e01a599d4a3a20e7322aabd35a5938e7a69d1d",
   "size": 139255
  },
- "notes": "New All games tab: every PC game at your stores, on sale or not, graded and checked against your laptop. Sort by grade, rating, critics, newest, price or A\u2013Z."
+ "notes": "All games now loads as one continuous list from the best grade down as you scroll. Nothing reshuffles."
 }
