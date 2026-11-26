@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 3,
+  "v": 4,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "33dd496c5e5c0a8d172649c64b343f7e242135ef2c9068e6e7d52712fffa27dd",
+  "sha256": "34f0feabfba4d855b458b990ffd1f1a552b04751dca99524a6800c23ee7de4eb",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "155 historic cars added, back to the 1886 Benz Patent-Motorwagen; veteran cars drawn as horseless carriages."
+ "notes": "713 more models from the big brands' full histories: 1950s-80s American cars, AMC, early Japanese, British and European classics."
 }
