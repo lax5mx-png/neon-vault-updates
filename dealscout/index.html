@@ -104,8 +104,8 @@ h1{font-size:28px;line-height:1.1;margin:10px 2px 2px;letter-spacing:-.5px;font-
 .cal .x{flex:1;font-size:14px}.cal .x b{display:block}
 .cal.live .d{background:var(--acc);color:var(--onacc)}.cal.live .d small{color:var(--onacc)}
 /* nav */
-nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:var(--sab);z-index:6}
-nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 10px;font-size:12px;font-weight:700;color:var(--mute);position:relative}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:var(--sab);z-index:6}
+nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 10px;font-size:11px;letter-spacing:-.01em;white-space:nowrap;font-weight:700;color:var(--mute);position:relative}
 nav.tabs button svg{width:24px;height:24px}
 nav.tabs button.on{color:var(--acc)}
 nav.tabs .dot{position:absolute;top:5px;left:calc(50% + 8px);background:var(--hot);color:#fff;font-size:10px;min-width:16px;height:16px;border-radius:8px;display:grid;place-items:center;padding:0 4px}
@@ -249,7 +249,7 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 .grade small{display:block;font-size:9px;font-weight:700;opacity:.75;line-height:1;margin-top:1px}.grade:has(small){height:auto;padding:3px 5px;flex-direction:column}
 .gparts{display:grid;gap:7px;margin:8px 0 2px;padding:10px 12px;border-radius:12px;background:var(--soft)}.gparts>div{display:grid;grid-template-columns:110px 1fr 28px;align-items:center;gap:8px;font-size:12.5px}
 .gparts span{color:var(--ink);font-weight:700}.gparts i{font-style:normal;color:var(--mute);font-weight:600;font-size:11px}.gparts b{text-align:right}
-.deal .mid{min-width:0}.deal .meta .tag{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.deal .mid{min-width:0}.deal .meta .tag{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.deal .meta .tag.rate{display:inline-block}.deal .meta .tag b{flex-shrink:0}
 .gsrc{margin:2px 0 0;font-size:11.5px;color:var(--mute)}
 .gbar{height:7px;border-radius:4px;background:var(--line);overflow:hidden}.gbar em{display:block;height:100%;border-radius:4px;background:var(--acc)}
 .gradebar{display:flex;gap:12px;align-items:center;margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--soft)}
@@ -300,6 +300,15 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
     <div class="more" id="dmore"></div>
   </section>
 
+  <section class="view" id="v-all">
+    <h1>All games</h1>
+    <p class="sub">Every PC game sold at your stores, on sale or not, with its grade and whether it runs on your laptop.</p>
+    <div class="chips" id="asorts"></div>
+    <div class="chips" id="afilt"></div>
+    <div class="statline"><span id="astat"></span></div>
+    <div id="alist"></div>
+    <div id="amore" class="more"></div>
+  </section>
   <section class="view" id="v-free">
     <h1>Free games</h1>
     <p class="sub">Free to keep forever once you claim them. Epic gives away a new one every Thursday.</p>
@@ -326,6 +335,7 @@ button.more{color:var(--acc);font-weight:800;font-size:14px;padding:6px 0}
 </main>
 <nav class="tabs" id="tabs">
   <button data-v="deals" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3" fill="currentColor"/></svg>Deals</button>
+  <button data-v="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>All games</button>
   <button data-v="free"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="5" rx="1"/><path d="M12 8v13M5 13v8h14v-8M12 8S10.5 3 7.5 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>Free<span class="dot" id="freedot" style="display:none"></span></button>
   <button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1.5 1.5 0 0 0 1.5 1.2h9.1a1.5 1.5 0 0 0 1.5-1.1L22 7H6.2"/></svg>My list<span class="dot" id="listdot" style="display:none"></span></button>
   <button data-v="watch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></svg>Watchlist<span class="dot" id="watchdot" style="display:none"></span></button>
@@ -425,7 +435,7 @@ const GPUS = [
 const CPUS = [
   ['Ryzen 7 7445HS', 7.0], ['Ryzen 5 7535HS', 6.0], ['Ryzen 7 7840HS', 9.5], ['Ryzen 7 8845HS', 9.8], ['Core i5-12450H', 6.3], ['Core i5-13420H', 7.0], ['Core i7-12650H', 8.0], ['Core i7-13620H', 8.8], ['Core i7-13700H', 9.5], ['Core i5-12400 (desktop)', 6.6], ['Ryzen 5 5600 (desktop)', 7.0], ['Older quad-core', 2.5]
 ];
-function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, sortGrade:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
+function blank() { return {cpu:0, gpu:0, ram:16, disk:94, stores:null, preset:'best', minRate:0, hideNo:false, sortGrade:false, allSort:'grade', allSale:false, watch:[], daily:true, dailyT:'17:00', freeNote:true, seenFree:[], hideOwned:true, owned:{apps:[], at:''}, mine:[], steamUser:'', steamKey:'', steamId:'', itadKey:'', genres:[], ph:{}, list:[], budget:0, listSort:'added'}; }
 let S = Object.assign(blank(), lsGet(KEY) || {});
 function save() { lsSet(KEY, S); syncNative(); }
 function syncNative() { if (!A) return; try { A.setReminderData(JSON.stringify({watch:S.watch.map(w => ({id:w.id, title:w.title, target:w.target, low:!!w.lowAlert})), free:S.freeNote})); } catch (e) {} }
@@ -639,12 +649,12 @@ function vtag(k) {
   return `<span class="tag ${v.k}">${ic} ${v.label}</span>`;
 }
 function refreshGrades(k) {
-  document.querySelectorAll(k ? `.deal[data-ck="${CSS.escape(k)}"]` : '#dlist .deal[data-deal]').forEach(e => { const d = DEAL[e.dataset.deal], g = e.querySelector('.grade'); if (d && g) g.outerHTML = gradeTag(dealScore(d)); });
-  if (S.sortGrade && !searchMode) { clearTimeout(sortT); sortT = setTimeout(sortByGrade, 900); }
+  document.querySelectorAll(k ? `.deal[data-ck="${CSS.escape(k)}"]` : '#dlist .deal[data-deal], #alist .deal[data-deal]').forEach(e => { const d = DEAL[e.dataset.deal], g = e.querySelector('.grade'); if (d && g) g.outerHTML = gradeTag(dealScore(d)); });
+  if ((S.sortGrade && !searchMode) || S.allSort === 'grade') { if (!sortT) sortT = setTimeout(() => { sortT = 0; if (S.sortGrade && !searchMode) sortByGrade('#dlist'); if (S.allSort === 'grade') sortByGrade('#alist'); }, 900); }
 }
 let sortT;
-function sortByGrade() {
-  const box = $('#dlist'), cards = [...box.querySelectorAll('.deal[data-deal]')]; if (cards.length < 2) return;
+function sortByGrade(sel) {
+  const box = $(sel || '#dlist'), cards = [...box.querySelectorAll('.deal[data-deal]')]; if (cards.length < 2) return;
   const sc = e => { const d = DEAL[e.dataset.deal]; return d ? dealScore(d).s : 0; };
   const sorted = cards.slice().sort((a, b) => sc(b) - sc(a));
   if (sorted.every((e, i) => e === cards[i])) return;
@@ -1062,7 +1072,7 @@ const gradeTag = gr => gr ? `<span class="grade ${gr.c}" title="${esc(gr.why)}">
 function dealCard(d) {
   const k = ckey(d.steamAppID, d.title);
   const hidden = cardHidden({dataset:{ck:k, app:d.steamAppID || '', title:d.title, game:d.gameID}}), own = isOwned(d.steamAppID, d.title, d.gameID);
-  const sale = +d.salePrice, off = Math.round(+d.savings), avgMode = !!PRESETS[S.preset].avg && !searchMode, av = avgMode ? baseline(d) : null, ro = avgMode ? realOff(d) : null;
+  const sale = +d.salePrice, off = Math.round(+d.savings), avgMode = !!PRESETS[S.preset].avg && !searchMode && !inAll, av = avgMode ? baseline(d) : null, ro = avgMode ? realOff(d) : null;
   const avgTag = !avgMode ? '' : ro !== null ? `<span class="tag store">${av.year ? '1-year avg · ' + av.n + (av.n === 1 ? ' store' : ' stores') : 'vs ' + av.n + ' stores today'}</span>` : '<span class="tag store">Only at 1 store</span>';
   return `<button class="deal" data-game="${d.gameID}" data-deal="${esc(d.dealID)}" data-app="${d.steamAppID || ''}" data-ck="${esc(k)}" data-title="${esc(d.title)}"${hidden ? ' style="display:none"' : ''}>
     <div class="img"><img loading="lazy" src="${esc(img(d.steamAppID, d.thumb))}" onerror="if(this.dataset.f){this.style.visibility='hidden'}else{this.dataset.f=1;this.src='${esc(d.thumb)}'}" alt=""></div>
@@ -1409,6 +1419,46 @@ async function loadEnding() {
     box.innerHTML = `<div class="sec" style="margin-top:4px"><h2>Ending soon</h2><span>Sales over in the next day and a half</span></div><div class="ends">${out.slice(0, 14).map(x => `<button class="endc" data-search="${esc(x.title)}"><b>${esc(x.title)}</b><span class="ep">${money(x.price)} <i>-${x.cut}%</i></span><span class="es">${esc(x.shop)}</span><span class="et">${hrs(x.end)}</span>${x.low != null && x.price <= x.low + .01 ? '<span class="tag low">Lowest ever</span>' : ''}</button>`).join('')}</div>`;
   } catch (e) { box.innerHTML = ''; }
 }
+/* ---------- All games: the whole catalogue, not just sales ---------- */
+const ASORTS = {grade:['Best grade', 'sortBy=Reviews'], top:['Top rated', 'sortBy=Reviews'], meta:['Critics’ picks', 'sortBy=Metacritic'], new:['Newest', 'sortBy=Release'], cheap:['Cheapest', 'sortBy=Price'], az:['A–Z', 'sortBy=Title']};
+let apage = 0, aseen = new Set(), aloading = false, aend = false, acount = 0, inAll = false;
+function refilterAll() { document.querySelectorAll('#alist .deal').forEach(e => e.style.display = cardHidden(e) ? 'none' : ''); }
+function renderAllChips() {
+  $('#asorts').innerHTML = Object.entries(ASORTS).map(([k, v]) => `<button class="chip${S.allSort === k ? ' on' : ''}" data-asort="${k}">${v[0]}</button>`).join('');
+  $('#afilt').innerHTML = `<button class="chip${S.hideNo ? ' on' : ''}" data-act="hideno">Runs on my laptop</button>
+    <button class="chip${S.allSale ? ' on' : ''}" data-act="allsale">On sale only</button>
+    <button class="chip${S.genres.length ? ' on' : ''}" data-act="genres">${S.genres.length ? S.genres.map(gLabel).join(', ') : 'All genres'} ▾</button>
+    ${(S.owned.apps || []).length || S.mine.length ? `<button class="chip${S.hideOwned ? ' on' : ''}" data-act="hideown">Hide games I own</button>` : ''}`;
+}
+async function loadAll(reset) {
+  if (aloading) return;
+  if (reset) { apage = 0; aseen = new Set(); aend = false; acount = 0; $('#alist').innerHTML = '<div class="skel"></div>'.repeat(6); $('#amore').innerHTML = ''; renderAllChips(); }
+  if (aend) return; aloading = true;
+  if (!reset) $('#amore').innerHTML = '<div class="spin"></div>';
+  try {
+    if (!(S.stores || []).length) throw new Error('nostores');
+    const grade = S.allSort === 'grade', data = [];
+    for (let k = 0; k < (grade && reset ? 3 : 1) && !aend; k++) {
+      const u = CS + 'deals?onSale=' + (S.allSale ? 1 : 0) + '&pageSize=60&pageNumber=' + apage + '&' + ASORTS[S.allSort][1] + (S.allSort === 'top' ? '&steamRating=70' : '') + (S.allSort === 'meta' ? '&metacritic=1' : '') + '&storeID=' + encodeURIComponent((S.stores || []).join(','));
+      const got = await cached(u, 30 * 6e4, apage === 0); data.push(...got); apage++; if (got.length < 60 || apage > 60) aend = true;
+    }
+    // one card per game: the cheapest store CheapShark returned
+    const by = {}; data.forEach(d => { if (aseen.has(d.gameID)) return; const o = by[d.gameID]; if (!o || +d.salePrice < +o.salePrice) by[d.gameID] = d; });
+    let fresh = Object.values(by); fresh.forEach(d => aseen.add(d.gameID));
+    if (grade) fresh.sort((a, b) => dealScore(b).s - dealScore(a).s);
+    if (reset) $('#alist').innerHTML = '';
+    inAll = true; $('#alist').insertAdjacentHTML('beforeend', fresh.map(dealCard).join('')); inAll = false;
+    fresh.forEach(d => requestCompat(d.steamAppID, d.title)); acount += fresh.length;
+    storeAverages(fresh).then(() => refreshGrades()).catch(() => {});
+    $('#astat').textContent = acount + ' games' + (grade ? ' · sorted by grade' : ' · ' + ASORTS[S.allSort][0].toLowerCase()) + (S.allSale ? ' · on sale only' : '');
+    $('#amore').innerHTML = aend ? '<span class="sub">That’s everything.</span>' : '<button class="btn ghost" data-act="allmore">Load more games</button>';
+    if (!acount) $('#alist').innerHTML = '<div class="empty"><h3>No games match</h3><p>Loosen the filters above.</p></div>';
+  } catch (e) {
+    if (reset || !acount) $('#alist').innerHTML = `<div class="empty"><h3>${e.message === 'nostores' ? 'No stores selected' : 'Couldn’t load games'}</h3><p>${e.message === 'nostores' ? 'Turn on at least one store in Filters on the Deals tab.' : 'Check your internet connection and try again.'}</p></div>`;
+    $('#amore').innerHTML = acount ? '<button class="btn ghost" data-act="allmore">Try again</button>' : '';
+  }
+  aloading = false;
+}
 function shareList() {
   const tot = S.list.reduce((a, x) => a + x.now, 0);
   const txt = 'My game list (' + S.list.length + ' games, ' + money(tot) + ' total):\n' + S.list.map(x => '• ' + x.title + ' – ' + money(x.now) + ' at ' + ((STORES[x.store] || {}).name || 'store')).join('\n');
@@ -1584,12 +1634,15 @@ document.addEventListener('click', e => {
   if (b.dataset.open) { openUrl(b.dataset.open); return; }
   if (b.dataset.v) { go(b.dataset.v); return; }
   if (b.dataset.lrm) { const x = S.list.find(y => y.id === b.dataset.lrm); S.list = S.list.filter(y => y.id !== b.dataset.lrm); save(); renderList(); toast('Removed ' + (x ? x.title : '')); return; }
+  if (b.dataset.asort) { S.allSort = b.dataset.asort; save(); loadAll(true); return; }
   if (b.dataset.lsort) { S.listSort = b.dataset.lsort; save(); renderList(); return; }
   const a = b.dataset.act;
   if (a === 'filters') openFilters();
-  else if (a === 'hideno') { S.hideNo = !S.hideNo; save(); renderPresets(); loadDeals(true); }
+  else if (a === 'hideno') { S.hideNo = !S.hideNo; save(); renderPresets(); loadDeals(true); if (acount) { renderAllChips(); document.querySelectorAll('#alist .deal').forEach(e => e.style.display = cardHidden(e) ? 'none' : ''); } }
+  else if (a === 'allsale') { S.allSale = !S.allSale; save(); loadAll(true); }
+  else if (a === 'allmore') loadAll(false);
   else if (a === 'sortgrade') { S.sortGrade = !S.sortGrade; save(); renderPresets(); loadDeals(true); }
-  else if (a === 'hideown') { S.hideOwned = !S.hideOwned; save(); renderPresets(); loadDeals(true); }
+  else if (a === 'hideown') { S.hideOwned = !S.hideOwned; save(); renderPresets(); loadDeals(true); if (acount) { renderAllChips(); refilterAll(); } }
   else if (a === 'genres') openFilters();
   else if (a === 'rate') { S.minRate = S.minRate === 0 ? 80 : S.minRate === 80 ? 90 : 0; save(); renderPresets(); loadDeals(true); }
   else if (a === 'more') loadDeals(false);
@@ -1610,7 +1663,7 @@ let view = 'deals';
 function go(v) {
   view = v; document.querySelectorAll('.view').forEach(s => s.classList.toggle('on', s.id === 'v-' + v));
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === v)); $('#main').scrollTop = 0;
-  if (v === 'free') loadFree(); else if (v === 'list') renderList(true); else if (v === 'watch') renderWatch(true); else if (v === 'guide') renderGuide();
+  if (v === 'all') { if (!acount) loadAll(true); else { renderAllChips(); refilterAll(); } } else if (v === 'free') loadFree(); else if (v === 'list') renderList(true); else if (v === 'watch') renderWatch(true); else if (v === 'guide') renderGuide();
 }
 function renderRig() { $('#rigtxt').textContent = GPUS[S.gpu][0].replace(/ Laptop| \(.*\)/g, '') + ' · ' + S.ram + ' GB'; }
 window.onAndroidBack = () => { if (LB) { closeLB(); return true; } if (sheetOpen) { closeSheet(); return true; } if (searchMode) { exitSearch(); return true; } if (view !== 'deals') { go('deals'); return true; } return false; };

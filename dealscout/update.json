@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 11,
+  "v": 13,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "3affafc0b80ef84d3d09e0368dd3bbe7dc88423621b5ec263dd2bf701598f8cc",
+  "sha256": "f04ad1cfa67944fb67114dbba8798781d5551c4600baf1507b1501a4973d6d7b",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "e5a28fb660eaffdbab9f7f3236e01a599d4a3a20e7322aabd35a5938e7a69d1d",
   "size": 139255
  },
- "notes": "The laptop check now gives a straight answer for every game: Runs great, Runs on medium, or Won't run. No more maybes."
+ "notes": "New All games tab: every PC game at your stores, on sale or not, graded and checked against your laptop. Sort by grade, rating, critics, newest, price or A\u2013Z."
 }
