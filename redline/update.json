@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 5,
+  "v": 6,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "817f644fba04cecb9786ba71f95d6feb0fc145de359742e0ac7411cbb7fc892a",
+  "sha256": "ee5e016011dab1bbb3147fe98596a730f00953bb651f3785de86ffe4f63020e8",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "532 more models from Wikipedia's brand lists: VW, BMW, Mercedes, Audi, Porsche, Opel, Fiat, Renault, Peugeot, Citroën, Ferrari, Alfa, Maserati, Aston Martin, Jaguar, Volvo, Hyundai, Kia, Vauxhall, Rolls-Royce, Holden, Škoda, Daihatsu, Suzuki, Isuzu, Jeep, SEAT, Saab, Lotus, MG, Bentley, Lincoln, Mercury, Mazda, Mitsubishi, Subaru."
+ "notes": "Polish pass: every brand has a badge, settings have icons, pickups drawn properly (real cab lengths, crew cabs, kei trucks, pre-war trucks), duplicate listings merged, concept cars removed from the dealer, names and body types cleaned up, missing dimensions filled, weight and torque follow your units."
 }
