@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 10,
+  "v": 11,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/dealscout/index.html",
-  "sha256": "6d8bc8814af79b12b09109ad76fc1ad6c83335e1b1ac672e471f80bdd9c2c4ba",
+  "sha256": "3affafc0b80ef84d3d09e0368dd3bbe7dc88423621b5ec263dd2bf701598f8cc",
   "minVc": 2
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "e5a28fb660eaffdbab9f7f3236e01a599d4a3a20e7322aabd35a5938e7a69d1d",
   "size": 139255
  },
- "notes": "Grades now combine everything: price history, discounts, store averages, CheapShark's deal rating, Steam reviews, Metacritic and your laptop. New: Sort by grade."
+ "notes": "The laptop check now gives a straight answer for every game: Runs great, Runs on medium, or Won't run. No more maybes."
 }

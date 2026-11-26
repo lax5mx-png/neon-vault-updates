@@ -553,27 +553,25 @@ function expected0(c) {
   if (m && m.gpu) { const q = R.gpu / m.gpu; if (q >= 4) return r && r.gpu ? 'Medium settings at 1080p' : 'High to max settings at 1080p'; if (q >= 2) return 'Medium settings at 1080p'; if (q >= 1.3) return 'Low to medium settings at 1080p'; return 'Low settings, maybe below 1080p'; }
   return '';
 }
+// A yes-or-no answer for every game. It runs if your laptop meets every listed minimum
+// (with a 10% margin for the graphics score, which is an estimate); otherwise it doesn't.
+// tier says which settings it runs at: 'high' when it also meets the recommended specs, else 'low'.
 function verdict(c) {
-  if (!c) return {k:'u', label:'Not checked', why:'No Steam listing to check requirements against.'};
-  const R = rig(), notes = [];
-  if (!c.win) return {k:'b', label:'Not on Windows', why:'This game doesn’t list Windows support.'};
-  const m = c.min, r = c.rec;
-  if (!m && !r) return {k:'u', label:'Not checked', why:'The store page doesn’t list system requirements.'};
-  const over = x => x !== null && x !== undefined;
-  const exp = expected(c);
-  if (m && over(m.gpu) && m.gpu > R.gpu * 1.3) return {k:'b', label:'May not run', why:'Its minimum graphics card is clearly stronger than your ' + R.name + '.'};
-  if (m && over(m.ram) && m.ram > R.ram) return {k:'b', label:'May not run', why:'It needs at least ' + m.ram + ' GB of RAM; you have ' + R.ram + ' GB.'};
-  if (m && over(m.cpu) && m.cpu > R.cpu * 1.6) return {k:'b', label:'May not run', why:'Its minimum processor is much stronger than your ' + R.cpuName + '.'};
-  if (r && over(r.cpu) && r.cpu > R.cpu * 1.15) notes.push('Its recommended processor is stronger than your ' + R.cpuName + ', so busy scenes may dip.');
+  const R = rig(), notes = [], over = x => x !== null && x !== undefined;
+  if (!c) return {k:'g', tier:'low', label:'Runs', why:'No Steam requirements to check, so DealScout goes by your laptop: an ' + R.name + ' with ' + R.ram + ' GB beats the minimum of nearly every PC game sold outside Steam.'};
+  if (!c.win) return {k:'b', label:'Won’t run', why:'It isn’t made for Windows.'};
+  const m = c.min, r = c.rec, exp = expected(c);
+  if (!m && !r) return {k:'g', tier:'low', label:'Runs', why:'The store lists no system requirements, which only small or older games leave out. Your laptop is well above what those need.', notes, exp};
+  if (m && over(m.gpu) && m.gpu > R.gpu * 1.1) return {k:'b', label:'Won’t run', why:'Its minimum graphics card is stronger than your ' + R.name + '.'};
+  if (m && over(m.ram) && m.ram > R.ram) return {k:'b', label:'Won’t run', why:'It needs at least ' + m.ram + ' GB of RAM; you have ' + R.ram + ' GB.'};
+  if (m && over(m.cpu) && m.cpu > R.cpu * 1.25) return {k:'b', label:'Won’t run', why:'Its minimum processor is stronger than your ' + R.cpuName + '.'};
+  if (m && over(m.vram) && m.vram > R.vram) return {k:'b', label:'Won’t run', why:'It needs ' + m.vram + ' GB of video memory and your card has ' + R.vram + ' GB.'};
   const need = (r && r.storage) || (m && m.storage);
-  if (need && need > R.disk) notes.push('Needs about ' + Math.round(need) + ' GB of space; you set ' + R.disk + ' GB free.');
-  if (m && over(m.gpu) && m.gpu > R.gpu * 1.05) return {k:'w', label:'May struggle', why:'Its minimum graphics card is about level with or a bit above yours, so expect low settings.', notes, exp};
-  if (m && over(m.cpu) && m.cpu > R.cpu * 1.2) return {k:'w', label:'May struggle', why:'Its minimum processor is a bit stronger than yours, so it may stutter in busy scenes.', notes, exp};
-  if (m && over(m.vram) && m.vram > R.vram) return {k:'w', label:'May struggle', why:'It asks for ' + m.vram + ' GB of video memory and your card has ' + R.vram + ' GB, so use low textures.', notes, exp};
-  if (r && over(r.gpu) && r.gpu <= R.gpu * 1.05 && (!over(r.ram) || r.ram <= R.ram) && (!over(r.vram) || r.vram <= R.vram)) return {k:'g', label:'Runs great', why:'Your laptop meets the recommended specs.', notes, exp};
-  if (r && (over(r.gpu) || over(r.ram))) return {k:'w', label:'Runs on lower settings', why:'Above the minimum but below the recommended specs, so use medium settings or DLSS.', notes, exp};
-  if (m && over(m.gpu)) return {k:'g', label:'Should run well', why:'Your laptop is well above the minimum specs.', notes, exp};
-  return {k:'g', label:'Should run', why:'Nothing in the listed requirements is above your laptop.', notes, exp};
+  if (need && need > R.disk) notes.push('Needs about ' + Math.round(need) + ' GB of space; you set ' + R.disk + ' GB free, so clear some room first.');
+  const recOk = r && (over(r.gpu) || over(r.ram)) && (!over(r.gpu) || r.gpu <= R.gpu * 1.05) && (!over(r.ram) || r.ram <= R.ram) && (!over(r.vram) || r.vram <= R.vram) && (!over(r.cpu) || r.cpu <= R.cpu * 1.15);
+  if (recOk) return {k:'g', tier:'high', label:'Runs great', why:'Your laptop meets the recommended specs: high settings.', notes, exp};
+  if (r && (over(r.gpu) || over(r.ram))) return {k:'g', tier:'low', label:'Runs on medium', why:'Your laptop meets the minimum but not the recommended specs: medium or low settings.', notes, exp};
+  return {k:'g', tier:'high', label:'Runs great', why:'Your laptop is above every listed requirement.', notes, exp};
 }
 const COMPAT_KEY = 'compat.v2';
 try { localStorage.removeItem('compat.v1'); } catch (e) {}
@@ -635,9 +633,9 @@ function pump() {
   }
 }
 function vtag(k) {
-  if (!k || k === 't:') return '<span class="tag u">? Not checked</span>';
+  if (!k || k === 't:') return '<span class="tag g">✓ Runs</span>';
   const c = COMPAT[k]; if (!c) return '<span class="tag u">Checking…</span>';
-  const v = verdict(c.none ? null : c); const ic = v.k === 'g' ? '✓' : v.k === 'w' ? '~' : v.k === 'b' ? '✗' : '?';
+  const v = verdict(c.none ? null : c); const ic = v.k === 'b' ? '✗' : '✓';
   return `<span class="tag ${v.k}">${ic} ${v.label}</span>`;
 }
 function refreshGrades(k) {
@@ -1045,14 +1043,14 @@ function score(x) {
   const revS = pct ? 55 + (pct - 55) * Math.min(1, Math.log10(cnt + 1) / 3.5) : null;
   const quality = blend([[revS, .6], [meta || null, .4]]) ?? 50;
   // laptop
-  const v = c ? verdict(st) : null, vk = v ? v.k : 'p', fit = {g:100, w:55, b:0, u:60, p:60}[vk];
+  const v = c ? verdict(st) : null, vk = v ? (v.k === 'g' && v.tier === 'low' ? 'l' : v.k) : 'p', fit = {g:100, l:80, b:0, p:60}[vk];
   let total = .45 * price + .35 * quality + .2 * fit;
   if (vk === 'b') total = Math.min(total, 45);
   const L = LETTERS.find(l => total >= l[0]);
   const pw = lowS != null && lowS >= 99 ? 'lowest price ever' : lowS != null ? Math.round((now / low - 1) * 100) + '% above its lowest ever' : off ? off + '% off' : 'full price';
   const qw = [pct ? pct + '% liked on Steam' + (cnt ? ' (' + (cnt >= 1000 ? Math.round(cnt / 1000) + 'k' : cnt) + ' reviews)' : '') : '', meta ? 'Metacritic ' + meta : ''].filter(Boolean).join(', ') || 'no reviews yet';
-  const why = [pw + (x.cheaper ? ', cheaper at another store' : ''), qw, {g:'runs well on your laptop', w:'might struggle on your laptop', b:'won’t run on your laptop', u:'laptop not checked', p:'checking your laptop'}[vk]].join(' · ');
-  const used = [lowS != null && 'lowest-ever price', 'discount', avgS != null && (x.year ? '1-year average price' : 'average across stores'), drS != null && 'CheapShark deal rating', pct && 'Steam reviews', meta && 'Metacritic', vk !== 'p' && vk !== 'u' && 'laptop check'].filter(Boolean);
+  const why = [pw + (x.cheaper ? ', cheaper at another store' : ''), qw, {g:'runs great on your laptop', l:'runs on medium settings on your laptop', b:'won’t run on your laptop', p:'checking your laptop'}[vk]].join(' · ');
+  const used = [lowS != null && 'lowest-ever price', 'discount', avgS != null && (x.year ? '1-year average price' : 'average across stores'), drS != null && 'CheapShark deal rating', pct && 'Steam reviews', meta && 'Metacritic', vk !== 'p' && 'laptop check'].filter(Boolean);
   return {s:Math.round(total), g:L[1], c:L[2], why, used, price:Math.round(price), quality:Math.round(quality), fit, vk, pending:vk === 'p'};
 }
 const dealScore = d => {
@@ -1193,7 +1191,7 @@ function renderGame() {
     ${best ? (gr => `<div class="gradebar ${gr.c}"><b>${gr.g}</b><div><strong>Grade ${gr.s}/100</strong><span>${esc(gr.why)}</span></div></div>
       <div class="gparts">${[['Price', gr.price, '45%'], ['Game quality', gr.quality, '35%'], ['Your laptop', gr.fit, '20%']].map(([n, v, w]) => `<div><span>${n} <i>${w}</i></span><div class="gbar"><em style="width:${v}%"></em></div><b>${v}</b></div>`).join('')}<p class="gsrc">Based on: ${gr.used.join(', ')}</p></div>`)(score({now:best.price, low:low ? +low.price : null, off:Math.round(+best.savings || 0), dr:gq().dr, ro:gq().ro, year:gq().year, pct:gq().pct, cnt:gq().cnt, meta:gq().meta, ck:curGame.ck, cheaper:false})) : ''}
     ${best ? `<div class="note" style="margin-top:8px">${atLow ? '<b style="color:var(--good)">This is the lowest price it’s ever been.</b>' : low ? 'It has been cheaper before, so it may drop again in a future sale.' : ''}</div>` : ''}
-    <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'g' ? '✓ ' : v.k === 'w' ? '~ ' : v.k === 'b' ? '✗ ' : '? ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
+    <div class="verdict ${loadingC ? 'u' : v.k}"><b>${loadingC ? 'Checking your laptop…' : (v.k === 'b' ? '✗ ' : '✓ ') + v.label + ' on your ' + esc(rig().name.replace(/ \(.*\)/, ''))}</b>
       ${loadingC ? '' : `<p>${esc(c0 && c0.none ? 'This game isn’t on Steam, so there are no listed requirements to check.' : v.why)}${v.notes && v.notes.length ? ' ' + esc(v.notes.join(' ')) : ''}</p>`}
       ${v.exp ? `<div class="exp"><span>Expected</span><b>${esc(v.exp)}</b></div>` : ''}
     </div>
@@ -1374,7 +1372,7 @@ function tiersOf(b) {
   (b.tiers || []).forEach(t => { (t.games || []).forEach(gm => { const tt = gm && (gm.title || gm.name); if (tt && !cum.includes(tt)) cum.push(tt); }); const p = t.price && t.price.amount != null ? +t.price.amount : null; out.push({price:p, games:cum.slice()}); });
   return out;
 }
-function runCount(titles) { let g = 0, w = 0, k = 0; titles.forEach(t => { const c = COMPAT[ckey(null, t)]; if (!c) return; k++; const v = verdict(c.none ? null : c).k; if (v === 'g') g++; else if (v === 'w') w++; }); return {g, w, k}; }
+function runCount(titles) { let g = 0, w = 0, k = 0; titles.forEach(t => { const c = COMPAT[ckey(null, t)]; if (!c) return; k++; const v = verdict(c.none ? null : c).k; if (v === 'g') g++; else w++; }); return {g, w, k}; }
 function bundleHtml() {
   if (!S.list.length && !S.watch.length) return '';
   let h = '<div class="sec"><h2>Bundles with your games</h2><span>From Humble, Fanatical and more</span></div>';
@@ -1388,7 +1386,7 @@ function bundleHtml() {
     return `<div class="bcard"><div class="bh"><div><b>${esc(b.title || 'Bundle')}</b><span>${esc(store)}${end ? ' · ' + (left <= 1 ? '<em>ends within a day</em>' : 'ends ' + fdate(end) + ' (' + left + ' days)') : ''}</span></div>${b.url ? `<button class="btn sm" data-open="${esc(b.url)}">Open</button>` : ''}</div>
       <div class="bmine">Has from your lists: <b>${mine.map(esc).join(', ')}</b></div>
       ${ts.map(t => { const rc = runCount(t.games), per = t.price / t.games.length, hasMine = mine.filter(m => t.games.some(x => norm(x) === norm(m))).length;
-        return `<div class="btier"><div class="bp">${money(t.price)}</div><div class="bm"><b>${t.games.length} game${t.games.length === 1 ? '' : 's'} · ${money(per)} each</b><span>${rc.k ? `${rc.g} run well${rc.w ? ' · ' + rc.w + ' might struggle' : ''}${rc.k < t.games.length ? ' · ' + (t.games.length - rc.k) + ' not checked' : ''}` : 'Checking your laptop…'}${hasMine ? ' · includes ' + hasMine + ' of yours' : ''}</span></div></div>`; }).join('')}
+        return `<div class="btier"><div class="bp">${money(t.price)}</div><div class="bm"><b>${t.games.length} game${t.games.length === 1 ? '' : 's'} · ${money(per)} each</b><span>${rc.k ? `${rc.g} run on your laptop${rc.w ? ' · ' + rc.w + ' won’t' : ''}${rc.k < t.games.length ? ' · ' + (t.games.length - rc.k) + ' still checking' : ''}` : 'Checking your laptop…'}${hasMine ? ' · includes ' + hasMine + ' of yours' : ''}</span></div></div>`; }).join('')}
       ${ts.length ? `<details><summary>Games in this bundle</summary><p>${esc(ts[ts.length - 1].games.join(' · '))}</p></details>` : ''}</div>`;
   }).join('');
 }
