@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 4,
+  "v": 5,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "34f0feabfba4d855b458b990ffd1f1a552b04751dca99524a6800c23ee7de4eb",
+  "sha256": "817f644fba04cecb9786ba71f95d6feb0fc145de359742e0ac7411cbb7fc892a",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "713 more models from the big brands' full histories: 1950s-80s American cars, AMC, early Japanese, British and European classics."
+ "notes": "532 more models from Wikipedia's brand lists: VW, BMW, Mercedes, Audi, Porsche, Opel, Fiat, Renault, Peugeot, Citroën, Ferrari, Alfa, Maserati, Aston Martin, Jaguar, Volvo, Hyundai, Kia, Vauxhall, Rolls-Royce, Holden, Škoda, Daihatsu, Suzuki, Isuzu, Jeep, SEAT, Saab, Lotus, MG, Bentley, Lincoln, Mercury, Mazda, Mitsubishi, Subaru."
 }
