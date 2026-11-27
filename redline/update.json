@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 51,
+  "v": 52,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "bfd5b0680f52b797ab82c0a7c48ce06e390084be128ff3994e697aff1e34129b",
+  "sha256": "726fc0ed37c1335006714dfe87ab08e105df4d291a93fc47db0a270e44ad44c8",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 24: Grandeur/Azera, Atos/Santro, Lantra wagon, Cherokee XJ/Grand Cherokee ZJ, 626 liftback, 106/Saxo, Camaro/Firebird convertible, Laguna Coupé, Saab 900/9-3 hatch + coupé, Arosa/Lupo, Cordoba Vario + saloons, WRX/Impreza saloon, Alto/Celerio/Pixo, Verso/Wish/Picnic, Sequoia/Land Cruiser, Polo coupé, Volvo 340/440/460, Alpina coupés/saloons, C4 2020+, BMW E24, Geely SUVs, Gemini, Rodeo/Frontera, XJ-SC, Sportage I/II/III, Datsun 510/710/Bluebird, Rover 200/25, Grand Vitara/XL-7, TownAce/Previa, Yugo/Zastava, Brera/GT, Alfa 155/75/33, Aston roadsters/Volante, Equinox/Terrain, Sebring/200/Avenger, Xsara Picasso, Leganza/Epica, Magnum, Regata, Taurus/Five Hundred, GV60/70/80, Mazda6 hatch, MG ZT/Rover 75, Eclipse Spyder, Note, Pathfinder, Cascada, Kadjar/Austral, Vel Satis, 21 Nevada, Tarraco/Kodiaq, Scala/Kamiq, Venza, Arteon/CC, Volvo 480, Korando KJ, DeSoto 1946-54, Fiat 131, MU-X/Fortuner/Everest"
+ "notes": "Hand-drawn outlines, batch 25: Granta/Kalina hatch, Nissan D21/720 pickups (3 cabs), Ascona CC, 504/505, Alfasud/Sprint, BLS, Escalade/Tahoe/Suburban/Yukon 1999-2014, Aspen/Durango, Sebring/Eclipse coupé, DS5, Terios/Rush, Journey/Freemont, DS 7, Figo/Ka+, C-Max, Fusion (EU), Savana/Express, Ridgeline, Elantra hatch, Sonata 1985-98, QX50/EX, Isuzu 117, Rio saloon, Mazda B-Series/Courier (3 cabs), Xedos/Millenia, 323 wagon/saloon, C-Class coupé, S-Class W140/W108, Almera saloon, Prairie, Astra F estate, 408/301, Partner/Berlingo/Rifter, 306 Cabriolet, Proton Iriz/Persona/Satria, Renault 21 hatch, 20/30, Arona, Enyaq/ID.4/ID.5, Musso/Rexton, XV/Crosstrek, Tata Safari, Auris/Corolla Touring, Alfa 145/146, DS3 Cabrio, i40 Combi, /8 coupé, Bluebird Sylphy, Rekord C, Vios/Etios, Astra/Escort cabrios, PT Cruiser, C4 Aircross/ASX, Dacia 1310 Break, Espero, Astra/Kadett estates, QX60, Beta/Gamma coupé"
 }
