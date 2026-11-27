@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 46,
+  "v": 47,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "4c76aeec1c345c488aa19e59a3579a42f2a41b420680601221ee85bcf7880d20",
+  "sha256": "b7242cd8046c28ea21dee4554057c108169c661bef7d551e699214e045d27b94",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 19: Malibu/Chevelle, Doblò/Combo, F-Pace/E-Pace/I-Pace, XE, Pajero Pinin and II-IV, 206/207, Espace, Renault 19 saloon, Rexton, Impreza saloon, Hilux, Land Cruiser 70 and 80-300, S-Class W116, Q7/Q8, 7 Series E23/E32, Odyssey/Carnival/Sienna/Pacifica, Musa/Idea, Mazda2, SL R129-R232, Colt, Octavia I Combi, Fortuner/4Runner, Tourneo, Alfa Spider/GTV, A4 Cabriolet, Audi 100 C1/C2, Sebring Convertible, C4 Coupé, Explorer, Escort III, Commodore, Civic, Accord, Elantra, Accent, Renegade, A-/B-Class, Terrano, 307, Saab 9000, Charade, Ritmo, Continental GTC, 3 Series Compact, Camaro 3rd gen, C1/107/Aygo, Charger, Dakota, Tipo, Sierra HD, Rodeo, CX Break"
+ "notes": "Hand-drawn outlines, batch 20: Fit/Jazz, F-Type Convertible, Jaguar XJ Series I-III/XJ40, MKZ/Continental, Mazda6 wagon, C-Class wagons, A-Class W176/W177, ASX, Mokka/Encore/Trax, Signum, Kadett E saloon, Manta, 2008, 508, 306, coupé-cabriolets, Renault 9/11, Ibiza ST, Wagon R+/Agila, T-Roc/T-Cross, Amarok, Golf Cabriolet, Avenir/Primera wagon, Jetta IV, Alfa 166, Audi Cabriolet, Cruze hatch, Corvette C5/C6, Challenger, Galaxy/S-Max, Escort wagon/saloon, Kona, Thema/Kappa, L200, Astra K/L, Panamera, Outback, V50, Alpina Touring, Granada, Vito/V-Class, Delica, Corona/Carina, PT Cruiser Convertible, DS3, C2, Xsara, Caravan IV/V, Marea/Linea, Punto 176, C-Max, Pilot, Defender L663, E-/CLK Cabriolets, Grandland, Myvi"
 }
