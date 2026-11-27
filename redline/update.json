@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 16,
+  "v": 17,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "934862f64d96ee72e4f14d33eeea8e91dcf327acd49a0e2da7180004a791c7b6",
+  "sha256": "290ff06e5fbae37d72b350fd0efcbe82365a6d6d54e39fdd419ae773aa2796f6",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every Japanese car now has a shape for its model or era: kei cars and kei vans, Honda S500-S800, Beat, S660, del Sol, CR-Z, Insight, Ridgeline, Element, Nissan Figaro, Be-1, Pao, S-Cargo, Japanese pickups by cab size, Patrol and early Land Cruisers, 60s-90s Japanese coupés, plus saloons, hatches, estates, vans and SUVs by era. RX-7, MR2, 86, 350Z and MX-5 now match all their name spellings."
+ "notes": "Hand-drawn shapes for Ferrari, Fiat, BMW, Alpina, Mercedes, Ford, Chevrolet, Volkswagen and Renault lines; tidied odd model names"
 }
