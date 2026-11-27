@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 32,
+  "v": 33,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "b3cc52cf72e5d4dd72f3920e4310f1d3b86d5c2627786ea8f0581a37a789393e",
+  "sha256": "18383dbf48ef22326227d353278a2559daba4175dca6d6d059e69dc9ba012efa",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Soft-top off-roaders drawn open, Saab 95 estate"
+ "notes": "Every car its own drawing (part 1): per-body outlines for Toyota, Ford, Audi, Mercedes, Nissan, Renault, Opel/Vauxhall, Volkswagen and modern crossovers"
 }
