@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 50,
+  "v": 51,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "863dd6e3d1d328f79b2d0cff58970a9b542b20edd7047237d1498942885f6745",
+  "sha256": "bfd5b0680f52b797ab82c0a7c48ce06e390084be128ff3994e697aff1e34129b",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 23: i30 Fastback/wagon/Veloster, Accent, Q70/Fuga, Optima/Ceed wagons, Rekord/Commodore/Victor, Mégane Coupé, Renault 18, SX4/Sedici, Corolla 2013-19 and E120 hatch, YRV/Materia, Fiorino/Qubo, Amaze/City, Commodore/HSV saloons, Kadett coupé, Rover 400/45, R8 Spyder, Blazer, Camaro/Firebird 4th gen, C5 Aircross, DS4, Sirion, Bravo/Brava, Focus IV, Fiesta Mk1, Fox Mustang, Venga/ix20, Prisma/Dedra, Lexus RC, CX-3/CX-30/MX-30, E-Class coupé, A/B-Class, Corsa F, Vectra GTS, Senator/Monza, Bonneville, Clio V, Safrane, Corolla Cross/C-HR, Corolla wagons, Polo I/II, Scirocco II, S80, C126, Sunny/Sentra, Cutlass, Swift/Cultus, Simca, Chaser/Cresta/Mark II, Flying Spur/Mulsanne, BLS/9-3 wagon, Impala, Avalanche, Aveo/Nexia saloons, Leon ST, Lacetti hatch, Tempra, Fiat 124 coupé, Expedition/Navigator, Acadia/Enclave/Traverse, Astra coupé, Palisade/Telluride, ix35/Tucson, i40/Sonata"
+ "notes": "Hand-drawn outlines, batch 24: Grandeur/Azera, Atos/Santro, Lantra wagon, Cherokee XJ/Grand Cherokee ZJ, 626 liftback, 106/Saxo, Camaro/Firebird convertible, Laguna Coupé, Saab 900/9-3 hatch + coupé, Arosa/Lupo, Cordoba Vario + saloons, WRX/Impreza saloon, Alto/Celerio/Pixo, Verso/Wish/Picnic, Sequoia/Land Cruiser, Polo coupé, Volvo 340/440/460, Alpina coupés/saloons, C4 2020+, BMW E24, Geely SUVs, Gemini, Rodeo/Frontera, XJ-SC, Sportage I/II/III, Datsun 510/710/Bluebird, Rover 200/25, Grand Vitara/XL-7, TownAce/Previa, Yugo/Zastava, Brera/GT, Alfa 155/75/33, Aston roadsters/Volante, Equinox/Terrain, Sebring/200/Avenger, Xsara Picasso, Leganza/Epica, Magnum, Regata, Taurus/Five Hundred, GV60/70/80, Mazda6 hatch, MG ZT/Rover 75, Eclipse Spyder, Note, Pathfinder, Cascada, Kadjar/Austral, Vel Satis, 21 Nevada, Tarraco/Kodiaq, Scala/Kamiq, Venza, Arteon/CC, Volvo 480, Korando KJ, DeSoto 1946-54, Fiat 131, MU-X/Fortuner/Everest"
 }
