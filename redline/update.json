@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 43,
+  "v": 44,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "f80d8cc192cf8588cecee25691140ec0097ab9d058876307e469cde00c60940e",
+  "sha256": "b651ba1ab96d4472f9d6e6aaed6196977fb66cb63cdddf65ad82302b804635b8",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 16: Vectra, Calibra, GLC/GLE Coupé/GLA, E-Class Estate, Astra Sports Tourer, 307 SW, Saab 9-3/9-5, Ibiza SC, Volvo S60 I/V90/C30, Trafic/Vivaro/Talento, Corvette convertibles, Malibu, i20, Lancer and Evo, Mégane Estate, Legacy/Impreza/Forester, Mercedes /8 and W123, C5 Tourer, Clio I, Yeti, Bora, Nissan AD, Alfa 147/156/159, CLA Shooting Brake, A-Class W168, 508 SW, 911 Targa/Cabriolet G and 964, Crown, Camaro 2nd gen, Logan, Lodgy, Stilo, Cherokee XJ/SJ, Colt, 3008/5008, Fabia Combi, Passat B2/B3 Variant, Jumpy/Expert, Scorpio"
+ "notes": "Hand-drawn outlines, batch 17: Civic sedan, Sonata, Optima/K5, CLA/CLS, Primera, Meriva, Omega Caravan, 406, Macan, Mégane I-IV, Scénic, up!/Mii/Citigo, CrossPolo, Golf Plus/Sportsvan, C70, F-150 1997-2014, Campo, A7, Continental GT, Tahoe/Yukon/Suburban 1991-2006, ZX, Dokker, Durango, Grand Cherokee, LS, 323, Toledo, Passat B2-B4, C-MAX, SL R107, Volvo 340, Alfa 75, Audi Coupé/quattro, X2, X4, 4 Series and 1/2 Series convertibles, 1 Series Coupé, Cruze, 500X, Focus sedan, Jaguar XJ, Sorento, Mazda3 sedan, CX-5, Clio II, Renault 25, Korando, Auris, Giulia"
 }
