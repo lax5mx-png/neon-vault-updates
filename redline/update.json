@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 27,
+  "v": 28,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "34042743b71f40199752958610430094095179c4202aec58474cd7c2913bff19",
+  "sha256": "0a69017c2b5e7c5d504ed9fd6c9dab3b06975895e1136cdc1ab246b16e171c9b",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Talbot saloons, Fiat 500X and other small fixes"
+ "notes": "Pre-war streamliners (Airflow, Zephyr, Cord 810, Tatra, Aprilia, Peugeot 402...), Citroën Traction Avant, Fiat Topolino, Bugatti 57 SC and wartime jeeps"
 }
