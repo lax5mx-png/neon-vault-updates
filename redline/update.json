@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 34,
+  "v": 35,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "10afedcd9f725896f48153ba291137892ced618d47bc8f09e87e15b99bb11804",
+  "sha256": "aeb196852601e4ce07afe8c810a1be674c4c9e4f1b0ef3b0843a901f1ac5f59b",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car its own drawing (part 2): per-body outlines for Chevrolet, BMW, Citroën, Honda, Hyundai, Fiat, Mitsubishi, Mazda, Kia, Peugeot, Alpina, Škoda, Dodge, DeSoto, Suzuki, Subaru and Volvo; pickups take cab length from the name"
+ "notes": "Every car its own drawing (part 3): per-body outlines for Chrysler, Lada, Cadillac, Buick, Holden, Ferrari, Pontiac, Jaguar, Daihatsu, Lexus, GMC, SEAT, Porsche, Dacia, Alfa Romeo, Lancia, AMG, Mercury, MG, Maserati, Bentley, Isuzu, Lincoln, Daewoo, Jeep, Oldsmobile, Acura, Infiniti, Plymouth, Ram, Saab, SsangYong, Proton, Maxus and Tata"
 }
