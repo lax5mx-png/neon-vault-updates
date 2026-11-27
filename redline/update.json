@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 36,
+  "v": 37,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "ec62910b45523c03f3483e201f0ebf14fbf39a2b1aefe23b9663ed37d14f71ff",
+  "sha256": "11c4d21c5906a6fda439095b6102f442e9c2d9054784a18791475446be874161",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car its own drawing (finished): per-body outlines for the remaining makes — Rover, MINI, Rolls-Royce, GAZ, Datsun, Talbot, UAZ, TVR, Mahindra, Geely, FAW, HSV, Moskvich, Bristol, Triumph, DS, Lotus, Saturn, AMC, FSO, BYD, Genesis, Cupra, Maybach, Scion and ~200 smaller makes"
+ "notes": "Every car its own drawing: pre-war cars (1906-1945) now each have their own outline — tourers, upright saloons, bustle-backs, streamliners, long-bonnet luxury cars and boat-tail sports cars; fixed outlines for a few mislabelled modern cars"
 }
