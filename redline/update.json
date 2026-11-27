@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 26,
+  "v": 27,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "12626bd4f5108ffddcbde9279623d88217001f65a4eebd02db228a3e6541d87a",
+  "sha256": "34042743b71f40199752958610430094095179c4202aec58474cd7c2913bff19",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Estates and hatchbacks no longer drawn as saloons in several older lines (Dacia, Fiat, Škoda, Tofas, Trabant, Wartburg, Peugeot, Volvo, BMW)"
+ "notes": "Talbot saloons, Fiat 500X and other small fixes"
 }
