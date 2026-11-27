@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 9,
+  "v": 10,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "798e555a1ba5399cd2720d1b94d02d1c8e2cee8b3f62f611a7297b6ac930471a",
+  "sha256": "b3dc8d680411853c77e25afe4dd0ff2cdbd3364a073cdcc7058bcfcc782de5cd",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "66 more hand-drawn car shapes: Golf Mk2, 205, Delta, 308/328, 458/488/F8, M3 E30, W123, W124, 190E, Impreza WRX, GT-R, 300ZX, Carrera GT, 918, R8, Gallardo, P1, Viper, Challenger, Bronco, FJ Cruiser, Multipla, Sierra Cosworth, S2000, Integra, CRX, MX-5, MR2, GT86, Silvia, 350Z/370Z, 3000GT, Capri, Thunderbird, Crown Vic, GTO, 'Cuda, Continental, H2, New Beetle, Scirocco, Corrado, Twingo, 928, 944, Boxster, Cayman, XJS, SLS, DB5, DB9/DB11, Spider, Giulia GT, Fulvia, P1800, Saab 900, Zonda, Huayra, Agera and more."
+ "notes": "32 more hand-drawn shapes: 1958 Impala, Impala/Chevelle SS, Fairlane GT, Riviera, Toronado, 2000GT, Supra A70 and A90, RX-8, Cosmo, Hakosuka GT-R, NSX (2016), LFA, i8, Z3/Z4/Z8, Daytona, 288 GTO, F50, 550-812 GTs, FF/GTC4Lusso, Purosangue, Urus, Espada, 350 GT, McLaren 12C-750S, Tesla Roadster and Model X, Rivian, 8C, 4C, Monaro."
 }
