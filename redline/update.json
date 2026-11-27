@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 55,
+  "v": 56,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "ba3e36c6e88ae28efe15b361fd3c1795e29b508a2beeffe826a13db47c4457a6",
+  "sha256": "fe0aa2082a2b34e45c3bcdb98765ccefbebeff368755afde0e3c9c1a32efca6b",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Catalogue clean-up: 409 duplicate listings of the same car removed (a single model year listed inside a longer run of the same generation, or the same generation listed twice under two spellings). Only the newest listing stays; its engine list gains any engines the duplicate had. Cars you already own are unaffected."
+ "notes": "Hand-drawn outlines, batch 28: outlines re-attached to listings renamed by the clean-up (C-Class T-Modell, Avensis/Superb wagons, Grand Cherokee WJ, RAV4, V70), Grosser Mercedes tourers, Sunfire/Sunbird, Avantime, Mégane cabrios, Felicia, Rodius, Camry XV70, VXR8/Commodore VE-VF, Derby, Wiesmann, Audi 100/200 Avant, DeSoto convertibles, Daytona/Laser, Uno, Tourneo Connect, Suburban, Veracruz, Maserati Biturbo family, Maxus G10, 929/Luce, B-Class W245, RVR/Space Wagon/Grandis, Commodore coupé, Grand Am/6000, Škoda 105-136, Avanza/Xenia, Corolla E70 liftback, Innova, Land Cruiser 70, Nova saloon, Fox/Gol, Beetle cabrio, MDX 2014+, Integra coupé, Ariel Atom, BMW 1 Series F40, E21/E30 cabrio, Rendezvous/Aztek, HHR, Nubira/Lacetti saloon, Camaro convertibles, Ayla/Agya, Neon, Dodge 1960-66, Ferrari 360/F430/348/355/250, Fullback/L200 cabs, Taurus/Sable + wagon, Equus, Getz"
 }
