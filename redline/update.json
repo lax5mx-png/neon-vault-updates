@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 33,
+  "v": 34,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "18383dbf48ef22326227d353278a2559daba4175dca6d6d059e69dc9ba012efa",
+  "sha256": "10afedcd9f725896f48153ba291137892ced618d47bc8f09e87e15b99bb11804",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car its own drawing (part 1): per-body outlines for Toyota, Ford, Audi, Mercedes, Nissan, Renault, Opel/Vauxhall, Volkswagen and modern crossovers"
+ "notes": "Every car its own drawing (part 2): per-body outlines for Chevrolet, BMW, Citroën, Honda, Hyundai, Fiat, Mitsubishi, Mazda, Kia, Peugeot, Alpina, Škoda, Dodge, DeSoto, Suzuki, Subaru and Volvo; pickups take cab length from the name"
 }
