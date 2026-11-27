@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 44,
+  "v": 45,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "b651ba1ab96d4472f9d6e6aaed6196977fb66cb63cdddf65ad82302b804635b8",
+  "sha256": "08e3629f90ad7f5531679b21f82aa7fe92fa1383dca150642074c3c65c184fe1",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 17: Civic sedan, Sonata, Optima/K5, CLA/CLS, Primera, Meriva, Omega Caravan, 406, Macan, Mégane I-IV, Scénic, up!/Mii/Citigo, CrossPolo, Golf Plus/Sportsvan, C70, F-150 1997-2014, Campo, A7, Continental GT, Tahoe/Yukon/Suburban 1991-2006, ZX, Dokker, Durango, Grand Cherokee, LS, 323, Toledo, Passat B2-B4, C-MAX, SL R107, Volvo 340, Alfa 75, Audi Coupé/quattro, X2, X4, 4 Series and 1/2 Series convertibles, 1 Series Coupé, Cruze, 500X, Focus sedan, Jaguar XJ, Sorento, Mazda3 sedan, CX-5, Clio II, Renault 25, Korando, Auris, Giulia"
+ "notes": "Hand-drawn outlines, batch 18: X5/X7, X3, AX, Uno, Mustang S550/S650, cee'd, Lexus ES/GS/IS, Frontera, 405/406/407 estates, Clio Estate, RAV4, Simca 1000, Astra Estate, Alfa 156/159 Sportwagon/33/164/Giulietta, Malibu wagon and El Camino, Saxo, XM, Fiesta III/IV, Sierra sedan/Turnier, Holden Ute, Santa Fe I/II, Trooper, Compass/Cherokee KL, Forte, Mazda3 hatch, Qashqai, Patrol, Adam, 405, Laguna, Vitara, Avensis, S40, Frontier/Navara, Jetta I/II, Captiva, Xantia, Duster, i10, i40 wagon, Q50, F-Type coupe, Sunny/Almera, Ateca/Karoq, Beetle Cabriolet, CC, Touareg, A3 Cabriolet, C8/807/Ulysse"
 }
