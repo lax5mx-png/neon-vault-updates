@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 19,
+  "v": 20,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "b2cb544ca1db437329d5ba59bc5fcd8b9cec221bf6bb23641f5a4836987c4034",
+  "sha256": "098f4ffe28927e130dd2026f25096c560c225debf24eb46467dfa68c565f6b7c",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn shapes for American classics (Dodge, Plymouth, Pontiac, Jeep, Chrysler, Cadillac, Buick...), MG, Citroën, Holden, Peugeot, Volvo, Alfa Romeo, Maserati, TVR, Aston Martin, Porsche and Lancia"
+ "notes": "Hand-drawn shapes for Lamborghini, McLaren, Bugatti, Rolls-Royce, Lotus, Jaguar, Triumph, Saab, Austin, Morris, Rover, AC, Morgan, Bristol, De Tomaso, SEAT, Škoda, Moskvich, ZAZ, FSO, GAZ, Lada, DAF and Talbot classics"
 }
