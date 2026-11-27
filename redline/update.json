@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 41,
+  "v": 42,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "5ed484171e11f0ec1ac1415675dbd6ec85e4656f4e3b89901188f3795c74a871",
+  "sha256": "f8aa870ac84329cbab27405a73fd73849503c5655471f1f252c480c6f534be24",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batches 13-14: Astra H/J, 208, Fiesta, F-150 2015+, A3 8V, A1, Audi 80 B1-B3, Santa Fe, Swift, Range Rover L322-L460, C-Class and E-Class by generation, Fabia, V40, BX, Insignia, Leon, i30, Renault 19, C3, Kangoo, Tiguan, Golf V/VI, Camaro, Zafira, 500L, Touran, Passat Variant, X6, BT-50, cabriolets (3 Series, A5, Saab 9-3)"
+ "notes": "Hand-drawn outlines, batch 15: Range Rover Sport, Discovery I-5 and Sport, Sierra, A8, Mondeo, Yukon/Tahoe/Suburban, D-Max, XF, Picanto, Rio, Carens, Jetta, A3 Sedan, Q5, Q3, C4, Escort, Ypsilon, 308, Malibu, Canyon/Colorado, Bluebird, Micra, Omega, Kadett, Kodiaq, Tundra I, H-1, 2 Series coupe, Logan MCV, Sandero, Caravan, Yaris, XC90, MiTo, Tucson, Navigator, Buick Regal"
 }
