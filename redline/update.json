@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 14,
+  "v": 15,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "bc9820743f1ae06eca45862456cb88bae4391b9124d87d6d62e79ba01e6a9cd2",
+  "sha256": "6e6a800eb6b4833cb343a93fb43eadd3c8b59a446197e4bfc28a8eb228dfd314",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Generation-by-generation shapes for about 30 more model lines: Mustang, Camaro and Corvette convertibles, MINI and Golf cabrios, BMW 3/4/6 Series and M coupes, A5, Audi Coupé, Accord and Civic coupes, Hyundai Coupe, Jaguar XK and F-Type, Manta, American personal coupes, Opel/Ford/Toyota/Renault/Peugeot/Škoda estates, Mondeo and Vectra liftbacks, Corolla, Astra and Focus saloons, S-Class, Terrano/Pajero/Vitara-type off-roaders, modern crossovers, big vans and compact MPVs."
+ "notes": "Shapes for about 25 more model lines: Mercedes C, E, CLA and A-Class in every naming, their estates, coupés and cabrios; Ferrari Mondial, 348, 355, 360, F430 and spiders; Ferrari 250/275/330/365 GTs; supercar roadsters; Spyker; Aston Martin V8, Virage, DB7, Vanquish; Bentley Continental, Flying Spur; Maserati GranTurismo; Alfa GTV and Spider; DeSoto and 50s Chrysler cars with fins; RX-7 SA; 4Runner; Skyline coupés; Lexus RC; Chrysler Sebring; 80s-00s people carriers; Citroën CX, XM, Ami and DS Break; Polonez, Dacia, Lada and Simca saloons."
 }

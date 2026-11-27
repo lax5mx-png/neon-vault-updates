@@ -1159,6 +1159,61 @@ window.CARSHAPES = [
  ...F(/^(Renault (Master|Trafic)|Opel (Movano|Vivaro)|Vauxhall (Movano|Vivaro)|Nissan (NV400|NV300|Primastar|Interstar|NV200)|Ford Transit(?! Connect)|Fiat (Ducato|Talento|Scudo)|Citroën (Jumper|Jumpy|SpaceTourer)|Peugeot (Boxer|Expert|Traveller)|Toyota (ProAce|HiAce|Granvia)|Mercedes-Benz (Sprinter|Vito|V-?[Cc]lass|Viano|Vaneo)|Hyundai (H-1|H-100|Staria|iLoad|iMax|Starex)|Kia (Pregio|Carnival|Sedona)|Mitsubishi (Delica|Space Gear|L300)|Iveco Daily|Volkswagen Crafter|MAN TGE)/, ['van'], [
   [1980,2026,S2,{rt:.88,rx:.02,rh:.995,cp:.03,rf:.8,ws:.88,belt:.56,hood:.5,rad:80,x:{bump:false}}]]),
  ...F(/^(BMW 2 Series (Active|Gran) Tourer|Mercedes-Benz (B-?[Cc]lass|A-?[Cc]lass)|Fiat (500L|Idea|Qubo)|Kia (Carens|Venga)|Opel (Meriva|Zafira)|Vauxhall (Meriva|Zafira)|Mitsubishi (Space (Star|Runner|Wagon))|Ford (B-Max|C-Max|S-Max|Galaxy)|Renault (Scenic|Grand Scenic|Modus)|Citroën (C3 Picasso|C4 Picasso|Xsara Picasso|Berlingo)|Toyota (Verso|Corolla Verso|Sienta|Prius\+)|Honda (FR-V|Stream|Freed|Jade|Shuttle)|Nissan (Note|Livina)|Hyundai (Matrix|ix20)|Peugeot (5008|3008|1007)|SEAT (Altea)|Škoda (Roomster))/, ['van','hatch'], [[1995,2026,S2,{rt:.66,rx:.07,rh:.975,cp:.07,rf:.68,ws:.83,belt:.6,hood:.52,rad:120}]]),
+ // ===== batch 9: more lines =====
+ // Mercedes-Benz C, E, CLA, R-Class in every naming the sources use (C-class, C-Klasse, C 200...)
+ ...F(/^(Mercedes-Benz|Mercedes-AMG) (C|E|CLA|CLS)(-?[Cc]lass|-Klasse| \d| AMG| \(|$)(?!.*(Coupe|Coupé|Cabrio|Convertible|Estate|T-Modell|Wagon|Shooting|All-Terrain|Universal))/, ['sedan'], [
+  [1965,1985,S3,{deck:.62,cb:.2,rr:.3,rf:.65,ws:.76,belt:.62,hood:.6,rad:30}], [1985,1996,S3,{deck:.64,cb:.2,rr:.31,rf:.64,ws:.76,belt:.64,hood:.6,rad:60}], [1996,2026,S3,{deck:.65,cb:.17,rr:.32,rf:.61,ws:.73,belt:.64,hood:.57,rad:100}]]),
+ ...F(/^(Mercedes-Benz|Mercedes-AMG) (C|E|CLA|CLS|R)(-?[Cc]lass|-Klasse| \d| AMG| \(|$).*(Estate|T-Modell|Wagon|Shooting|All-Terrain|Universal|Kombi)|^Mercedes-Benz R-?[Cc]lass/, ['wagon','van'], [
+  [1965,1995,S2,{rt:.65,rx:.03,rh:.99,cp:.04,rf:.64,ws:.76,belt:.63,hood:.6,rad:40}], [1996,2026,S2,{rt:.66,rx:.05,rh:.98,cp:.05,rf:.61,ws:.74,belt:.64,hood:.57,rad:90}]]),
+ ...F(/^(Mercedes-Benz|Mercedes-AMG) (C|E|S|CL|CLK)(-?[Cc]lass|-Klasse| \d| AMG| \(|$).*(Coupe|Coupé|Cabrio|Convertible)/, ['coupe'], [[1977,2026,S3,{deck:.65,cb:.15,rr:.36,rf:.6,ws:.72,belt:.64,hood:.57,rad:110}]]),
+ ...F(/^(Mercedes-Benz|Mercedes-AMG) (C|E|S|SL|CL|CLK)(-?[Cc]lass|-Klasse| \d| AMG| \(|$).*(Cabrio|Convertible|Roadster)/, ['convertible'], [[1977,2026,CV,{deck:.65,ws:.7,belt:.64,hood:.57,rad:110}]]),
+ ...F(/^Mercedes-Benz A-?([Cc]lass|Klasse)/, ['hatch'], [[1997,2012,S2,{rt:.64,rx:.05,rh:.98,cp:.05,rf:.72,ws:.86,belt:.6,hood:.48,rad:150}], [2012,2026,S2,{rt:.6,rx:.15,rf:.57,ws:.73,belt:.64,hood:.55,rad:100}]]),
+ // more Ferraris and supercars
+ {m:/^Ferrari (Mondial|348|355|F355|360|F430|430)(?!.*(Spider|GTS|Cabrio))/, y:[1980, 2010],
+  top:[[.02,.18,0],[0,.38,60],[.01,.62,80],[.17,.66,100],[.24,.7,100],[.35,.97,200],[.42,1,200],[.5,.985,150],[.66,.66,80],[.86,.55,300],[.97,.45,150],[1,.38,60],[.99,.24,40],[.96,.16,0]],
+  glass:[[.38,.67],[.43,.92],[.5,.955],[.64,.67]], hb:.65, hn:.5, ws:.66, doors:2, crease:false, hl:0, tl:[0,.5,.02,.07], bump:false},
+ {m:/^Ferrari (Mondial|348|355|F355|360|F430|430|458|488|F8|SF90|296).*(Spider|GTS|Cabrio|Aperta)/, y:[1980, 2026],
+  top:[[.02,.18,0],[0,.38,60],[.01,.62,80],[.17,.66,100],[.35,.68,150],[.5,.67,100],[.66,.66,80],[.86,.55,300],[.97,.45,150],[1,.38,60],[.99,.24,40],[.96,.16,0]],
+  cvt:1, hb:.65, hn:.5, ws:.66, doors:2, crease:false, hl:0, tl:[0,.5,.02,.07], bump:false},
+ {m:/^Ferrari (250|330|275|365|342|375|410|400|500)( GT| GTE| GTB| GTC| GTS| 2\+2| America| Superamerica| Superfast| California| Europa| MM|$)/, y:[1950, 1976],
+  top:[[.03,.16,0],[0,.3,80],[.01,.55,200],[.08,.62,400],[.22,.74,700],[.35,.96,500],[.43,1,300],[.52,.97,200],[.6,.66,100],[.75,.62,600],[.92,.55,400],[.99,.47,200],[1,.36,80],[.99,.24,40],[.96,.15,0]],
+  glass:[[.31,.68],[.4,.92],[.5,.94],[.58,.68]], hb:.66, hn:.57, ws:.6, doors:2, crease:false, spear:false, hl:[.96,.52,65], tl:[0,.45,.02,.06], wheel:'wire', white:false, bump:false},
+ {m:/^(Lamborghini (Aventador|Murci|Diablo|Hurac|Gallardo|Revuelto).*(Roadster|Spyder|Spider)|Audi R8.*Spyder|Lamborghini Gallardo.*Spyder)/, y:[1995, 2026],
+  top:[[.03,.18,0],[0,.38,40],[.01,.6,60],[.18,.66,60],[.4,.68,80],[.55,.67,60],[.7,.62,60],[.93,.45,100],[1,.35,60],[.99,.2,40],[.96,.15,0]],
+  cvt:1, hb:.63, hn:.45, ws:.7, doors:2, crease:false, hl:0, tl:[0,.45,.02,.06], bump:false},
+ {m:/^Spyker C8/, y:[2000, 2026],
+  top:[[.02,.18,0],[0,.38,60],[.01,.6,80],[.18,.66,200],[.33,.94,500],[.42,1,400],[.5,.97,250],[.68,.63,80],[.9,.5,300],[1,.38,80],[.99,.22,40],[.96,.16,0]],
+  glass:[[.37,.67],[.43,.92],[.5,.95],[.66,.64]], hb:.65, hn:.48, ws:.69, doors:2, crease:false, tl:[0,.5,.02,.05], bump:false, wheel:'turbine', white:false},
+ // British and Italian GTs
+ ...F(/^Aston Martin (V8|Virage|DB7|DB AR1|Vanquish|V8 Vantage|Lagonda Taraf|DBS|Vantage)(?!.*(Volante|Roadster|Spyder|Zagato Speedster))/, ['coupe'], [
+  [1969,1989,S3,{deck:.62,cb:.12,rr:.36,rf:.58,ws:.68,belt:.62,hood:.6,rad:80}], [1989,2026,S3,{deck:.64,cb:.1,rr:.38,rf:.57,ws:.68,belt:.65,hood:.57,rad:200}]]),
+ ...F(/^(Aston Martin|Bentley|Maserati|Jaguar|Rolls-Royce).*(Volante|Roadster|Convertible|Cabrio|GTC|Spyder|Corniche|Azure|GranCabrio|Dawn|Spider)|^Maserati GranCabrio|^Rolls-Royce Dawn|^Bentley Azure/, ['convertible'], [[1977,2026,CV,{deck:.65,ws:.66,belt:.65,hood:.58,rad:140}]]),
+ ...F(/^(Maserati (GranTurismo|Coup[eé]|3200|4200|Spyder|GT)|Bentley (Continental|Brooklands)(?!.*(Flying|GTC|Convertible)))/, ['coupe'], [[1990,2026,S3,{deck:.64,cb:.12,rr:.37,rf:.58,ws:.7,belt:.66,hood:.6,rad:150}]]),
+ ...F(/^(Bentley (Flying Spur|Continental Flying Spur|Mulsanne|Arnage)|Maserati (Quattroporte|Ghibli)|Jaguar (XJ|XF|XE)|Aston Martin Rapide|Porsche Panamera)/, ['sedan'], [[1995,2026,S3,{deck:.66,cb:.14,rr:.34,rf:.6,ws:.73,belt:.66,hood:.58,rad:120}]]),
+ ...F(/^Alfa Romeo (GTV|Spider)( \(916\)| \(939\)|$)/, ['coupe'], [[1995,2010,S3,{deck:.66,cb:.12,rr:.36,rf:.56,ws:.68,belt:.66,hood:.55,rad:150,x:{hl:[.97,.54,40]}}]]),
+ ...F(/^Alfa Romeo (Spider|Brera)( \(939\)|$)/, ['convertible'], [[1995,2011,CV,{deck:.66,ws:.67,belt:.66,hood:.55,rad:140,x:{hl:[.97,.54,40]}}]]),
+ ...F(/^(Lotus Elan|Fiat 124 Sport Coupe|Fiat 124 Coup[eé]|Fiat 124 Spider|Abarth 124 Spider|Alfa Romeo Alfasud Sprint|Alfa Romeo Alfetta GTV|Alfa Romeo GTV6|Lancia Beta Coup[eé])/, ['coupe','convertible'], [[1962,1989,S3,{deck:.62,cb:.16,rr:.34,rf:.6,ws:.72,belt:.62,hood:.58,rad:50}]]),
+ ...F(/^(Fiat 124 Spider|Abarth 124 Spider)$/, ['convertible'], [[2016,2026,CV,{deck:.63,ws:.6,belt:.66,hood:.56,rad:140}]]),
+ // DeSoto 1946-61, and similar Chrysler-group cars
+ ...F(/^(DeSoto|Chrysler (Windsor|Saratoga|New Yorker|Imperial|Newport)|Dodge (Coronet|Royal|Custom Royal|Kingsway|Meadowbrook)|Plymouth (Belvedere|Savoy|Plaza|Cranbrook|Cambridge|Fury)|Imperial)/, ['sedan','coupe','convertible','wagon'], [
+  [1946,1954,S3,{deck:.56,cb:.24,rr:.31,rf:.64,ws:.73,belt:.6,hood:.6,rad:220}], [1955,1956,S3,{deck:.6,cb:.21,rr:.31,rf:.64,ws:.72,belt:.6,hood:.6,rad:100}],
+  [1957,1961,S3,{deck:.62,cb:.22,rr:.31,rf:.63,ws:.7,belt:.6,hood:.58,rad:60,x:{fins:1,tl:[.003,.55,.02,.08]}}]]),
+ // Japanese odds
+ ...F(/^Mazda RX(-7|7)?$|^Mazda RX-?(2|3|4|5)\b/, ['coupe','sedan'], [[1970,1985,S3,{deck:.6,cb:.12,rr:.36,rf:.58,ws:.7,belt:.62,hood:.56,rad:60}]]),
+ ...F(/^(Toyota (4Runner|4runner|Hilux Surf|Fortuner))/, ['suv'], [[1984,2026,S2,{rt:.7,rx:.03,rh:.99,cp:.04,rf:.66,ws:.73,belt:.65,hood:.63,rad:60}]]),
+ ...F(/^(Nissan Skyline|Nissan Skyline GT-R)( Coupe| GTS| 2000|$| \()/, ['coupe'], [[1969,1989,S3,{deck:.63,cb:.17,rr:.33,rf:.6,ws:.72,belt:.63,hood:.6,rad:40}], [1989,2026,S3,{deck:.66,cb:.15,rr:.34,rf:.6,ws:.73,belt:.66,hood:.6,rad:150}]]),
+ ...F(/^(Lexus (RC|SC|LC)|Infiniti (Q60|G37 Coupe|G35 Coupe)|Toyota (Camry Solara|Solara|Soarer)|Chrysler Sebring Coupe|Dodge Avenger Coupe)/, ['coupe'], [[1990,2026,S3,{deck:.65,cb:.13,rr:.37,rf:.58,ws:.71,belt:.65,hood:.56,rad:150}]]),
+ ...F(/^(Toyota (Camry Solara|Solara)|Chrysler (Sebring|PT Cruiser|200)|Mitsubishi Eclipse Spyder|Pontiac (Firebird|Sunfire|G6).*(Convertible|Cabrio)|Ford Escort.*(Cabrio|Convertible)|Dodge Avenger.*Conv|Chevrolet Cavalier.*Conv)/, ['convertible'], [[1983,2012,CV,{deck:.64,ws:.72,belt:.63,hood:.56,rad:90}]]),
+ // People carriers of the 80s-00s
+ ...F(/^(Chrysler (Grand Voyager|Voyager|Town)|Plymouth Voyager|Dodge (Grand Caravan|Caravan)|Citroën (Evasion|C8)|Peugeot (806|807)|Fiat Ulysse|Lancia (Zeta|Phedra)|Mazda (MPV|5|Premacy)|Nissan (Serena|Quest|Prairie|Elgrand|Presage)|Toyota (Previa|Estima|Sienna|Alphard|Noah|Voxy)|Ford (Windstar|Freestar|Grand C-Max|Grand Tourneo|Tourneo)|Honda (Odyssey|Stepwgn|Elysion)|Opel (Sintra|Zafira)|Vauxhall (Sintra|Zafira)|Proton Exora|Dacia (Lodgy|Dokker|Jogger)|Daihatsu (Move|Tanto)|GMC Savana|Chevrolet (Express|Astro|Venture|Uplander|Lumina APV)|Pontiac (Trans Sport|Montana)|Oldsmobile Silhouette|Kia (Carnival|Sedona))/, ['van','suv','wagon'], [[1984,2026,S2,{rt:.7,rx:.05,rh:.98,cp:.05,rf:.7,ws:.85,belt:.6,hood:.5,rad:120}]]),
+ // Citroën specials
+ ...F(/^Citroën CX/, ['hatch','sedan','wagon'], [[1974,1991,S2,{rt:.45,rx:.24,rh:.92,cp:.22,rf:.6,ws:.73,belt:.6,hood:.5,rad:80,x:{skirt:1}}]]),
+ ...F(/^Citroën (XM|Xantia)/, ['hatch','sedan'], [[1989,2003,S2,{rt:.55,rx:.2,rh:.93,cp:.2,rf:.6,ws:.73,belt:.62,hood:.52,rad:60}]]),
+ ...F(/^Citroën (Ami|AMI|Dyane)/, ['sedan','hatch','wagon'], [[1961,1983,S2,{rt:.58,rx:.14,rh:.95,cp:.15,rf:.65,ws:.72,belt:.6,hood:.57,rad:150,x:{hl:[.9,.62,80],hlOut:1}}]]),
+ ...F(/^Citroën (DS|ID)( |\d|$).*(Cabrio|Convertible)/, ['convertible'], [[1958,1976,CV,{deck:.62,ws:.66,belt:.64,hood:.5,rad:150,x:{skirt:1}}]]),
+ ...F(/^Citroën (DS|ID)( |\d|$).*(Break|Safari|Familiale|Wagon)/, ['wagon'], [[1958,1976,S2,{rt:.65,rx:.04,rh:.98,cp:.05,rf:.62,ws:.67,belt:.64,hood:.5,rad:150,x:{skirt:1}}]]),
+ // Eastern Europe
+ ...F(/^(FSO Polonez|Dacia (1300|1310|1410|Nova|Solenza|1100)|Talbot Simca|Simca (1100|1300|1500|1301|1501)|Lada (2101|2103|2104|2105|2106|2107|Riva|Nova|1200|1500)|Moskvitch|Zastava|Yugo|Wartburg|Trabant)/, ['sedan','hatch','wagon'], [[1960,2008,S3,{deck:.63,cb:.21,rr:.3,rf:.65,ws:.76,belt:.62,hood:.6,rad:30}]]),
  // ===== model lines, generation by generation =====
  ...F(/^Volkswagen Golf(?!.*(Variant|Plus|Sportsvan|Cabrio|Country|Alltrack))/, ['hatch'], [
   [1983,1991,S2,{rt:.62,rx:.1,rf:.63,ws:.77,belt:.62,hood:.6,rad:40}], [1991,1997,S2,{rt:.6,rx:.11,rf:.62,ws:.76,belt:.62,hood:.58}], [1997,2003,S2,{rt:.62,rx:.11,rf:.6,ws:.76,belt:.62,hood:.57,rad:90}],
