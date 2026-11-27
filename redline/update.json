@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 24,
+  "v": 25,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "18a5bfee24a1996142d22325912c7a0ae3d3a30378cfeb386d1574955855c77d",
+  "sha256": "2bc4064c3612b1a0e032208cdf7d9592fe2cc408938e2aac57cab80eddd32faf",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "More shape fixes from a catalogue-wide review: full-size vans, kei hatchbacks, liftbacks, Mercedes 190 SL, VW Fridolin, Suzuki X-90 and double-cab pickups"
+ "notes": "Convertibles no longer borrow closed-car roofs from their model lines; DeSoto/Chrysler Forward Look wagons fixed"
 }
