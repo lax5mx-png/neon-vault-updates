@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 38,
+  "v": 39,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "c3be69feb8255d49a0614aa4f2d3e208bd5c85dd60a632ed3ef9fff43c1422dc",
+  "sha256": "ac5b6d48b05d1458cef0afc574e865d148dad36ef54f9d6b0a039cdf95b7eb7c",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car its own drawing: Ford Model AA truck gets its own flatbed outline"
+ "notes": "Hand-drawn outlines, batches 8-10: BMW 3/5 Series by generation, Silverado, Super Duty, F-Series 1973-91, Ram 1500, Ranger, Tacoma, Passat, Golf III/IV, Golf Variant, Octavia, Superb, A4 B5, S-Class W126-W223, Cayenne, V70, S60, Sportage, Astra, Vectra, Insignia, Ibiza, Polo, Caddy, MINI, 911 Cabriolet/Targa, Renault Master"
 }
