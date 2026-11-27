@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 42,
+  "v": 43,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "f8aa870ac84329cbab27405a73fd73849503c5655471f1f252c480c6f534be24",
+  "sha256": "f80d8cc192cf8588cecee25691140ec0097ab9d058876307e469cde00c60940e",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 15: Range Rover Sport, Discovery I-5 and Sport, Sierra, A8, Mondeo, Yukon/Tahoe/Suburban, D-Max, XF, Picanto, Rio, Carens, Jetta, A3 Sedan, Q5, Q3, C4, Escort, Ypsilon, 308, Malibu, Canyon/Colorado, Bluebird, Micra, Omega, Kadett, Kodiaq, Tundra I, H-1, 2 Series coupe, Logan MCV, Sandero, Caravan, Yaris, XC90, MiTo, Tucson, Navigator, Buick Regal"
+ "notes": "Hand-drawn outlines, batch 16: Vectra, Calibra, GLC/GLE Coupé/GLA, E-Class Estate, Astra Sports Tourer, 307 SW, Saab 9-3/9-5, Ibiza SC, Volvo S60 I/V90/C30, Trafic/Vivaro/Talento, Corvette convertibles, Malibu, i20, Lancer and Evo, Mégane Estate, Legacy/Impreza/Forester, Mercedes /8 and W123, C5 Tourer, Clio I, Yeti, Bora, Nissan AD, Alfa 147/156/159, CLA Shooting Brake, A-Class W168, 508 SW, 911 Targa/Cabriolet G and 964, Crown, Camaro 2nd gen, Logan, Lodgy, Stilo, Cherokee XJ/SJ, Colt, 3008/5008, Fabia Combi, Passat B2/B3 Variant, Jumpy/Expert, Scorpio"
 }
