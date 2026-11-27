@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 10,
+  "v": 11,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "b3dc8d680411853c77e25afe4dd0ff2cdbd3364a073cdcc7058bcfcc782de5cd",
+  "sha256": "d3c6b5ff8701c5a6f1471fccadcd9fcff2a384a6371035b6cc15af4f63d02929",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "32 more hand-drawn shapes: 1958 Impala, Impala/Chevelle SS, Fairlane GT, Riviera, Toronado, 2000GT, Supra A70 and A90, RX-8, Cosmo, Hakosuka GT-R, NSX (2016), LFA, i8, Z3/Z4/Z8, Daytona, 288 GTO, F50, 550-812 GTs, FF/GTC4Lusso, Purosangue, Urus, Espada, 350 GT, McLaren 12C-750S, Tesla Roadster and Model X, Rivian, 8C, 4C, Monaro."
+ "notes": "36 more hand-drawn classics: Corvette C1, Avanti, '67 Eldorado, Chrysler 300C, '57 Fury, Tucker 48, Austin-Healey 100/3000, MGA, MGB and MGB GT, Spitfire, TR6, Stag, XK120/140/150, Jaguar Mark 2, Silver Cloud, Corniche, R-Type Continental, Pagoda SL, R107 SL, Fintail, Ponton, Mercedes 600, BMW 507, Giulietta Sprint and Spider, Fiat 124 Spider, X1/9, Aurelia, Citroën SM, Alpine A110 (both), Amazon, Saab 96, VW Thing."
 }
