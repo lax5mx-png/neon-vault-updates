@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 17,
+  "v": 18,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "290ff06e5fbae37d72b350fd0efcbe82365a6d6d54e39fdd419ae773aa2796f6",
+  "sha256": "05fcbd8089aa2594fe4249d320333ce0e0baaed7447b52e5dc2056a62fb69727",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn shapes for Ferrari, Fiat, BMW, Alpina, Mercedes, Ford, Chevrolet, Volkswagen and Renault lines; tidied odd model names"
+ "notes": "Hand-drawn shapes for Audi, Opel, Vauxhall, Hyundai and Kia lines; fixed shape priority so model lines beat brand catch-alls"
 }
