@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 47,
+  "v": 48,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "b7242cd8046c28ea21dee4554057c108169c661bef7d551e699214e045d27b94",
+  "sha256": "01b1ada47afa1a67a51844886113bef48f8ab3b2d02af45cc8f1036c2b51e47d",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 20: Fit/Jazz, F-Type Convertible, Jaguar XJ Series I-III/XJ40, MKZ/Continental, Mazda6 wagon, C-Class wagons, A-Class W176/W177, ASX, Mokka/Encore/Trax, Signum, Kadett E saloon, Manta, 2008, 508, 306, coupé-cabriolets, Renault 9/11, Ibiza ST, Wagon R+/Agila, T-Roc/T-Cross, Amarok, Golf Cabriolet, Avenir/Primera wagon, Jetta IV, Alfa 166, Audi Cabriolet, Cruze hatch, Corvette C5/C6, Challenger, Galaxy/S-Max, Escort wagon/saloon, Kona, Thema/Kappa, L200, Astra K/L, Panamera, Outback, V50, Alpina Touring, Granada, Vito/V-Class, Delica, Corona/Carina, PT Cruiser Convertible, DS3, C2, Xsara, Caravan IV/V, Marea/Linea, Punto 176, C-Max, Pilot, Defender L663, E-/CLK Cabriolets, Grandland, Myvi"
+ "notes": "Hand-drawn outlines, batch 21: Panamera Sport Turismo, CrossTouran, 605/607, Koleos, Clio Symbol/Mégane saloon/Fluence, Renault 21, Roomster, Ignis, Phaeton, XC40/EX30, DFSK, Malibu/Monte Carlo coupé, 309, 6 Series GT/Gran Coupé, E30 coupé, E21, E12, Xsara Coupé, Escape/Kuga/Tribute, Focus I saloon/wagon, Maverick, Envoy/TrailBlazer, Hyundai Coupé, GLB, Galant, Astra/Verano saloon, Polo III, S90, V40 wagon, 740/940/960, DeSoto Fire-series, Omega A/Carlton estates, Legacy wagon, Cavalier/Ascona, Audi 80 Avant/RS2, Cadillac CTS/CT5/CT6, C3 Picasso/Aircross, Cuore/Mira, Fiat 131/132/Argenta, Focus II, Polonez, Q60, Delta, Lincoln Continental/Town Car, Quattroporte/Ghibli, CLS Shooting Brake, MG ZR/Rover 25, Outlander, X-Trail/Rogue, Serena/Elgrand, Captur, Mégane Classic, Volvo 850/V70, F-100 1956-72, Cedric/Gloria, Grand Am/Grand Prix, Carina E liftback, Acura TL, ARO, LaCrosse, Tracker/Sidekick, C4 Cactus"
 }
