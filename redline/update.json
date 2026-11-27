@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 13,
+  "v": 14,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "6b4e7c526a90b9399ce5d30f1067c79f9743357bc560dc48e00d2fb4b808f2bb",
+  "sha256": "bc9820743f1ae06eca45862456cb88bae4391b9124d87d6d62e79ba01e6a9cd2",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "29 more hand-drawn shapes: Celica (all generations), Firebird (1967 and 1982-2002), Prelude (all generations), Eclipse, AMG GT and roadster, Morgan, Jimny (old and new), Lotus Elise, Exige, Evora, Emira and Esprit, VW T3, T4 and T5/T6 vans, SLK, CLK, CL, Audi TT Mk2/Mk3 and roadster. G-Class now matches every version."
+ "notes": "Generation-by-generation shapes for about 30 more model lines: Mustang, Camaro and Corvette convertibles, MINI and Golf cabrios, BMW 3/4/6 Series and M coupes, A5, Audi Coupé, Accord and Civic coupes, Hyundai Coupe, Jaguar XK and F-Type, Manta, American personal coupes, Opel/Ford/Toyota/Renault/Peugeot/Škoda estates, Mondeo and Vectra liftbacks, Corolla, Astra and Focus saloons, S-Class, Terrano/Pajero/Vitara-type off-roaders, modern crossovers, big vans and compact MPVs."
 }
