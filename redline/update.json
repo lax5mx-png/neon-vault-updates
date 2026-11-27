@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 21,
+  "v": 22,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "62a3b60eff279497a66baacbe3e46e8ca8e088b84e28cb4d00d2104e84060142",
+  "sha256": "8fbe61a1ba129ba9461a0c0038773656049e22af6a245a63fb9ec17cba04cefd",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn shapes for the last classics and small makers: Alpine, Bentley, Sunbeam, Hillman, Panhard, Facel Vega, Iso, NSU, Trabant, Tatra, bubble cars, boutique supercars and more"
+ "notes": "Hand-drawn shapes for modern lines: Defender, Sandero Stepway, Škoda, Bentley, Saab, Fiat Egea, Holden, DS, Lada, UAZ, Tata, Mahindra, Perodua, Proton and the Chinese brands"
 }
