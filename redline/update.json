@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 49,
+  "v": 50,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "d4bbe716db9abf81701476ea8c90ef5917e321a678f90bf45b75d41221ae02b8",
+  "sha256": "863dd6e3d1d328f79b2d0cff58970a9b542b20edd7047237d1498942885f6745",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 22: SsangYong Chairman, Visa/LNA, Dodge Ram 1981-2002, Compass/Patriot, Mazda6 saloon, Primera, Micra K10/K11, Patrol 160/260, Talisman saloon/estate, Modus, Espace I/II, Yaris XP10, Volvo 740/940 estates, Egea/Tipo hatch, Harrier/Murano, Aston DB7/DB9/Vantage, A3 8L 3-door/Sportback, 6/8 Series coupe/convertible, S-10/Colorado/Sonoma cabs, Charger 1966-87, Explorer 2011+, Mustang S197 + convertibles, Genesis G70/G80/G90, Accord/Civic Tourer, Genesis Coupe, Jaguar XK, Seltos/Niro/Stonic, Forte 5/Koup, Freelander, Lexus RX/NX/UX, GranTurismo, Mazda5/Premacy, 323 saloon, GL/GLS, CLC/C sportcoupe, GLK, ML/GLE, Carisma, Twingo II/III, Highlander, Polo VI, Lavida/Virtus, S70/850, Integra liftback, Regal colonnade coupé, Granada/Scorpio estates, Taunus/Cortina, HSV Tourer, MPV, R-Class, Rover 800, Simca/Talbot Horizon, Proace/Hiace, Q2/Q4, Aveo/Sonic, Chrysler 300, C-Elysée/301, DS3/500 Cabrio, Mondial, Panda III, Croma, HR-V/ZR-V, Civic 1972-87"
+ "notes": "Hand-drawn outlines, batch 23: i30 Fastback/wagon/Veloster, Accent, Q70/Fuga, Optima/Ceed wagons, Rekord/Commodore/Victor, Mégane Coupé, Renault 18, SX4/Sedici, Corolla 2013-19 and E120 hatch, YRV/Materia, Fiorino/Qubo, Amaze/City, Commodore/HSV saloons, Kadett coupé, Rover 400/45, R8 Spyder, Blazer, Camaro/Firebird 4th gen, C5 Aircross, DS4, Sirion, Bravo/Brava, Focus IV, Fiesta Mk1, Fox Mustang, Venga/ix20, Prisma/Dedra, Lexus RC, CX-3/CX-30/MX-30, E-Class coupé, A/B-Class, Corsa F, Vectra GTS, Senator/Monza, Bonneville, Clio V, Safrane, Corolla Cross/C-HR, Corolla wagons, Polo I/II, Scirocco II, S80, C126, Sunny/Sentra, Cutlass, Swift/Cultus, Simca, Chaser/Cresta/Mark II, Flying Spur/Mulsanne, BLS/9-3 wagon, Impala, Avalanche, Aveo/Nexia saloons, Leon ST, Lacetti hatch, Tempra, Fiat 124 coupé, Expedition/Navigator, Acadia/Enclave/Traverse, Astra coupé, Palisade/Telluride, ix35/Tucson, i40/Sonata"
 }
