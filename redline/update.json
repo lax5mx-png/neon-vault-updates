@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 54,
+  "v": 55,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "7c49268f8cc2fa9447e26eae4c9a8cd5ea9730f6cab94c4d9628c8a04b955862",
+  "sha256": "ba3e36c6e88ae28efe15b361fd3c1795e29b508a2beeffe826a13db47c4457a6",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 27: Legnum fix, Alfasud Sprint, Chevy Van/Express 1964-96, Peugeot 104, Arkana/Rafale/Eclipse Cross, Scion tC, Exeo + ST, Justy, Ertiga/XL6, Corolla E140, Alphard/Vellfire, TVR Cerbera/Tuscan/Chimaera, Alpina XD3/XB7, BYD SUVs, DeSoto convertibles, FAW Besturn, Egea/Tipo/Cronos saloon, 1965-73 Mustang/Shelby convertible, Lancia Y10, 626 wagon, E-Class W211, C124 coupé, Minica/i-MiEV, Starion/Sapporo/Conquest, Super 5, Liana/Aerio, 4Runner/Hilux Surf, Caldina, Camry XV30/XV40, Viva/Victor estates, ILX/CSX, Alfetta/Giulietta/90, Q5/Q3/Q8 Sportback, Audi V8, Bentley Continental R/T/Brooklands, E36 coupé, Trailblazer/Encore GX, Spin/Orlando, Corvette C4, Formentor/Terramar, Cupra Leon, Altis, Caliber, Talon/Laser/Eclipse, Edge/MKX/Nautilus, Fiesta/Ikon saloon, SN95 Mustang, Ambassador, Mobilio/Freed, Civic 3-door + saloon, Hyundai Genesis saloon, XK convertible, Wagoneer, cee'd SW, Samara, LX/LC300, CX-7/CX-9/CX-90, AMG SUVs, Titan, Altima/Teana/Maxima, Sentra B15/B16, 1007, 604, Polestar 2/4"
+ "notes": "Catalogue clean-up: 409 duplicate listings of the same car removed (a single model year listed inside a longer run of the same generation, or the same generation listed twice under two spellings). Only the newest listing stays; its engine list gains any engines the duplicate had. Cars you already own are unaffected."
 }
