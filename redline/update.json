@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 23,
+  "v": 24,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "6dfe85efd69a6b8d6db4035e4db92da35e5ebb15bdd7592c2110461b84617c36",
+  "sha256": "18a5bfee24a1996142d22325912c7a0ae3d3a30378cfeb386d1574955855c77d",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Crew-cab pickups get their long cabs, fat-fendered 1946-50 saloons, Citroën Ami 6, BMW Z3 Coupe and many small corrections"
+ "notes": "More shape fixes from a catalogue-wide review: full-size vans, kei hatchbacks, liftbacks, Mercedes 190 SL, VW Fridolin, Suzuki X-90 and double-cab pickups"
 }
