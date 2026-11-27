@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 12,
+  "v": 13,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "d9f06ea39de55bbd5db12ee31af760b50a467d5bdf42c5c83344d52b4e68750a",
+  "sha256": "6b4e7c526a90b9399ce5d30f1067c79f9743357bc560dc48e00d2fb4b808f2bb",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "25 more hand-drawn shapes for modern and electric cars: Taycan and Cross Turismo, EQS/EQE, BMW iX, Kia EV6, Ioniq 5 and 6, ID. Buzz, Mustang Mach-E, Ford GT (2017), Hummer EV, Cullinan, Wraith/Spectre, Bentayga, DBX, SF90/296, MC20, C-HR, Juke, Leaf, Kia Soul, Stinger, Lucid Air, Polestar 1, MINI Clubman and Countryman."
+ "notes": "29 more hand-drawn shapes: Celica (all generations), Firebird (1967 and 1982-2002), Prelude (all generations), Eclipse, AMG GT and roadster, Morgan, Jimny (old and new), Lotus Elise, Exige, Evora, Emira and Esprit, VW T3, T4 and T5/T6 vans, SLK, CLK, CL, Audi TT Mk2/Mk3 and roadster. G-Class now matches every version."
 }
