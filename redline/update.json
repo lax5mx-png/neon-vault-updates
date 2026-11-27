@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 48,
+  "v": 49,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "01b1ada47afa1a67a51844886113bef48f8ab3b2d02af45cc8f1036c2b51e47d",
+  "sha256": "d4bbe716db9abf81701476ea8c90ef5917e321a678f90bf45b75d41221ae02b8",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 21: Panamera Sport Turismo, CrossTouran, 605/607, Koleos, Clio Symbol/Mégane saloon/Fluence, Renault 21, Roomster, Ignis, Phaeton, XC40/EX30, DFSK, Malibu/Monte Carlo coupé, 309, 6 Series GT/Gran Coupé, E30 coupé, E21, E12, Xsara Coupé, Escape/Kuga/Tribute, Focus I saloon/wagon, Maverick, Envoy/TrailBlazer, Hyundai Coupé, GLB, Galant, Astra/Verano saloon, Polo III, S90, V40 wagon, 740/940/960, DeSoto Fire-series, Omega A/Carlton estates, Legacy wagon, Cavalier/Ascona, Audi 80 Avant/RS2, Cadillac CTS/CT5/CT6, C3 Picasso/Aircross, Cuore/Mira, Fiat 131/132/Argenta, Focus II, Polonez, Q60, Delta, Lincoln Continental/Town Car, Quattroporte/Ghibli, CLS Shooting Brake, MG ZR/Rover 25, Outlander, X-Trail/Rogue, Serena/Elgrand, Captur, Mégane Classic, Volvo 850/V70, F-100 1956-72, Cedric/Gloria, Grand Am/Grand Prix, Carina E liftback, Acura TL, ARO, LaCrosse, Tracker/Sidekick, C4 Cactus"
+ "notes": "Hand-drawn outlines, batch 22: SsangYong Chairman, Visa/LNA, Dodge Ram 1981-2002, Compass/Patriot, Mazda6 saloon, Primera, Micra K10/K11, Patrol 160/260, Talisman saloon/estate, Modus, Espace I/II, Yaris XP10, Volvo 740/940 estates, Egea/Tipo hatch, Harrier/Murano, Aston DB7/DB9/Vantage, A3 8L 3-door/Sportback, 6/8 Series coupe/convertible, S-10/Colorado/Sonoma cabs, Charger 1966-87, Explorer 2011+, Mustang S197 + convertibles, Genesis G70/G80/G90, Accord/Civic Tourer, Genesis Coupe, Jaguar XK, Seltos/Niro/Stonic, Forte 5/Koup, Freelander, Lexus RX/NX/UX, GranTurismo, Mazda5/Premacy, 323 saloon, GL/GLS, CLC/C sportcoupe, GLK, ML/GLE, Carisma, Twingo II/III, Highlander, Polo VI, Lavida/Virtus, S70/850, Integra liftback, Regal colonnade coupé, Granada/Scorpio estates, Taunus/Cortina, HSV Tourer, MPV, R-Class, Rover 800, Simca/Talbot Horizon, Proace/Hiace, Q2/Q4, Aveo/Sonic, Chrysler 300, C-Elysée/301, DS3/500 Cabrio, Mondial, Panda III, Croma, HR-V/ZR-V, Civic 1972-87"
 }
