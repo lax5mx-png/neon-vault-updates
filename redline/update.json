@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 31,
+  "v": 32,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "4f4871c41d9975e3f137a0642dcbee00e71fd9656eeb80660c19219efc131bfc",
+  "sha256": "b3cc52cf72e5d4dd72f3920e4310f1d3b86d5c2627786ea8f0581a37a789393e",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Fixed 59 versions with wrong sizes in the source data (they now match their model's other versions), so their drawings are no longer stretched"
+ "notes": "Soft-top off-roaders drawn open, Saab 95 estate"
 }

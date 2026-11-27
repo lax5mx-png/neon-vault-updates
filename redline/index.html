@@ -940,7 +940,7 @@ window.CARSHAPES = [
   top:[[.02,.13,0],[0,.26,60],[.005,.56,60],[.03,.6,60],[.2,.62,100],[.25,.65,100],[.32,.95,250],[.36,1,250],[.6,1,250],[.64,.96,150],[.71,.66,80],[.94,.62,200],[1,.56,80],[1,.27,40],[.98,.13,0]],
   glass:[[.28,.68],[.35,.93],[.6,.95],[.69,.67]], hb:.65, hn:.6, ws:.71, crease:false, spear:false, hl:[.985,.52,70], tl:[0,.45,.02,.07]},
  // Saab 96 1960-80: the rally-winning teardrop
- {m:/^Saab (96|92|93|95)( |$)/, y:[1949, 1980],
+ {m:/^Saab (96|92|93)( |$)/, y:[1949, 1980],
   top:[[.04,.14,0],[0,.28,80], ...arc(.45,.3,.45,.7,180,95,7,250), [.55,.99,400],[.63,.94,250],[.7,.66,120],[.9,.6,500],[.99,.5,250],[1,.38,80],[.97,.14,0]],
   glass:[[.24,.66],[.31,.9],[.6,.93],[.68,.67]], hb:.64, hn:.58, ws:.7, doors:2, crease:false, spear:false, hl:[.97,.5,65], tl:[0,.4,.025,.06]},
  // Volkswagen 181 "Thing" 1968-83 and Kübelwagen
@@ -1119,6 +1119,8 @@ window.CARSHAPES = [
  ...F(/^Porsche Panamera(?!.*(Sport Turismo|Cross Turismo))/, ['sedan','hatch','coupe'], [[2009,2026,S2,{rt:.58,rx:.22,rh:.96,cp:.24,rf:.58,ws:.71,belt:.62,hood:.54,rad:200}]]),
  // Jaguar XJ (X351) 2010-19: the long fastback limousine
  ...F(/^Jaguar XJ( \(X351\)|$| L| R| ?\d)/, ['sedan'], [[2010,2019,S2,{rt:.6,rx:.2,rh:.97,cp:.2,rf:.6,ws:.73,belt:.64,hood:.58,rad:150}]]),
+ // soft-top off-roaders: a tub with the hood down
+ ...F(/(Cabrio|Convertible|Soft ?Top|Canvas|Targa)/, ['suv'], [[1946,2026,CV,{deck:.72,ws:.7,belt:.66,hood:.64,rad:40,x:{bump:false}}]]),
  // ===== batch 8: model lines, generation by generation (popular nameplates) =====
  // muscle and sports convertibles
  ...F(/^Ford Mustang.*(Convertible|Cabrio)|^Ford Mustang( 19(64|65|66|67|68|69|70))?$/, ['convertible'], [[1964,1973,CV,{deck:.62,ws:.62,belt:.64,hood:.6,rad:60}], [1974,1993,CV,{deck:.62,ws:.66,belt:.63,hood:.57,rad:50}], [1994,2026,CV,{deck:.64,ws:.65,belt:.66,hood:.58,rad:90}]]),
@@ -1865,6 +1867,7 @@ window.CARSHAPES = [
  ...F(/^Citroën Traction.*(Cabrio|Roadster)/, ['convertible'], [[1934,1940,CV,{deck:.6,ws:.66,belt:.62,hood:.62,rad:200,x:{fend:[150,200],post:1}}]]),
  {m:/^Fiat 500 Topolino/, y:[1936, 1955], post:1, top:[[.03,.14,0],[0,.26,60],[.03,.55,250],[.1,.64,150],[.2,.66,60],[.27,.96,200],[.35,1,200],[.56,.99,150],[.63,.93,100],[.7,.66,60],[.9,.58,300],[1,.42,150],[1,.27,60],[.98,.14,0]], glass:[[.25,.68],[.3,.92],[.56,.94],[.68,.68]], hb:.65, hn:.58, ws:.7, doors:2, crease:false, spear:false, fend:[150,180], hl:[.9,.62,60], hlOut:2},
  ...F(/^(Ford GPW|Jeep Willys (MB|CJ-2A)|Willys (MB|Jeep|CJ-2A)|Bantam BRC|Volkswagen Schwimmwagen)/, null, [[1940,1949,CV,{deck:.72,ws:.68,belt:.66,hood:.64,rad:20,x:{bump:false,post:1,doors:0}}]]),
+ {m:/^Saab 95( |$)/, y:[1959, 1978], ...S2({rt:.66,rx:.04,rh:.98,cp:.05,rf:.64,ws:.74,belt:.6,hood:.56,nose:.32,rad:200})},
  // ===== model lines, generation by generation =====
  ...F(/^Volkswagen Golf(?!.*(Variant|Plus|Sportsvan|Cabrio|Country|Alltrack))/, ['hatch'], [
   [1983,1991,S2,{rt:.62,rx:.1,rf:.63,ws:.77,belt:.62,hood:.6,rad:40}], [1991,1997,S2,{rt:.6,rx:.11,rf:.62,ws:.76,belt:.62,hood:.58}], [1997,2003,S2,{rt:.62,rx:.11,rf:.6,ws:.76,belt:.62,hood:.57,rad:90}],
