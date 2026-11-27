@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 7,
+  "v": 8,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "9015bb5a219efd669d18f51f63185f5595f002a017105a03d3de92e406f786c6",
+  "sha256": "5d0aefef5b13ae22a82505dd9edf4a7b2863e7d808b761eebe278b0139874d5d",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn shapes for iconic cars, first 70 done: Beetle, VW bus, Mini, 2CV, Fiat 500, DS, E-Type, 911, Countach, DeLorean, Mustang, Corvette, Land Rover, Jeep, G-Class, F40, Testarossa, Miura, Cybertruck and more."
+ "notes": "Every car since 1946 now has a shaped side profile: model lines drawn generation by generation (Golf, Civic, 3 Series, F-150, Range Rover and hundreds more), and a profile for its body type and era for the rest."
 }
