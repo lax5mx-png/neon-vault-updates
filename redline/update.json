@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 45,
+  "v": 46,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "08e3629f90ad7f5531679b21f82aa7fe92fa1383dca150642074c3c65c184fe1",
+  "sha256": "4c76aeec1c345c488aa19e59a3579a42f2a41b420680601221ee85bcf7880d20",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batch 18: X5/X7, X3, AX, Uno, Mustang S550/S650, cee'd, Lexus ES/GS/IS, Frontera, 405/406/407 estates, Clio Estate, RAV4, Simca 1000, Astra Estate, Alfa 156/159 Sportwagon/33/164/Giulietta, Malibu wagon and El Camino, Saxo, XM, Fiesta III/IV, Sierra sedan/Turnier, Holden Ute, Santa Fe I/II, Trooper, Compass/Cherokee KL, Forte, Mazda3 hatch, Qashqai, Patrol, Adam, 405, Laguna, Vitara, Avensis, S40, Frontier/Navara, Jetta I/II, Captiva, Xantia, Duster, i10, i40 wagon, Q50, F-Type coupe, Sunny/Almera, Ateca/Karoq, Beetle Cabriolet, CC, Touareg, A3 Cabriolet, C8/807/Ulysse"
+ "notes": "Hand-drawn outlines, batch 19: Malibu/Chevelle, Doblò/Combo, F-Pace/E-Pace/I-Pace, XE, Pajero Pinin and II-IV, 206/207, Espace, Renault 19 saloon, Rexton, Impreza saloon, Hilux, Land Cruiser 70 and 80-300, S-Class W116, Q7/Q8, 7 Series E23/E32, Odyssey/Carnival/Sienna/Pacifica, Musa/Idea, Mazda2, SL R129-R232, Colt, Octavia I Combi, Fortuner/4Runner, Tourneo, Alfa Spider/GTV, A4 Cabriolet, Audi 100 C1/C2, Sebring Convertible, C4 Coupé, Explorer, Escort III, Commodore, Civic, Accord, Elantra, Accent, Renegade, A-/B-Class, Terrano, 307, Saab 9000, Charade, Ritmo, Continental GTC, 3 Series Compact, Camaro 3rd gen, C1/107/Aygo, Charger, Dakota, Tipo, Sierra HD, Rodeo, CX Break"
 }
