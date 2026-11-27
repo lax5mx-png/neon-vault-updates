@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 11,
+  "v": 12,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "d3c6b5ff8701c5a6f1471fccadcd9fcff2a384a6371035b6cc15af4f63d02929",
+  "sha256": "d9f06ea39de55bbd5db12ee31af760b50a467d5bdf42c5c83344d52b4e68750a",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "36 more hand-drawn classics: Corvette C1, Avanti, '67 Eldorado, Chrysler 300C, '57 Fury, Tucker 48, Austin-Healey 100/3000, MGA, MGB and MGB GT, Spitfire, TR6, Stag, XK120/140/150, Jaguar Mark 2, Silver Cloud, Corniche, R-Type Continental, Pagoda SL, R107 SL, Fintail, Ponton, Mercedes 600, BMW 507, Giulietta Sprint and Spider, Fiat 124 Spider, X1/9, Aurelia, Citroën SM, Alpine A110 (both), Amazon, Saab 96, VW Thing."
+ "notes": "25 more hand-drawn shapes for modern and electric cars: Taycan and Cross Turismo, EQS/EQE, BMW iX, Kia EV6, Ioniq 5 and 6, ID. Buzz, Mustang Mach-E, Ford GT (2017), Hummer EV, Cullinan, Wraith/Spectre, Bentayga, DBX, SF90/296, MC20, C-HR, Juke, Leaf, Kia Soul, Stinger, Lucid Air, Polestar 1, MINI Clubman and Countryman."
 }
