@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 37,
+  "v": 38,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "11c4d21c5906a6fda439095b6102f442e9c2d9054784a18791475446be874161",
+  "sha256": "c3be69feb8255d49a0614aa4f2d3e208bd5c85dd60a632ed3ef9fff43c1422dc",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car its own drawing: pre-war cars (1906-1945) now each have their own outline — tourers, upright saloons, bustle-backs, streamliners, long-bonnet luxury cars and boat-tail sports cars; fixed outlines for a few mislabelled modern cars"
+ "notes": "Every car its own drawing: Ford Model AA truck gets its own flatbed outline"
 }
