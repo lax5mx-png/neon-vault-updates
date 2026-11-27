@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 39,
+  "v": 40,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "ac5b6d48b05d1458cef0afc574e865d148dad36ef54f9d6b0a039cdf95b7eb7c",
+  "sha256": "c8d59dbe6186cc925e3d1f98987b68401f24a47a533a58ed894de70fafd4ab86",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Hand-drawn outlines, batches 8-10: BMW 3/5 Series by generation, Silverado, Super Duty, F-Series 1973-91, Ram 1500, Ranger, Tacoma, Passat, Golf III/IV, Golf Variant, Octavia, Superb, A4 B5, S-Class W126-W223, Cayenne, V70, S60, Sportage, Astra, Vectra, Insignia, Ibiza, Polo, Caddy, MINI, 911 Cabriolet/Targa, Renault Master"
+ "notes": "Hand-drawn outlines, batches 11-12: BMW 7 Series, 4 Series, X1, 2 Series Tourer, 3 Series Coupé; Audi 100/A6/A4/A3/A5 by generation; Golf VII/VIII; Volvo XC60, V60, S80; Range Rover Evoque and Velar; Ram HD, Tundra; Corsa A-E, Berlingo, Alhambra/Sharan/Galaxy, W124/S124, CR-V, Kadett Caravan, Grand Vitara, C5, CX, Focus, Clio, Ibiza, Altea, 308 SW, i30 wagon, MINI Convertible, Movano; hatchbacks redrawn with proper rear pillars"
 }
