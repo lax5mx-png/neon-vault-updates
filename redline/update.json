@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 29,
+  "v": 30,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "9366a3cf9aef560930bc0d49be39011193abb33ceec87f10e8177518a8eb9c21",
+  "sha256": "d8decbe92b146a6999cf1a2874f4143edd8e97d3498fc174b23292d4b7e52f92",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Faster car drawing: shape lookups are now cached"
+ "notes": "Porsche Panamera and Jaguar XJ fastbacks, Mitsuoka saloons, Toyota Hilux Surf as an SUV, MGB GT dimensions corrected"
 }
