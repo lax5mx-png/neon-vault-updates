@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 8,
+  "v": 9,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "5d0aefef5b13ae22a82505dd9edf4a7b2863e7d808b761eebe278b0139874d5d",
+  "sha256": "798e555a1ba5399cd2720d1b94d02d1c8e2cee8b3f62f611a7297b6ac930471a",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Every car since 1946 now has a shaped side profile: model lines drawn generation by generation (Golf, Civic, 3 Series, F-150, Range Rover and hundreds more), and a profile for its body type and era for the rest."
+ "notes": "66 more hand-drawn car shapes: Golf Mk2, 205, Delta, 308/328, 458/488/F8, M3 E30, W123, W124, 190E, Impreza WRX, GT-R, 300ZX, Carrera GT, 918, R8, Gallardo, P1, Viper, Challenger, Bronco, FJ Cruiser, Multipla, Sierra Cosworth, S2000, Integra, CRX, MX-5, MR2, GT86, Silvia, 350Z/370Z, 3000GT, Capri, Thunderbird, Crown Vic, GTO, 'Cuda, Continental, H2, New Beetle, Scirocco, Corrado, Twingo, 928, 944, Boxster, Cayman, XJS, SLS, DB5, DB9/DB11, Spider, Giulia GT, Fulvia, P1800, Saab 900, Zonda, Huayra, Agera and more."
 }
