@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 15,
+  "v": 16,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "6e6a800eb6b4833cb343a93fb43eadd3c8b59a446197e4bfc28a8eb228dfd314",
+  "sha256": "934862f64d96ee72e4f14d33eeea8e91dcf327acd49a0e2da7180004a791c7b6",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Shapes for about 25 more model lines: Mercedes C, E, CLA and A-Class in every naming, their estates, coupés and cabrios; Ferrari Mondial, 348, 355, 360, F430 and spiders; Ferrari 250/275/330/365 GTs; supercar roadsters; Spyker; Aston Martin V8, Virage, DB7, Vanquish; Bentley Continental, Flying Spur; Maserati GranTurismo; Alfa GTV and Spider; DeSoto and 50s Chrysler cars with fins; RX-7 SA; 4Runner; Skyline coupés; Lexus RC; Chrysler Sebring; 80s-00s people carriers; Citroën CX, XM, Ami and DS Break; Polonez, Dacia, Lada and Simca saloons."
+ "notes": "Every Japanese car now has a shape for its model or era: kei cars and kei vans, Honda S500-S800, Beat, S660, del Sol, CR-Z, Insight, Ridgeline, Element, Nissan Figaro, Be-1, Pao, S-Cargo, Japanese pickups by cab size, Patrol and early Land Cruisers, 60s-90s Japanese coupés, plus saloons, hatches, estates, vans and SUVs by era. RX-7, MR2, 86, 350Z and MX-5 now match all their name spellings."
 }
