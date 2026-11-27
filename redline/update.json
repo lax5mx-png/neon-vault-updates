@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 28,
+  "v": 29,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "0a69017c2b5e7c5d504ed9fd6c9dab3b06975895e1136cdc1ab246b16e171c9b",
+  "sha256": "9366a3cf9aef560930bc0d49be39011193abb33ceec87f10e8177518a8eb9c21",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Pre-war streamliners (Airflow, Zephyr, Cord 810, Tatra, Aprilia, Peugeot 402...), Citroën Traction Avant, Fiat Topolino, Bugatti 57 SC and wartime jeeps"
+ "notes": "Faster car drawing: shape lookups are now cached"
 }

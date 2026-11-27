@@ -2132,11 +2132,16 @@ function roundPath(g, P, start) {
 /* car: {body, year, len, hgt, wb, rim, tw, color, seed, low (0-3), wing (0-2), rimUp, caliper, stripe, wheel, rimColor, brand}
    draws the car with its length = w pixels, rear bumper at x, ground at y. Returns the pixel scale (px per mm). */
 // hand-drawn profiles for iconic models (shapes.js): matched on brand, model name and year
+const ICON_CACHE = new Map();
 function findIcon(car, yr) {
   const L = window.CARSHAPES; if (!L || !car.name || car.noIcon) return null;
-  const key = (car.brand || '') + ' ' + car.name;
-  for (const ic of L) if (yr >= ic.y[0] && yr <= ic.y[1] && (!ic.b || ic.b.includes(car.body)) && (!ic.h || ((car.hgt || 1450) >= ic.h[0] && (car.hgt || 1450) < ic.h[1])) && ic.m.test(key)) return ic;
-  return null;
+  const key = (car.brand || '') + ' ' + car.name, ck = key + '|' + yr + '|' + car.body + '|' + (car.hgt || 0);
+  if (ICON_CACHE.has(ck)) return ICON_CACHE.get(ck);
+  let hit = null;
+  for (const ic of L) if (yr >= ic.y[0] && yr <= ic.y[1] && (!ic.b || ic.b.includes(car.body)) && (!ic.h || ((car.hgt || 1450) >= ic.h[0] && (car.hgt || 1450) < ic.h[1])) && ic.m.test(key)) { hit = ic; break; }
+  if (ICON_CACHE.size > 5000) ICON_CACHE.clear();
+  ICON_CACHE.set(ck, hit);
+  return hit;
 }
 function drawCar(g, x, y, w, car) {
   car = car || {};
