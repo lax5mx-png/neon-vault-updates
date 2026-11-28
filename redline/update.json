@@ -1,8 +1,8 @@
 {
  "content": {
-  "v": 57,
+  "v": 58,
   "url": "https://raw.githubusercontent.com/lax5mx-png/neon-vault-updates/main/redline/index.html",
-  "sha256": "fbcfc174d47dd3c64784ded891fa75922e69a6077c4e0e6f9acfcb0a33960865",
+  "sha256": "eb99ce3c5148087621837f83ce5f1877474709dba8fff8b21d7b5399c0f2e879",
   "minVc": 1
  },
  "apk": {
@@ -12,5 +12,5 @@
   "sha256": "a7e875c9e5c9d003f86236c66bf0b80c4eef2eaca812d93334ef3dacc8ecdfd9",
   "size": 765083
  },
- "notes": "Catalogue clean-up, part 2: 209 more listings removed where two trims of the same car look identical in real life (same body, doors and size, sold in the same years, differing only in trim, engine or drivetrain - e.g. LX/EX, TDI, 4MATIC, 2.0 vs 2.5). The newest stays and keeps all the engines. Versions with their own bodywork (M, RS, AMG kits, GTI, Type R, Shelby, 4x4, cross/active, coupes, cabrios, other cabs and door counts) stay as separate cars. Owned cars are unaffected."
+ "notes": "Catalogue trimmed to about 6,000 cars: the most popular models in all their main generations, plus the coolest ones (supercars, sports and muscle cars, performance versions, classics and icons). Duplicate trims of a kept car fold into it with all their engines; everything else is retired from the dealer and races. Cars you already own still load and drive."
 }
